@@ -1,0 +1,204 @@
+/*
+   Copyright 2019 Leon Kiefer
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+#include "CorsairLightingFirmware.h"
+#include "HID-Project.h"
+
+CorsairLightingFirmware_& CorsairLightingFirmware()
+{
+	static CorsairLightingFirmware_ obj;
+	return obj;
+}
+
+LEDController_& LEDController()
+{
+	static LEDController_ obj;
+	return obj;
+}
+
+void response(const uint8_t* data, size_t size) {
+	uint8_t response[16];
+	memset(response, 0x00, sizeof(response));
+	if (size > sizeof(response)) {
+		return;
+	}
+	memcpy(response, data, size);
+	RawHID.write(response, sizeof(response));
+}
+
+void response(const uint8_t data) {
+	response(&data, 1);
+}
+
+void response_P(const uint8_t* data, size_t size, const uint8_t offset) {
+	uint8_t response[16];
+	memset(response, 0x00, sizeof(response));
+	if (size + offset > sizeof(response)) {
+		return;
+	}
+	memcpy_P(response + offset, data, size);
+	RawHID.write(response, sizeof(response));
+}
+
+uint16_t combine(const byte& byte1, const byte& byte2) {
+	uint16_t t = byte1;
+	t = t << 8;
+	t |= byte2;
+	return t;
+}
+
+void handleCommand(const byte& command, const byte* data) {
+	if (command >= 0x10 && command < 0x30) {
+		response(0);
+		Serial.print(F("ignore: "));
+		Serial.print(command, HEX);
+		Serial.print("\n");
+	}
+	else if (command >= 0x30 && command < 0x40) {
+		LEDController().handleLEDControl(command, data);
+	}
+	else {
+		CorsairLightingFirmware().handleFirmwareCommand(command, data);
+	}
+}
+
+void CorsairLightingFirmware_::handleFirmwareCommand(const byte & command, const byte * data)
+{
+	switch (command)
+	{
+	case 0x01://ReadStatus
+		response_P((uint8_t*) status, sizeof(status), 1);
+		break;
+	case 0x02://ReadFirmwareVersion
+		response_P(firmware_version, sizeof(firmware_version), 1);
+		break;
+	case 0x03://ReadDeviceId
+		response(DeviceId, sizeof(DeviceId));
+		break;
+	case 0x04://WriteDeviceId
+		memcpy(DeviceId, data, 4);
+		response(DeviceId, sizeof(DeviceId));
+		break;
+	case 0x06://ReadBootloaderVersion
+		response_P(bootloader_version, sizeof(bootloader_version), 1);
+		break;
+	}
+}
+
+void LEDController_::handleLEDControl(const byte& command, const byte* data) {
+#define ledChannel channels[data[0]]
+	switch (command)
+	{
+	case 0x30://ReadLedStripMask
+	{
+		uint8_t ledMask[GROUPS_NUM + 1];
+		ledMask[0] = 0;//always zero
+		for (unsigned int i = 0; i < GROUPS_NUM; i++) {
+			if (i < ledChannel.groupsSet) {
+				ledMask[i + 1] = ledChannel.groups[i].ledCount;
+			}
+			else {
+				ledMask[i + 1] = 0x00;
+			}
+		}
+		response(ledMask, sizeof(ledMask));
+		return;
+		break;
+	}
+	case 0x31://WriteLedRgbValue
+		Serial.println(F("WriteLedRgbValue"));
+		break;
+	case 0x33://commit
+		Serial.println(F("commit"));
+		break;
+	case 0x34://WriteLedClear
+		Serial.println(F("WriteLedClear"));
+		break;
+	case 0x35://WriteLedGroupSet
+	{
+		Serial.println(F("WriteLedGroupSet"));
+		if (ledChannel.groupsSet >= GROUPS_NUM) {
+
+			Serial.print(F("max groups: "));
+			Serial.print(GROUPS_NUM, HEX);
+			Serial.print("\n");
+			break;
+		}
+		Group& group = ledChannel.groups[ledChannel.groupsSet++];
+		group.ledIndex = data[1];
+		group.ledCount = data[2];
+		group.mode = data[3];
+		group.speed = data[4];
+		group.direction = data[5];
+		group.extra = data[6];
+		// byte 7 is 0xFF
+		group.color1.setRGB(data[8], data[9], data[10]);
+		group.color2.setRGB(data[11], data[12], data[13]);
+		group.color3.setRGB(data[14], data[15], data[16]);
+		group.temp1 = combine(data[17], data[18]);
+		group.temp2 = combine(data[19], data[20]);
+		group.temp3 = combine(data[21], data[22]);
+		break;
+	}
+	case 0x36://WriteLedExternalTemp
+	{
+		ledChannel.temp = combine(data[2], data[3]);
+		break;
+	}
+	case 0x37://WriteLedGroupsClear
+	{
+		Serial.println(F("WriteLedGroupsClear"));
+		ledChannel.groupsSet = 0;
+		break;
+	}
+	case 0x38://WriteLedMode
+	{
+		Serial.print(F("mode: "));
+		Serial.print(data[1], HEX);
+		Serial.print("\n");
+		ledChannel.ledMode = data[1];
+		break;
+	}
+	case 0x39://WriteLedBrightness
+	{
+		/*Byte 2 is the brightness where
+			0x00 = > 0 %
+			0x21 = > 33 %
+			0x42 = > 66 %
+			0x64 = > 100 %
+			*/
+		ledChannel.brightness = data[1];
+		break;
+	}
+	case 0x3A://WriteLedCount 
+	{
+		ledChannel.ledCount = data[1];
+	}
+	case 0x3B://WriteLedPortType
+	{
+		Serial.print(F("ledPortType: "));
+		Serial.print(data[1], HEX);
+		Serial.print("\n");
+		ledChannel.ledPortType = data[1];
+		break;
+	}
+	default:
+		Serial.print(F("unkown command: "));
+		Serial.print(command, HEX);
+		Serial.print("\n");
+		break;
+	}
+	response(0x00);
+}
