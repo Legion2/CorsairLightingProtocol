@@ -1,0 +1,41 @@
+##############################################################
+
+
+CorsairLightingNodePRO.name=CorsairLightingNodePRO 16u2
+CorsairLightingNodePRO.build.core=CorsairLightingProtocol:CorsairLightingProtocol
+CorsairLightingNodePRO.bootloader.tool=arduino:avrdude
+CorsairLightingNodePRO.upload.tool=arduino:avrdude
+
+# MCU properties
+CorsairLightingNodePRO.upload.maximum_size=12288
+CorsairLightingNodePRO.upload.maximum_data_size=512
+CorsairLightingNodePRO.build.mcu=atmega16u2
+
+#general settings for all boards:
+CorsairLightingNodePRO.build.variant=HoodLoader2:HoodLoader2
+CorsairLightingNodePRO.build.board=HoodLoader2:HOODLOADER2
+CorsairLightingNodePRO.build.f_cpu=16000000L
+CorsairLightingNodePRO.vid.0=0x1b1c
+CorsairLightingNodePRO.pid.0=0x0c0b
+
+#uploading settings
+CorsairLightingNodePRO.upload.speed=57600
+CorsairLightingNodePRO.upload.protocol=avr109
+CorsairLightingNodePRO.upload.disable_flushing=true
+CorsairLightingNodePRO.upload.use_1200bps_touch=true
+CorsairLightingNodePRO.upload.wait_for_upload_port=true
+
+#fuses (HoodLoader2 only, not suitable for DFU)
+CorsairLightingNodePRO.bootloader.low_fuses=0xEF
+CorsairLightingNodePRO.bootloader.high_fuses=0xD8
+CorsairLightingNodePRO.bootloader.extended_fuses=0xFC
+CorsairLightingNodePRO.bootloader.unlock_bits=0x3F
+CorsairLightingNodePRO.bootloader.lock_bits=0x0F
+
+#usb settings, manufacturer overwritten by the IDE because of the VID
+CorsairLightingNodePRO.build.vid=0x1b1c
+CorsairLightingNodePRO.build.pid=0x0c0b
+CorsairLightingNodePRO.build.usb_product="Lighting Node PRO"
+CorsairLightingNodePRO.build.usb_manufacturer="Corsair"
+CorsairLightingNodePRO.build.extra_flags={build.usb_flags} -DMAGIC_KEY_POS=(RAMEND-1) -DUSB_EP_SIZE=16 -DSERIAL_NUMBER="1EA000060904BAAEFB66DF55421900F5" -DDEVICE_VERSION=0x001
+

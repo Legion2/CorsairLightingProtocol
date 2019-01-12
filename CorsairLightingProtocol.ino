@@ -23,6 +23,9 @@
 // Product Name: Lighting Node PRO
 // Serial Number: 1EA000060904BAAEFB66DF55421900F5
 
+#define CHANNELS_NUM 2
+#define GROUPS_NUM 1
+
 //strip/fan number
 #define STRIP_SETUP_MASK_DISABLED 0x00
 #define STRIP_SETUP_MASK_1 0x01
@@ -69,8 +72,6 @@ uint8_t rawhidData[64];
 
 uint8_t DeviceId[4] = { 0x01, 0x00, 0x00, 0x00 };
 
-uint8_t ledMask[16];
-
 struct Group {
 	byte type = TYPE_RGB_LED_STRIP;
 	byte mode = GROUP_MODE_Rainbow_Wave;
@@ -95,10 +96,10 @@ struct Channel {
 
 	uint16_t temp = 0;
 
-	Group groups[1];
+	Group groups[GROUPS_NUM];
 };
 
-Channel channels[2];
+Channel channels[CHANNELS_NUM];
 
 void setup() {
 	// put your setup code here, to run once:
@@ -123,7 +124,6 @@ void loop() {
 		doCommand(command, buffer);
 	}
 }
-
 
 void doCommand(byte command, byte* data) {
 	if (command >= 0x10 && command < 0x30) {
@@ -184,13 +184,14 @@ void response_P(const uint8_t* data, size_t size) {
 
 void ledControll(byte command, byte* data) {
 #define ledChannel data[0]
+	Serial.print(F("led channel: "));
+	Serial.print(ledChannel, DEC);
+	Serial.print("\n");
 	switch (command)
 	{
 	case 0x30://ReadLedStripMask
 	{
-		Serial.print(F("led channel: "));
-		Serial.print(ledChannel, DEC);
-		Serial.print("\n");
+		uint8_t ledMask[7];
 		ledMask[0] = 0;//always zero
 		ledMask[1] = 0x02;
 		ledMask[2] = 0x01;
