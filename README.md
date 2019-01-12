@@ -1,5 +1,5 @@
-Add Support of the Lightning Node PRO Protocol to Arduino.
-Controll LEDs connected to the Arduino with the Corsair Link or the ICUE Software.
+Add Support of the Lighting Node PRO Protocol to Arduino.
+Controll LEDs connected to the Arduino with the Corsair Link or the iCUE Software.
 
 # DISCLAIMERS
 This is a DO IT YOURSELF project, use at your own risk.
