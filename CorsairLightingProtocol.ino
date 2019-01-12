@@ -25,6 +25,15 @@
 
 #define CHANNELS_NUM 2
 #define GROUPS_NUM 1
+//Channel modes
+#define CHANNEL_MODE_DISABLED 0x00
+#define CHANNEL_MODE_ON 0x01
+
+//Port types
+#define PORT_TYPE_DISABLED 0x00
+#define PORT_TYPE_RGB_LED_STRIP 0x01
+#define PORT_TYPE_RGB_LED_SP_FANS 0x02
+#define PORT_TYPE_RGB_LED_LL_FANS 0x03
 
 //strip/fan number
 #define STRIP_SETUP_MASK_DISABLED 0x00
@@ -32,17 +41,6 @@
 #define STRIP_SETUP_MASK_2 0x02
 #define STRIP_SETUP_MASK_3 0x03
 
-//strip/fan number
-#define STRIP_1 0x00
-#define STRIP_2 0x0A
-#define STRIP_3 0x14
-#define STRIP_4 0x1E
-
-//LED type
-#define TYPE_RGB_LED_STRIP  0x0A
-#define TYPE_RGB_HD_FAN	    0x0C
-#define TYPE_RGB_SP_FAN	    0x01
-#define TYPE_RGB_ML_FAN	    0x04
 //LED group mode
 #define GROUP_MODE_Rainbow_Wave 0x00
 #define GROUP_MODE_Color_Shift 0x01
@@ -72,8 +70,10 @@ uint8_t rawhidData[64];
 
 uint8_t DeviceId[4] = { 0x01, 0x00, 0x00, 0x00 };
 
+
 struct Group {
-	byte type = TYPE_RGB_LED_STRIP;
+	byte ledIndex = 0;//start index of the leds of this group
+	byte ledCount = 0;//number of leds in this group
 	byte mode = GROUP_MODE_Rainbow_Wave;
 	byte speed = GROUP_SPEED_HIGH;
 	byte direction = GROUP_DIRECTION_FORWARD;
@@ -89,14 +89,15 @@ struct Group {
 };
 
 struct Channel {
-	uint8_t brightness = 0;
-	uint8_t ledMode = 0;
+	uint8_t brightness = 0x64;
+	uint8_t ledMode = CHANNEL_MODE_ON;
 	uint8_t ledCount = 0;
-	uint8_t ledPortType = 0;
+	uint8_t ledPortType = PORT_TYPE_RGB_LED_STRIP;
 
 	uint16_t temp = 0;
 
 	Group groups[GROUPS_NUM];
+	uint8_t groupsSet = 0;
 };
 
 Channel channels[CHANNELS_NUM];
@@ -184,9 +185,6 @@ void response_P(const uint8_t* data, size_t size) {
 
 void ledControll(byte command, byte* data) {
 #define ledChannel data[0]
-	Serial.print(F("led channel: "));
-	Serial.print(ledChannel, DEC);
-	Serial.print("\n");
 	switch (command)
 	{
 	case 0x30://ReadLedStripMask
@@ -194,11 +192,11 @@ void ledControll(byte command, byte* data) {
 		uint8_t ledMask[7];
 		ledMask[0] = 0;//always zero
 		ledMask[1] = 0x02;
-		ledMask[2] = 0x01;
-		ledMask[3] = 0x03;
-		ledMask[4] = 0x01;
-		ledMask[5] = 0x01;
-		ledMask[6] = 0x01;
+		ledMask[2] = STRIP_SETUP_MASK_DISABLED;
+		ledMask[3] = STRIP_SETUP_MASK_DISABLED;
+		ledMask[4] = STRIP_SETUP_MASK_DISABLED;
+		ledMask[5] = STRIP_SETUP_MASK_DISABLED;
+		ledMask[6] = STRIP_SETUP_MASK_DISABLED;
 		response(ledMask, sizeof(ledMask));
 		return;
 		break;
@@ -214,8 +212,15 @@ void ledControll(byte command, byte* data) {
 		break;
 	case 0x35://WriteLedGroupSet
 	{
-		Group& group = channels[ledChannel].groups[0];
-		group.type = data[2];
+		if (channels[ledChannel].groupsSet >= GROUPS_NUM) {
+			Serial.print(F("max groups: "));
+			Serial.print(GROUPS_NUM, HEX);
+			Serial.print("\n");
+			break;
+		}
+		Group& group = channels[ledChannel].groups[channels[ledChannel].groupsSet++];
+		group.ledIndex = data[1];
+		group.ledCount = data[2];
 		group.mode = data[3];
 		group.speed = data[4];
 		group.direction = data[5];
@@ -235,6 +240,10 @@ void ledControll(byte command, byte* data) {
 		break;
 	}
 	case 0x37://WriteLedGroupsClear
+		for (uint8_t i = 0; i < CHANNELS_NUM; i++)
+		{
+			channels[i].groupsSet = 0;
+		}
 		Serial.println(F("WriteLedGroupsClear"));
 		break;
 	case 0x38://WriteLedMode
