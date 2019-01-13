@@ -16,7 +16,9 @@
 #include <CorsairLightingProtocol.h>
 
 void setup() {
+#ifdef DEBUG
 	Serial.begin(115200);
+#endif
 	CorsairLightingProtocol.begin();
 }
 

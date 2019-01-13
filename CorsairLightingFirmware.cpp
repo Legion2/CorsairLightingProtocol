@@ -79,22 +79,31 @@ void LEDController_::handleLEDControl(const Command& command) {
 		break;
 	}
 	case 0x31://WriteLedRgbValue
+#ifdef DEBUG
 		Serial.println(F("WriteLedRgbValue"));
+#endif
 		break;
 	case 0x33://commit
+#ifdef DEBUG
 		Serial.println(F("commit"));
+#endif
 		break;
 	case 0x34://WriteLedClear
+#ifdef DEBUG
 		Serial.println(F("WriteLedClear"));
+#endif
 		break;
 	case 0x35://WriteLedGroupSet
 	{
+#ifdef DEBUG
 		Serial.println(F("WriteLedGroupSet"));
+#endif
 		if (ledChannel.groupsSet >= GROUPS_NUM) {
-
+#ifdef DEBUG
 			Serial.print(F("max groups: "));
 			Serial.print(GROUPS_NUM, HEX);
 			Serial.print("\n");
+#endif
 			break;
 		}
 		Group& group = ledChannel.groups[ledChannel.groupsSet++];
@@ -120,15 +129,19 @@ void LEDController_::handleLEDControl(const Command& command) {
 	}
 	case 0x37://WriteLedGroupsClear
 	{
+#ifdef DEBUG
 		Serial.println(F("WriteLedGroupsClear"));
+#endif
 		ledChannel.groupsSet = 0;
 		break;
 	}
 	case 0x38://WriteLedMode
 	{
+#ifdef DEBUG
 		Serial.print(F("mode: "));
 		Serial.print(data[1], HEX);
 		Serial.print("\n");
+#endif
 		ledChannel.ledMode = data[1];
 		break;
 	}
@@ -149,16 +162,20 @@ void LEDController_::handleLEDControl(const Command& command) {
 	}
 	case 0x3B://WriteLedPortType
 	{
+#ifdef DEBUG
 		Serial.print(F("ledPortType: "));
 		Serial.print(data[1], HEX);
 		Serial.print("\n");
+#endif
 		ledChannel.ledPortType = data[1];
 		break;
 	}
 	default:
+#ifdef DEBUG
 		Serial.print(F("unkown command: "));
 		Serial.print(command.command, HEX);
 		Serial.print("\n");
+#endif
 		break;
 	}
 	CorsairLightingProtocol.response(0x00);

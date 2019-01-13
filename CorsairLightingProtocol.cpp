@@ -39,9 +39,11 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 	if (bytesAvailable)
 	{
 		if (bytesAvailable != 16) {
+#ifdef DEBUG
 			Serial.print(F("bytesAvailable: "));
 			Serial.print(bytesAvailable);
 			Serial.print("\n");
+#endif // DEBUG
 			return;
 		}
 		RawHID.readBytes(command.raw, sizeof(command.raw));
@@ -52,9 +54,11 @@ void CorsairLightingProtocol_::handleCommand(const Command& command)
 {
 	if (command.command >= 0x10 && command.command < 0x30) {
 		response(0x01);
+#ifdef DEBUG
 		Serial.print(F("ignore: "));
 		Serial.print(command.command, HEX);
 		Serial.print("\n");
+#endif // DEBUG
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
 		LEDController().handleLEDControl(command);
