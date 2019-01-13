@@ -51,7 +51,7 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 void CorsairLightingProtocol_::handleCommand(const Command& command)
 {
 	if (command.command >= 0x10 && command.command < 0x30) {
-		response(0);
+		response(0x01);
 		Serial.print(F("ignore: "));
 		Serial.print(command.command, HEX);
 		Serial.print("\n");
@@ -64,18 +64,18 @@ void CorsairLightingProtocol_::handleCommand(const Command& command)
 	}
 }
 
-void CorsairLightingProtocol_::response(const uint8_t* data, size_t size) {
+void CorsairLightingProtocol_::response(const uint8_t* data, size_t size, const uint8_t offset) {
 	uint8_t response[16];
 	memset(response, 0x00, sizeof(response));
-	if (size > sizeof(response)) {
+	if (size + offset > sizeof(response)) {
 		return;
 	}
-	memcpy(response, data, size);
+	memcpy(response + offset, data, size);
 	RawHID.write(response, sizeof(response));
 }
 
 void CorsairLightingProtocol_::response(const uint8_t data) {
-	response(&data, 1);
+	response(&data, 1, 0);
 }
 
 void CorsairLightingProtocol_::response_P(const uint8_t* data, size_t size, const uint8_t offset) {

@@ -37,5 +37,5 @@ CorsairLightingNodePRO.build.vid=0x1b1c
 CorsairLightingNodePRO.build.pid=0x0c0b
 CorsairLightingNodePRO.build.usb_product="Lighting Node PRO"
 CorsairLightingNodePRO.build.usb_manufacturer="Corsair"
-CorsairLightingNodePRO.build.extra_flags={build.usb_flags} -DMAGIC_KEY_POS=(RAMEND-1) -DUSB_EP_SIZE=16 -DSERIAL_NUMBER="1EA000060904BAAEFB66DF55421900F5" -DDEVICE_VERSION=0x001
+CorsairLightingNodePRO.build.extra_flags={build.usb_flags} -DMAGIC_KEY_POS=(RAMEND-1) -DUSB_EP_SIZE=16 -DSERIAL_NUMBER="1EA000060904BAAEFB66DF55421900F5" -DDEVICE_VERSION=0x001 -DRAWHID_TX_SIZE=0x10
 

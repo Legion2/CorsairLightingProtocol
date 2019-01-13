@@ -46,11 +46,11 @@ void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command)
 		CorsairLightingProtocol.response_P(firmware_version, sizeof(firmware_version), 1);
 		break;
 	case 0x03://ReadDeviceId
-		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId));
+		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId), 1);
 		break;
 	case 0x04://WriteDeviceId
 		memcpy(DeviceId, command.data, 4);
-		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId));
+		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId), 1);
 		break;
 	case 0x06://ReadBootloaderVersion
 		CorsairLightingProtocol.response_P(bootloader_version, sizeof(bootloader_version), 1);
@@ -65,17 +65,16 @@ void LEDController_::handleLEDControl(const Command& command) {
 	{
 	case 0x30://ReadLedStripMask
 	{
-		uint8_t ledMask[GROUPS_NUM + 1];
-		ledMask[0] = 0;//always zero
+		uint8_t ledMask[GROUPS_NUM];
 		for (unsigned int i = 0; i < GROUPS_NUM; i++) {
 			if (i < ledChannel.groupsSet) {
-				ledMask[i + 1] = ledChannel.groups[i].ledCount;
+				ledMask[i] = ledChannel.groups[i].ledCount;
 			}
 			else {
-				ledMask[i + 1] = 0x00;
+				ledMask[i] = 0x00;
 			}
 		}
-		CorsairLightingProtocol.response(ledMask, sizeof(ledMask));
+		CorsairLightingProtocol.response(ledMask, sizeof(ledMask), 1);
 		return;
 		break;
 	}

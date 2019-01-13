@@ -45,7 +45,7 @@ public:
 	bool available();
 	void getCommand(Command& command);
 	void handleCommand(const Command& command);
-	void response(const uint8_t * data, size_t size);
+	void response(const uint8_t * data, size_t size, const uint8_t offset);
 	void response(const uint8_t data);
 	void response_P(const uint8_t * data, size_t size, const uint8_t offset);
 };

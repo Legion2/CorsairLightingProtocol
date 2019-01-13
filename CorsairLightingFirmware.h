@@ -31,6 +31,9 @@
 // Product Name: Lighting Node PRO
 // Serial Number: 1EA000060904BAAEFB66DF55421900F5
 
+#define PROTOCOL_STATUS_OK 0x00
+#define PROTOCOL_STATUS_ERROR 0xFF
+
 #define CHANNELS_NUM 2
 #define GROUPS_NUM 1
 //Channel modes
@@ -67,7 +70,7 @@
 
 const uint8_t firmware_version[] PROGMEM = { 0x00, 0x02, 0x36 };
 const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
-const char status[] PROGMEM = "test";
+const uint8_t status[] PROGMEM = { PROTOCOL_STATUS_OK };
 
 struct Group {
 	byte ledIndex = 0;//start index of the leds of this group
@@ -102,7 +105,7 @@ class CorsairLightingFirmware_ {
 public:
 	void handleFirmwareCommand(const Command& command);
 protected:
-	uint8_t DeviceId[4] = { 0x01, 0x00, 0x00, 0x00 };
+	uint8_t DeviceId[4] = { 0x4E, 0x91, 0x67, 0xB9 };
 };
 
 CorsairLightingFirmware_& CorsairLightingFirmware();
