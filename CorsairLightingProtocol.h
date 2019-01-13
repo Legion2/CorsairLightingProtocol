@@ -23,15 +23,16 @@
 #include "WProgram.h"
 #endif
 
-#define COMMAND_SIZE 64
+#define COMMAND_SIZE USB_EP_SIZE
+#define RESPONSE_SIZE USB_EP_SIZE
 
 struct Command {
 	union {
 		struct {
 			uint8_t command;
-			uint8_t data[15];
+			uint8_t data[COMMAND_SIZE - 1];
 		};
-		uint8_t raw[16];
+		uint8_t raw[COMMAND_SIZE];
 	};
 };
 

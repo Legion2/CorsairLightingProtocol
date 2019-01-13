@@ -60,123 +60,125 @@ void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command)
 
 void LEDController_::handleLEDControl(const Command& command) {
 	auto& data = command.data;
+	if (data[0] < sizeof(channels)) {
 #define ledChannel channels[data[0]]
-	switch (command.command)
-	{
-	case 0x30://ReadLedStripMask
-	{
-		uint8_t ledMask[GROUPS_NUM];
-		for (unsigned int i = 0; i < GROUPS_NUM; i++) {
-			if (i < ledChannel.groupsSet) {
-				ledMask[i] = ledChannel.groups[i].ledCount;
+		switch (command.command)
+		{
+		case 0x30://ReadLedStripMask
+		{
+			uint8_t ledMask[GROUPS_NUM];
+			for (unsigned int i = 0; i < GROUPS_NUM; i++) {
+				if (i < ledChannel.groupsSet) {
+					ledMask[i] = ledChannel.groups[i].ledCount;
+				}
+				else {
+					ledMask[i] = 0x00;
+				}
 			}
-			else {
-				ledMask[i] = 0x00;
-			}
+			CorsairLightingProtocol.response(ledMask, sizeof(ledMask), 1);
+			return;
+			break;
 		}
-		CorsairLightingProtocol.response(ledMask, sizeof(ledMask), 1);
-		return;
-		break;
-	}
-	case 0x31://WriteLedRgbValue
+		case 0x31://WriteLedRgbValue
 #ifdef DEBUG
-		Serial.println(F("WriteLedRgbValue"));
+			Serial.println(F("WriteLedRgbValue"));
 #endif
-		break;
-	case 0x33://commit
+			break;
+		case 0x33://commit
 #ifdef DEBUG
-		Serial.println(F("commit"));
+			Serial.println(F("commit"));
 #endif
-		break;
-	case 0x34://WriteLedClear
+			break;
+		case 0x34://WriteLedClear
 #ifdef DEBUG
-		Serial.println(F("WriteLedClear"));
+			Serial.println(F("WriteLedClear"));
 #endif
-		break;
-	case 0x35://WriteLedGroupSet
-	{
+			break;
+		case 0x35://WriteLedGroupSet
+		{
 #ifdef DEBUG
-		Serial.println(F("WriteLedGroupSet"));
+			Serial.println(F("WriteLedGroupSet"));
 #endif
-		if (ledChannel.groupsSet >= GROUPS_NUM) {
+			if (ledChannel.groupsSet >= GROUPS_NUM) {
 #ifdef DEBUG
-			Serial.print(F("max groups: "));
-			Serial.print(GROUPS_NUM, HEX);
+				Serial.print(F("max groups: "));
+				Serial.print(GROUPS_NUM, HEX);
+				Serial.print("\n");
+#endif
+				break;
+			}
+			Group& group = ledChannel.groups[ledChannel.groupsSet++];
+			group.ledIndex = data[1];
+			group.ledCount = data[2];
+			group.mode = data[3];
+			group.speed = data[4];
+			group.direction = data[5];
+			group.extra = data[6];
+			// byte 7 is 0xFF
+			group.color1.setRGB(data[8], data[9], data[10]);
+			group.color2.setRGB(data[11], data[12], data[13]);
+			group.color3.setRGB(data[14], data[15], data[16]);
+			group.temp1 = combine(data[17], data[18]);
+			group.temp2 = combine(data[19], data[20]);
+			group.temp3 = combine(data[21], data[22]);
+			break;
+		}
+		case 0x36://WriteLedExternalTemp
+		{
+			ledChannel.temp = combine(data[2], data[3]);
+			break;
+		}
+		case 0x37://WriteLedGroupsClear
+		{
+#ifdef DEBUG
+			Serial.println(F("WriteLedGroupsClear"));
+#endif
+			ledChannel.groupsSet = 0;
+			break;
+		}
+		case 0x38://WriteLedMode
+		{
+#ifdef DEBUG
+			Serial.print(F("mode: "));
+			Serial.print(data[1], HEX);
+			Serial.print("\n");
+#endif
+			ledChannel.ledMode = data[1];
+			break;
+		}
+		case 0x39://WriteLedBrightness
+		{
+			/*Byte 2 is the brightness where
+				0x00 = > 0 %
+				0x21 = > 33 %
+				0x42 = > 66 %
+				0x64 = > 100 %
+				*/
+			ledChannel.brightness = data[1];
+			break;
+		}
+		case 0x3A://WriteLedCount 
+		{
+			ledChannel.ledCount = data[1];
+		}
+		case 0x3B://WriteLedPortType
+		{
+#ifdef DEBUG
+			Serial.print(F("ledPortType: "));
+			Serial.print(data[1], HEX);
+			Serial.print("\n");
+#endif
+			ledChannel.ledPortType = data[1];
+			break;
+		}
+		default:
+#ifdef DEBUG
+			Serial.print(F("unkown command: "));
+			Serial.print(command.command, HEX);
 			Serial.print("\n");
 #endif
 			break;
 		}
-		Group& group = ledChannel.groups[ledChannel.groupsSet++];
-		group.ledIndex = data[1];
-		group.ledCount = data[2];
-		group.mode = data[3];
-		group.speed = data[4];
-		group.direction = data[5];
-		group.extra = data[6];
-		// byte 7 is 0xFF
-		group.color1.setRGB(data[8], data[9], data[10]);
-		group.color2.setRGB(data[11], data[12], data[13]);
-		group.color3.setRGB(data[14], data[15], data[16]);
-		group.temp1 = combine(data[17], data[18]);
-		group.temp2 = combine(data[19], data[20]);
-		group.temp3 = combine(data[21], data[22]);
-		break;
-	}
-	case 0x36://WriteLedExternalTemp
-	{
-		ledChannel.temp = combine(data[2], data[3]);
-		break;
-	}
-	case 0x37://WriteLedGroupsClear
-	{
-#ifdef DEBUG
-		Serial.println(F("WriteLedGroupsClear"));
-#endif
-		ledChannel.groupsSet = 0;
-		break;
-	}
-	case 0x38://WriteLedMode
-	{
-#ifdef DEBUG
-		Serial.print(F("mode: "));
-		Serial.print(data[1], HEX);
-		Serial.print("\n");
-#endif
-		ledChannel.ledMode = data[1];
-		break;
-	}
-	case 0x39://WriteLedBrightness
-	{
-		/*Byte 2 is the brightness where
-			0x00 = > 0 %
-			0x21 = > 33 %
-			0x42 = > 66 %
-			0x64 = > 100 %
-			*/
-		ledChannel.brightness = data[1];
-		break;
-	}
-	case 0x3A://WriteLedCount 
-	{
-		ledChannel.ledCount = data[1];
-	}
-	case 0x3B://WriteLedPortType
-	{
-#ifdef DEBUG
-		Serial.print(F("ledPortType: "));
-		Serial.print(data[1], HEX);
-		Serial.print("\n");
-#endif
-		ledChannel.ledPortType = data[1];
-		break;
-	}
-	default:
-#ifdef DEBUG
-		Serial.print(F("unkown command: "));
-		Serial.print(command.command, HEX);
-		Serial.print("\n");
-#endif
-		break;
 	}
 	CorsairLightingProtocol.response(0x00);
 }

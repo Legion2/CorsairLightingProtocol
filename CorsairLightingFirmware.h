@@ -35,7 +35,7 @@
 #define PROTOCOL_STATUS_ERROR 0xFF
 
 #define CHANNELS_NUM 2
-#define GROUPS_NUM 1
+#define GROUPS_NUM 3
 //Channel modes
 #define CHANNEL_MODE_DISABLED 0x00
 #define CHANNEL_MODE_ON 0x01

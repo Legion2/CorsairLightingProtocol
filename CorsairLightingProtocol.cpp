@@ -38,7 +38,7 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 	auto bytesAvailable = RawHID.available();
 	if (bytesAvailable)
 	{
-		if (bytesAvailable != 16) {
+		if (bytesAvailable != COMMAND_SIZE) {
 #ifdef DEBUG
 			Serial.print(F("bytesAvailable: "));
 			Serial.print(bytesAvailable);
@@ -69,7 +69,7 @@ void CorsairLightingProtocol_::handleCommand(const Command& command)
 }
 
 void CorsairLightingProtocol_::response(const uint8_t* data, size_t size, const uint8_t offset) {
-	uint8_t response[16];
+	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
 	if (size + offset > sizeof(response)) {
 		return;
@@ -83,7 +83,7 @@ void CorsairLightingProtocol_::response(const uint8_t data) {
 }
 
 void CorsairLightingProtocol_::response_P(const uint8_t* data, size_t size, const uint8_t offset) {
-	uint8_t response[16];
+	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
 	if (size + offset > sizeof(response)) {
 		return;
