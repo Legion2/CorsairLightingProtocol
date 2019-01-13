@@ -28,30 +28,6 @@ LEDController_& LEDController()
 	return obj;
 }
 
-void response(const uint8_t* data, size_t size) {
-	uint8_t response[16];
-	memset(response, 0x00, sizeof(response));
-	if (size > sizeof(response)) {
-		return;
-	}
-	memcpy(response, data, size);
-	RawHID.write(response, sizeof(response));
-}
-
-void response(const uint8_t data) {
-	response(&data, 1);
-}
-
-void response_P(const uint8_t* data, size_t size, const uint8_t offset) {
-	uint8_t response[16];
-	memset(response, 0x00, sizeof(response));
-	if (size + offset > sizeof(response)) {
-		return;
-	}
-	memcpy_P(response + offset, data, size);
-	RawHID.write(response, sizeof(response));
-}
-
 uint16_t combine(const byte& byte1, const byte& byte2) {
 	uint16_t t = byte1;
 	t = t << 8;
@@ -59,47 +35,33 @@ uint16_t combine(const byte& byte1, const byte& byte2) {
 	return t;
 }
 
-void handleCommand(const byte& command, const byte* data) {
-	if (command >= 0x10 && command < 0x30) {
-		response(0);
-		Serial.print(F("ignore: "));
-		Serial.print(command, HEX);
-		Serial.print("\n");
-	}
-	else if (command >= 0x30 && command < 0x40) {
-		LEDController().handleLEDControl(command, data);
-	}
-	else {
-		CorsairLightingFirmware().handleFirmwareCommand(command, data);
-	}
-}
-
-void CorsairLightingFirmware_::handleFirmwareCommand(const byte & command, const byte * data)
+void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command)
 {
-	switch (command)
+	switch (command.command)
 	{
 	case 0x01://ReadStatus
-		response_P((uint8_t*) status, sizeof(status), 1);
+		CorsairLightingProtocol.response_P((uint8_t*) status, sizeof(status), 1);
 		break;
 	case 0x02://ReadFirmwareVersion
-		response_P(firmware_version, sizeof(firmware_version), 1);
+		CorsairLightingProtocol.response_P(firmware_version, sizeof(firmware_version), 1);
 		break;
 	case 0x03://ReadDeviceId
-		response(DeviceId, sizeof(DeviceId));
+		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId));
 		break;
 	case 0x04://WriteDeviceId
-		memcpy(DeviceId, data, 4);
-		response(DeviceId, sizeof(DeviceId));
+		memcpy(DeviceId, command.data, 4);
+		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId));
 		break;
 	case 0x06://ReadBootloaderVersion
-		response_P(bootloader_version, sizeof(bootloader_version), 1);
+		CorsairLightingProtocol.response_P(bootloader_version, sizeof(bootloader_version), 1);
 		break;
 	}
 }
 
-void LEDController_::handleLEDControl(const byte& command, const byte* data) {
+void LEDController_::handleLEDControl(const Command& command) {
+	auto& data = command.data;
 #define ledChannel channels[data[0]]
-	switch (command)
+	switch (command.command)
 	{
 	case 0x30://ReadLedStripMask
 	{
@@ -113,7 +75,7 @@ void LEDController_::handleLEDControl(const byte& command, const byte* data) {
 				ledMask[i + 1] = 0x00;
 			}
 		}
-		response(ledMask, sizeof(ledMask));
+		CorsairLightingProtocol.response(ledMask, sizeof(ledMask));
 		return;
 		break;
 	}
@@ -196,9 +158,9 @@ void LEDController_::handleLEDControl(const byte& command, const byte* data) {
 	}
 	default:
 		Serial.print(F("unkown command: "));
-		Serial.print(command, HEX);
+		Serial.print(command.command, HEX);
 		Serial.print("\n");
 		break;
 	}
-	response(0x00);
+	CorsairLightingProtocol.response(0x00);
 }

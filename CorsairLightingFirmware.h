@@ -22,6 +22,7 @@
 	#include "WProgram.h"
 #endif
 
+#include "CorsairLightingProtocol.h"
 #include <FastLED.h>
 // VID: 1b1c
 // PID: 0c0b
@@ -97,11 +98,9 @@ struct Channel {
 	uint8_t groupsSet = 0;
 };
 
-void handleCommand(const byte& command, const byte* data);
-
 class CorsairLightingFirmware_ {
 public:
-	void handleFirmwareCommand(const byte& command, const byte* data);
+	void handleFirmwareCommand(const Command& command);
 protected:
 	uint8_t DeviceId[4] = { 0x01, 0x00, 0x00, 0x00 };
 };
@@ -110,7 +109,7 @@ CorsairLightingFirmware_& CorsairLightingFirmware();
 
 class LEDController_ {
 public:
-	void handleLEDControl(const byte & command, const byte * data);
+	void handleLEDControl(const Command & command);
 protected:
 	Channel channels[CHANNELS_NUM];
 };

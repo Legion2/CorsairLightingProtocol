@@ -13,33 +13,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CorsairLightingFirmware.h"
-#include <FastLED.h>
-#include "HID-Project.h"
-
-uint8_t rawhidData[64];
+#include <CorsairLightingProtocol.h>
 
 void setup() {
-	// put your setup code here, to run once:
 	Serial.begin(115200);
-	RawHID.begin(rawhidData, sizeof(rawhidData));
+	CorsairLightingProtocol.begin();
 }
 
 void loop() {
-	// Check if there is new data from the RawHID device
-	auto bytesAvailable = RawHID.available();
-	if (bytesAvailable)
+	if (CorsairLightingProtocol.available())
 	{
-		if (bytesAvailable != 16) {
-			Serial.print(F("bytesAvailable: "));
-			Serial.print(bytesAvailable);
-			Serial.print("\n");
-			return;
-		}
-		int command = RawHID.read();
-		uint8_t buffer[15];
-		RawHID.readBytes(buffer, sizeof(buffer));
-		handleCommand(command, buffer);
+		Command command;
+		CorsairLightingProtocol.getCommand(command);
+		CorsairLightingProtocol.handleCommand(command);
 	}
 }
-
