@@ -39,20 +39,20 @@ void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command)
 {
 	switch (command.command)
 	{
-	case 0x01://ReadStatus
+	case READ_STATUS:
 		CorsairLightingProtocol.response_P((uint8_t*) status, sizeof(status), 1);
 		break;
-	case 0x02://ReadFirmwareVersion
+	case READ_FIRMWARE_VERSION:
 		CorsairLightingProtocol.response_P(firmware_version, sizeof(firmware_version), 1);
 		break;
-	case 0x03://ReadDeviceId
+	case READ_DEVICE_ID:
 		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId), 1);
 		break;
-	case 0x04://WriteDeviceId
+	case WRITE_DEVICE_ID:
 		memcpy(DeviceId, command.data, 4);
 		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId), 1);
 		break;
-	case 0x06://ReadBootloaderVersion
+	case READ_BOOTLOADER_VERSION:
 		CorsairLightingProtocol.response_P(bootloader_version, sizeof(bootloader_version), 1);
 		break;
 	}
@@ -64,7 +64,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 #define ledChannel channels[data[0]]
 		switch (command.command)
 		{
-		case 0x30://ReadLedStripMask
+		case READ_LED_STRIP_MASK:
 		{
 			uint8_t ledMask[GROUPS_NUM];
 			for (unsigned int i = 0; i < GROUPS_NUM; i++) {
@@ -79,22 +79,22 @@ void LEDController_::handleLEDControl(const Command& command) {
 			return;
 			break;
 		}
-		case 0x31://WriteLedRgbValue
+		case WRITE_LED_RGB_VALUE:
 #ifdef DEBUG
 			Serial.println(F("WriteLedRgbValue"));
 #endif
 			break;
-		case 0x33://commit
+		case WRITE_LED_TRIGGER:
 #ifdef DEBUG
-			Serial.println(F("commit"));
+			Serial.println(F("WRITE_LED_TRIGGER"));
 #endif
 			break;
-		case 0x34://WriteLedClear
+		case WRITE_LED_CLEAR:
 #ifdef DEBUG
 			Serial.println(F("WriteLedClear"));
 #endif
 			break;
-		case 0x35://WriteLedGroupSet
+		case WRITE_LED_GROUP_SET:
 		{
 #ifdef DEBUG
 			Serial.println(F("WriteLedGroupSet"));
@@ -123,12 +123,12 @@ void LEDController_::handleLEDControl(const Command& command) {
 			group.temp3 = combine(data[21], data[22]);
 			break;
 		}
-		case 0x36://WriteLedExternalTemp
+		case WRITE_LED_EXTERNAL_TEMP:
 		{
 			ledChannel.temp = combine(data[2], data[3]);
 			break;
 		}
-		case 0x37://WriteLedGroupsClear
+		case WRITE_LED_GROUPS_CLEAR:
 		{
 #ifdef DEBUG
 			Serial.println(F("WriteLedGroupsClear"));
@@ -136,7 +136,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 			ledChannel.groupsSet = 0;
 			break;
 		}
-		case 0x38://WriteLedMode
+		case WRITE_LED_MODE:
 		{
 #ifdef DEBUG
 			Serial.print(F("mode: "));
@@ -146,7 +146,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 			ledChannel.ledMode = data[1];
 			break;
 		}
-		case 0x39://WriteLedBrightness
+		case WRITE_LED_BRIGHTNESS:
 		{
 			/*Byte 2 is the brightness where
 				0x00 = > 0 %
@@ -157,11 +157,11 @@ void LEDController_::handleLEDControl(const Command& command) {
 			ledChannel.brightness = data[1];
 			break;
 		}
-		case 0x3A://WriteLedCount 
+		case WRITE_LED_COUNT:
 		{
 			ledChannel.ledCount = data[1];
 		}
-		case 0x3B://WriteLedPortType
+		case WRITE_LED_PORT_TYPE:
 		{
 #ifdef DEBUG
 			Serial.print(F("ledPortType: "));
