@@ -15,6 +15,7 @@
 */
 #include "CorsairLightingProtocol.h"
 #include "CorsairLightingFirmware.h"
+#include "LEDController.h"
 #include "HID-Project.h"
 
 CorsairLightingProtocol_ CorsairLightingProtocol;
