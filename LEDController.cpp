@@ -45,7 +45,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 					ledMask[i] = 0x00;
 				}
 			}
-			CorsairLightingProtocol.response(ledMask, sizeof(ledMask), 1);
+			CorsairLightingProtocol.send(ledMask, sizeof(ledMask));
 			return;
 			break;
 		}
@@ -150,5 +150,5 @@ void LEDController_::handleLEDControl(const Command& command) {
 			break;
 		}
 	}
-	CorsairLightingProtocol.response(0x00);
+	CorsairLightingProtocol.send(nullptr, 0);
 }

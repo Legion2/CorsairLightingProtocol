@@ -54,12 +54,7 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 void CorsairLightingProtocol_::handleCommand(const Command& command)
 {
 	if (command.command >= 0x10 && command.command < 0x30) {
-		response(0x01);
-#ifdef DEBUG
-		Serial.print(F("ignore: "));
-		Serial.print(command.command, HEX);
-		Serial.print("\n");
-#endif // DEBUG
+		sendError();
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
 		LEDController().handleLEDControl(command);
@@ -69,27 +64,30 @@ void CorsairLightingProtocol_::handleCommand(const Command& command)
 	}
 }
 
-void CorsairLightingProtocol_::response(const uint8_t* data, size_t size, const uint8_t offset) {
+void CorsairLightingProtocol_::send(const uint8_t* data, size_t size) {
 	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
-	if (size + offset > sizeof(response)) {
+	if (size + 1 > sizeof(response)) {
 		return;
 	}
-	memcpy(response + offset, data, size);
+	memcpy(response + 1, data, size);
 	RawHID.write(response, sizeof(response));
 }
 
-void CorsairLightingProtocol_::response(const uint8_t data) {
-	response(&data, 1, 0);
-}
-
-void CorsairLightingProtocol_::response_P(const uint8_t* data, size_t size, const uint8_t offset) {
+void CorsairLightingProtocol_::sendError() {
 	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
-	if (size + offset > sizeof(response)) {
+	response[0] = PROTOCOL_RESPONSE_ERROR;
+	RawHID.write(response, sizeof(response));
+}
+
+void CorsairLightingProtocol_::send_P(const uint8_t* data, size_t size) {
+	uint8_t response[RESPONSE_SIZE];
+	memset(response, 0x00, sizeof(response));
+	if (size + 1 > sizeof(response)) {
 		return;
 	}
-	memcpy_P(response + offset, data, size);
+	memcpy_P(response + 1, data, size);
 	RawHID.write(response, sizeof(response));
 }
 

@@ -62,6 +62,9 @@
 #define WRITE_LED_COUNT 0x3A
 #define WRITE_LED_PORT_TYPE 0x3B
 
+#define PROTOCOL_RESPONSE_OK 0x01
+#define PROTOCOL_RESPONSE_ERROR 0x01
+
 struct Command {
 	union {
 		struct {
@@ -82,9 +85,9 @@ public:
 	bool available();
 	void getCommand(Command& command);
 	void handleCommand(const Command& command);
-	void response(const uint8_t * data, size_t size, const uint8_t offset);
-	void response(const uint8_t data);
-	void response_P(const uint8_t * data, size_t size, const uint8_t offset);
+	void send(const uint8_t * data, size_t size);
+	void sendError();
+	void send_P(const uint8_t * data, size_t size);
 };
 
 extern CorsairLightingProtocol_ CorsairLightingProtocol;

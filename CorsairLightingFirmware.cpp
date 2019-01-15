@@ -27,20 +27,20 @@ void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command)
 	switch (command.command)
 	{
 	case READ_STATUS:
-		CorsairLightingProtocol.response_P((uint8_t*)status, sizeof(status), 1);
+		CorsairLightingProtocol.send_P((uint8_t*)status, sizeof(status));
 		break;
 	case READ_FIRMWARE_VERSION:
-		CorsairLightingProtocol.response_P(firmware_version, sizeof(firmware_version), 1);
+		CorsairLightingProtocol.send_P(firmware_version, sizeof(firmware_version));
 		break;
 	case READ_DEVICE_ID:
-		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId), 1);
+		CorsairLightingProtocol.send(DeviceId, sizeof(DeviceId));
 		break;
 	case WRITE_DEVICE_ID:
 		memcpy(DeviceId, command.data, 4);
-		CorsairLightingProtocol.response(DeviceId, sizeof(DeviceId), 1);
+		CorsairLightingProtocol.send(DeviceId, sizeof(DeviceId));
 		break;
 	case READ_BOOTLOADER_VERSION:
-		CorsairLightingProtocol.response_P(bootloader_version, sizeof(bootloader_version), 1);
+		CorsairLightingProtocol.send_P(bootloader_version, sizeof(bootloader_version));
 		break;
 	}
 }
