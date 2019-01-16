@@ -33,7 +33,7 @@
 #define PROTOCOL_STATUS_OK 0x00
 #define PROTOCOL_STATUS_ERROR 0xFF
 
-const uint8_t firmware_version[] PROGMEM = { 0x00, 0x02, 0x36 };
+const uint8_t firmware_version[] PROGMEM = { 0x00, 0x07, 0x00 };
 const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
 const uint8_t status[] PROGMEM = { PROTOCOL_STATUS_OK };
 

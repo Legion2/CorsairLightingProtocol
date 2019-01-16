@@ -1,0 +1,11 @@
+# CorsairLightingProtocol build property overrides
+#
+
+##############################################################
+
+build.vid=0x1b1c
+build.pid=0x0c0c
+build.usb_product="Lighting Node Loader"
+build.usb_manufacturer="Corsair"
+build.usb_serial_number="1EA000060904BAAEFB66DF55421900F5"
+build.extra_flags={build.usb_flags} -DMAGIC_KEY_POS=(RAMEND-1) -DUSB_EP_SIZE=16 -DSERIAL_NUMBER={build.usb_serial_number} -DDEVICE_VERSION=0x002 -DRAWHID_TX_SIZE=0x10 -DHID_ENDPOINT_INTERVAL_RAWHID=0x08 -DDEBUG

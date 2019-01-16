@@ -14,30 +14,13 @@
    limitations under the License.
 */
 #include <CorsairLightingProtocol.h>
-#include <LEDController.h>
-
-CRGB leds_channel1[CHANNEL_LED_COUNT];
-CRGB leds_channel2[CHANNEL_LED_COUNT];
 
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
 #endif
-	FastLED.addLeds<NEOPIXEL, 2>(leds_channel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, 3>(leds_channel2, CHANNEL_LED_COUNT);
-	LEDController().addLeds(0, leds_channel1);
-	LEDController().addLeds(1, leds_channel2);
 	CorsairLightingProtocol.begin();
 }
 
 void loop() {
-	if (CorsairLightingProtocol.available())
-	{
-		Command command;
-		CorsairLightingProtocol.getCommand(command);
-		CorsairLightingProtocol.handleCommand(command);
-	}
-
-	LEDController().updateLEDs();
-	FastLED.show();
 }

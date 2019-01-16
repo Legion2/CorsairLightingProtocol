@@ -14,7 +14,6 @@
    limitations under the License.
 */
 #include "CorsairLightingFirmware.h"
-#include "HID-Project.h"
 
 CorsairLightingFirmware_& CorsairLightingFirmware()
 {

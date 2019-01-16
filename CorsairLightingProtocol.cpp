@@ -16,7 +16,7 @@
 #include "CorsairLightingProtocol.h"
 #include "CorsairLightingFirmware.h"
 #include "LEDController.h"
-#include "HID-Project.h"
+#include "RawHID.h"
 
 CorsairLightingProtocol_ CorsairLightingProtocol;
 
@@ -48,6 +48,10 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 			return;
 		}
 		RawHID.readBytes(command.raw, sizeof(command.raw));
+#ifdef DEBUG
+		Serial.print(F("Command: "));
+		Serial.println(command.command, HEX);
+#endif // DEBUG
 	}
 }
 

@@ -28,6 +28,10 @@ LEDController_& LEDController()
 	return obj;
 }
 
+void LEDController_::addLeds(uint8_t channel, CRGB const * led_buffer) {
+	channels[channel].led_buffer = led_buffer;
+}
+
 void LEDController_::handleLEDControl(const Command& command) {
 	auto& data = command.data;
 	if (data[0] < sizeof(channels)) {
@@ -151,4 +155,8 @@ void LEDController_::handleLEDControl(const Command& command) {
 		}
 	}
 	CorsairLightingProtocol.send(nullptr, 0);
+}
+
+void LEDController_::updateLEDs()
+{
 }

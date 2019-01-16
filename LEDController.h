@@ -22,11 +22,12 @@
 #include "WProgram.h"
 #endif
 
-#include "CorsairLightingProtocol.h"
 #include <FastLED.h>
+#include <CorsairLightingProtocol.h>
 
-#define CHANNELS_NUM 2
+#define CHANNEL_NUM 2
 #define GROUPS_NUM 6
+#define CHANNEL_LED_COUNT 256
 
 //LED brightness
 #define CHANNEL_LED_BRIGHTNESS_MIN 0
@@ -91,13 +92,17 @@ struct Channel {
 
 	Group groups[GROUPS_NUM];
 	uint8_t groupsSet = 0;
+
+	CRGB const* led_buffer;
 };
 
 class LEDController_ {
 public:
+	void addLeds(uint8_t channel, CRGB const* led_buffer);
 	void handleLEDControl(const Command & command);
+	void updateLEDs();
 protected:
-	Channel channels[CHANNELS_NUM];
+	Channel channels[CHANNEL_NUM];
 };
 
 LEDController_& LEDController();
