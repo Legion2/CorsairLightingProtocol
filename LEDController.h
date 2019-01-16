@@ -27,7 +27,7 @@
 
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
-#define CHANNEL_LED_COUNT 256
+#define CHANNEL_LED_COUNT 60
 
 //LED brightness
 #define CHANNEL_LED_BRIGHTNESS_MIN 0
@@ -36,6 +36,7 @@
 //Channel modes
 #define CHANNEL_MODE_DISABLED 0x00
 #define CHANNEL_MODE_ON 0x01
+#define CHANNEL_MODE_SOFTWARE_PLAYBACK 0x02
 
 //Port types
 #define PORT_TYPE_DISABLED 0x00
@@ -94,14 +95,18 @@ struct Channel {
 	uint8_t groupsSet = 0;
 
 	CRGB const* led_buffer;
+
+	uint8_t values_buffer[3][CHANNEL_LED_COUNT];
+	bool trigger_update = false;
 };
 
 class LEDController_ {
 public:
 	void addLeds(uint8_t channel, CRGB const* led_buffer);
 	void handleLEDControl(const Command & command);
-	void updateLEDs();
+	bool updateLEDs();
 protected:
+	void addColors(CRGB * led_buffer, const CRGB& color, const uint8_t* values, uint8_t length);
 	Channel channels[CHANNEL_NUM];
 };
 

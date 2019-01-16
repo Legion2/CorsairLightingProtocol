@@ -48,10 +48,6 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 			return;
 		}
 		RawHID.readBytes(command.raw, sizeof(command.raw));
-#ifdef DEBUG
-		Serial.print(F("Command: "));
-		Serial.println(command.command, HEX);
-#endif // DEBUG
 	}
 }
 

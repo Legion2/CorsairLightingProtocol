@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <LEDController.h>
+#include <FastLED.h>
 
 CRGB leds_channel1[CHANNEL_LED_COUNT];
 CRGB leds_channel2[CHANNEL_LED_COUNT];
@@ -38,6 +39,7 @@ void loop() {
 		CorsairLightingProtocol.handleCommand(command);
 	}
 
-	LEDController().updateLEDs();
-	FastLED.show();
+	if (LEDController().updateLEDs()) {
+		FastLED.show();
+	}
 }
