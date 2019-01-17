@@ -96,24 +96,32 @@ struct Channel {
 
 	Group groups[GROUPS_NUM];
 	uint8_t groupsSet = 0;
+};
 
+struct LEDBufferData {
 	CRGB const* led_buffer;
 
 	uint8_t values_buffer[3][CHANNEL_LED_COUNT];
-	bool trigger_update = false;
 };
 
 class LEDController_ {
 public:
+	LEDController_();
 	void addLeds(uint8_t channel, CRGB const* led_buffer);
 	void handleLEDControl(const Command & command);
 	bool updateLEDs();
 protected:
 	void addColors(CRGB * led_buffer, const CRGB& color, const uint8_t* values, uint8_t length);
 	Channel channels[CHANNEL_NUM];
+	bool trigger_update = false;
+
+	LEDBufferData volatileData[CHANNEL_NUM];
+
+	bool load();
+	bool save();
 };
 
-LEDController_& LEDController();
+extern LEDController_ LEDController;
 
 #endif
 

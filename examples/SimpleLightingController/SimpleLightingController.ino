@@ -17,17 +17,15 @@
 #include <LEDController.h>
 #include <FastLED.h>
 
-CRGB leds_channel1[CHANNEL_LED_COUNT];
-CRGB leds_channel2[CHANNEL_LED_COUNT];
+CRGB leds[CHANNEL_LED_COUNT * 2];
 
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
 #endif
-	FastLED.addLeds<NEOPIXEL, 2>(leds_channel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, 3>(leds_channel2, CHANNEL_LED_COUNT);
-	LEDController().addLeds(0, leds_channel1);
-	LEDController().addLeds(1, leds_channel2);
+	FastLED.addLeds<NEOPIXEL, 2>(leds, CHANNEL_LED_COUNT * 2);
+	LEDController.addLeds(0, leds);
+	LEDController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
 	CorsairLightingProtocol.begin();
 }
 
@@ -39,7 +37,7 @@ void loop() {
 		CorsairLightingProtocol.handleCommand(command);
 	}
 
-	if (LEDController().updateLEDs()) {
+	if (LEDController.updateLEDs()) {
 		FastLED.show();
 	}
 }

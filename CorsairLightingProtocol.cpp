@@ -57,7 +57,7 @@ void CorsairLightingProtocol_::handleCommand(const Command& command)
 		sendError();
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
-		LEDController().handleLEDControl(command);
+		LEDController.handleLEDControl(command);
 	}
 	else {
 		CorsairLightingFirmware().handleFirmwareCommand(command);

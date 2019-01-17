@@ -14,6 +14,9 @@
    limitations under the License.
 */
 #include "LEDController.h"
+#ifdef USE_EEPROM
+#include <EEPROM.h>
+#endif
 
 uint16_t combine(const byte& byte1, const byte& byte2) {
 	uint16_t t = byte1;
@@ -22,20 +25,22 @@ uint16_t combine(const byte& byte1, const byte& byte2) {
 	return t;
 }
 
-LEDController_& LEDController()
-{
-	static LEDController_ obj;
-	return obj;
+LEDController_::LEDController_() {
+	load();
 }
 
 void LEDController_::addLeds(uint8_t channel, CRGB const * led_buffer) {
-	channels[channel].led_buffer = led_buffer;
+	volatileData[channel].led_buffer = led_buffer;
 }
 
 void LEDController_::handleLEDControl(const Command& command) {
 	auto& data = command.data;
-	if (data[0] < CHANNEL_NUM) {
-		auto& ledChannel = channels[data[0]];
+	if (command.command == WRITE_LED_TRIGGER) {
+		trigger_update = true;
+		save();
+	}
+	else if (data[0] < CHANNEL_NUM) {
+		Channel& ledChannel = channels[data[0]];
 		switch (command.command)
 		{
 		case READ_LED_STRIP_MASK:
@@ -54,10 +59,12 @@ void LEDController_::handleLEDControl(const Command& command) {
 			break;
 		}
 		case WRITE_LED_RGB_VALUE:
+		{
 #ifdef DEBUG
 			Serial.println(F("WriteLedRgbValue"));
 #endif
 			break;
+		}
 		case WRITE_LED_COLOR_VALUES:
 		{
 			const uint8_t offset = data[1];
@@ -69,25 +76,17 @@ void LEDController_::handleLEDControl(const Command& command) {
 			if (offset + length > CHANNEL_LED_COUNT) {
 				return;
 			}
-
-			memcpy(ledChannel.values_buffer[color] + offset, data + 4, length);
-			break;
-		}
-		case WRITE_LED_TRIGGER:
-		{
-#ifdef DEBUG
-			Serial.println(F("WRITE_LED_TRIGGER"));
-#endif
-			ledChannel.trigger_update = true;
+			memcpy(volatileData[data[0]].values_buffer[color] + offset, data + 4, length);
 			break;
 		}
 		case WRITE_LED_CLEAR:
+		{
 #ifdef DEBUG
-			Serial.println(F("WriteLedClear"));
-			Serial.print(data[0], HEX);
+			Serial.print(F("WriteLedClear"));
+			Serial.println(data[0], HEX);
 #endif
-			fill_solid(ledChannel.led_buffer, CHANNEL_LED_COUNT, CRGB::Black);
 			break;
+		}
 		case WRITE_LED_GROUP_SET:
 		{
 #ifdef DEBUG
@@ -116,7 +115,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 			group.temp2 = combine(data[19], data[20]);
 			group.temp3 = combine(data[21], data[22]);
 			break;
-		}
+			}
 		case WRITE_LED_EXTERNAL_TEMP:
 		{
 			ledChannel.temp = combine(data[2], data[3]);
@@ -161,6 +160,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 			break;
 		}
 		default:
+		{
 #ifdef DEBUG
 			Serial.print(F("unkown command: "));
 			Serial.print(command.command, HEX);
@@ -168,9 +168,10 @@ void LEDController_::handleLEDControl(const Command& command) {
 #endif
 			break;
 		}
-	}
+		}
+		}
 	CorsairLightingProtocol.send(nullptr, 0);
-}
+		}
 
 void LEDController_::addColors(CRGB * led_buffer, const CRGB& color, const uint8_t* values, uint8_t length) {
 	for (int i = 0; i < length; i++) {
@@ -187,22 +188,35 @@ bool LEDController_::updateLEDs()
 		{
 		case CHANNEL_MODE_DISABLED:
 		{
-			updated = true;
 			break;
 		}
 		case CHANNEL_MODE_ON:
 		{
+			for (int i = 0; i < channel.groupsSet; i++) {
+				const Group& group = channel.groups[i];
+				switch (group.mode)
+				{
+				default: {
+#ifdef DEBUG
+					Serial.print(F("unkown group mode: "));
+					Serial.print(channel.ledMode, HEX);
+					Serial.println();
+#endif
+					break;
+				}
+				}
+			}
 			updated = true;
 			break;
 		}
 		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
 		{
-			if (channel.trigger_update || true) {//WTF?!?
-				channel.trigger_update = false;
-				fill_solid(channel.led_buffer, CHANNEL_LED_COUNT, CRGB::Black);
-				addColors(channel.led_buffer, CRGB::Red, channel.values_buffer[0], CHANNEL_LED_COUNT);
-				addColors(channel.led_buffer, CRGB::Green, channel.values_buffer[1], CHANNEL_LED_COUNT);
-				addColors(channel.led_buffer, CRGB::Blue, channel.values_buffer[2], CHANNEL_LED_COUNT);
+			if (trigger_update) {
+				auto& data = volatileData[channelId];
+				fill_solid(data.led_buffer, CHANNEL_LED_COUNT, CRGB::Black);
+				addColors(data.led_buffer, CRGB::Red, data.values_buffer[0], CHANNEL_LED_COUNT);
+				addColors(data.led_buffer, CRGB::Green, data.values_buffer[1], CHANNEL_LED_COUNT);
+				addColors(data.led_buffer, CRGB::Blue, data.values_buffer[2], CHANNEL_LED_COUNT);
 				updated = true;
 			}
 			break;
@@ -212,11 +226,33 @@ bool LEDController_::updateLEDs()
 #ifdef DEBUG
 			Serial.print(F("unkown led mode: "));
 			Serial.print(channel.ledMode, HEX);
-			Serial.print("\n");
+			Serial.println();
 			break;
 #endif
 		}
 		}
 	}
+	trigger_update = false;
 	return updated;
 }
+
+bool LEDController_::load() {
+#ifdef USE_EEPROM
+#ifdef DEBUG
+	Serial.println(F("Save to EEPROM."));
+#endif
+	EEPROM.put(0, channels);
+	return true;
+#endif
+	return false;
+}
+
+bool LEDController_::save() {
+#ifdef USE_EEPROM
+	EEPROM.get(0, channels);
+	return true;
+#endif
+	return false;
+}
+
+LEDController_ LEDController;
