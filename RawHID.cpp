@@ -58,6 +58,10 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
     0xC0                         /* end collection */ 
 };
 
+#ifndef SERIAL_NUMBER
+#define SERIAL_NUMBER ""
+#endif
+
 const u8 STRING_SERIAL_NUMBER[] PROGMEM = SERIAL_NUMBER;
 
 RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), featureReport(NULL), featureLength(0)

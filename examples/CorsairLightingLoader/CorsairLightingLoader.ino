@@ -13,14 +13,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingProtocol.h>
+#include <RawHID.h>
+
+uint8_t rawhidData[64];
 
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
 #endif
-	CorsairLightingProtocol.begin();
+	RawHID.begin(rawhidData, sizeof(rawhidData));
 }
 
 void loop() {
+	int count = RawHID.available();
+	if (count > 0) {
+
+	}
 }

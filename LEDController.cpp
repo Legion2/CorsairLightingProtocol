@@ -34,7 +34,7 @@ void LEDController_::addLeds(uint8_t channel, CRGB const * led_buffer) {
 
 void LEDController_::handleLEDControl(const Command& command) {
 	auto& data = command.data;
-	if (data[0] < sizeof(channels)) {
+	if (data[0] < CHANNEL_NUM) {
 		auto& ledChannel = channels[data[0]];
 		switch (command.command)
 		{
@@ -63,10 +63,10 @@ void LEDController_::handleLEDControl(const Command& command) {
 			const uint8_t offset = data[1];
 			const uint8_t length = data[2];
 			const uint8_t color = data[3];
-			if (color >= sizeof(ledChannel.values_buffer)) {
+			if (color >= 3) {
 				return;
 			}
-			if (offset + length >= sizeof(ledChannel.values_buffer[color])) {
+			if (offset + length >= CHANNEL_LED_COUNT) {
 				return;
 			}
 
@@ -132,11 +132,6 @@ void LEDController_::handleLEDControl(const Command& command) {
 		}
 		case WRITE_LED_MODE:
 		{
-#ifdef DEBUG
-			Serial.print(F("mode: "));
-			Serial.print(data[1], HEX);
-			Serial.print("\n");
-#endif
 			ledChannel.ledMode = data[1];
 			break;
 		}
@@ -185,32 +180,32 @@ void LEDController_::addColors(CRGB * led_buffer, const CRGB& color, const uint8
 
 bool LEDController_::updateLEDs()
 {
-	for (int channelId = 0; channelId < sizeof(channels); channelId++) {
+	bool updated = false;
+	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
 		Channel& channel = channels[channelId];
 		switch (channel.ledMode)
 		{
 		case CHANNEL_MODE_DISABLED:
 		{
-			return false;
+			updated = true;
+			break;
 		}
 		case CHANNEL_MODE_ON:
 		{
-			return true;
+			updated = true;
+			break;
 		}
 		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
 		{
 			if (channel.trigger_update || true) {//WTF?!?
 				channel.trigger_update = false;
 				fill_solid(channel.led_buffer, CHANNEL_LED_COUNT, CRGB::Black);
-				addColors(channel.led_buffer, CRGB::Red, channel.values_buffer[0], sizeof(channel.values_buffer[0]));
-				addColors(channel.led_buffer, CRGB::Green, channel.values_buffer[1], sizeof(channel.values_buffer[1]));
-				addColors(channel.led_buffer, CRGB::Blue, channel.values_buffer[2], sizeof(channel.values_buffer[2]));
-
-				return true;
+				addColors(channel.led_buffer, CRGB::Red, channel.values_buffer[0], CHANNEL_LED_COUNT);
+				addColors(channel.led_buffer, CRGB::Green, channel.values_buffer[1], CHANNEL_LED_COUNT);
+				addColors(channel.led_buffer, CRGB::Blue, channel.values_buffer[2], CHANNEL_LED_COUNT);
+				updated = true;
 			}
-			else {
-				return false;
-			}
+			break;
 		}
 		default:
 		{
@@ -218,9 +213,10 @@ bool LEDController_::updateLEDs()
 			Serial.print(F("unkown led mode: "));
 			Serial.print(channel.ledMode, HEX);
 			Serial.print("\n");
+			break;
 #endif
-			return false;
 		}
 		}
 	}
+	return updated;
 }
