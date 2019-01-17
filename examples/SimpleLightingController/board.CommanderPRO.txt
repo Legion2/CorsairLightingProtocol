@@ -7,5 +7,3 @@ build.vid=0x1b1c
 build.pid=0x0c10
 build.usb_product="Commander PRO"
 build.usb_manufacturer="Corsair"
-build.usb_serial_number="0905031174181010"
-build.extra_flags={build.usb_flags} -DMAGIC_KEY_POS=(RAMEND-1) -DUSB_EP_SIZE=16 -DSERIAL_NUMBER={build.usb_serial_number} -DDEVICE_VERSION=0x001 -DRAWHID_TX_SIZE=0x10 -DHID_ENDPOINT_INTERVAL_RAWHID=0x08 -DDEBUG
