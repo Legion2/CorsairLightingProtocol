@@ -27,7 +27,10 @@
 
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
-#define CHANNEL_LED_COUNT 60
+
+// iCUE changes to a very slow mode when there are more than 50 leds per channel
+#define CHANNEL_LED_COUNT 50
+//#define CHANNEL_LED_COUNT 60
 
 //LED brightness
 #define CHANNEL_LED_BRIGHTNESS_MIN 0

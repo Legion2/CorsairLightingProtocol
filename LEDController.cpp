@@ -66,7 +66,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 			if (color >= 3) {
 				return;
 			}
-			if (offset + length >= CHANNEL_LED_COUNT) {
+			if (offset + length > CHANNEL_LED_COUNT) {
 				return;
 			}
 

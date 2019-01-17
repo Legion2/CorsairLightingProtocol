@@ -27,6 +27,11 @@ void setup() {
 void loop() {
 	int count = RawHID.available();
 	if (count > 0) {
+		while (count--) {
+			Serial.print(RawHID.read(), HEX);
+			Serial.print(F(" "));
+		}
 
+		Serial.println();
 	}
 }
