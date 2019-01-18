@@ -1,6 +1,7 @@
 Add Support of the Lighting Node PRO Protocol to Arduino.
 Controll LEDs connected to the Arduino with the Corsair Link or the iCUE Software.
 
+![Overview](Overview.png)
 
 # Requirements
 This library uses the USB HID interface of the Arduino Micro or Leonardo.
