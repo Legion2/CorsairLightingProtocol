@@ -196,10 +196,16 @@ bool LEDController_::updateLEDs()
 				const Group& group = channel.groups[i];
 				switch (group.mode)
 				{
-				default: {
+				case GROUP_MODE_Static:
+				{
+					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1);
+					break;
+				}
+				default:
+				{
 #ifdef DEBUG
 					Serial.print(F("unkown group mode: "));
-					Serial.print(channel.ledMode, HEX);
+					Serial.print(group.mode, HEX);
 					Serial.println();
 #endif
 					break;
