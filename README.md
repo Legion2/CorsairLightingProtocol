@@ -13,11 +13,6 @@ Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio
 # DISCLAIMERS
 This is a DO IT YOURSELF project, use at your own risk.
 
-THIS IS NOT PLUG AND PLAY.
-You MAY need to use a custom Bootloader for the Arduino and/or custom Arduino core.
-
-Changing the VID and PID of your Arduino forces you to use a custom boards configuration, otherwise the Arduino is lost(can not be detected by the IDE).
-
 # Credits
 - [HoodLoader2](https://github.com/NicoHood/HoodLoader2)
 - [Arduino HID Project](https://github.com/NicoHood/HID)
