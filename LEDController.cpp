@@ -296,6 +296,19 @@ bool LEDController_::updateLEDs()
 						}
 						fadeToBlackBy(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, 100);
 						volatileData[channelId].led_buffer[group.ledIndex + step] = group.color1 % channel.brightness;
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Marquee:
+				{
+					int duration = applySpeed(10000, group.speed);
+					int count = animation_step_count(duration, 20);
+					if (count > 0) {
+						for (int i = 0; i < group.ledCount; i++) {
+							volatileData[channelId].led_buffer[group.ledIndex + i] = random8() > 127 ? group.color1 % channel.brightness : CRGB::Black;
+						}
+						updated = true;
 					}
 					break;
 				}
