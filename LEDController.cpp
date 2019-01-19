@@ -273,6 +273,32 @@ bool LEDController_::updateLEDs()
 					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
 					break;
 				}
+				case GROUP_MODE_Visor:
+				{
+					int duration = applySpeed(150 * group.ledCount, group.speed);
+					int steps = group.ledCount * 2;
+					int count = animation_step_count(duration, steps);
+					if (count > 0) {
+						int step = animation_step(duration, steps);
+						if (step >= group.ledCount ? count > step - group.ledCount : count > step) {
+							if (group.extra & GROUP_EXTRA_RANDOM) {
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra & GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+
+						if (step >= group.ledCount) {
+							step = steps - step - 1;
+						}
+						fadeToBlackBy(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, 100);
+						volatileData[channelId].led_buffer[group.ledIndex + step] = group.color1 % channel.brightness;
+					}
+					break;
+				}
 				default:
 				{
 #ifdef DEBUG
