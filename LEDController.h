@@ -69,6 +69,10 @@
 #define GROUP_DIRECTION_BACKWARD 0x00
 #define GROUP_DIRECTION_FORWARD  0x01
 
+//LED group extra
+#define GROUP_EXTRA_ALTERNATING 0x00
+#define GROUP_EXTRA_RANDOM  0x01
+
 struct Group {
 	byte ledIndex = 0;//start index of the leds of this group
 	byte ledCount = 0;//number of leds in this group
@@ -114,8 +118,16 @@ protected:
 	void addColors(CRGB * led_buffer, const CRGB& color, const uint8_t* values, uint8_t length);
 	Channel channels[CHANNEL_NUM];
 	bool trigger_update = false;
+	bool trigger_save = false;
 
 	LEDBufferData volatileData[CHANNEL_NUM];
+
+	long lastUpdate = 0;
+	long currentUpdate = 0;
+
+	int applySpeed(int duration, byte speed);
+	int animation_step(int duration, int steps);
+	int animation_step_count(int duration, int steps);
 
 	bool load();
 	bool save();

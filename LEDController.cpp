@@ -37,7 +37,10 @@ void LEDController_::handleLEDControl(const Command& command) {
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
 		trigger_update = true;
-		save();
+		if (trigger_save) {
+			trigger_save = false;
+			save();
+		}
 	}
 	else if (data[0] < CHANNEL_NUM) {
 		Channel& ledChannel = channels[data[0]];
@@ -114,8 +117,9 @@ void LEDController_::handleLEDControl(const Command& command) {
 			group.temp1 = combine(data[17], data[18]);
 			group.temp2 = combine(data[19], data[20]);
 			group.temp3 = combine(data[21], data[22]);
+			trigger_save = true;
 			break;
-			}
+		}
 		case WRITE_LED_EXTERNAL_TEMP:
 		{
 			ledChannel.temp = combine(data[2], data[3]);
@@ -126,37 +130,44 @@ void LEDController_::handleLEDControl(const Command& command) {
 #ifdef DEBUG
 			Serial.println(F("WriteLedGroupsClear"));
 #endif
-			ledChannel.groupsSet = 0;
+			if (ledChannel.groupsSet != 0) {
+				ledChannel.groupsSet = 0;
+				trigger_save = true;
+			}
 			break;
 		}
 		case WRITE_LED_MODE:
 		{
-			ledChannel.ledMode = data[1];
+			if (ledChannel.ledMode != data[1]) {
+				ledChannel.ledMode = data[1];
+				trigger_save = true;
+			}
 			break;
 		}
 		case WRITE_LED_BRIGHTNESS:
 		{
-			/*Byte 2 is the brightness where
-				0x00 = > 0 %
-				0x21 = > 33 %
-				0x42 = > 66 %
-				0x64 = > 100 %
-				*/
-			ledChannel.brightness = data[1];
+			uint8_t brightness = data[1] * 2.5546875f;
+			if (ledChannel.brightness != brightness) {
+				ledChannel.brightness = brightness;
+				trigger_save = true;
+			}
 			break;
 		}
 		case WRITE_LED_COUNT:
 		{
+#ifdef DEBUG
+			Serial.print(F("WRITE_LED_COUNT: "));
+			Serial.print(data[1], HEX);
+			Serial.println();
+#endif
 			ledChannel.ledCount = data[1];
 		}
 		case WRITE_LED_PORT_TYPE:
 		{
-#ifdef DEBUG
-			Serial.print(F("ledPortType: "));
-			Serial.print(data[1], HEX);
-			Serial.print("\n");
-#endif
-			ledChannel.ledPortType = data[1];
+			if (ledChannel.ledPortType != data[1]) {
+				ledChannel.ledPortType = data[1];
+				trigger_save = true;
+			}
 			break;
 		}
 		default:
@@ -169,9 +180,9 @@ void LEDController_::handleLEDControl(const Command& command) {
 			break;
 		}
 		}
-		}
+	}
 	CorsairLightingProtocol.send(nullptr, 0);
-		}
+}
 
 void LEDController_::addColors(CRGB * led_buffer, const CRGB& color, const uint8_t* values, uint8_t length) {
 	for (int i = 0; i < length; i++) {
@@ -179,9 +190,44 @@ void LEDController_::addColors(CRGB * led_buffer, const CRGB& color, const uint8
 	}
 }
 
+int LEDController_::applySpeed(int duration, byte speed) {
+	switch (speed)
+	{
+	case GROUP_SPEED_HIGH:
+		return duration / 2;
+	case GROUP_SPEED_MEDIUM:
+		return duration;
+	case GROUP_SPEED_LOW:
+		return duration * 2;
+	}
+}
+
+/*
+returns the current step of the animation
+*/
+int LEDController_::animation_step(int duration, int steps) {
+	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+	return currentStep;
+}
+/*
+returns the number of steps since the last update
+*/
+int LEDController_::animation_step_count(int duration, int steps) {
+	long lastAnimationNumber = lastUpdate / duration;
+	long currentAnimationNumber = currentUpdate / duration;
+	int lastStep = ((lastUpdate % duration) / ((float)duration)) * steps;
+	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+
+	return currentStep - lastStep + (currentAnimationNumber - lastAnimationNumber) * steps;
+}
+
 bool LEDController_::updateLEDs()
 {
+	lastUpdate = currentUpdate;
+	currentUpdate = millis();
+
 	bool updated = false;
+
 	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
 		Channel& channel = channels[channelId];
 		switch (channel.ledMode)
@@ -196,9 +242,35 @@ bool LEDController_::updateLEDs()
 				const Group& group = channel.groups[i];
 				switch (group.mode)
 				{
+				case GROUP_MODE_Color_Pulse:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 512);
+					if (count > 0) {
+						int step = animation_step(duration, 512);
+						if (count > step) {
+							if (group.extra & GROUP_EXTRA_RANDOM) {
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra & GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						uint8_t scale = ease8InOutApprox((uint8_t)step);
+						if (step >= 256) {
+							scale = 255 - scale;
+						}
+
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % scale % channel.brightness);
+						updated = true;
+					}
+					break;
+				}
 				case GROUP_MODE_Static:
 				{
-					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1);
+					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
 					break;
 				}
 				default:
