@@ -273,6 +273,28 @@ bool LEDController_::updateLEDs()
 					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
 					break;
 				}
+				case GROUP_MODE_Temperature:
+				{
+					const uint16_t& currentTemperature = channel.temp;
+
+					CRGB color;
+					if (currentTemperature < group.temp1) {
+						color = group.color1;
+					}
+					else if (currentTemperature < group.temp2) {
+						color = group.color1.lerp16(group.color2, ((currentTemperature - group.temp1) / ((float) (group.temp2 - group.temp1))) * 65535);
+					}
+					else if (currentTemperature < group.temp3) {
+						color = group.color2.lerp16(group.color3, ((currentTemperature - group.temp2) / ((float) (group.temp3 - group.temp2))) * 65535);
+					}
+					else {
+						color = group.color3;
+					}
+
+					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, color % channel.brightness);
+					updated = true;
+					break;
+				}
 				case GROUP_MODE_Visor:
 				{
 					int duration = applySpeed(150 * group.ledCount, group.speed);
