@@ -242,6 +242,39 @@ bool LEDController_::updateLEDs()
 				const Group& group = channel.groups[i];
 				switch (group.mode)
 				{
+				case GROUP_MODE_Color_Shift:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 512);
+					if (count > 0) {
+						int step = animation_step(duration, 512);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = group.color2;
+								group.color2 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						uint8_t scale;
+						if (step < 128) {
+							scale = 0;
+						}
+						else if (step < 384) {
+							scale = ease8InOutApprox(step - 128);
+						}
+						else {
+							scale = 255;
+						}
+
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
+						updated = true;
+					}
+					break;
+				}
 				case GROUP_MODE_Color_Pulse:
 				{
 					int duration = applySpeed(3000, group.speed);
@@ -249,10 +282,10 @@ bool LEDController_::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 512);
 						if (count > step) {
-							if (group.extra & GROUP_EXTRA_RANDOM) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
 								group.color1 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra & GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -303,10 +336,10 @@ bool LEDController_::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, steps);
 						if (step >= group.ledCount ? count > step - group.ledCount : count > step) {
-							if (group.extra & GROUP_EXTRA_RANDOM) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
 								group.color1 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra & GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -330,6 +363,39 @@ bool LEDController_::updateLEDs()
 						for (int i = 0; i < group.ledCount; i++) {
 							volatileData[channelId].led_buffer[group.ledIndex + i] = random8() > 127 ? group.color1 % channel.brightness : CRGB::Black;
 						}
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Blink:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 2);
+					if (count > 0) {
+						int step = animation_step(duration, 2);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Rainbow:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 256);
+					if (count > 0) {
+						int step = animation_step(duration, 256);
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, CHSV(step, 255, 255) % channel.brightness);
 						updated = true;
 					}
 					break;
