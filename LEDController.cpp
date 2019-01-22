@@ -345,12 +345,14 @@ bool LEDController_::updateLEDs()
 								group.color2 = group.color3;
 							}
 						}
-
-						if (step >= group.ledCount) {
-							step = steps - step - 1;
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, CRGB::Black);
+						for (int i = 0; i < 4; i++) {
+							int led = (((step - i) % steps) + steps) % steps;
+							if (led >= group.ledCount) {
+								led = steps - led - 1;
+							}
+							volatileData[channelId].led_buffer[group.ledIndex + led] = group.color1 % channel.brightness;
 						}
-						fadeToBlackBy(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, 100);
-						volatileData[channelId].led_buffer[group.ledIndex + step] = group.color1 % channel.brightness;
 						updated = true;
 					}
 					break;
