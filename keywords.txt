@@ -1,0 +1,42 @@
+#######################################
+# Syntax Coloring Map For Corsair Lighting Protocol
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+CorsairLightingFirmware	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+available	KEYWORD2
+getCommand	KEYWORD2
+handleCommand	KEYWORD2
+handleLEDControl	KEYWORD2
+updateLEDs	KEYWORD2
+send	KEYWORD2
+sendError	KEYWORD2
+send_P	KEYWORD2
+
+#######################################
+# Instances (KEYWORD1)
+#######################################
+
+LEDController	KEYWORD1
+CorsairLightingProtocol	KEYWORD1
+
+#######################################
+# Structures (KEYWORD3)
+#######################################
+
+Command	KEYWORD3
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+CHANNEL_LED_COUNT	LITERAL1
