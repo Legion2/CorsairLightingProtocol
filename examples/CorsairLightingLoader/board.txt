@@ -1,9 +1,0 @@
-# CorsairLightingProtocol build property overrides
-#
-
-##############################################################
-
-build.vid=0x1b1c
-build.pid=0x0c0c
-build.usb_product="Lighting Node Loader"
-build.usb_manufacturer="Corsair"
