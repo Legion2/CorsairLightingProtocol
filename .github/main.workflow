@@ -14,8 +14,11 @@ workflow "Test" {
 }
 
 action "Install FastLED" {
-  uses = "actions/bin/sh@master"
-  args = ["mkdir -p libraries", "cd libraries; wget -O FastLED.zip https://github.com/FastLED/FastLED/archive/3.2.0.zip; unzip FastLED.zip; rm FastLED.zip"]
+  uses = "Legion2/download-release-action@master"
+  args = "FastLED/FastLED 3.2.0"
+  env = {
+    TARGET_PATH = "libraries"
+  }
 }
 
 action "Build examples" {
