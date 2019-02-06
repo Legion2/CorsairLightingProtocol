@@ -3,14 +3,36 @@ Controll LEDs connected to the Arduino with the Corsair Link or the iCUE Softwar
 
 ![Overview](Overview.png)
 
-# Requirements
-This library uses the USB HID interface of the Arduino Micro or Leonardo.
-The library is compatible with all boards using the MCU ATmega32U4.
+# Getting started
 
-Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio).
+## Requirements
+The library is compatible with all boards using the MCU ATmega32U4.
+This includes **Arduino Micro**, **Arduino Leonardo** and **Pro Micro**.
+It is **not** compatible with Arduino Uno, Arduino Mega and Arduino Nano.
+
+As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is required.
+The Arduino IDE is not supported because it does not provide a way to configure the build options without creating your own board configuration.
+Advanced users can create their own boards configuration with the correct [build settings](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) and then use this boards configuration with the Arduino IDE.
+
+## Install the library
+Use the [Library-Manager](https://www.visualmicro.com/page/User-Guide.aspx?doc=Library-Manager.html#) to install this library or download a [release](https://github.com/Legion2/CorsairLightingProtocol/releases).
+
+## Example
+Open the example "SimpleLightingController", you can find it in the Visual Micro Explorer.
+The example only requires one LED Stip connected to the Arduino.
+The library [FastLED](http://fastled.io/) is used to control the leds, for more information on [how to wiring the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the leds in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
+After you did the wiring or at least know which pin is the data pin, you can set this pin in the example sketch and upload it to the arduino.
+
+To verify the library works as expected open the Windows settings -> devices -> connected devices. Somewhere in the list of devices there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
+Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Node PRO".
+
+## Use the library
+If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the [board.txt](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) in the root directory of your sketch.
 
 ## How it works
-In the board.txt the unique VID and PID of a "Lighting Node PRO" are defined. After uploading a sketch with the library and these IDs, iCUE recognizes the Arduino as a Lighting Node PRO.
+This library uses the USB HID interface of the Arduino Micro or Leonardo.
+In the board.txt the unique VID and PID of a "Lighting Node PRO" are defined.
+After uploading a sketch with the library and these IDs, iCUE recognizes the Arduino as a Lighting Node PRO.
 In iCUE you can then select the "Lighting Node PRO" and set some lighting effects.
 iCUE sends these via the CorsairLightingProtocol to the Arduino.
 These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino.
