@@ -17,11 +17,7 @@
 #ifndef _CORSAIRLIGHTINGPROTOCOL_h
 #define _CORSAIRLIGHTINGPROTOCOL_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "arduino.h"
-#else
-#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 #define COMMAND_SIZE USB_EP_SIZE
 #define RESPONSE_SIZE USB_EP_SIZE

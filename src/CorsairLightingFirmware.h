@@ -16,11 +16,7 @@
 #ifndef _CORSAIRLIGHTINGFIRMWARE_h
 #define _CORSAIRLIGHTINGFIRMWARE_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 #include "CorsairLightingProtocol.h"
 // VID: 1b1c
