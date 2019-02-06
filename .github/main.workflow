@@ -15,7 +15,7 @@ workflow "Test" {
 
 action "Install FastLED" {
   uses = "actions/bin/sh@master"
-  args = "\"mkdir -p libraries\" \"cd libraries; wget -O FastLED.zip https://github.com/FastLED/FastLED/archive/3.2.0.zip; unzip FastLED.zip; rm FastLED.zip\""
+  args = ["mkdir -p libraries", "cd libraries; wget -O FastLED.zip https://github.com/FastLED/FastLED/archive/3.2.0.zip; unzip FastLED.zip; rm FastLED.zip"]
 }
 
 action "Build examples" {
