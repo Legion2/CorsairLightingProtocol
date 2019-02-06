@@ -17,13 +17,16 @@
 #include <LEDController.h>
 #include <FastLED.h>
 
-CRGB leds[CHANNEL_LED_COUNT * 2];
+#define NUM_LEDS CHANNEL_LED_COUNT * 2
+#define DATA_PIN 2
+
+CRGB leds[NUM_LEDS];
 
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
 #endif
-	FastLED.addLeds<NEOPIXEL, 2>(leds, CHANNEL_LED_COUNT * 2);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 	LEDController.addLeds(0, leds);
 	LEDController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
 	CorsairLightingProtocol.begin();
