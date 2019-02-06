@@ -10,6 +10,8 @@ The library is compatible with all boards using the MCU ATmega32U4.
 This includes **Arduino Micro**, **Arduino Leonardo** and **Pro Micro**.
 It is **not** compatible with Arduino Uno, Arduino Mega and Arduino Nano.
 
+In the rest of the documentation the board with the ATmega32U4 is called "Arduino" regardless of the manufacturer.
+
 As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is required.
 The Arduino IDE is not supported because it does not provide a way to configure the build options without creating your own board configuration.
 Advanced users can create their own boards configuration with the correct [build settings](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) and then use this boards configuration with the Arduino IDE.
@@ -25,6 +27,13 @@ After you did the wiring or at least know which pin is the data pin, you can set
 
 To verify the library works as expected open the Windows settings -> devices -> connected devices. Somewhere in the list of devices there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
 Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Node PRO".
+
+In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the leds you have.
+iCUE groups the LEDs into groups of ten.
+So if you have 20 LEDs, set the amount to 2.
+The "SimpleLightingController" example support maximum 5 per channel.
+Because the "SimpleLightingController" concatenate the two channels a total of 100 leds can be controlled.
+Now you can create lighting effects in the "Lighting Channel #" tabs.
 
 ## Use the library
 If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the [board.txt](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) in the root directory of your sketch.
