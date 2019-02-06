@@ -24,4 +24,7 @@ action "Install FastLED" {
 action "Build examples" {
   uses = "Legion2/arduino-builder-action@master"
   needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:leonardo"
+  }
 }
