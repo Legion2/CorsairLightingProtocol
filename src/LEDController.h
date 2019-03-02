@@ -92,16 +92,16 @@ struct Channel {
 	uint8_t ledCount = 0;
 	uint8_t ledPortType = PORT_TYPE_RGB_LED_STRIP;
 
-	uint16_t temp;
-
 	Group groups[GROUPS_NUM];
 	uint8_t groupsSet = 0;
 };
 
 struct LEDBufferData {
 	CRGB const* led_buffer;
-
+	// store an array for each color
 	uint8_t values_buffer[3][CHANNEL_LED_COUNT];
+	// current temperature
+	uint16_t temp;
 };
 
 class LEDController_ {
@@ -114,6 +114,7 @@ protected:
 	void addColors(CRGB * led_buffer, const CRGB& color, const uint8_t* values, uint8_t length);
 	Channel channels[CHANNEL_NUM];
 	bool trigger_update = false;
+	// Indicates that the configuration of the channels has been changed and should be saved
 	bool trigger_save = false;
 
 	LEDBufferData volatileData[CHANNEL_NUM];

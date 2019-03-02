@@ -16,6 +16,9 @@
 #include "LEDController.h"
 #ifdef USE_EEPROM
 #include <EEPROM.h>
+#ifndef EEPROM_ADDRESS
+#define EEPROM_ADDRESS 0
+#endif
 #endif
 
 uint16_t combine(const byte& byte1, const byte& byte2) {
@@ -36,6 +39,7 @@ void LEDController_::addLeds(uint8_t channel, CRGB const * led_buffer) {
 void LEDController_::handleLEDControl(const Command& command) {
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
+		//Trigger update of the LEDs
 		trigger_update = true;
 		if (trigger_save) {
 			trigger_save = false;
@@ -44,6 +48,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 	}
 	else if (data[0] < CHANNEL_NUM) {
 		Channel& ledChannel = channels[data[0]];
+		LEDBufferData& volatileChannelData = volatileData[data[0]];
 		switch (command.command)
 		{
 		case READ_LED_STRIP_MASK:
@@ -58,6 +63,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 				}
 			}
 			CorsairLightingProtocol.send(ledMask, sizeof(ledMask));
+			// don't send default response
 			return;
 			break;
 		}
@@ -66,6 +72,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 #ifdef DEBUG
 			Serial.println(F("WriteLedRgbValue"));
 #endif
+			// TODO
 			break;
 		}
 		case WRITE_LED_COLOR_VALUES:
@@ -79,22 +86,16 @@ void LEDController_::handleLEDControl(const Command& command) {
 			if (offset + length > CHANNEL_LED_COUNT) {
 				return;
 			}
-			memcpy(volatileData[data[0]].values_buffer[color] + offset, data + 4, length);
+			memcpy(volatileChannelData.values_buffer[color] + offset, data + 4, length);
 			break;
 		}
 		case WRITE_LED_CLEAR:
 		{
-#ifdef DEBUG
-			Serial.print(F("WriteLedClear"));
-			Serial.println(data[0], HEX);
-#endif
+			memset(volatileChannelData.values_buffer, 0, sizeof(volatileChannelData.values_buffer));
 			break;
 		}
 		case WRITE_LED_GROUP_SET:
 		{
-#ifdef DEBUG
-			Serial.println(F("WriteLedGroupSet"));
-#endif
 			if (ledChannel.groupsSet >= GROUPS_NUM) {
 #ifdef DEBUG
 				Serial.print(F("max groups: "));
@@ -122,7 +123,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 		}
 		case WRITE_LED_EXTERNAL_TEMP:
 		{
-			ledChannel.temp = combine(data[2], data[3]);
+			volatileChannelData.temp = combine(data[2], data[3]);
 			break;
 		}
 		case WRITE_LED_GROUPS_CLEAR:
@@ -146,6 +147,7 @@ void LEDController_::handleLEDControl(const Command& command) {
 		}
 		case WRITE_LED_BRIGHTNESS:
 		{
+			// convert brightness from range 0-100 to 0-255
 			uint8_t brightness = data[1] * 2.5546875f;
 			if (ledChannel.brightness != brightness) {
 				ledChannel.brightness = brightness;
@@ -160,7 +162,9 @@ void LEDController_::handleLEDControl(const Command& command) {
 			Serial.print(data[1], HEX);
 			Serial.println();
 #endif
+			// TODO
 			ledChannel.ledCount = data[1];
+			break;
 		}
 		case WRITE_LED_PORT_TYPE:
 		{
@@ -308,7 +312,7 @@ bool LEDController_::updateLEDs()
 				}
 				case GROUP_MODE_Temperature:
 				{
-					const uint16_t& currentTemperature = channel.temp;
+					const uint16_t& currentTemperature = volatileData[channelId].temp;
 
 					CRGB color;
 					if (currentTemperature < group.temp1) {
@@ -431,7 +435,7 @@ bool LEDController_::updateLEDs()
 		default:
 		{
 #ifdef DEBUG
-			Serial.print(F("unkown led mode: "));
+			Serial.print(F("unkown led channel mode: "));
 			Serial.print(channel.ledMode, HEX);
 			Serial.println();
 			break;
@@ -445,10 +449,7 @@ bool LEDController_::updateLEDs()
 
 bool LEDController_::load() {
 #ifdef USE_EEPROM
-#ifdef DEBUG
-	Serial.println(F("Save to EEPROM."));
-#endif
-	EEPROM.put(0, channels);
+	EEPROM.get(EEPROM_ADDRESS, channels);
 	return true;
 #endif
 	return false;
@@ -456,7 +457,10 @@ bool LEDController_::load() {
 
 bool LEDController_::save() {
 #ifdef USE_EEPROM
-	EEPROM.get(0, channels);
+#ifdef DEBUG
+	Serial.println(F("Save to EEPROM."));
+#endif
+	EEPROM.put(EEPROM_ADDRESS, channels);
 	return true;
 #endif
 	return false;
