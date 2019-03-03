@@ -1,7 +1,12 @@
-Add Support of the Lighting Node PRO Protocol to Arduino.
-Controll LEDs connected to the Arduino with the Corsair Link or the iCUE Software.
+**This library can be used to integrate custom/unofficial RGB strips with iCUE.**
 
-![Overview](Overview.png)
+## Features
+* Add support of the Lighting Node PRO protocol to Arduino.
+* Control LEDs with the Corsair Link or the iCUE software.
+* Easy to use with [FastLED](http://fastled.io/)
+* [Supported LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets)
+
+![Overview](docs/Overview.png)
 
 # Getting started
 
@@ -27,6 +32,8 @@ After you did the wiring or at least know which pin is the data pin, you can set
 
 To verify the library works as expected open the Windows settings -> devices -> connected devices. Somewhere in the list of devices there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
 Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Node PRO".
+
+![iCUE RGB Strip example](docs/iCUE.png)
 
 In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the leds you have.
 iCUE groups the LEDs into groups of ten.
