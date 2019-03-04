@@ -1,3 +1,7 @@
+
+[![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol)
+![Actions Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/Legion2/CorsairLightingProtocol)
+
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
 
 ## Features
