@@ -377,11 +377,12 @@ bool LEDController_::updateLEDs()
 				}
 				case GROUP_MODE_Marquee:
 				{
-					int duration = applySpeed(10000, group.speed);
-					int count = animation_step_count(duration, 20);
+					int duration = applySpeed(700, group.speed);
+					int count = animation_step_count(duration, 3);
 					if (count > 0) {
+						int step = animation_step(duration, 3);
 						for (int i = 0; i < group.ledCount; i++) {
-							volatileData[channelId].led_buffer[group.ledIndex + i] = random8() > 127 ? group.color1 % channel.brightness : CRGB::Black;
+							volatileData[channelId].led_buffer[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 % channel.brightness : CRGB::Black;
 						}
 						updated = true;
 					}
