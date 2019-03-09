@@ -37,7 +37,7 @@ After you did the wiring or at least know which pin is the data pin, you can set
 To verify the library works as expected open the Windows settings -> devices -> connected devices. Somewhere in the list of devices there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
 Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Node PRO".
 
-![iCUE RGB Strip example](docs/iCUE.png)
+![iCUE RGB Strip example](docs/iCUE.jpg)
 
 In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the leds you have.
 iCUE groups the LEDs into groups of ten.
