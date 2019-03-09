@@ -246,6 +246,20 @@ bool LEDController_::updateLEDs()
 				const Group& group = channel.groups[i];
 				switch (group.mode)
 				{
+				case GROUP_MODE_Rainbow_Wave:
+				{
+					int duration = applySpeed(3300, group.speed);
+					int count = animation_step_count(duration, 256);
+					if (count > 0) {
+						int step = animation_step(duration, 256);
+						int move = group.direction == GROUP_DIRECTION_FORWARD ? -15 : 15;
+						for (int i = 0; i < group.ledCount; i++) {
+							volatileData[channelId].led_buffer[group.ledIndex + i] = CHSV(step + (i * move), 255, 255) % channel.brightness;
+						}
+						updated = true;
+					}
+					break;
+				}
 				case GROUP_MODE_Color_Shift:
 				{
 					int duration = applySpeed(3000, group.speed);
