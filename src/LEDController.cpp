@@ -319,6 +319,52 @@ bool LEDController_::updateLEDs()
 					}
 					break;
 				}
+				case GROUP_MODE_Color_Wave:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 10000);
+					if (count > 0) {
+						int step = animation_step(duration, 10000);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = group.color2;
+								group.color2 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						float valley = step / 10000.0;
+						for (int i = 0; i < group.ledCount; i++) {
+							float pos = (i % 17) / 17.0;
+
+							float distanceWave;
+							CRGB color;
+							const bool flag = (i % 34) < 17;
+							if (pos < valley) {
+								color = flag ? group.color1 : group.color2;
+								distanceWave = abs(valley - 0.5 - pos);
+							}
+							else {
+								color = flag ? group.color2 : group.color1;
+								distanceWave = abs(valley + 0.5 - pos);
+							}
+
+							uint8_t scale;
+							if (distanceWave > 0.25) {
+								scale = 0;
+							}
+							else {
+								scale = 255 - ease8InOutApprox((distanceWave * 4) * 256);
+							}
+							volatileData[channelId].led_buffer[group.ledIndex + i] = (color % scale) % channel.brightness;
+						}
+						updated = true;
+					}
+					break;
+				}
 				case GROUP_MODE_Static:
 				{
 					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
