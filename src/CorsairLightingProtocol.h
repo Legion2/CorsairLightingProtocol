@@ -14,10 +14,11 @@
    limitations under the License.
 */
 
-#ifndef _CORSAIRLIGHTINGPROTOCOL_h
-#define _CORSAIRLIGHTINGPROTOCOL_h
+#ifndef _CorsairLightingProtocol_h
+#define _CorsairLightingProtocol_h
 
 #include "Arduino.h"
+#include "ILEDController.h"
 
 #define COMMAND_SIZE USB_EP_SIZE
 #define RESPONSE_SIZE USB_EP_SIZE
@@ -71,21 +72,20 @@ struct Command {
 	};
 };
 
-class CorsairLightingProtocol_
+class CorsairLightingProtocol
 {
-private:
-	uint8_t rawhidData[COMMAND_SIZE];
 public:
-	CorsairLightingProtocol_(void);
+	CorsairLightingProtocol(ILEDController* a);
 	void begin();
-	bool available();
+	bool available() const;
 	void getCommand(Command& command);
 	void handleCommand(const Command& command);
-	void send(const uint8_t * data, size_t size);
-	void sendError();
-	void send_P(const uint8_t * data, size_t size);
+	void send(const uint8_t * data, size_t size) const;
+	void sendError() const;
+	void send_P(const uint8_t * data, size_t size) const;
+private:
+	uint8_t rawhidData[COMMAND_SIZE];
+	ILEDController* const ledController;
 };
-
-extern CorsairLightingProtocol_ CorsairLightingProtocol;
 
 #endif

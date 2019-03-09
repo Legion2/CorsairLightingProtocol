@@ -13,12 +13,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include <ILEDController.h>
 #include <CorsairLightingProtocol.h>
 #include <LEDController.h>
 #include <FastLED.h>
 
+// iCUE changes to a very slow mode when there are more than 50 leds per channel
+#define CHANNEL_LED_COUNT 50
 #define NUM_LEDS CHANNEL_LED_COUNT * 2
 #define DATA_PIN 2
+
+LEDController<CHANNEL_LED_COUNT> ledController(true);
+CorsairLightingProtocol cLP(&ledController);
 
 CRGB leds[NUM_LEDS];
 
@@ -27,20 +33,20 @@ void setup() {
 	Serial.begin(115200);
 #endif
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-	LEDController.addLeds(0, leds);
-	LEDController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
-	CorsairLightingProtocol.begin();
+	ledController.addLeds(0, leds);
+	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
+	cLP.begin();
 }
 
 void loop() {
-	if (CorsairLightingProtocol.available())
+	if (cLP.available())
 	{
 		Command command;
-		CorsairLightingProtocol.getCommand(command);
-		CorsairLightingProtocol.handleCommand(command);
+		cLP.getCommand(command);
+		cLP.handleCommand(command);
 	}
 
-	if (LEDController.updateLEDs()) {
+	if (ledController.updateLEDs()) {
 		FastLED.show();
 	}
 }

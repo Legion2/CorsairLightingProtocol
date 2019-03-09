@@ -18,23 +18,19 @@
 #include "LEDController.h"
 #include "RawHID.h"
 
-CorsairLightingProtocol_ CorsairLightingProtocol;
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* const aLEDController) : ledController(aLEDController){}
 
-CorsairLightingProtocol_::CorsairLightingProtocol_(void)
+void CorsairLightingProtocol::begin()
 {
 	RawHID.begin(rawhidData, sizeof(rawhidData));
 }
 
-void CorsairLightingProtocol_::begin()
-{
-}
-
-bool CorsairLightingProtocol_::available()
+bool CorsairLightingProtocol::available() const
 {
 	return RawHID.available() > 0;
 }
 
-void CorsairLightingProtocol_::getCommand(Command& command)
+void CorsairLightingProtocol::getCommand(Command& command)
 {
 	auto bytesAvailable = RawHID.available();
 	if (bytesAvailable)
@@ -51,20 +47,20 @@ void CorsairLightingProtocol_::getCommand(Command& command)
 	}
 }
 
-void CorsairLightingProtocol_::handleCommand(const Command& command)
+void CorsairLightingProtocol::handleCommand(const Command& command)
 {
 	if (command.command >= 0x10 && command.command < 0x30) {
 		sendError();
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
-		LEDController.handleLEDControl(command);
+		ledController->handleLEDControl(command, *this);
 	}
 	else {
-		CorsairLightingFirmware().handleFirmwareCommand(command);
+		CorsairLightingFirmware().handleFirmwareCommand(command, *this);
 	}
 }
 
-void CorsairLightingProtocol_::send(const uint8_t* data, size_t size) {
+void CorsairLightingProtocol::send(const uint8_t* data, size_t size) const {
 	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
 	if (size + 1 > sizeof(response)) {
@@ -74,14 +70,14 @@ void CorsairLightingProtocol_::send(const uint8_t* data, size_t size) {
 	RawHID.write(response, sizeof(response));
 }
 
-void CorsairLightingProtocol_::sendError() {
+void CorsairLightingProtocol::sendError() const {
 	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
 	response[0] = PROTOCOL_RESPONSE_ERROR;
 	RawHID.write(response, sizeof(response));
 }
 
-void CorsairLightingProtocol_::send_P(const uint8_t* data, size_t size) {
+void CorsairLightingProtocol::send_P(const uint8_t* data, size_t size) const {
 	uint8_t response[RESPONSE_SIZE];
 	memset(response, 0x00, sizeof(response));
 	if (size + 1 > sizeof(response)) {

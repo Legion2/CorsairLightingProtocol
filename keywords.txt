@@ -6,6 +6,9 @@
 # Datatypes (KEYWORD1)
 #######################################
 
+LEDController	KEYWORD1
+ILEDController	KEYWORD1
+CorsairLightingProtocol	KEYWORD1
 CorsairLightingFirmware	KEYWORD1
 
 #######################################
@@ -26,8 +29,6 @@ send_P	KEYWORD2
 # Instances (KEYWORD1)
 #######################################
 
-LEDController	KEYWORD1
-CorsairLightingProtocol	KEYWORD1
 
 #######################################
 # Structures (KEYWORD3)
@@ -39,4 +40,3 @@ Command	KEYWORD3
 # Constants (LITERAL1)
 #######################################
 
-CHANNEL_LED_COUNT	LITERAL1

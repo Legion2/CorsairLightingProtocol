@@ -35,7 +35,7 @@ const uint8_t status[] PROGMEM = { PROTOCOL_STATUS_OK };
 
 class CorsairLightingFirmware_ {
 public:
-	void handleFirmwareCommand(const Command& command);
+	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocol& clp);
 protected:
 	uint8_t DeviceId[4] = { 0x4E, 0x91, 0x67, 0xB9 };
 };

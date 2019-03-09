@@ -13,11 +13,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "LEDController.h"
+#ifndef _ILEDController_h
+#define _ILEDController_h
 
-uint16_t combine(const byte& byte1, const byte& byte2) {
-	uint16_t t = byte1;
-	t = t << 8;
-	t |= byte2;
-	return t;
-}
+#include "Arduino.h"
+#include <FastLED.h>
+
+struct Command;
+class CorsairLightingProtocol;
+
+class ILEDController {
+public:
+	virtual void addLeds(uint8_t channel, CRGB const* led_buffer) = 0;
+	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) = 0;
+	virtual bool updateLEDs() = 0;
+};
+
+#endif
