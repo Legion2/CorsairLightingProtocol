@@ -9,6 +9,7 @@
 * Control LEDs with the Corsair Link or the iCUE software.
 * Easy to use with [FastLED](http://fastled.io/)
 * [Supported LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets)
+* persistent settings for use without USB connection
 
 ![Overview](docs/Overview.png)
 
