@@ -395,6 +395,32 @@ bool LEDController_::updateLEDs()
 					}
 					break;
 				}
+				case GROUP_MODE_Sequential:
+				{
+					int steps = group.ledCount;
+					int duration = applySpeed(60 * steps, group.speed);
+					int count = animation_step_count(duration, steps);
+					if (count > 0) {
+						int step = animation_step(duration, steps);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color2 = group.color1;
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+						}
+
+						if (group.direction == GROUP_DIRECTION_FORWARD) {
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], step + 1, group.color1 % channel.brightness);
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex + step + 1], group.ledCount - (step + 1), group.color2 % channel.brightness);
+						}
+						else {
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex + group.ledCount - (step + 1)], step + 1, group.color1 % channel.brightness);
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount - (step + 1), group.color2 % channel.brightness);
+						}
+						updated = true;
+					}
+					break;
+				}
 				case GROUP_MODE_Rainbow:
 				{
 					int duration = applySpeed(3000, group.speed);
