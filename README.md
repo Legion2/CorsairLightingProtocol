@@ -28,6 +28,7 @@ Advanced users can create their own boards configuration with the correct [build
 
 ## Install the library
 Use the [Library-Manager](https://www.visualmicro.com/page/User-Guide.aspx?doc=Library-Manager.html#) to install this library or download a [release](https://github.com/Legion2/CorsairLightingProtocol/releases).
+Additionally the [FastLED](http://fastled.io/) library must be installed.
 
 ## Example
 Open the example "SimpleLightingController", you can find it in the Visual Micro Explorer.
