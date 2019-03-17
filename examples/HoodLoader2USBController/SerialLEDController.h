@@ -13,17 +13,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#ifndef _SERIALLEDCONTROLLER_h
+#define _SERIALLEDCONTROLLER_h
 
-#include "Arduino.h"
+#include <ILEDController.h>
 
-struct Command;
-class CorsairLightingProtocol;
-
-class ILEDController {
+class SerialLEDController : public ILEDController {
 public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) = 0;
+	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) override;
+	virtual void handleCallback();
+private:
+	const CorsairLightingProtocol* clp;
+	byte buff[RESPONSE_SIZE];
+	uint8_t part = 0;
 };
 
 #endif
+

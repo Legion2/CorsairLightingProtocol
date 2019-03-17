@@ -105,9 +105,9 @@ class LEDController : public ILEDController {
 
 public:
 	LEDController(bool useEEPROM);
-	virtual void addLeds(uint8_t channel, CRGB const* led_buffer) override;
+	virtual void addLeds(uint8_t channel, CRGB const* led_buffer);
 	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocol& clp) override;
-	virtual bool updateLEDs() override;
+	virtual bool updateLEDs();
 protected:
 	Channel channels[CHANNEL_NUM];
 	bool trigger_update = false;

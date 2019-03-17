@@ -13,17 +13,28 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#include <CorsairLightingProtocol.h>
+#include "SerialLEDController.h"
 
-#include "Arduino.h"
+SerialLEDController ledController;
+CorsairLightingProtocol cLP(&ledController);
 
-struct Command;
-class CorsairLightingProtocol;
 
-class ILEDController {
-public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) = 0;
-};
-
+void setup() {
+#ifdef DEBUG
+	Serial.begin(115200);
 #endif
+	Serial1.begin(115200);
+	cLP.begin();
+}
+
+void loop() {
+	if (cLP.available())
+	{
+		Command command;
+		cLP.getCommand(command);
+		cLP.handleCommand(command);
+	}
+
+	ledController.handleCallback();
+}
