@@ -10,7 +10,10 @@ action "Issue Checklist Checker" {
 
 workflow "Test" {
   on = "push"
-  resolves = ["Build SimpleLightingController", "Build HoodLoader2LEDController"]
+  resolves = [
+    "Build SimpleLightingController",
+    "Build HoodLoader2UnoMegaController",
+  ]
 }
 
 action "Install FastLED" {
@@ -30,11 +33,11 @@ action "Build SimpleLightingController" {
   }
 }
 
-action "Build HoodLoader2LEDController" {
+action "Build HoodLoader2UnoMegaController" {
   uses = "Legion2/arduino-builder-action@master"
   needs = ["Install FastLED"]
   env = {
     BOARD_NAME = "arduino:avr:mega"
-    SKETCH_PATH = "./examples/HoodLoader2LEDController/HoodLoader2LEDController.ino"
+    SKETCH_PATH = "./examples/HoodLoader2UnoMegaController/HoodLoader2UnoMegaController.ino"
   }
 }
