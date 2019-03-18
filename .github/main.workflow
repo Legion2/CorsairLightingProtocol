@@ -37,7 +37,7 @@ action "Build HoodLoader2UnoMegaController" {
   uses = "Legion2/arduino-builder-action@master"
   needs = ["Install FastLED"]
   env = {
-    BOARD_NAME = "arduino:avr:mega"
+    BOARD_NAME = "arduino:avr:uno"
     SKETCH_PATH = "./examples/HoodLoader2UnoMegaController/HoodLoader2UnoMegaController.ino"
   }
 }
