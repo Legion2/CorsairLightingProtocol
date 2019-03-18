@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <ILEDController.h>
-#include <CorsairLightingProtocol.h>
+#include "CorsairLightingProtocolSerial.h"
 #include <LEDController.h>
 #include <FastLED.h>
 
@@ -23,30 +22,40 @@
 #define NUM_LEDS CHANNEL_LED_COUNT * 2
 #define DATA_PIN 2
 
+const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0x10 };
+
 LEDController<CHANNEL_LED_COUNT> ledController(true);
-CorsairLightingProtocol cLP(&ledController);
+CorsairLightingProtocolSerial cLPS(&ledController, firmware_version);
 
 CRGB leds[NUM_LEDS];
 
 void setup() {
-#ifdef DEBUG
-	Serial.begin(115200);
-#endif
+	/*
+	YOU MUST NOT USE Serial!
+	Serial is used by CorsairLightingProtocolSerial!
+	*/
+	digitalWrite(7, HIGH);
+	pinMode(7, OUTPUT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 	ledController.addLeds(0, leds);
 	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
-	cLP.begin();
+	cLPS.begin();
+	digitalWrite(7, LOW);
 }
 
 void loop() {
-	if (cLP.available())
+	if (cLPS.available())
 	{
 		Command command;
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
+		cLPS.getCommand(command);
+		cLPS.handleCommand(command);
 	}
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
 	}
+}
+
+void serialEvent() {
+	cLPS.handleSerial();
 }

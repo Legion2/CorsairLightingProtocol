@@ -13,28 +13,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingNodePRO.h>
-#include "SerialLEDController.h"
+#include "CLPUSBSerialBridge.h"
 
-SerialLEDController ledController;
-CorsairLightingProtocol cLP(&ledController, firmware_version);
-
+CLPUSBSerialBridge usbToSerialBridge;
 
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
-#endif
-	Serial1.begin(115200);
-	cLP.begin();
+#endif // DEBUG
+	usbToSerialBridge.begin();
 }
 
 void loop() {
-	if (cLP.available())
-	{
-		Command command;
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
+	usbToSerialBridge.handleHID();
+	usbToSerialBridge.handleResponse();
+}
 
-	ledController.handleCallback();
+void serialEvent1() {
+	usbToSerialBridge.handleSerial();
 }

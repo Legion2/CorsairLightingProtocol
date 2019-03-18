@@ -18,6 +18,8 @@
 #include "LEDController.h"
 #include "RawHID.h"
 
+#if defined(USBCON)
+
 CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
 
 CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
@@ -82,3 +84,4 @@ void CorsairLightingProtocol::sendX(const uint8_t* data, const size_t x) const
 	RawHID.write(data, x);
 }
 
+#endif
