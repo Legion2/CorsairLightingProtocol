@@ -13,16 +13,29 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#ifndef _CLPUSBSerialBridge_h
+#define _CLPUSBSerialBridge_h
 
 #include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
 
-class ILEDController {
+#define RAWHID_TO_SERIAL_BUFFER_SIZE 16
+#define SERIAL_TO_RAWHID_BUFFER_SIZE 64
+#define SERIAL_BUFFER_TIMEOUT 100
+#define SERIAL_BAUD 115200
+
+class CLPUSBSerialBridge {
 public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* clp) = 0;
+	virtual void begin();
+	virtual void handleHID();
+	virtual void handleResponse();
+	// should be called in SerialEvent()
+	virtual void handleSerial();
+private:
+	byte rawHIDBuffer[64];
+	byte tx_buffer[SERIAL_TO_RAWHID_BUFFER_SIZE];
+	uint8_t pos = 0;
+	unsigned long last_rx = 0;
 };
 
 #endif
+

@@ -21,11 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+
 // Include guard
 #pragma once
 
 #include <Arduino.h>
 #include "HID.h"
+#if defined(USBCON)
+
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
 
 // RawHID might never work with multireports, because of OS problems
@@ -177,3 +180,4 @@ protected:
 	int featureLength;
 };
 extern RawHID_ RawHID;
+#endif

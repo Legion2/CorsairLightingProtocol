@@ -19,7 +19,8 @@
 #include "Arduino.h"
 
 #include <FastLED.h>
-#include <CorsairLightingProtocol.h>
+#include <CorsairLightingProtocolResponse.h>
+#include <CorsairLightingProtocolConstants.h>
 #include <ILEDController.h>
 
 #define CHANNEL_NUM 2
@@ -106,7 +107,7 @@ class LEDController : public ILEDController {
 public:
 	LEDController(bool useEEPROM);
 	virtual void addLeds(uint8_t channel, CRGB const* led_buffer);
-	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocol& clp) override;
+	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
 	virtual bool updateLEDs();
 protected:
 	Channel channels[CHANNEL_NUM];
@@ -148,7 +149,7 @@ void LEDController<CHANNEL_LED_COUNT>::addLeds(uint8_t channel, CRGB const* led_
 }
 
 template<size_t CHANNEL_LED_COUNT>
-void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) {
+void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) {
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
 		//Trigger update of the LEDs
@@ -174,7 +175,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 					ledMask[i] = 0x00;
 				}
 			}
-			clp.send(ledMask, sizeof(ledMask));
+			response->send(ledMask, sizeof(ledMask));
 			// don't send default response
 			return;
 			break;
@@ -297,7 +298,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		}
 		}
 	}
-	clp.send(nullptr, 0);
+	response->send(nullptr, 0);
 }
 
 template<size_t CHANNEL_LED_COUNT>

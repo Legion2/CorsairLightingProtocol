@@ -13,30 +13,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#ifndef _CorsairLightingProtocolSerial_h
+#define _CorsairLightingProtocolSerial_h
 
-#ifndef _CorsairLightingProtocol_h
-#define _CorsairLightingProtocol_h
+#include <CorsairLightingProtocolConstants.h>
+#include <CorsairLightingProtocolResponse.h>
+#include <ILEDController.h>
 
-#include "Arduino.h"
-#include "ILEDController.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
+#define SERIAL_BUFFER_TIMEOUT 100
+#define SERIAL_BAUD 115200
 
-#if defined(USBCON)
-
-class CorsairLightingProtocol : public CorsairLightingProtocolResponse
-{
+class CorsairLightingProtocolSerial : public CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocol(ILEDController* a);
+	CorsairLightingProtocolSerial(ILEDController* a);
 	void begin();
 	bool available() const;
+	// should be called in SerialEvent()
+	void handleSerial();
 	void getCommand(Command& command);
 	void handleCommand(const Command& command);
-	void sendX(const uint8_t * data, const size_t x) const override;
+	void sendX(const uint8_t* data, const size_t x) const override;
 private:
-	uint8_t rawhidData[COMMAND_SIZE];
+	byte rawCommand[COMMAND_SIZE];
+	uint8_t part = 0;
+	unsigned long last_rx = 0;
 	ILEDController* const ledController;
 };
 
-#endif
 #endif

@@ -22,6 +22,7 @@ THE SOFTWARE.
 */
 
 #include "RawHID.h"
+#if defined(USBCON)
 #ifndef HID_REPORTID_RAWHID
 #define HID_REPORTID_RAWHID 0x00
 #endif
@@ -172,3 +173,4 @@ uint8_t RawHID_::getShortName(char *name)
 }
 
 RawHID_ RawHID;
+#endif
