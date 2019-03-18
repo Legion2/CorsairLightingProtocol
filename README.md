@@ -18,7 +18,9 @@
 ## Requirements
 The library is compatible with all boards using the MCU ATmega32U4.
 This includes **Arduino Micro**, **Arduino Leonardo** and **Pro Micro**.
-It is **not** compatible with Arduino Uno, Arduino Mega and Arduino Nano.
+
+It also supports the Arduino Uno and Arduino Mega, **but** for that the [HoodLoader2](https://github.com/NicoHood/HoodLoader2) Bootloader is required.
+It is **not** compatible with Arduino Nano.
 
 In the rest of the documentation the board with the ATmega32U4 is called "Arduino" regardless of the manufacturer.
 
