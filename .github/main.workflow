@@ -1,6 +1,6 @@
 workflow "Test" {
   on = "push"
-  resolves = ["Build examples"]
+  resolves = ["Build SimpleLightingController", "Build HoodLoader2LEDController"]
 }
 
 action "Install FastLED" {
@@ -11,10 +11,20 @@ action "Install FastLED" {
   }
 }
 
-action "Build examples" {
+action "Build SimpleLightingController" {
   uses = "Legion2/arduino-builder-action@master"
   needs = ["Install FastLED"]
   env = {
     BOARD_NAME = "arduino:avr:leonardo"
+    SKETCH_PATH = "./examples/SimpleLightingController/SimpleLightingController.ino"
+  }
+}
+
+action "Build HoodLoader2LEDController" {
+  uses = "Legion2/arduino-builder-action@master"
+  needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:mega"
+    SKETCH_PATH = "./examples/HoodLoader2LEDController/HoodLoader2LEDController.ino"
   }
 }
