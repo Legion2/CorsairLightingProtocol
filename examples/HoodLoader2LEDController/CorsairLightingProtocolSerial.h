@@ -21,7 +21,7 @@
 #include <ILEDController.h>
 
 #define SERIAL_BUFFER_TIMEOUT 100
-#define SERIAL_BAUD 115200
+#define SERIAL_BAUD 1000000
 
 class CorsairLightingProtocolSerial : public CorsairLightingProtocolResponse {
 public:
