@@ -18,43 +18,32 @@
 
 CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(ILEDController* a, const uint8_t* firmwareVersion) : ledController(a), corsairLightingFirmware(firmwareVersion) {}
 
-bool test = false;
-
 void CorsairLightingProtocolSerial::begin()
 {
 	Serial.begin(SERIAL_BAUD);
+	Serial.setTimeout(SERIAL_TIMEOUT);
 }
 
 bool CorsairLightingProtocolSerial::available() const
 {
-	return part == sizeof(rawCommand);
+	return commandAvailable;
 }
 
 void CorsairLightingProtocolSerial::handleSerial()
 {
-	int readAvailable = Serial.available();
-	if (readAvailable > 0) {
-		digitalWrite(7, !test);
-		const unsigned long time = millis();
-		if (time - last_rx > SERIAL_BUFFER_TIMEOUT) {
-			if (part > 0) {
-				test = true;
-			}
-			part = 0;
+	if (Serial.available()) {
+		size_t read = Serial.readBytes(rawCommand, sizeof(rawCommand));
+		if (read = sizeof(rawCommand)) {
+			commandAvailable = true;
 		}
-		last_rx = time;
-		size_t read = min(sizeof(rawCommand) - part, (size_t) readAvailable);
-		Serial.readBytes(rawCommand + part, read);
-		part += read;
 	}
-	digitalWrite(7, test);
 }
 
 void CorsairLightingProtocolSerial::getCommand(Command& command)
 {
 	if (available()) {
 		memcpy(command.raw, rawCommand, sizeof(command.raw));
-		part = 0;
+		commandAvailable = false;
 	}
 }
 

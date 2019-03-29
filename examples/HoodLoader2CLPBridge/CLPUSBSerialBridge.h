@@ -18,10 +18,12 @@
 
 #include "Arduino.h"
 
-#define RAWHID_TO_SERIAL_BUFFER_SIZE 16
+#define RAWHID_TO_SERIAL_BUFFER_SIZE 64
 #define SERIAL_TO_RAWHID_BUFFER_SIZE 64
-#define SERIAL_BUFFER_TIMEOUT 100
+#define SERIAL_TIMEOUT 3
 #define SERIAL_BAUD 1000000
+
+#define RESET_PIN IO_MCU_RESET_PIN
 
 class CLPUSBSerialBridge {
 public:
@@ -31,11 +33,9 @@ public:
 	// should be called in SerialEvent()
 	virtual void handleSerial();
 private:
-	byte rawHIDBuffer[64];
+	byte rawHIDBuffer[RAWHID_TO_SERIAL_BUFFER_SIZE];
 	byte tx_buffer[SERIAL_TO_RAWHID_BUFFER_SIZE];
-	uint8_t pos = 0;
-	unsigned long last_rx = 0;
+	bool responseAvailable = false;
 };
 
 #endif
-
