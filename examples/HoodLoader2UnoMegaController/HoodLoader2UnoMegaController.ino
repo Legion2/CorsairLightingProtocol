@@ -38,10 +38,14 @@ void setup() {
 	ledController.addLeds(0, leds);
 	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
 	cLPS.begin();
-	digitalWrite(7, LOW);
+	
 }
 
 void loop() {
+	if (millis() > 1000) {
+		digitalWrite(7, LOW);
+	}
+
 	if (cLPS.available())
 	{
 		Command command;

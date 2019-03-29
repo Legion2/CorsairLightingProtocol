@@ -20,7 +20,7 @@
 #include <CorsairLightingProtocolResponse.h>
 #include <ILEDController.h>
 
-#define SERIAL_BUFFER_TIMEOUT 100
+#define SERIAL_TIMEOUT 3
 #define SERIAL_BAUD 1000000
 
 class CorsairLightingProtocolSerial : public CorsairLightingProtocolResponse {
@@ -35,8 +35,7 @@ public:
 	void sendX(const uint8_t* data, const size_t x) const override;
 private:
 	byte rawCommand[COMMAND_SIZE];
-	uint8_t part = 0;
-	unsigned long last_rx = 0;
+	bool commandAvailable = false;
 	ILEDController* const ledController;
 };
 

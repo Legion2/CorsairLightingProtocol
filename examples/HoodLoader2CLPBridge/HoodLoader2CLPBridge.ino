@@ -19,16 +19,18 @@ CLPUSBSerialBridge usbToSerialBridge;
 
 void setup() {
 #ifdef DEBUG
-	Serial.begin(115200);
+	while (!Serial);
+	Serial.begin(1000000);
 #endif // DEBUG
+	delay(5000);
 	usbToSerialBridge.begin();
+#ifdef DEBUG
+	Serial.println((uint8_t)1);
+#endif // DEBUG
 }
 
 void loop() {
+	usbToSerialBridge.handleSerial();
 	usbToSerialBridge.handleHID();
 	usbToSerialBridge.handleResponse();
-}
-
-void serialEvent1() {
-	usbToSerialBridge.handleSerial();
 }
