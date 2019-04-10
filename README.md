@@ -26,6 +26,8 @@ As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.vi
 The Arduino IDE is not supported because it does not provide a way to configure the build options without creating your own board configuration.
 Advanced users can create their own boards configuration with the correct [build settings](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) and then use this boards configuration with the Arduino IDE.
 
+You have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
+
 ## Install the library
 Use the [Library-Manager](https://www.visualmicro.com/page/User-Guide.aspx?doc=Library-Manager.html#) to install this library or download a [release](https://github.com/Legion2/CorsairLightingProtocol/releases).
 Additionally the [FastLED](http://fastled.io/) library must be installed.
@@ -58,6 +60,18 @@ After uploading a sketch with the library and these IDs, iCUE recognizes the Ard
 In iCUE you can then select the "Lighting Node PRO" and set some lighting effects.
 iCUE sends these via the CorsairLightingProtocol to the Arduino.
 These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino.
+
+## Use multiple Devices
+Each device has two unique IDs, that is, they should be unique.
+You must give each device unique ids.
+There are two ids that must be changed `SERIAL_NUMBER` and `DeviceID`.
+
+The `SERIAL_NUMBER` can be changed in the board.txt file.
+Uncomment the line with `SERIAL_NUMBER` and change some characters at the end, don't change the length or use special characters.
+The `DeviceID` can be changed with the [tool](examples/DeviceIDTool/DeviceIDTool.ino)
+Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 115200.
+The tool displays the current DeviceID, you can type in a new DeviceID that is saved on the Arduino.
+After that you can upload another sketch.
 
 # DISCLAIMERS
 This is a DO IT YOURSELF project, use at your own risk.

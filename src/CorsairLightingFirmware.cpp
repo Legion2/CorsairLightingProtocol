@@ -13,12 +13,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include <EEPROM.h>
 #include "CorsairLightingFirmware.h"
 
 CorsairLightingFirmware_& CorsairLightingFirmware()
 {
 	static CorsairLightingFirmware_ obj;
 	return obj;
+}
+
+CorsairLightingFirmware_::CorsairLightingFirmware_()
+{
+	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
 }
 
 void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command, const CorsairLightingProtocol& clp)
@@ -35,7 +41,8 @@ void CorsairLightingFirmware_::handleFirmwareCommand(const Command & command, co
 		clp.send(DeviceId, sizeof(DeviceId));
 		break;
 	case WRITE_DEVICE_ID:
-		memcpy(DeviceId, command.data, 4);
+		memcpy(DeviceId, command.data, sizeof(DeviceId));
+		EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
 		clp.send(DeviceId, sizeof(DeviceId));
 		break;
 	case READ_BOOTLOADER_VERSION:

@@ -26,6 +26,10 @@
 // Product Name: Lighting Node PRO
 // Serial Number: 1EA000060904BAAEFB66DF55421900F5
 
+#ifndef EEPROM_ADDRESS_DEVICE_ID
+#define EEPROM_ADDRESS_DEVICE_ID 0
+#endif
+
 #define PROTOCOL_STATUS_OK 0x00
 #define PROTOCOL_STATUS_ERROR 0xFF
 
@@ -35,9 +39,10 @@ const uint8_t status[] PROGMEM = { PROTOCOL_STATUS_OK };
 
 class CorsairLightingFirmware_ {
 public:
+	CorsairLightingFirmware_();
 	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocol& clp);
 protected:
-	uint8_t DeviceId[4] = { 0x4E, 0x91, 0x67, 0xB9 };
+	uint8_t DeviceId[4];
 };
 
 CorsairLightingFirmware_& CorsairLightingFirmware();
