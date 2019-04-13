@@ -37,6 +37,7 @@ Open the example "SimpleLightingController", you can find it in the Visual Micro
 The example only requires one LED Stip connected to the Arduino.
 The library [FastLED](http://fastled.io/) is used to control the leds, for more information on [how to wiring the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the leds in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
 After you did the wiring or at least know which pin is the data pin, you can set this pin in the example sketch and upload it to the arduino.
+In Visual Studio use the "Release" [configuration](https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/debugger/how-to-set-debug-and-release-configurations.md#change-the-build-configuration).
 
 To verify the library works as expected open the Windows settings -> devices -> connected devices. Somewhere in the list of devices there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
 Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Node PRO".
@@ -67,11 +68,18 @@ You must give each device unique ids.
 There are two ids that must be changed `SERIAL_NUMBER` and `DeviceID`.
 
 The `SERIAL_NUMBER` can be changed in the board.txt file.
-Uncomment the line with `SERIAL_NUMBER` and change some characters at the end, don't change the length or use special characters.
+Uncomment the line with `SERIAL_NUMBER` and change some characters at the end, don't change the length and only use HEX characters(0-9 and A-F).
 The `DeviceID` can be changed with the [tool](examples/DeviceIDTool/DeviceIDTool.ino)
 Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 115200.
 The tool displays the current DeviceID, you can type in a new DeviceID that is saved on the Arduino.
 After that you can upload another sketch.
+
+## Debugging
+For debugging don't use the integrated debugger of Visual Studio, it will most likely break the USB comunication.
+Use the `DEBUG` macro and the Serial Monitor.
+With the `-DDEBUG` flag you can enable debugging in the whole project.
+Add this flag in the board.txt file to the `build.extra_flags`.
+A Serial Monitor MUST be opened, otherwise the USB connection is blocked for the Corsair Lighting Protocol.
 
 # DISCLAIMERS
 This is a DO IT YOURSELF project, use at your own risk.
