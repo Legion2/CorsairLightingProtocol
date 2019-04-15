@@ -262,8 +262,7 @@ __pycache__/
 
 __vm/
 
-
-# Visual Studio
+ # Visual Studio
 *.sln
 *.vcxproj
 *.vcxproj.filters

@@ -133,7 +133,7 @@ protected:
 #include <EEPROM.h>
 
 #ifndef EEPROM_ADDRESS
-#define EEPROM_ADDRESS 0
+#define EEPROM_ADDRESS 4
 #endif
 
 uint16_t combine(const byte& byte1, const byte& byte2);

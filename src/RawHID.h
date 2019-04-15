@@ -165,7 +165,7 @@ protected:
     int getInterface(uint8_t* interfaceCount);
     int getDescriptor(USBSetup& setup);
     bool setup(USBSetup& setup);
-	uint8_t getShortName(char* name);
+	uint8_t getShortName(char* name) override;
 
     EPTYPE_DESCRIPTOR_SIZE epType[1];
     uint8_t protocol;
