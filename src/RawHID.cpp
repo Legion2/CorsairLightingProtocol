@@ -66,6 +66,7 @@ const char STRING_SERIAL_NUMBER[] PROGMEM = SERIAL_NUMBER;
 
 RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), featureReport(NULL), featureLength(0)
 {
+	setTimeout(10);
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
 }

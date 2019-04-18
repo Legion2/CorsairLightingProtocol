@@ -158,7 +158,11 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			save();
 		}
 	}
-	else if (data[0] < CHANNEL_NUM) {
+	else {
+		if (data[0] >= CHANNEL_NUM) {
+			clp.sendError();
+			return;
+		}
 		Channel& ledChannel = channels[data[0]];
 		LEDBufferData& volatileChannelData = volatileData[data[0]];
 		switch (command.command)
@@ -166,7 +170,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		case READ_LED_STRIP_MASK:
 		{
 			uint8_t ledMask[GROUPS_NUM];
-			for (unsigned int i = 0; i < GROUPS_NUM; i++) {
+			for (uint8_t i = 0; i < GROUPS_NUM; i++) {
 				if (i < ledChannel.groupsSet) {
 					ledMask[i] = ledChannel.groups[i].ledCount;
 				}
@@ -193,9 +197,11 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			const uint8_t length = data[2];
 			const uint8_t color = data[3];
 			if (color >= 3) {
+				clp.sendError();
 				return;
 			}
 			if (offset + length > CHANNEL_LED_COUNT) {
+				clp.sendError();
 				return;
 			}
 			memcpy(volatileChannelData.values_buffer[color] + offset, data + 4, length);
@@ -214,7 +220,8 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 				Serial.print(GROUPS_NUM, HEX);
 				Serial.print("\n");
 #endif
-				break;
+				clp.sendError();
+				return;
 			}
 			Group& group = ledChannel.groups[ledChannel.groupsSet++];
 			group.ledIndex = data[1];
@@ -293,7 +300,8 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			Serial.print(command.command, HEX);
 			Serial.print("\n");
 #endif
-			break;
+			clp.sendError();
+			return;
 		}
 		}
 	}

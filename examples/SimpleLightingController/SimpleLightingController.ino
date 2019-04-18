@@ -28,6 +28,8 @@ CorsairLightingProtocol cLP(&ledController);
 
 CRGB leds[NUM_LEDS];
 
+Command command;
+
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
@@ -41,12 +43,14 @@ void setup() {
 void loop() {
 	if (cLP.available())
 	{
-		Command command;
 		cLP.getCommand(command);
 		cLP.handleCommand(command);
 	}
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
+	}
+	else {
+		delay(3);
 	}
 }
