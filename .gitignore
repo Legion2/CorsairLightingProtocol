@@ -266,3 +266,4 @@ __vm/
 *.sln
 *.vcxproj
 *.vcxproj.filters
+*.vcxitems
