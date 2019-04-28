@@ -96,7 +96,7 @@ class LEDController : public ILEDController {
 	};
 
 	struct LEDBufferData {
-		CRGB const* led_buffer;
+		CRGB * led_buffer;
 		// store an array for each color
 		uint8_t values_buffer[3][CHANNEL_LED_COUNT];
 		// current temperature
@@ -105,7 +105,7 @@ class LEDController : public ILEDController {
 
 public:
 	LEDController(bool useEEPROM);
-	virtual void addLeds(uint8_t channel, CRGB const* led_buffer) override;
+	virtual void addLeds(uint8_t channel, CRGB * led_buffer) override;
 	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocol& clp) override;
 	virtual bool updateLEDs() override;
 protected:
@@ -143,7 +143,7 @@ LEDController<CHANNEL_LED_COUNT>::LEDController(bool useEEPROM) : useEEPROM(useE
 }
 
 template<size_t CHANNEL_LED_COUNT>
-void LEDController<CHANNEL_LED_COUNT>::addLeds(uint8_t channel, CRGB const* led_buffer) {
+void LEDController<CHANNEL_LED_COUNT>::addLeds(uint8_t channel, CRGB * led_buffer) {
 	volatileData[channel].led_buffer = led_buffer;
 }
 
@@ -325,6 +325,8 @@ int LEDController<CHANNEL_LED_COUNT>::applySpeed(int duration, byte speed) {
 		return duration;
 	case GROUP_SPEED_LOW:
 		return duration * 2;
+	default:
+		return duration;
 	}
 }
 
@@ -368,7 +370,7 @@ bool LEDController<CHANNEL_LED_COUNT>::updateLEDs()
 		case CHANNEL_MODE_ON:
 		{
 			for (int i = 0; i < channel.groupsSet; i++) {
-				const Group& group = channel.groups[i];
+				Group& group = channel.groups[i];
 				switch (group.mode)
 				{
 				case GROUP_MODE_Rainbow_Wave:
