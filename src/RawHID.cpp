@@ -168,7 +168,8 @@ bool RawHID_::setup(USBSetup& setup)
 
 uint8_t RawHID_::getShortName(char *name)
 {
-	strcpy_P(name, STRING_SERIAL_NUMBER);
+	name[0] = '\0';
+	strncat_P(name, STRING_SERIAL_NUMBER, ISERIAL_MAX_LEN - 1);
 	return strlen(name);
 }
 
