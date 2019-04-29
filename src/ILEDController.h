@@ -22,7 +22,9 @@
 
 class ILEDController {
 public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* clp) = 0;
+	virtual void addLeds(uint8_t channel, CRGB * led_buffer) = 0;
+	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
+	virtual bool updateLEDs() = 0;
 };
 
 #endif

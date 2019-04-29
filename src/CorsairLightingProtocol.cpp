@@ -39,8 +39,7 @@ void CorsairLightingProtocol::getCommand(Command& command)
 		if (bytesAvailable != COMMAND_SIZE) {
 #ifdef DEBUG
 			Serial.print(F("bytesAvailable: "));
-			Serial.print(bytesAvailable);
-			Serial.print("\n");
+			Serial.println(bytesAvailable);
 #endif // DEBUG
 			return;
 		}
@@ -50,14 +49,17 @@ void CorsairLightingProtocol::getCommand(Command& command)
 
 void CorsairLightingProtocol::handleCommand(const Command& command)
 {
-	if (command.command >= 0x10 && command.command < 0x30) {
+	if (command.command < 0x10) {
+		CorsairLightingFirmware().handleFirmwareCommand(command, *this);
+	}
+	else if (command.command >= 0x10 && command.command < 0x30) {
 		sendError();
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
 		ledController->handleLEDControl(command, this);
 	}
 	else {
-		CorsairLightingFirmware().handleFirmwareCommand(command, *this);
+		sendError();
 	}
 }
 
