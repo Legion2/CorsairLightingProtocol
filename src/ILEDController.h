@@ -17,6 +17,7 @@
 #define _ILEDController_h
 
 #include "Arduino.h"
+#include <FastLED.h>
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 

@@ -33,7 +33,7 @@ void CorsairLightingProtocolSerial::handleSerial()
 {
 	if (Serial.available()) {
 		size_t read = Serial.readBytes(rawCommand, sizeof(rawCommand));
-		if (read = sizeof(rawCommand)) {
+		if (read == sizeof(rawCommand)) {
 			commandAvailable = true;
 		}
 	}

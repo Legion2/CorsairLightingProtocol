@@ -161,7 +161,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 	}
 	else {
 		if (data[0] >= CHANNEL_NUM) {
-			clp.sendError();
+			response->sendError();
 			return;
 		}
 		Channel& ledChannel = channels[data[0]];
@@ -198,11 +198,11 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			const uint8_t length = data[2];
 			const uint8_t color = data[3];
 			if (color >= 3) {
-				clp.sendError();
+				response->sendError();
 				return;
 			}
 			if (offset + length > CHANNEL_LED_COUNT) {
-				clp.sendError();
+				response->sendError();
 				return;
 			}
 			memcpy(volatileChannelData.values_buffer[color] + offset, data + 4, length);
@@ -221,7 +221,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 				Serial.print(GROUPS_NUM, HEX);
 				Serial.print("\n");
 #endif
-				clp.sendError();
+				response->sendError();
 				return;
 			}
 			Group& group = ledChannel.groups[ledChannel.groupsSet++];
@@ -301,7 +301,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			Serial.print(command.command, HEX);
 			Serial.print("\n");
 #endif
-			clp.sendError();
+			response->sendError();
 			return;
 		}
 		}
