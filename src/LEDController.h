@@ -96,7 +96,7 @@ class LEDController : public ILEDController {
 	};
 
 	struct LEDBufferData {
-		CRGB const* led_buffer;
+		CRGB * led_buffer;
 		// store an array for each color
 		uint8_t values_buffer[3][CHANNEL_LED_COUNT];
 		// current temperature
@@ -105,7 +105,7 @@ class LEDController : public ILEDController {
 
 public:
 	LEDController(bool useEEPROM);
-	virtual void addLeds(uint8_t channel, CRGB const* led_buffer) override;
+	virtual void addLeds(uint8_t channel, CRGB * led_buffer) override;
 	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocol& clp) override;
 	virtual bool updateLEDs() override;
 protected:
@@ -143,7 +143,7 @@ LEDController<CHANNEL_LED_COUNT>::LEDController(bool useEEPROM) : useEEPROM(useE
 }
 
 template<size_t CHANNEL_LED_COUNT>
-void LEDController<CHANNEL_LED_COUNT>::addLeds(uint8_t channel, CRGB const* led_buffer) {
+void LEDController<CHANNEL_LED_COUNT>::addLeds(uint8_t channel, CRGB * led_buffer) {
 	volatileData[channel].led_buffer = led_buffer;
 }
 
@@ -158,7 +158,11 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			save();
 		}
 	}
-	else if (data[0] < CHANNEL_NUM) {
+	else {
+		if (data[0] >= CHANNEL_NUM) {
+			clp.sendError();
+			return;
+		}
 		Channel& ledChannel = channels[data[0]];
 		LEDBufferData& volatileChannelData = volatileData[data[0]];
 		switch (command.command)
@@ -166,7 +170,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		case READ_LED_STRIP_MASK:
 		{
 			uint8_t ledMask[GROUPS_NUM];
-			for (unsigned int i = 0; i < GROUPS_NUM; i++) {
+			for (uint8_t i = 0; i < GROUPS_NUM; i++) {
 				if (i < ledChannel.groupsSet) {
 					ledMask[i] = ledChannel.groups[i].ledCount;
 				}
@@ -193,9 +197,11 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			const uint8_t length = data[2];
 			const uint8_t color = data[3];
 			if (color >= 3) {
+				clp.sendError();
 				return;
 			}
 			if (offset + length > CHANNEL_LED_COUNT) {
+				clp.sendError();
 				return;
 			}
 			memcpy(volatileChannelData.values_buffer[color] + offset, data + 4, length);
@@ -214,7 +220,8 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 				Serial.print(GROUPS_NUM, HEX);
 				Serial.print("\n");
 #endif
-				break;
+				clp.sendError();
+				return;
 			}
 			Group& group = ledChannel.groups[ledChannel.groupsSet++];
 			group.ledIndex = data[1];
@@ -293,7 +300,8 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			Serial.print(command.command, HEX);
 			Serial.print("\n");
 #endif
-			break;
+			clp.sendError();
+			return;
 		}
 		}
 	}
@@ -317,6 +325,8 @@ int LEDController<CHANNEL_LED_COUNT>::applySpeed(int duration, byte speed) {
 		return duration;
 	case GROUP_SPEED_LOW:
 		return duration * 2;
+	default:
+		return duration;
 	}
 }
 
@@ -360,7 +370,7 @@ bool LEDController<CHANNEL_LED_COUNT>::updateLEDs()
 		case CHANNEL_MODE_ON:
 		{
 			for (int i = 0; i < channel.groupsSet; i++) {
-				const Group& group = channel.groups[i];
+				Group& group = channel.groups[i];
 				switch (group.mode)
 				{
 				case GROUP_MODE_Rainbow_Wave:

@@ -24,7 +24,7 @@ class CorsairLightingProtocol;
 
 class ILEDController {
 public:
-	virtual void addLeds(uint8_t channel, CRGB const* led_buffer) = 0;
+	virtual void addLeds(uint8_t channel, CRGB * led_buffer) = 0;
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) = 0;
 	virtual bool updateLEDs() = 0;
 };
