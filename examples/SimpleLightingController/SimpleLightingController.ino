@@ -18,7 +18,7 @@
 #include <FastLED.h>
 
 // The number of LEDs per channel, there are two channels.
-// iCUE changes to a very slow mode when there are more than 50 LEDs per channel.
+// 60 LEDs per channel is the maximum iCUE can handle.
 #define CHANNEL_LED_COUNT 50
 
 // Total count of LEDs on all channels, the value is calculated based on the leds per channel.
