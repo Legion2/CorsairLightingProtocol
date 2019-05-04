@@ -194,17 +194,16 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		case WRITE_LED_COLOR_VALUES:
 		{
 			const uint8_t offset = data[1];
-			const uint8_t length = data[2];
+			const uint8_t inputLength = data[2];
 			const uint8_t color = data[3];
 			if (color >= 3) {
 				clp.sendError();
 				return;
 			}
-			if (offset + length > CHANNEL_LED_COUNT) {
-				clp.sendError();
-				return;
+			size_t copyLength = min(CHANNEL_LED_COUNT - offset, inputLength);
+			if (copyLength >= 0) {
+				memcpy(volatileChannelData.values_buffer[color] + offset, data + 4, copyLength);
 			}
-			memcpy(volatileChannelData.values_buffer[color] + offset, data + 4, length);
 			break;
 		}
 		case WRITE_LED_CLEAR:
