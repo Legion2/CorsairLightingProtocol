@@ -27,6 +27,12 @@ THE SOFTWARE.
 #include <Arduino.h>
 #include "HID.h"
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
+// HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
+// Interrupt Out Endpoint is optional, contoll endpoint is used by default
+#define ENDPOINT_COUNT 1
+
+#define HID_ENDPOINT_IN	pluggedEndpoint
+#define HID_TX HID_ENDPOINT_IN
 
 // RawHID might never work with multireports, because of OS problems
 // therefore we have to make it a single report with no idea. No other HID device will be supported then.
@@ -46,26 +52,10 @@ THE SOFTWARE.
 #endif
 
 #undef RAWHID_TX_SIZE
-#define RAWHID_TX_SIZE RAWHID_SIZE
+#define RAWHID_TX_SIZE RAWHID_SIZE // todo should be 16
 
 #undef RAWHID_RX_SIZE
-#define RAWHID_RX_SIZE RAWHID_SIZE
-
-typedef union{
-	// a RAWHID_TX_SIZE byte buffer for tx
-	uint8_t whole8[0];
-	uint16_t whole16[0];
-	uint32_t whole32[0];
-	uint8_t buff[RAWHID_TX_SIZE];
-} HID_RawKeyboardTXReport_Data_t;
-
-typedef union{
-	// a RAWHID_TX_SIZE byte buffer for rx
-	uint8_t whole8[0];
-	uint16_t whole16[0];
-	uint32_t whole32[0];
-	uint8_t buff[RAWHID_RX_SIZE];
-} HID_RawKeyboardRXReport_Data_t;
+#define RAWHID_RX_SIZE RAWHID_SIZE // todo should be 64
 
 class RawHID_ : public PluggableUSBModule, public Stream
 {
@@ -154,7 +144,7 @@ public:
 	}
 
 	virtual size_t write(uint8_t *buffer, size_t size){
-		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
+		return USB_Send(HID_TX | TRANSFER_RELEASE, buffer, size);
 	}
 
 protected:
@@ -164,7 +154,7 @@ protected:
     bool setup(USBSetup& setup);
 	uint8_t getShortName(char* name) override;
 
-    EPTYPE_DESCRIPTOR_SIZE epType[1];
+    EPTYPE_DESCRIPTOR_SIZE epType[ENDPOINT_COUNT];
     uint8_t protocol;
     uint8_t idle;
 

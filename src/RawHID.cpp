@@ -30,14 +30,6 @@ THE SOFTWARE.
 #define HID_ENDPOINT_INTERVAL_RAWHID 0x01
 #endif
 
-typedef struct
-{
-	InterfaceDescriptor hid;
-	HIDDescDescriptor   desc;
-	EndpointDescriptor  in;
-	EndpointDescriptor  out;
-} HIDDescriptor2;
-
 static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 	/*    RAW HID */
     0x06, lowByte(RAWHID_USAGE_PAGE), highByte(RAWHID_USAGE_PAGE),      /* 30 */
@@ -55,7 +47,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
     0x95, RAWHID_RX_SIZE,        /* report count RX */
     0x09, 0x02,                  /* usage */
     0x91, 0x02,                  /* Output (array) */
-    0xC0                         /* end collection */ 
+    0xC0                         /* end collection */
 };
 
 #ifndef SERIAL_NUMBER
@@ -64,7 +56,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 
 const char STRING_SERIAL_NUMBER[] PROGMEM = SERIAL_NUMBER;
 
-RawHID_::RawHID_(void) : PluggableUSBModule(1, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), featureReport(NULL), featureLength(0)
+RawHID_::RawHID_(void) : PluggableUSBModule(ENDPOINT_COUNT, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), featureReport(NULL), featureLength(0)
 {
 	setTimeout(10);
 	epType[0] = EP_TYPE_INTERRUPT_IN;
@@ -75,11 +67,10 @@ int RawHID_::getInterface(uint8_t* interfaceCount)
 {
 	// Maybe as optional device FastRawHID with different USAGE PAGE
 	*interfaceCount += 1; // uses 1
-	HIDDescriptor2 hidInterface = {
-		D_INTERFACE(pluggedInterface, 1, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
+	HIDDescriptor hidInterface = {
+		D_INTERFACE(pluggedInterface, ENDPOINT_COUNT, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
 		D_HIDREPORT(sizeof(_hidReportDescriptorRawHID)),
-		D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT, RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID),
-		D_ENDPOINT(USB_ENDPOINT_OUT(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT, RAWHID_RX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)
+		D_ENDPOINT(USB_ENDPOINT_IN(HID_ENDPOINT_IN), USB_ENDPOINT_TYPE_INTERRUPT, RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)
 	};
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
 	
