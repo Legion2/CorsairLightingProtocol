@@ -34,7 +34,7 @@ In the rest of the documentation the board with the ATmega32U4 is called "Arduin
 As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is required.
 Visual Micro provides the required functionality for free, but sometimes ask you to buy the full version.
 The Arduino IDE is not supported because it does not provide a way to configure the build options without creating your own board configuration.
-Advanced users can create their own boards configuration with the correct [build settings](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) and then use this boards configuration with the Arduino IDE.
+Advanced users can create their own boards configuration with the correct [build settings](examples/LightingNodePRO/board.txt) and then use this boards configuration with the Arduino IDE.
 
 You have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
 
@@ -58,11 +58,11 @@ iCUE groups the LEDs into groups of ten.
 So if you have 20 LEDs, set the amount to 2.
 Now you can create lighting effects in the "Lighting Channel #" tabs.
 
-The example "SimpleLightingController" only requires one LED Stip connected to the Arduino.
-Because the "SimpleLightingController" concatenate the two channels a total of 120 leds can be controlled on a single LED Strip.
+The example "SingleStripLightingNodePRO" only requires one LED Stip connected to the Arduino.
+Because the "SingleStripLightingNodePRO" concatenate the two channels a total of 120 leds can be controlled on a single LED Strip.
 
 ## Use the library
-If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the [board.txt](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) in the root directory of your sketch.
+If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the [board.txt](examples/LightingNodePRO/board.txt) in the root directory of your sketch.
 
 ## How it works
 This library uses the USB HID interface of the Arduino Micro or Leonardo.
