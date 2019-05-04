@@ -18,7 +18,9 @@
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
+#include "CorsairLightingProtocolResponse.h"
+#include "CorsairLightingProtocolConstants.h"
+
 // VID: 1b1c
 // PID: 0c0b
 // Revision: 0001
@@ -40,7 +42,7 @@ const uint8_t status[] PROGMEM = { PROTOCOL_STATUS_OK };
 class CorsairLightingFirmware_ {
 public:
 	CorsairLightingFirmware_();
-	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocol& clp);
+	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response);
 protected:
 	uint8_t DeviceId[4];
 };

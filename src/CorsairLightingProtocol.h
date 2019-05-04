@@ -19,60 +19,11 @@
 
 #include "Arduino.h"
 #include "ILEDController.h"
+#include "CorsairLightingProtocolResponse.h"
+#include "CorsairLightingProtocolConstants.h"
 
-#define COMMAND_SIZE USB_EP_SIZE
-#define RESPONSE_SIZE USB_EP_SIZE
 
-#define READ_STATUS 0x01
-#define READ_FIRMWARE_VERSION 0x02
-#define READ_DEVICE_ID 0x03
-#define WRITE_DEVICE_ID 0x04
-#define START_FIRMWARE_UPDATE 0x05
-#define READ_BOOTLOADER_VERSION 0x06
-#define WRITE_TEST_FLAG 0x07
-
-#define READ_TEMPERATURE_MASK 0x10
-#define READ_TEMPERATURE_VALUE 0x11
-#define READ_VOLTAGE_VALUE 0x12
-
-#define READ_FAN_MASK 0x20
-#define READ_FAN_SPEED 0x21
-#define READ_FAN_POWER 0x22
-#define WRITE_FAN_POWER 0x23
-#define WRITE_FAN_SPEED 0x24
-#define WRITE_FAN_CURVE 0x25
-#define WRITE_FAN_EXTERNAL_TEMP 0x26
-#define WRITE_FAN_FORCE_THREE_PIN_MODE 0x27
-#define WRITE_FAN_DETECTION_TYPE 0x28
-#define READ_FAN_DETECTION_TYPE 0x29
-
-#define READ_LED_STRIP_MASK 0x30
-#define WRITE_LED_RGB_VALUE 0x31
-#define WRITE_LED_COLOR_VALUES 0x32
-#define WRITE_LED_TRIGGER 0x33
-#define WRITE_LED_CLEAR 0x34
-#define WRITE_LED_GROUP_SET 0x35
-#define WRITE_LED_EXTERNAL_TEMP 0x36
-#define WRITE_LED_GROUPS_CLEAR 0x37
-#define WRITE_LED_MODE 0x38
-#define WRITE_LED_BRIGHTNESS 0x39
-#define WRITE_LED_COUNT 0x3A
-#define WRITE_LED_PORT_TYPE 0x3B
-
-#define PROTOCOL_RESPONSE_OK 0x01
-#define PROTOCOL_RESPONSE_ERROR 0x01
-
-struct Command {
-	union {
-		struct {
-			uint8_t command;
-			uint8_t data[COMMAND_SIZE - 1];
-		};
-		uint8_t raw[COMMAND_SIZE];
-	};
-};
-
-class CorsairLightingProtocol
+class CorsairLightingProtocol : public CorsairLightingProtocolResponse
 {
 public:
 	CorsairLightingProtocol(ILEDController* a);
@@ -80,9 +31,7 @@ public:
 	bool available() const;
 	void getCommand(Command& command);
 	void handleCommand(const Command& command);
-	void send(const uint8_t * data, size_t size) const;
-	void sendError() const;
-	void send_P(const uint8_t * data, size_t size) const;
+	void sendX(const uint8_t * data, const size_t x) const override;
 private:
 	uint8_t rawhidData[COMMAND_SIZE];
 	ILEDController* const ledController;

@@ -106,7 +106,7 @@ class LEDController : public ILEDController {
 public:
 	LEDController(bool useEEPROM);
 	virtual void addLeds(uint8_t channel, CRGB * led_buffer) override;
-	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocol& clp) override;
+	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
 	virtual bool updateLEDs() override;
 protected:
 	Channel channels[CHANNEL_NUM];
@@ -148,7 +148,7 @@ void LEDController<CHANNEL_LED_COUNT>::addLeds(uint8_t channel, CRGB * led_buffe
 }
 
 template<size_t CHANNEL_LED_COUNT>
-void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, const CorsairLightingProtocol& clp) {
+void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) {
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
 		//Trigger update of the LEDs
@@ -160,7 +160,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 	}
 	else {
 		if (data[0] >= CHANNEL_NUM) {
-			clp.sendError();
+			response->sendError();
 			return;
 		}
 		Channel& ledChannel = channels[data[0]];
@@ -178,7 +178,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 					ledMask[i] = 0x00;
 				}
 			}
-			clp.send(ledMask, sizeof(ledMask));
+			response->send(ledMask, sizeof(ledMask));
 			// don't send default response
 			return;
 			break;
@@ -197,7 +197,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			const uint8_t inputLength = data[2];
 			const uint8_t color = data[3];
 			if (color >= 3) {
-				clp.sendError();
+				response->sendError();
 				return;
 			}
 			size_t copyLength = min(CHANNEL_LED_COUNT - offset, inputLength);
@@ -219,7 +219,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 				Serial.print(GROUPS_NUM, HEX);
 				Serial.print("\n");
 #endif
-				clp.sendError();
+				response->sendError();
 				return;
 			}
 			Group& group = ledChannel.groups[ledChannel.groupsSet++];
@@ -299,12 +299,12 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			Serial.print(command.command, HEX);
 			Serial.print("\n");
 #endif
-			clp.sendError();
+			response->sendError();
 			return;
 		}
 		}
 	}
-	clp.send(nullptr, 0);
+	response->send(nullptr, 0);
 }
 
 template<size_t CHANNEL_LED_COUNT>

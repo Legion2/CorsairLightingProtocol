@@ -49,43 +49,21 @@ void CorsairLightingProtocol::getCommand(Command& command)
 void CorsairLightingProtocol::handleCommand(const Command& command)
 {
 	if (command.command < 0x10) {
-		CorsairLightingFirmware().handleFirmwareCommand(command, *this);
+		CorsairLightingFirmware().handleFirmwareCommand(command, this);
 	}
 	else if (command.command >= 0x10 && command.command < 0x30) {
 		sendError();
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
-		ledController->handleLEDControl(command, *this);
+		ledController->handleLEDControl(command, this);
 	}
 	else {
 		sendError();
 	}
 }
 
-void CorsairLightingProtocol::send(const uint8_t* data, size_t size) const {
-	uint8_t response[RESPONSE_SIZE];
-	memset(response, 0x00, sizeof(response));
-	if (size + 1 > sizeof(response)) {
-		return;
-	}
-	memcpy(response + 1, data, size);
-	RawHID.write(response, sizeof(response));
-}
-
-void CorsairLightingProtocol::sendError() const {
-	uint8_t response[RESPONSE_SIZE];
-	memset(response, 0x00, sizeof(response));
-	response[0] = PROTOCOL_RESPONSE_ERROR;
-	RawHID.write(response, sizeof(response));
-}
-
-void CorsairLightingProtocol::send_P(const uint8_t* data, size_t size) const {
-	uint8_t response[RESPONSE_SIZE];
-	memset(response, 0x00, sizeof(response));
-	if (size + 1 > sizeof(response)) {
-		return;
-	}
-	memcpy_P(response + 1, data, size);
-	RawHID.write(response, sizeof(response));
+void CorsairLightingProtocol::sendX(const uint8_t* data, const size_t x) const
+{
+	RawHID.write(data, x);
 }
 
