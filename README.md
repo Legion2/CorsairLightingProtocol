@@ -10,10 +10,19 @@
 * Easy to use with [FastLED](http://fastled.io/)
 * [Supported LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets)
 * persistent settings for use without USB connection
+* Use multiple devices at the same time
 
 ![Overview](docs/Overview.png)
 
 # Getting started
+
+- [Requirements](#requirements)
+- [Install the library](#install-the-library)
+- [Create a Lighting Node PRO](#create-a-lighting-node-pro)
+- [Use the library](#use-the-library)
+- [How it works](#how-it-works)
+- [Use multiple Devices](#use-multiple-devices)
+- [Debugging](#debugging)
 
 ## Requirements
 The library is compatible with all boards using the MCU ATmega32U4.
@@ -33,9 +42,8 @@ You have problems with a board not listed here, please open an [Issue](https://g
 Use the [Library-Manager](https://www.visualmicro.com/page/User-Guide.aspx?doc=Library-Manager.html#) to install this library or download a [release](https://github.com/Legion2/CorsairLightingProtocol/releases).
 Additionally the [FastLED](http://fastled.io/) library must be installed.
 
-## Example
-Open the example "SimpleLightingController", you can find it in the Visual Micro Explorer.
-The example only requires one LED Stip connected to the Arduino.
+## Create a Lighting Node PRO
+Open the example "LightingNodePRO", you can find it in the Visual Micro Explorer or in the [examples directory](examples).
 The library [FastLED](http://fastled.io/) is used to control the leds, for more information on [how to wiring the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the leds in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
 After you did the wiring or at least know which pin is the data pin, you can set this pin in the example sketch and upload it to the arduino.
 In Visual Studio use the "Release" [configuration](https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/debugger/how-to-set-debug-and-release-configurations.md#change-the-build-configuration).
@@ -48,9 +56,10 @@ Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Nod
 In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the leds you have.
 iCUE groups the LEDs into groups of ten.
 So if you have 20 LEDs, set the amount to 2.
-The "SimpleLightingController" example support maximum 5 per channel.
-Because the "SimpleLightingController" concatenate the two channels a total of 100 leds can be controlled.
 Now you can create lighting effects in the "Lighting Channel #" tabs.
+
+The example "SimpleLightingController" only requires one LED Stip connected to the Arduino.
+Because the "SimpleLightingController" concatenate the two channels a total of 120 leds can be controlled on a single LED Strip.
 
 ## Use the library
 If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the [board.txt](https://github.com/Legion2/CorsairLightingProtocol/blob/master/examples/SimpleLightingController/board.txt) in the root directory of your sketch.
