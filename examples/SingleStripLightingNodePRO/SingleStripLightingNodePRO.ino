@@ -19,7 +19,7 @@
 
 // The number of LEDs per channel, there are two channels.
 // 60 LEDs per channel is the maximum iCUE can handle.
-#define CHANNEL_LED_COUNT 50
+#define CHANNEL_LED_COUNT 10
 
 // Total count of LEDs on all channels, the value is calculated based on the leds per channel.
 #define NUM_LEDS (CHANNEL_LED_COUNT * 2)
@@ -34,7 +34,7 @@
 #define USE_EEPROM true
 
 // This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
-#define DISABLE_BUILTIN_LED
+//#define DISABLE_BUILTIN_LED
 
 LEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
 CorsairLightingProtocol cLP(&ledController);
@@ -58,7 +58,7 @@ void setup() {
 #endif
 #endif
 #endif
-	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+	FastLED.addLeds<TM1803, DATA_PIN, GBR>(leds, NUM_LEDS);
 	ledController.addLeds(0, leds);
 	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
 	cLP.begin();
