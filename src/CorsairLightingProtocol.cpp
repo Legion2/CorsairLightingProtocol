@@ -35,7 +35,7 @@ void CorsairLightingProtocol::getCommand(Command& command)
 	auto bytesAvailable = RawHID.available();
 	if (bytesAvailable)
 	{
-		if (bytesAvailable != COMMAND_SIZE) {
+		if (bytesAvailable != COMMAND_SIZE) {//TODO why is this always false
 #ifdef DEBUG
 			Serial.print(F("bytesAvailable: "));
 			Serial.println(bytesAvailable);
