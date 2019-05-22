@@ -214,11 +214,6 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		case WRITE_LED_GROUP_SET:
 		{
 			if (ledChannel.groupsSet >= GROUPS_NUM) {
-#ifdef DEBUG
-				Serial.print(F("max groups: "));
-				Serial.print(GROUPS_NUM, HEX);
-				Serial.print("\n");
-#endif
 				response->sendError();
 				return;
 			}
@@ -246,9 +241,6 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		}
 		case WRITE_LED_GROUPS_CLEAR:
 		{
-#ifdef DEBUG
-			Serial.println(F("WriteLedGroupsClear"));
-#endif
 			if (ledChannel.groupsSet != 0) {
 				ledChannel.groupsSet = 0;
 				trigger_save = true;
