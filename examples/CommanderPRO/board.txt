@@ -1,0 +1,11 @@
+# build properties for Commander PRO
+#
+
+##############################################################
+
+build.vid=0x1b1c
+build.pid=0x0c10
+build.usb_product="Commander PRO"
+build.usb_manufacturer="Corsair"
+
+#build.extra_flags={build.usb_flags} '-DSERIAL_NUMBER="FB66DF55421900F5"'

@@ -18,7 +18,9 @@
 #include "LEDController.h"
 #include "RawHID.h"
 
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* const aLEDController) : ledController(aLEDController){}
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController) : ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
+
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController) : ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
 
 void CorsairLightingProtocol::begin()
 {
@@ -51,8 +53,21 @@ void CorsairLightingProtocol::handleCommand(const Command& command)
 	if (command.command < 0x10) {
 		CorsairLightingFirmware().handleFirmwareCommand(command, this);
 	}
-	else if (command.command >= 0x10 && command.command < 0x30) {
-		sendError();
+	else if (command.command >= 0x10 && command.command < 0x20) {
+		if (temperatureController != NULL) {
+			temperatureController->handleTemperatureControl(command, this);
+		}
+		else {
+			sendError();
+		}
+	}
+	else if (command.command >= 0x20 && command.command < 0x30) {
+		if (fanController != NULL) {
+			fanController->handleFanControl(command, this);
+		}
+		else {
+			sendError();
+		}
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
 		ledController->handleLEDControl(command, this);

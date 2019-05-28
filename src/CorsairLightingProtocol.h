@@ -19,6 +19,8 @@
 
 #include "Arduino.h"
 #include "ILEDController.h"
+#include "IFanController.h"
+#include "ITemperatureController.h"
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
@@ -26,7 +28,8 @@
 class CorsairLightingProtocol : public CorsairLightingProtocolResponse
 {
 public:
-	CorsairLightingProtocol(ILEDController* a);
+	CorsairLightingProtocol(ILEDController* l);
+	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f);
 	void begin();
 	bool available() const;
 	void getCommand(Command& command);
@@ -35,6 +38,8 @@ public:
 private:
 	uint8_t rawhidData[COMMAND_SIZE];
 	ILEDController* const ledController;
+	ITemperatureController* const temperatureController;
+	IFanController* const fanController;
 };
 
 #endif
