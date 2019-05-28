@@ -1,9 +1,0 @@
-# CorsairLightingProtocol build property overrides
-#
-
-##############################################################
-
-build.vid=0x1b1c
-build.pid=0x0c10
-build.usb_product="Commander PRO"
-build.usb_manufacturer="Corsair"
