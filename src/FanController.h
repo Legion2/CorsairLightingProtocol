@@ -23,15 +23,35 @@
 
 #define FAN_NUM 6
 
-#define FAN_MASK_AUTO 0x00
+#define FAN_MASK_OFF 0x00
 #define FAN_MASK_3PIN 0x01
 #define FAN_MASK_4PIN 0x02
-#define FAN_MASK_???? 0x03//TODO
+#define FAN_MASK_AUTO 0x03
+
+#define FAN_FORCE_THREE_PIN_MODE_ON 0x01
+#define FAN_FORCE_THREE_PIN_MODE_OFF 0x00
 
 class FanController : public IFanController {
 public:
 	virtual void handleFanControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
 protected:
+	// Fan Speed in RPM.
+	virtual uint16_t getFanSpeed(uint8_t fan) = 0;
+	// Fan Speed in RPM.
+	virtual void setFanSpeed(uint8_t fan, uint16_t speed) = 0;
+	// percentage 255 mean 100%.
+	virtual uint8_t getFanPower(uint8_t fan) = 0;
+	// percentage 255 mean 100%.
+	virtual void setFanPower(uint8_t fan, uint8_t percentage) = 0;
+	// The temperatures in hundredths of a degree Celsius and fan Speeds in RPM.
+	virtual void setFanCurve(uint8_t fan, uint8_t group, const uint16_t* temperatures, const uint16_t* rpms) = 0;
+	// The temperature in hundredths of a degree Celsius.
+	virtual void setFanExternalTemperature(uint8_t fan, uint16_t temp) = 0;
+	virtual void setFanForce3PinMode(bool flag) = 0;
+	// One of FAN_MASK_*
+	virtual uint8_t getFanDetectionType(uint8_t fan) = 0;
+	// One of FAN_MASK_*
+	virtual void setFanDetectionType(uint8_t fan, uint8_t type) = 0;
 };
 
 #endif

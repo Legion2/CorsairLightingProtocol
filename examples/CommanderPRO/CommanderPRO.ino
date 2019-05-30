@@ -13,11 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include "SimpleFanController.h"
 #include "ThermistorTemperatureController.h"
 #include <CorsairLightingProtocol.h>
 #include <LEDController.h>
-#include <TemperatureController.h>
-#include <FanController.h>
 #include <FastLED.h>
 
 #define DATA_PIN_CHANNEL_1 2
@@ -27,7 +26,7 @@
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
-FanController fanController;
+SimpleFanController fanController;
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
