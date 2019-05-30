@@ -15,6 +15,8 @@
 */
 #include "TemperatureController.h"
 
+#define bigEndian(a) highByte(a), lowByte(a)
+
 void TemperatureController::handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response)
 {
 	switch (command.command)
@@ -22,6 +24,9 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 	case READ_TEMPERATURE_MASK:
 	{
 		uint8_t mask[TEMPERATURE_NUM];
+		for (uint8_t i = 0; i < TEMPERATURE_NUM; i++) {
+			mask[i] = isTemperatureSensorConnected(i) ? TEMPERATURE_MASK_CONNECTED : TEMPERATURE_MASK_NOT_CONNECTED;
+		}
 		response->send(mask, sizeof(mask));
 		break;
 	}
@@ -32,8 +37,9 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 			response->sendError();
 			return;
 		}
+		uint16_t temp = getTemperatureValue(tempSensor);
 
-		uint8_t tempdata[] = { highByte(temperatures[tempSensor]), lowByte(temperatures[tempSensor]) };
+		uint8_t tempdata[] = { bigEndian(temp) };
 		response->send(tempdata, sizeof(tempdata));
 		break;
 	}
@@ -45,17 +51,17 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 		{
 		case VOLTAGE_RAIL_12V:
 		{
-			//TODO
+			voltage = getVoltageRail12V();
 			break;
 		}
 		case VOLTAGE_RAIL_5V:
 		{
-			//TODO
+			voltage = getVoltageRail5V();
 			break;
 		}
 		case VOLTAGE_RAIL_3V3:
 		{
-			//TODO
+			voltage = getVoltageRail3V3();
 			break;
 		}
 		default:

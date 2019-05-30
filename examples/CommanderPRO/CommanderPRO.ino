@@ -13,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include "ThermistorTemperatureController.h"
 #include <CorsairLightingProtocol.h>
 #include <LEDController.h>
 #include <TemperatureController.h>
@@ -25,7 +26,7 @@
 #define CHANNEL_LED_COUNT 60
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
-TemperatureController temperatureController;
+ThermistorTemperatureController temperatureController;
 FanController fanController;
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController);
 
