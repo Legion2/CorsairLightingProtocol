@@ -108,6 +108,7 @@ public:
 	virtual void addLeds(uint8_t channel, CRGB * led_buffer) override;
 	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
 	virtual bool updateLEDs() override;
+	virtual size_t getEEPROMSize();
 protected:
 	Channel channels[CHANNEL_NUM];
 	bool trigger_update = false;
@@ -650,6 +651,12 @@ bool LEDController<CHANNEL_LED_COUNT>::updateLEDs()
 	}
 	trigger_update = false;
 	return updated;
+}
+
+template<size_t CHANNEL_LED_COUNT>
+inline size_t LEDController<CHANNEL_LED_COUNT>::getEEPROMSize()
+{
+	return sizeof(channels);
 }
 
 template<size_t CHANNEL_LED_COUNT>

@@ -19,11 +19,11 @@
 
 #include "Arduino.h"
 #include "ILEDController.h"
+#include "CorsairLightingFirmware.h"
 #include "IFanController.h"
 #include "ITemperatureController.h"
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
-
 
 class CorsairLightingProtocol : public CorsairLightingProtocolResponse
 {
@@ -37,6 +37,7 @@ public:
 	void sendX(const uint8_t * data, const size_t x) const override;
 private:
 	uint8_t rawhidData[COMMAND_SIZE];
+	CorsairLightingFirmware corsairLightingFirmware;
 	ILEDController* const ledController;
 	ITemperatureController* const temperatureController;
 	IFanController* const fanController;

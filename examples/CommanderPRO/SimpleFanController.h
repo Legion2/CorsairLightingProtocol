@@ -21,6 +21,8 @@
 // This simple Fan Controller implementation does not implement all features of a Fan Controller.
 // It should only demonstrate how to implement your own Fan Controller.
 class SimpleFanController : public FanController {
+public:
+	SimpleFanController(size_t eEPROMAdress);
 protected:
 	virtual uint16_t getFanSpeed(uint8_t fan) override;
 	virtual void setFanSpeed(uint8_t fan, uint16_t speed) override;
@@ -32,7 +34,9 @@ protected:
 	virtual uint8_t getFanDetectionType(uint8_t fan) override;
 	virtual void setFanDetectionType(uint8_t fan, uint8_t type) override;
 
+	bool force3PinMode = false;
 	uint8_t detectionType[FAN_NUM] = { FAN_MASK_OFF };
+	size_t eEPROMAdress;
 };
 
 #endif

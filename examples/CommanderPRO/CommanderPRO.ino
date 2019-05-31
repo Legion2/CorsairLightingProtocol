@@ -26,7 +26,7 @@
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
-SimpleFanController fanController;
+SimpleFanController fanController(EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];

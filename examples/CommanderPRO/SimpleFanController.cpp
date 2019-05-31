@@ -15,7 +15,7 @@
 */
 #include "SimpleFanController.h"
 
-
+SimpleFanController::SimpleFanController(size_t eEPROMAdress) : eEPROMAdress(eEPROMAdress){}
 
 uint16_t SimpleFanController::getFanSpeed(uint8_t fan)
 {
@@ -45,6 +45,7 @@ void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp)
 
 void SimpleFanController::setFanForce3PinMode(bool flag)
 {
+	force3PinMode = flag;
 }
 
 uint8_t SimpleFanController::getFanDetectionType(uint8_t fan)
