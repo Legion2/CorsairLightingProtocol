@@ -31,10 +31,9 @@ It is **not** compatible with Arduino Uno, Arduino Mega and Arduino Nano.
 
 In the rest of the documentation the board with the ATmega32U4 is called "Arduino" regardless of the manufacturer.
 
-As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is required.
+As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is recommended.
 Visual Micro provides the required functionality for free, but sometimes ask you to buy the full version.
-The Arduino IDE is not supported because it does not provide a way to configure the build options without creating your own board configuration.
-Advanced users can create their own boards configuration with the correct [build settings](examples/LightingNodePRO/board.txt) and then use this boards configuration with the Arduino IDE.
+Using the Arduino IDE is difficult, but you can find a tutorial in the [wiki](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-Arduino-IDE).
 
 You have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
 
