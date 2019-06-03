@@ -15,28 +15,47 @@
 */
 #include "SimpleFanController.h"
 
-SimpleFanController::SimpleFanController(size_t eEPROMAdress) : eEPROMAdress(eEPROMAdress){}
+SimpleFanController::SimpleFanController(uint16_t eEPROMAdress) : eEPROMAdress(eEPROMAdress){}
+
+void SimpleFanController::addFan(uint8_t index, PWMFan* fan)
+{
+	if (index >= FAN_NUM) {
+		return;
+	}
+	fans[index] = fan;
+	fanData[index].detectionType = FAN_MASK_AUTO;
+}
 
 uint16_t SimpleFanController::getFanSpeed(uint8_t fan)
 {
-	return random16();
+	return fanData[fan].speed;
 }
 
 void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed)
 {
+	fanData[fan].speed = speed;
+	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_RPM;
 }
 
 uint8_t SimpleFanController::getFanPower(uint8_t fan)
 {
-	return 0;
+	return fanData[fan].power;
 }
 
 void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage)
 {
+	fanData[fan].power = percentage;
+	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_POWER;
+
+	if (fans[fan] != NULL) {
+		fans[fan]->setPower(percentage);
+	}
 }
 
-void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, const uint16_t* temperatures, const uint16_t* rpms)
+void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve)
 {
+	fanData[fan].fanCurve = fanCurve;
+	fanData[fan].mode = FAN_CONTROL_MODE_CURVE;
 }
 
 void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp)
@@ -50,10 +69,10 @@ void SimpleFanController::setFanForce3PinMode(bool flag)
 
 uint8_t SimpleFanController::getFanDetectionType(uint8_t fan)
 {
-	return detectionType[fan];
+	return fanData[fan].detectionType;
 }
 
 void SimpleFanController::setFanDetectionType(uint8_t fan, uint8_t type)
 {
-	detectionType[fan] = type;
+	fanData[fan].detectionType = type;
 }

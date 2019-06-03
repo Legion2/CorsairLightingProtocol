@@ -31,6 +31,15 @@
 #define FAN_FORCE_THREE_PIN_MODE_ON 0x01
 #define FAN_FORCE_THREE_PIN_MODE_OFF 0x00
 
+#define FAN_CURVE_POINTS_NUM 6
+
+struct FanCurve {
+	// The temperatures in hundredths of a degree Celsius.
+	uint16_t temperatures[FAN_CURVE_POINTS_NUM];
+	// The fan speeds in RPM.
+	uint16_t rpms[FAN_CURVE_POINTS_NUM];
+};
+
 class FanController : public IFanController {
 public:
 	virtual void handleFanControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
@@ -43,8 +52,7 @@ protected:
 	virtual uint8_t getFanPower(uint8_t fan) = 0;
 	// percentage 255 mean 100%.
 	virtual void setFanPower(uint8_t fan, uint8_t percentage) = 0;
-	// The temperatures in hundredths of a degree Celsius and fan Speeds in RPM.
-	virtual void setFanCurve(uint8_t fan, uint8_t group, const uint16_t* temperatures, const uint16_t* rpms) = 0;
+	virtual void setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve) = 0;
 	// The temperature in hundredths of a degree Celsius.
 	virtual void setFanExternalTemperature(uint8_t fan, uint16_t temp) = 0;
 	virtual void setFanForce3PinMode(bool flag) = 0;

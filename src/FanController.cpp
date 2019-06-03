@@ -94,13 +94,12 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 		}
 		const uint8_t& group = command.data[1];
-		uint16_t temperatures[FAN_NUM];
-		uint16_t rpms[FAN_NUM];
-		for (uint8_t i = 0; i < FAN_NUM; i++) {
-			temperatures[i] = fromBigEndian(command.data[2 + i * 2], command.data[3 + i * 2]);
-			rpms[i] = fromBigEndian(command.data[14 + i * 2], command.data[15 + i * 2]);
+		FanCurve fanCurve;
+		for (uint8_t i = 0; i < FAN_CURVE_POINTS_NUM; i++) {
+			fanCurve.temperatures[i] = fromBigEndian(command.data[2 + i * 2], command.data[3 + i * 2]);
+			fanCurve.rpms[i] = fromBigEndian(command.data[14 + i * 2], command.data[15 + i * 2]);
 		}
-		setFanCurve(fan, group, temperatures, rpms);
+		setFanCurve(fan, group, fanCurve);
 		response->send(NULL, 0);
 		break;
 	}

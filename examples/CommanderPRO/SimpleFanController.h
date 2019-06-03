@@ -16,27 +16,43 @@
 #ifndef _SimpleFanController_h
 #define _SimpleFanController_h
 
+#include "Arduino.h"
 #include "FanController.h"
+#include "PWMFan.h"
+
+#define FAN_CONTROL_MODE_FIXED_POWER 0
+#define FAN_CONTROL_MODE_FIXED_RPM 1
+#define FAN_CONTROL_MODE_CURVE 2
+
+struct FanData {
+	uint8_t mode = FAN_CONTROL_MODE_FIXED_POWER;
+	uint8_t power = 0;
+	uint16_t speed = 0;
+	uint8_t detectionType = FAN_MASK_OFF;
+	FanCurve fanCurve;
+};
 
 // This simple Fan Controller implementation does not implement all features of a Fan Controller.
 // It should only demonstrate how to implement your own Fan Controller.
 class SimpleFanController : public FanController {
 public:
-	SimpleFanController(size_t eEPROMAdress);
+	SimpleFanController(uint16_t eEPROMAdress);
+	void addFan(uint8_t index, PWMFan* fan);
 protected:
 	virtual uint16_t getFanSpeed(uint8_t fan) override;
 	virtual void setFanSpeed(uint8_t fan, uint16_t speed) override;
 	virtual uint8_t getFanPower(uint8_t fan) override;
 	virtual void setFanPower(uint8_t fan, uint8_t percentage) override;
-	virtual void setFanCurve(uint8_t fan, uint8_t group, const uint16_t* temperatures, const uint16_t* rpms) override;
+	virtual void setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve) override;
 	virtual void setFanExternalTemperature(uint8_t fan, uint16_t temp) override;
 	virtual void setFanForce3PinMode(bool flag) override;
 	virtual uint8_t getFanDetectionType(uint8_t fan) override;
 	virtual void setFanDetectionType(uint8_t fan, uint8_t type) override;
 
+	PWMFan* fans[FAN_NUM] = { NULL };
 	bool force3PinMode = false;
-	uint8_t detectionType[FAN_NUM] = { FAN_MASK_OFF };
-	size_t eEPROMAdress;
+	FanData fanData[FAN_NUM];
+	uint16_t eEPROMAdress;
 };
 
 #endif
