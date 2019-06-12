@@ -13,19 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#include "PWMFan.h"
 
-#include "Arduino.h"
-#include <FastLED.h>
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
+PWMFan::PWMFan(uint8_t pwmPin, uint8_t tachoPin) : pwmPin(pwmPin), tachoPin(tachoPin)
+{
+	pinMode(pwmPin, OUTPUT);
+	pinMode(tachoPin, INPUT_PULLUP);
+	analogWrite(pwmPin, 0);
+}
 
-class ILEDController {
-public:
-	virtual void addLeds(uint8_t channel, CRGB * led_buffer) = 0;
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-	virtual bool updateLEDs() = 0;
-};
-
-#endif
+void PWMFan::setPower(uint8_t percentage)
+{
+	analogWrite(pwmPin, percentage);
+}

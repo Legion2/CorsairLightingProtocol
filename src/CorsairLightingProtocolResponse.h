@@ -13,19 +13,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#ifndef _CorsairLightingProtocolCallback_h
+#define _CorsairLightingProtocolCallback_h
 
 #include "Arduino.h"
-#include <FastLED.h>
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
 
-class ILEDController {
+class CorsairLightingProtocolResponse {
 public:
-	virtual void addLeds(uint8_t channel, CRGB * led_buffer) = 0;
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-	virtual bool updateLEDs() = 0;
+	virtual void send(const uint8_t* data, size_t size) const;
+	virtual void sendError() const;
+	virtual void send_P(const uint8_t* data, size_t size) const;
+	// Send x byte data via the CorsairLightingProtocol.
+	virtual void sendX(const uint8_t* data, const size_t x) const = 0;
 };
 
 #endif

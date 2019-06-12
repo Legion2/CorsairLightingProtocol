@@ -13,19 +13,19 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#ifndef _PWMFan_h
+#define _PWMFan_h
 
 #include "Arduino.h"
-#include <FastLED.h>
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
 
-class ILEDController {
+class PWMFan {
 public:
-	virtual void addLeds(uint8_t channel, CRGB * led_buffer) = 0;
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-	virtual bool updateLEDs() = 0;
+	PWMFan(uint8_t pwmPin, uint8_t tachoPin);
+	virtual void setPower(uint8_t percentage);
+protected:
+	const uint8_t pwmPin;
+	const uint8_t tachoPin;
 };
 
 #endif
+
