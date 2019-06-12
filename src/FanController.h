@@ -23,10 +23,10 @@
 
 #define FAN_NUM 6
 
-#define FAN_MASK_OFF 0x00
+#define FAN_MASK_AUTO 0x00
 #define FAN_MASK_3PIN 0x01
 #define FAN_MASK_4PIN 0x02
-#define FAN_MASK_AUTO 0x03
+#define FAN_MASK_OFF 0x03
 
 #define FAN_FORCE_THREE_PIN_MODE_ON 0x01
 #define FAN_FORCE_THREE_PIN_MODE_OFF 0x00
