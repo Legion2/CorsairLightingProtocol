@@ -34,7 +34,7 @@
 #define USE_EEPROM true
 
 // This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
-//#define DISABLE_BUILTIN_LED
+#define DISABLE_BUILTIN_LED
 
 LEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
 CorsairLightingProtocol cLP(&ledController);
