@@ -24,7 +24,20 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 	{
 		uint8_t mask[FAN_NUM];
 		for (uint8_t i = 0; i < FAN_NUM; i++) {
-			mask[i] = getFanDetectionType(i);
+			switch (getFanDetectionType(i))
+			{
+			case FAN_DETECTION_TYPE_AUTO:
+				mask[i] = FAN_MASK_DISCONNECTED;//TODO
+				break;
+			case FAN_DETECTION_TYPE_3PIN:
+				mask[i] = FAN_MASK_3PIN;
+				break;
+			case FAN_DETECTION_TYPE_4PIN:
+				mask[i] = FAN_MASK_4PIN;
+				break;
+			case FAN_DETECTION_TYPE_DISCONNECTED:
+				mask[i] = FAN_MASK_DISCONNECTED;
+			}
 		}
 		response->send(mask, sizeof(mask));
 		break;

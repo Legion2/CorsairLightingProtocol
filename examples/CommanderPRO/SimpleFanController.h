@@ -28,7 +28,7 @@ struct FanData {
 	uint8_t mode = FAN_CONTROL_MODE_FIXED_POWER;
 	uint8_t power = 0;
 	uint16_t speed = 0;
-	uint8_t detectionType = FAN_MASK_OFF;
+	uint8_t detectionType = FAN_DETECTION_TYPE_DISCONNECTED;
 	FanCurve fanCurve;
 };
 
@@ -51,6 +51,8 @@ protected:
 	virtual void setFanForce3PinMode(bool flag) override;
 	virtual uint8_t getFanDetectionType(uint8_t fan) override;
 	virtual void setFanDetectionType(uint8_t fan, uint8_t type) override;
+	bool load();
+	bool save();
 
 	PWMFan* fans[FAN_NUM] = { NULL };
 	bool force3PinMode = false;
@@ -58,6 +60,7 @@ protected:
 	uint16_t externalTemp[FAN_NUM];
 	uint16_t updateRate;
 	uint16_t eEPROMAdress;
+	bool trigger_save = false;
 	long lastUpdate = 0;
 };
 
