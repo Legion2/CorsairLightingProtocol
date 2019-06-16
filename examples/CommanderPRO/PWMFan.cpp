@@ -15,14 +15,20 @@
 */
 #include "PWMFan.h"
 
-PWMFan::PWMFan(uint8_t pwmPin, uint8_t tachoPin) : pwmPin(pwmPin), tachoPin(tachoPin)
+PWMFan::PWMFan(uint8_t pwmPin, uint16_t minRPM ,uint16_t maxRPM) : pwmPin(pwmPin), minRPM(minRPM), maxRPM(maxRPM)
 {
 	pinMode(pwmPin, OUTPUT);
-	pinMode(tachoPin, INPUT_PULLUP);
 	analogWrite(pwmPin, 0);
 }
 
 void PWMFan::setPower(uint8_t percentage)
 {
 	analogWrite(pwmPin, percentage);
+}
+
+void PWMFan::setSpeed(uint16_t rpm)
+{
+	rpm = constrain(rpm, minRPM, maxRPM);
+	uint8_t power = ((float)(rpm - minRPM) / (float)(maxRPM - minRPM)) * 255;
+	setPower(power);
 }

@@ -24,19 +24,20 @@
 
 #define TEMP_SENSOR_PIN_1 A7
 
+#define FAN_UPDATE_RATE 500
 #define PWM_FAN_PIN_1 4
 
 #define CHANNEL_LED_COUNT 60
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
-SimpleFanController fanController(EEPROM_ADDRESS + ledController.getEEPROMSize());
+SimpleFanController fanController(FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];
 
-PWMFan fan1(PWM_FAN_PIN_1, 5);
+PWMFan fan1(PWM_FAN_PIN_1, 0, 2000);
 
 Command command;
 
@@ -66,7 +67,5 @@ void loop() {
 	if (ledController.updateLEDs()) {
 		FastLED.show();
 	}
-	else {
-		delay(3);
-	}
+	fanController.updateFans();
 }

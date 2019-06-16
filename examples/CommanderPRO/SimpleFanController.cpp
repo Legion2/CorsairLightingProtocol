@@ -15,7 +15,7 @@
 */
 #include "SimpleFanController.h"
 
-SimpleFanController::SimpleFanController(uint16_t eEPROMAdress) : eEPROMAdress(eEPROMAdress){}
+SimpleFanController::SimpleFanController(uint16_t updateRate, uint16_t eEPROMAdress) : updateRate(updateRate), eEPROMAdress(eEPROMAdress){}
 
 void SimpleFanController::addFan(uint8_t index, PWMFan* fan)
 {
@@ -24,6 +24,44 @@ void SimpleFanController::addFan(uint8_t index, PWMFan* fan)
 	}
 	fans[index] = fan;
 	fanData[index].detectionType = FAN_MASK_AUTO;
+}
+
+bool SimpleFanController::updateFans()
+{
+	long currentUpdate = millis();
+	long lastUpdateNumber = lastUpdate / updateRate;
+	long currentUpdateNumber = currentUpdate / updateRate;
+	lastUpdate = currentUpdate;
+	if (lastUpdateNumber < currentUpdateNumber) {
+		for (uint8_t i = 0; i < FAN_NUM; i++) {
+			if (fans[i] == NULL || fanData[i].mode != FAN_CONTROL_MODE_CURVE) {
+				continue;
+			}
+
+			const uint16_t& temp = externalTemp[i];//TODO
+			const FanCurve& fanCurve = fanData[i].fanCurve;
+
+			if (temp <= fanCurve.temperatures[0]) {
+				fans[i]->setSpeed(fanCurve.rpms[0]);
+				continue;
+			}
+			if (temp > fanCurve.temperatures[FAN_CURVE_POINTS_NUM - 1]) {
+				fans[i]->setSpeed(fanCurve.rpms[FAN_CURVE_POINTS_NUM - 1]);
+				continue;
+			}
+
+			for (uint8_t p = 0; p < FAN_CURVE_POINTS_NUM - 1; p++) {
+				if (temp > fanCurve.temperatures[p + 1]) {
+					continue;
+				}
+				uint16_t speed = map(temp, fanCurve.temperatures[p], fanCurve.temperatures[p + 1], fanCurve.rpms[p], fanCurve.rpms[p + 1]);
+				fans[i]->setSpeed(speed);
+				break;
+			}
+		}
+		return true;
+	}
+	return false;
 }
 
 uint16_t SimpleFanController::getFanSpeed(uint8_t fan)
@@ -35,6 +73,10 @@ void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed)
 {
 	fanData[fan].speed = speed;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_RPM;
+
+	if (fans[fan] != NULL) {
+		fans[fan]->setSpeed(speed);
+	}
 }
 
 uint8_t SimpleFanController::getFanPower(uint8_t fan)
@@ -60,7 +102,7 @@ void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanC
 
 void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp)
 {
-	 //TODO
+	externalTemp[fan] = temp;
 }
 
 void SimpleFanController::setFanForce3PinMode(bool flag)

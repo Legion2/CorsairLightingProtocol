@@ -36,8 +36,11 @@ struct FanData {
 // It should only demonstrate how to implement your own Fan Controller.
 class SimpleFanController : public FanController {
 public:
-	SimpleFanController(uint16_t eEPROMAdress);
+	// Fan Contorller must use the EEPROM else on startup the fans can't be controlled
+	// updateRate it the time between fan speed updates in ms
+	SimpleFanController(uint16_t updateRate, uint16_t eEPROMAdress);
 	void addFan(uint8_t index, PWMFan* fan);
+	virtual bool updateFans();
 protected:
 	virtual uint16_t getFanSpeed(uint8_t fan) override;
 	virtual void setFanSpeed(uint8_t fan, uint16_t speed) override;
@@ -52,7 +55,10 @@ protected:
 	PWMFan* fans[FAN_NUM] = { NULL };
 	bool force3PinMode = false;
 	FanData fanData[FAN_NUM];
+	uint16_t externalTemp[FAN_NUM];
+	uint16_t updateRate;
 	uint16_t eEPROMAdress;
+	long lastUpdate = 0;
 };
 
 #endif
