@@ -60,6 +60,7 @@ void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanC
 
 void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp)
 {
+	 //TODO
 }
 
 void SimpleFanController::setFanForce3PinMode(bool flag)

@@ -23,6 +23,7 @@
 void ThermistorTemperatureController::addSensor(uint8_t index, uint8_t pin)
 {
 	if (index < sizeof(sensorPins)) {
+		pinMode(pin, INPUT);
 		sensorPins[index] = pin;
 	}
 }

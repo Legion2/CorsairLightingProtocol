@@ -22,6 +22,10 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
+#define TEMP_SENSOR_PIN_1 A7
+
+#define PWM_FAN_PIN_1 4
+
 #define CHANNEL_LED_COUNT 60
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
@@ -32,7 +36,7 @@ CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanControll
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];
 
-PWMFan fan1(4, 5);
+PWMFan fan1(PWM_FAN_PIN_1, 5);
 
 Command command;
 
@@ -47,6 +51,7 @@ void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLeds(0, ledsChannel1);
 	ledController.addLeds(1, ledsChannel2);
+	temperatureController.addSensor(0, TEMP_SENSOR_PIN_1);
 	fanController.addFan(0, &fan1);
 	cLP.begin();
 }

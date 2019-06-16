@@ -14,16 +14,7 @@
    limitations under the License.
 */
 #include "FanController.h"
-
-#define bigEndian(a) highByte(a), lowByte(a)
-uint16_t fromBigEndian(const byte& byte1, const byte& byte2) {
-	uint16_t t = byte1;
-	t = t << 8;
-	t |= byte2;
-	return t;
-}
-#define convert100To255(a) (a * 2.5546875f)
-#define convert255To100(a) (a / 2.5546875f)
+#include "CLPUtils.h"
 
 void FanController::handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response)
 {
@@ -46,7 +37,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 		}
 		uint16_t speed = getFanSpeed(fan);
-		uint8_t fanData[] = { bigEndian(speed) };
+		uint8_t fanData[] = { toBigEndian(speed) };
 		response->send(fanData, sizeof(fanData));
 		break;
 	}
