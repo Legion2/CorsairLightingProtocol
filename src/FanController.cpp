@@ -134,7 +134,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 		}
 		const uint8_t& type = command.data[2];
-		if (type > FAN_MASK_AUTO) {
+		if (type > 0x03) {
 			response->sendError();
 			return;
 		}
