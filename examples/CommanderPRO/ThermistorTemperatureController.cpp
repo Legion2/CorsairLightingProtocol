@@ -19,6 +19,7 @@
 #define TEMPERATURE_REFERENCE (273.15 + 25)
 #define RESISTENCE_REFERENCE 10000
 #define RESISTENCE_DIVIDER 10000
+#define MAX_TEMP 150
 
 void ThermistorTemperatureController::addSensor(uint8_t index, uint8_t pin)
 {
@@ -44,7 +45,7 @@ uint16_t ThermistorTemperatureController::getTemperatureValue(uint8_t temperatur
 	temp = 1.0 / temp; // invert
 	temp -= 273.15; // convert to °C
 
-	return temp * 100;
+	return constrain(temp, 0, MAX_TEMP) * 100;
 }
 
 bool ThermistorTemperatureController::isTemperatureSensorConnected(uint8_t temperatureSensor)
