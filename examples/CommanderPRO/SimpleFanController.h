@@ -18,6 +18,7 @@
 
 #include "Arduino.h"
 #include "FanController.h"
+#include "TemperatureController.h"
 #include "PWMFan.h"
 
 #define FAN_CONTROL_MODE_FIXED_POWER 0
@@ -29,6 +30,7 @@ struct FanData {
 	uint8_t power = 0;
 	uint16_t speed = 0;
 	uint8_t detectionType = FAN_DETECTION_TYPE_DISCONNECTED;
+	uint8_t tempGroup;
 	FanCurve fanCurve;
 };
 
@@ -38,7 +40,7 @@ class SimpleFanController : public FanController {
 public:
 	// Fan Contorller must use the EEPROM else on startup the fans can't be controlled
 	// updateRate it the time between fan speed updates in ms
-	SimpleFanController(uint16_t updateRate, uint16_t eEPROMAdress);
+	SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate, uint16_t eEPROMAdress);
 	void addFan(uint8_t index, PWMFan* fan);
 	virtual bool updateFans();
 protected:
@@ -54,6 +56,7 @@ protected:
 	bool load();
 	bool save();
 
+	TemperatureController* const temperatureController;
 	PWMFan* fans[FAN_NUM] = { NULL };
 	bool force3PinMode = false;
 	FanData fanData[FAN_NUM];

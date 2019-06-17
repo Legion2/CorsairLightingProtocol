@@ -31,7 +31,7 @@
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
-SimpleFanController fanController(FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
+SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
@@ -53,6 +53,7 @@ void setup() {
 	ledController.addLeds(0, ledsChannel1);
 	ledController.addLeds(1, ledsChannel2);
 	temperatureController.addSensor(0, TEMP_SENSOR_PIN_1);
+	temperatureController.addSensor(1, TEMP_SENSOR_PIN_1);
 	fanController.addFan(0, &fan1);
 	cLP.begin();
 }

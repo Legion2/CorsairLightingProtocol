@@ -37,6 +37,8 @@
 
 #define FAN_CURVE_POINTS_NUM 6
 
+#define FAN_CURVE_TEMP_GROUP_EXTERNAL 255
+
 struct FanCurve {
 	// The temperatures in hundredths of a degree Celsius.
 	uint16_t temperatures[FAN_CURVE_POINTS_NUM];

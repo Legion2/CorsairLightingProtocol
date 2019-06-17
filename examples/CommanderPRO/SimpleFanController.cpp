@@ -16,7 +16,7 @@
 #include "SimpleFanController.h"
 #include <EEPROM.h>
 
-SimpleFanController::SimpleFanController(uint16_t updateRate, uint16_t eEPROMAdress) : updateRate(updateRate), eEPROMAdress(eEPROMAdress)
+SimpleFanController::SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate, uint16_t eEPROMAdress) : temperatureController(temperatureController), updateRate(updateRate), eEPROMAdress(eEPROMAdress)
 {
 	load();
 }
@@ -46,7 +46,15 @@ bool SimpleFanController::updateFans()
 				continue;
 			}
 
-			const uint16_t& temp = externalTemp[i];//TODO
+			uint16_t temp;
+			const uint8_t& group = fanData[i].tempGroup;
+			if (group == FAN_CURVE_TEMP_GROUP_EXTERNAL) {
+				temp = externalTemp[i];
+			}
+			else if (group < TEMPERATURE_NUM) {
+				temp = temperatureController->getTemperature(group);
+			}
+
 			const FanCurve& fanCurve = fanData[i].fanCurve;
 			uint16_t speed;
 
@@ -107,6 +115,7 @@ void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage)
 void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve)
 {
 	fanData[fan].fanCurve = fanCurve;
+	fanData[fan].tempGroup = group;
 	fanData[fan].mode = FAN_CONTROL_MODE_CURVE;
 	trigger_save = true;
 }

@@ -33,6 +33,7 @@
 class TemperatureController : public ITemperatureController {
 public:
 	virtual void handleTemperatureControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
+	virtual uint16_t getTemperature(uint8_t temperatureSensor);
 protected:
 	// The temperature in hundredths of a degree Celsius.
 	virtual uint16_t getTemperatureValue(uint8_t temperatureSensor) = 0;

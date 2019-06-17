@@ -14,8 +14,7 @@
    limitations under the License.
 */
 #include "TemperatureController.h"
-
-#define bigEndian(a) highByte(a), lowByte(a)
+#include "CLPUtils.h"
 
 void TemperatureController::handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response)
 {
@@ -38,8 +37,7 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 			return;
 		}
 		uint16_t temp = getTemperatureValue(tempSensor);
-
-		uint8_t tempdata[] = { bigEndian(temp) };
+		uint8_t tempdata[] = { toBigEndian(temp) };
 		response->send(tempdata, sizeof(tempdata));
 		break;
 	}
@@ -71,11 +69,19 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 		}
 		}
 
-		uint8_t voltagedata[] = { highByte(voltage), lowByte(voltage) };
+		uint8_t voltagedata[] = { toBigEndian(voltage) };
 		response->send(voltagedata, sizeof(voltagedata));
 		break;
 	}
 	default:
 		response->sendError();
 	}
+}
+
+uint16_t TemperatureController::getTemperature(uint8_t temperatureSensor)
+{
+	if (temperatureSensor >= TEMPERATURE_NUM) {
+		return 0;
+	}
+	return getTemperatureValue(temperatureSensor);
 }
