@@ -27,6 +27,15 @@ void SimpleFanController::addFan(uint8_t index, PWMFan* fan)
 		return;
 	}
 	fans[index] = fan;
+	switch (fanData[index].mode)
+	{
+	case FAN_CONTROL_MODE_FIXED_POWER:
+		fanData[index].speed = fan->calculateSpeedFromPower(fanData[index].power);
+		break;
+	case FAN_CONTROL_MODE_FIXED_RPM:
+		fanData[index].power = fan->calculatePowerFromSpeed(fanData[index].speed);
+		break;
+	}
 }
 
 bool SimpleFanController::updateFans()
@@ -42,7 +51,11 @@ bool SimpleFanController::updateFans()
 		}
 
 		for (uint8_t i = 0; i < FAN_NUM; i++) {
-			if (fans[i] == NULL || fanData[i].mode != FAN_CONTROL_MODE_CURVE) {
+			if (fans[i] == NULL) {
+				continue;
+			}
+			if (fanData[i].mode == FAN_CONTROL_MODE_FIXED_RPM || fanData[i].mode == FAN_CONTROL_MODE_FIXED_POWER) {
+				fans[i]->setPower(fanData[i].power);
 				continue;
 			}
 
@@ -92,11 +105,8 @@ void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed)
 {
 	fanData[fan].speed = speed;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_RPM;
-
-	if (fans[fan] != NULL) {
-		fanData[fan].power = fans[fan]->calculatePowerFromSpeed(speed);
-		fans[fan]->setPower(fanData[fan].power);
-	}
+	fanData[fan].power = fans[fan] != NULL ? fans[fan]->calculatePowerFromSpeed(speed) : 0;
+	trigger_save = true;
 }
 
 uint8_t SimpleFanController::getFanPower(uint8_t fan)
@@ -108,11 +118,8 @@ void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage)
 {
 	fanData[fan].power = percentage;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_POWER;
-
-	if (fans[fan] != NULL) {
-		fanData[fan].speed = fans[fan]->calculateSpeedFromPower(percentage);
-		fans[fan]->setPower(percentage);
-	}
+	fanData[fan].speed = fans[fan] != NULL ? fans[fan]->calculateSpeedFromPower(percentage) : 0;
+	trigger_save = true;
 }
 
 void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve)
