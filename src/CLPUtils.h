@@ -21,8 +21,14 @@
 #define toBigEndian(a) highByte(a), lowByte(a)
 uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
 // convert value from range 0-100 to 0-255
-#define convert100To255(a) (a * 2.5546875f)
+inline uint8_t convert100To255(uint8_t value)
+{
+	return value * 2.5546875f;
+}
 // convert value from range 0-255 to 0-100
-#define convert255To100(a) (a / 2.5546875f)
+inline uint8_t convert255To100(uint8_t value)
+{
+	return value / 2.5546875f;
+}
 
 #endif
