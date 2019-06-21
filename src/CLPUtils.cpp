@@ -21,3 +21,15 @@ uint16_t fromBigEndian(const byte& byte1, const byte& byte2) {
 	t |= byte2;
 	return t;
 }
+
+void disableBuildInLEDs()
+{
+#ifndef DEBUG
+#ifdef LED_BUILTIN_RX
+	pinMode(LED_BUILTIN_RX, INPUT);
+#endif
+#ifdef LED_BUILTIN_TX
+	pinMode(LED_BUILTIN_TX, INPUT);
+#endif
+#endif
+}

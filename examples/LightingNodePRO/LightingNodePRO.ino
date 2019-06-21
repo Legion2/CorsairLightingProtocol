@@ -31,12 +31,7 @@ CRGB ledsChannel2[CHANNEL_LED_COUNT];
 Command command;
 
 void setup() {
-#ifdef LED_BUILTIN_RX
-	pinMode(LED_BUILTIN_RX, INPUT);
-#endif
-#ifdef LED_BUILTIN_TX
-	pinMode(LED_BUILTIN_TX, INPUT);
-#endif
+	disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLeds(0, ledsChannel1);

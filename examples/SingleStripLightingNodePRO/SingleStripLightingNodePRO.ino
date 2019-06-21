@@ -33,9 +33,6 @@
 // If enabled, the Hardware Lighting configured in iCUE works without a USB connection and even after a restart of the Arduino.
 #define USE_EEPROM true
 
-// This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
-#define DISABLE_BUILTIN_LED
-
 LEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
 CorsairLightingProtocol cLP(&ledController);
 
@@ -48,16 +45,8 @@ Command command;
 void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
-#else
-#ifdef DISABLE_BUILTIN_LED
-#ifdef LED_BUILTIN_RX
-	pinMode(LED_BUILTIN_RX, INPUT);
 #endif
-#ifdef LED_BUILTIN_TX
-	pinMode(LED_BUILTIN_TX, INPUT);
-#endif
-#endif
-#endif
+	disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 	ledController.addLeds(0, leds);
 	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
