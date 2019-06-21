@@ -17,7 +17,12 @@
 #define _ThermistorTemperatureController_h
 
 #include "TemperatureController.h"
-
+/*
+Thermistor Schematic :
+    | ---- [10k - Resistor] ----- | ----- [Thermistor] ---- |
+    |                             |                         |
+ [Ground]                     Analog Pin                  [+5v]
+*/
 class ThermistorTemperatureController : public TemperatureController {
 public:
 	void addSensor(uint8_t index, uint8_t pin);
