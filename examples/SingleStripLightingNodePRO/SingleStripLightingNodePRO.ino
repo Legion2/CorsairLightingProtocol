@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingProtocol.h>
-#include <LEDController.h>
+#include <CorsairLightingNodePRO.h>
 #include <FastLED.h>
 
 // The number of LEDs per channel, there are two channels.
@@ -34,7 +33,7 @@
 #define USE_EEPROM true
 
 LEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
-CorsairLightingProtocol cLP(&ledController);
+CorsairLightingProtocol cLP(&ledController, firmware_version);
 
 // This array conatins all RGB values for all LEDs of the both channels.
 CRGB leds[NUM_LEDS];

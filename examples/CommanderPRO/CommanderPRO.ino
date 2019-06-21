@@ -33,10 +33,12 @@
 
 #define CHANNEL_LED_COUNT 60
 
+const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x07, 0x00 };
+
 LEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
 SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
-CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController);
+CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController, firmware_version);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];

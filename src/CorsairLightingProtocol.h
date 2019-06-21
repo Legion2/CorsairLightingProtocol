@@ -28,8 +28,8 @@
 class CorsairLightingProtocol : public CorsairLightingProtocolResponse
 {
 public:
-	CorsairLightingProtocol(ILEDController* l);
-	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f);
+	CorsairLightingProtocol(ILEDController* l, const uint8_t* firmwareVersion);
+	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, const uint8_t* firmwareVersion);
 	void begin();
 	bool available() const;
 	void getCommand(Command& command);

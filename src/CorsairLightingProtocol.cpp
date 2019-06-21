@@ -18,11 +18,9 @@
 #include "LEDController.h"
 #include "RawHID.h"
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x07, 0x00 };
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
 
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController) : corsairLightingFirmware(firmware_version), ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
-
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController) : corsairLightingFirmware(firmware_version), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
 
 void CorsairLightingProtocol::begin()
 {

@@ -13,24 +13,27 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingNodePRO.h>
+#ifndef _CORSAIRLIGHTINGNODEPRO_h
+#define _CORSAIRLIGHTINGNODEPRO_h
+
+#include "Arduino.h"
+#include "LEDController.h"
+#include "CorsairLightingProtocol.h"
 #include <FastLED.h>
 
-#define DATA_PIN_CHANNEL_1 2
-#define DATA_PIN_CHANNEL_2 3
+#define CHANNEL_LED_COUNT 60
 
-CRGB ledsChannel1[CHANNEL_LED_COUNT];
-CRGB ledsChannel2[CHANNEL_LED_COUNT];
+const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x07, 0x00 };
 
-CorsairLightingNodePRO cLNP(ledsChannel1, ledsChannel2);
+class CorsairLightingNodePRO {
+public:
+	CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2);
+	void begin();
+	void update();
+protected:
+	LEDController<CHANNEL_LED_COUNT> ledController;
+	CorsairLightingProtocol cLP;
+};
 
-void setup() {
-	disableBuildInLEDs();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	cLNP.begin();
-}
+#endif
 
-void loop() {
-	cLNP.update();
-}
