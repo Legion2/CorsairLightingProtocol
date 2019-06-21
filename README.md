@@ -26,7 +26,7 @@
 
 ## Requirements
 The library is compatible with all boards using the MCU ATmega32U4.
-This includes **Arduino Micro**, **Arduino Leonardo** and **Pro Micro**.
+This includes **Arduino Leonardo**, **SparkFun Pro Micro** and **Arduino Micro**.
 It is **not** compatible with Arduino Uno, Arduino Mega and Arduino Nano.
 
 In the rest of the documentation the board with the ATmega32U4 is called "Arduino" regardless of the manufacturer.
