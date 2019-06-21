@@ -13,16 +13,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#ifndef _CLPUtils_h
+#define _CLPUtils_h
 
 #include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
 
-class ILEDController {
-public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-};
+#define toBigEndian(a) highByte(a), lowByte(a)
+uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
+// convert value from range 0-100 to 0-255
+inline uint8_t convert100To255(uint8_t value)
+{
+	return value * 2.5546875f;
+}
+// convert value from range 0-255 to 0-100
+inline uint8_t convert255To100(uint8_t value)
+{
+	return value / 2.5546875f;
+}
 
 #endif

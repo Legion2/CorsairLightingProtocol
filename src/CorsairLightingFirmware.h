@@ -21,13 +21,6 @@
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
-// VID: 1b1c
-// PID: 0c0b
-// Revision: 0001
-// Manufacturer: Corsair
-// Product Name: Lighting Node PRO
-// Serial Number: 1EA000060904BAAEFB66DF55421900F5
-
 #ifndef EEPROM_ADDRESS_DEVICE_ID
 #define EEPROM_ADDRESS_DEVICE_ID 0
 #endif
@@ -35,19 +28,18 @@
 #define PROTOCOL_STATUS_OK 0x00
 #define PROTOCOL_STATUS_ERROR 0xFF
 
-const uint8_t firmware_version[] PROGMEM = { 0x00, 0x07, 0x00 };
-const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
-const uint8_t status[] PROGMEM = { PROTOCOL_STATUS_OK };
+#define FIRMWARE_VERSION_SIZE 3
 
-class CorsairLightingFirmware_ {
+const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
+
+class CorsairLightingFirmware {
 public:
-	CorsairLightingFirmware_();
+	CorsairLightingFirmware(const uint8_t* firmwareVersion);
 	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response);
 protected:
+	const uint8_t* firmwareVersion;
 	uint8_t DeviceId[4];
 };
-
-CorsairLightingFirmware_& CorsairLightingFirmware();
 
 #endif
 

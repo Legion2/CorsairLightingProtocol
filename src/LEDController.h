@@ -17,10 +17,10 @@
 #define _LEDController_h
 
 #include "Arduino.h"
-
 #include <FastLED.h>
-#include <CorsairLightingProtocol.h>
-#include <ILEDController.h>
+#include "CorsairLightingProtocol.h"
+#include "ILEDController.h"
+#include "CLPUtils.h"
 
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
@@ -105,9 +105,10 @@ class LEDController : public ILEDController {
 
 public:
 	LEDController(bool useEEPROM);
-	virtual void addLeds(uint8_t channel, CRGB * led_buffer) override;
+	virtual void addLeds(uint8_t channel, CRGB * led_buffer);
 	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
-	virtual bool updateLEDs() override;
+	virtual bool updateLEDs();
+	virtual size_t getEEPROMSize();
 protected:
 	Channel channels[CHANNEL_NUM];
 	bool trigger_update = false;
@@ -134,8 +135,6 @@ protected:
 #ifndef EEPROM_ADDRESS
 #define EEPROM_ADDRESS 4
 #endif
-
-uint16_t combine(const byte& byte1, const byte& byte2);
 
 template<size_t CHANNEL_LED_COUNT>
 LEDController<CHANNEL_LED_COUNT>::LEDController(bool useEEPROM) : useEEPROM(useEEPROM) {
@@ -228,15 +227,15 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 			group.color1.setRGB(data[8], data[9], data[10]);
 			group.color2.setRGB(data[11], data[12], data[13]);
 			group.color3.setRGB(data[14], data[15], data[16]);
-			group.temp1 = combine(data[17], data[18]);
-			group.temp2 = combine(data[19], data[20]);
-			group.temp3 = combine(data[21], data[22]);
+			group.temp1 = fromBigEndian(data[17], data[18]);
+			group.temp2 = fromBigEndian(data[19], data[20]);
+			group.temp3 = fromBigEndian(data[21], data[22]);
 			trigger_save = true;
 			break;
 		}
 		case WRITE_LED_EXTERNAL_TEMP:
 		{
-			volatileChannelData.temp = combine(data[2], data[3]);
+			volatileChannelData.temp = fromBigEndian(data[2], data[3]);
 			break;
 		}
 		case WRITE_LED_GROUPS_CLEAR:
@@ -257,8 +256,7 @@ void LEDController<CHANNEL_LED_COUNT>::handleLEDControl(const Command& command, 
 		}
 		case WRITE_LED_BRIGHTNESS:
 		{
-			// convert brightness from range 0-100 to 0-255
-			uint8_t brightness = data[1] * 2.5546875f;
+			uint8_t brightness = convert100To255(data[1]);
 			if (ledChannel.brightness != brightness) {
 				ledChannel.brightness = brightness;
 				trigger_save = true;
@@ -650,6 +648,12 @@ bool LEDController<CHANNEL_LED_COUNT>::updateLEDs()
 	}
 	trigger_update = false;
 	return updated;
+}
+
+template<size_t CHANNEL_LED_COUNT>
+inline size_t LEDController<CHANNEL_LED_COUNT>::getEEPROMSize()
+{
+	return sizeof(channels);
 }
 
 template<size_t CHANNEL_LED_COUNT>

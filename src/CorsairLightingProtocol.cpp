@@ -18,7 +18,11 @@
 #include "LEDController.h"
 #include "RawHID.h"
 
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* const aLEDController) : ledController(aLEDController){}
+const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x07, 0x00 };
+
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController) : corsairLightingFirmware(firmware_version), ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
+
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController) : corsairLightingFirmware(firmware_version), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
 
 void CorsairLightingProtocol::begin()
 {
@@ -49,10 +53,23 @@ void CorsairLightingProtocol::getCommand(Command& command)
 void CorsairLightingProtocol::handleCommand(const Command& command)
 {
 	if (command.command < 0x10) {
-		CorsairLightingFirmware().handleFirmwareCommand(command, this);
+		corsairLightingFirmware.handleFirmwareCommand(command, this);
 	}
-	else if (command.command >= 0x10 && command.command < 0x30) {
-		sendError();
+	else if (command.command >= 0x10 && command.command < 0x20) {
+		if (temperatureController != NULL) {
+			temperatureController->handleTemperatureControl(command, this);
+		}
+		else {
+			sendError();
+		}
+	}
+	else if (command.command >= 0x20 && command.command < 0x30) {
+		if (fanController != NULL) {
+			fanController->handleFanControl(command, this);
+		}
+		else {
+			sendError();
+		}
 	}
 	else if (command.command >= 0x30 && command.command < 0x40) {
 		ledController->handleLEDControl(command, this);
