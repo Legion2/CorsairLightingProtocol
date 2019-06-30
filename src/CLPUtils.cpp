@@ -13,16 +13,23 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#include "LEDController.h"
 
-#include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
+uint16_t fromBigEndian(const byte& byte1, const byte& byte2) {
+	uint16_t t = byte1;
+	t = t << 8;
+	t |= byte2;
+	return t;
+}
 
-class ILEDController {
-public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-};
-
+void disableBuildInLEDs()
+{
+#ifndef DEBUG
+#ifdef LED_BUILTIN_RX
+	pinMode(LED_BUILTIN_RX, INPUT);
 #endif
+#ifdef LED_BUILTIN_TX
+	pinMode(LED_BUILTIN_TX, INPUT);
+#endif
+#endif
+}

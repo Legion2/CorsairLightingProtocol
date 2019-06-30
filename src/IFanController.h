@@ -13,16 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#ifndef _IFanController_h
+#define _IFanController_h
 
 #include "Arduino.h"
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
-class ILEDController {
+class IFanController {
 public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
+	virtual void handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };
 
 #endif

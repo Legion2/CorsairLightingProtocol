@@ -14,10 +14,3 @@
    limitations under the License.
 */
 #include "LEDController.h"
-
-uint16_t combine(const byte& byte1, const byte& byte2) {
-	uint16_t t = byte1;
-	t = t << 8;
-	t |= byte2;
-	return t;
-}

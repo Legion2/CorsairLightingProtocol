@@ -13,16 +13,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#include "CorsairLightingNodePRO.h"
 
-#include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
+CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version)
+{
+	ledController.addLeds(0, ledsChannel1);
+	ledController.addLeds(1, ledsChannel2);
+}
 
-class ILEDController {
-public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-};
+void CorsairLightingNodePRO::begin()
+{
+	cLP.begin();
+}
 
-#endif
+void CorsairLightingNodePRO::update() {
+	if (cLP.available())
+	{
+		Command command;
+		cLP.getCommand(command);
+		cLP.handleCommand(command);
+	}
+
+	if (ledController.updateLEDs()) {
+		FastLED.show();
+	}
+	else {
+		delay(3);
+	}
+}

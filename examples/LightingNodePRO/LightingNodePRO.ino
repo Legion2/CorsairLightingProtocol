@@ -13,48 +13,24 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingProtocol.h>
-#include <LEDController.h>
+#include <CorsairLightingNodePRO.h>
 #include <FastLED.h>
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-#define CHANNEL_LED_COUNT 60
-
-LEDController<CHANNEL_LED_COUNT> ledController(true);
-CorsairLightingProtocol cLP(&ledController);
-
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];
 
-Command command;
+CorsairLightingNodePRO cLNP(ledsChannel1, ledsChannel2);
 
 void setup() {
-#ifdef LED_BUILTIN_RX
-	pinMode(LED_BUILTIN_RX, INPUT);
-#endif
-#ifdef LED_BUILTIN_TX
-	pinMode(LED_BUILTIN_TX, INPUT);
-#endif
+	disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	ledController.addLeds(0, ledsChannel1);
-	ledController.addLeds(1, ledsChannel2);
-	cLP.begin();
+	cLNP.begin();
 }
 
 void loop() {
-	if (cLP.available())
-	{
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
-
-	if (ledController.updateLEDs()) {
-		FastLED.show();
-	}
-	else {
-		delay(3);
-	}
+	cLNP.update();
 }

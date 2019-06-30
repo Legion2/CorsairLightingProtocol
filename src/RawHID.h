@@ -42,20 +42,8 @@ THE SOFTWARE.
 #undef RAWHID_USAGE
 #define RAWHID_USAGE		0x0C00 // recommended: 0x0100 to 0xFFFF
 
-// Keep one byte offset for the reportID if used
-#if (HID_REPORTID_RAWHID)
-#define RAWHID_SIZE (USB_EP_SIZE-1)
-#error RAWHID does not work properly with a report ID and multiple reports.
-#error Please remove this manually if you know what you are doing.
-#else
-#define RAWHID_SIZE (USB_EP_SIZE)
-#endif
-
-#undef RAWHID_TX_SIZE
-#define RAWHID_TX_SIZE RAWHID_SIZE // todo should be 16
-
-#undef RAWHID_RX_SIZE
-#define RAWHID_RX_SIZE RAWHID_SIZE // todo should be 64
+#define RAWHID_TX_SIZE 64
+#define RAWHID_RX_SIZE 64
 
 class RawHID_ : public PluggableUSBModule, public Stream
 {
@@ -143,7 +131,7 @@ public:
 		return write(&b, 1);
 	}
 
-	virtual size_t write(uint8_t *buffer, size_t size){
+	virtual size_t write(const uint8_t *buffer, size_t size){
 		return USB_Send(HID_TX | TRANSFER_RELEASE, buffer, size);
 	}
 
