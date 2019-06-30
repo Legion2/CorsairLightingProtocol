@@ -1,7 +1,9 @@
 workflow "Test" {
   on = "push"
   resolves = [
-    "Build SimpleLightingController",
+    "Build LightingNodePRO",
+    "Build CommanderPRO",
+    "Build SingleStripLightingNodePRO",
     "Build HoodLoader2UnoMegaController",
   ]
 }
@@ -14,12 +16,30 @@ action "Install FastLED" {
   }
 }
 
-action "Build SimpleLightingController" {
+action "Build LightingNodePRO" {
   uses = "Legion2/arduino-builder-action@master"
   needs = ["Install FastLED"]
   env = {
     BOARD_NAME = "arduino:avr:leonardo"
-    SKETCH_PATH = "./examples/SimpleLightingController/SimpleLightingController.ino"
+    SKETCH_PATH = "./examples/LightingNodePRO/LightingNodePRO.ino"
+  }
+}
+
+action "Build CommanderPRO" {
+  uses = "Legion2/arduino-builder-action@master"
+  needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:leonardo"
+    SKETCH_PATH = "./examples/CommanderPRO/CommanderPRO.ino"
+  }
+}
+
+action "Build SingleStripLightingNodePRO" {
+  uses = "Legion2/arduino-builder-action@master"
+  needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:micro"
+    SKETCH_PATH = "./examples/LightingNodePRO/SingleStripLightingNodePRO.ino"
   }
 }
 
