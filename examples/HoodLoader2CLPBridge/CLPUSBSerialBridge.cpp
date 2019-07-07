@@ -30,7 +30,6 @@ void resetIOMCU() {
 void CLPUSBSerialBridge::begin()
 {
 	Serial1.begin(SERIAL_BAUD);
-	Serial1.setTimeout(SERIAL_TIMEOUT);
 	RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 }
 
@@ -64,7 +63,7 @@ void CLPUSBSerialBridge::handleHID()
 		}
 
 		Serial1.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
-		Serial1.setTimeout(SERIAL_TIMEOUT);
+		Serial1.setTimeout(SERIAL_RESPONSE_TIMEOUT);
 		size_t read = Serial1.readBytes(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 		if (read != sizeof(rawHIDAndSerialBuffer)) {
 #ifdef DEBUG
