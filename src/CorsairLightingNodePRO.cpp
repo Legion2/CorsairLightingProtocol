@@ -27,6 +27,9 @@ void CorsairLightingNodePRO::begin()
 }
 
 void CorsairLightingNodePRO::update() {
+#if not defined(USBCON)
+	cLP.handleSerial();
+#endif
 	if (cLP.available())
 	{
 		Command command;
@@ -36,8 +39,5 @@ void CorsairLightingNodePRO::update() {
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
-	}
-	else {
-		delay(3);
 	}
 }

@@ -13,30 +13,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CorsairLightingProtocolSerial.h"
+#include <CorsairLightingProtocolSerial.h>
 #include <LEDController.h>
+#include <CorsairLightingNodePRO.h>
 #include <FastLED.h>
 
-// iCUE changes to a very slow mode when there are more than 50 leds per channel
-#define CHANNEL_LED_COUNT 50
-#define NUM_LEDS CHANNEL_LED_COUNT * 2
-#define DATA_PIN 2
+#define CHANNEL_LED_COUNT 60
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0x10 };
+#define DATA_PIN_CHANNEL_1 2
+#define DATA_PIN_CHANNEL_2 3
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
 CorsairLightingProtocolSerial cLPS(&ledController, firmware_version);
 
-CRGB leds[NUM_LEDS];
+CRGB ledsChannel1[CHANNEL_LED_COUNT];
+CRGB ledsChannel2[CHANNEL_LED_COUNT];
 
 void setup() {
 	/*
 	YOU MUST NOT USE Serial!
 	Serial is used by CorsairLightingProtocolSerial!
 	*/
-	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-	ledController.addLeds(0, leds);
-	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
+	ledController.addLeds(0, ledsChannel1);
+	ledController.addLeds(1, ledsChannel2);
 	cLPS.begin();
 }
 

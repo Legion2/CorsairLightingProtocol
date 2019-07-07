@@ -51,6 +51,7 @@ void CLPUSBSerialBridge::sendError() {
 
 void CLPUSBSerialBridge::sendResponse() {
 	RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+	// free the shared buffer to receive new data
 	RawHID.enable();
 }
 
