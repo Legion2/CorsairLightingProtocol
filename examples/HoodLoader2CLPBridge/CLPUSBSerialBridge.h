@@ -23,6 +23,7 @@
 	#define RAWHID_AND_SERIAL_BUFFER_SIZE COMMAND_SIZE
 #endif
 
+#define SERIAL_SYNCHRONIZATION_TIMEOUT 20
 #define SERIAL_TIMEOUT 4
 #define SERIAL_BAUD 1000000
 
@@ -34,6 +35,9 @@ public:
 	virtual void handleHID();
 private:
 	byte rawHIDAndSerialBuffer[RAWHID_AND_SERIAL_BUFFER_SIZE];
+
+	void sendError();
+	void sendResponse();
 };
 
 #endif

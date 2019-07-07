@@ -32,6 +32,17 @@ bool CorsairLightingProtocolSerial::available() const
 void CorsairLightingProtocolSerial::handleSerial()
 {
 	if (Serial.available()) {
+		delay(SERIAL_TIMEOUT);
+		while (Serial.available()) {
+			Serial.read();
+		}
+	}
+
+	Serial.write(42);
+	Serial.flush();
+	delayMicroseconds(100);
+
+	if (Serial.available()) {
 		size_t read = Serial.readBytes(rawCommand, sizeof(rawCommand));
 		if (read == sizeof(rawCommand)) {
 			commandAvailable = true;

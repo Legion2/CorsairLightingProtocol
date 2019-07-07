@@ -34,8 +34,6 @@ void setup() {
 	YOU MUST NOT USE Serial!
 	Serial is used by CorsairLightingProtocolSerial!
 	*/
-	digitalWrite(7, HIGH);
-	pinMode(7, OUTPUT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 	ledController.addLeds(0, leds);
 	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
@@ -43,10 +41,7 @@ void setup() {
 }
 
 void loop() {
-	if (millis() > 1000) {
-		digitalWrite(7, LOW);
-	}
-
+	cLPS.handleSerial();
 	if (cLPS.available())
 	{
 		Command command;
@@ -55,13 +50,6 @@ void loop() {
 	}
 
 	if (ledController.updateLEDs()) {
-		//FastLED.show();
+		FastLED.show();
 	}
-	else {
-		delay(2);
-	}
-}
-
-void serialEvent() {
-	cLPS.handleSerial();
 }

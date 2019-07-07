@@ -34,39 +34,47 @@ void CLPUSBSerialBridge::begin()
 	RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 }
 
+bool waitForSynchronization() {
+	while (Serial1.available()) {
+		Serial1.read();
+	}
+	Serial1.setTimeout(SERIAL_SYNCHRONIZATION_TIMEOUT);
+	byte value;
+	size_t read = Serial1.readBytes(&value, 1);
+	return read == 1 && value == 42;
+}
+
+void CLPUSBSerialBridge::sendError() {
+	memset(rawHIDAndSerialBuffer, 0, sizeof(rawHIDAndSerialBuffer));
+	rawHIDAndSerialBuffer[0] = PROTOCOL_RESPONSE_ERROR;
+	sendResponse();
+}
+
+void CLPUSBSerialBridge::sendResponse() {
+	RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+	RawHID.enable();
+}
+
 void CLPUSBSerialBridge::handleHID()
 {
 	if (RawHID.available()) {
-#ifdef DEBUG
-	/*	Serial.print(F("H"));
-		Serial.println(rawHIDAndSerialBuffer[0], HEX);*/
-#endif // DEBUG
-		while (Serial1.available()) {
-			Serial1.read();
+		if (!waitForSynchronization()) {
+			sendError();
+			return;
 		}
 
 		Serial1.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
-
+		Serial1.setTimeout(SERIAL_TIMEOUT);
 		size_t read = Serial1.readBytes(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
-#ifdef DEBUG
-/*		Serial.print(F("T"));
-		Serial.println(read);
-		*/Serial.print(rawHIDAndSerialBuffer[0], HEX);/*
-		Serial.print(F(" "));
-		Serial.print(rawHIDAndSerialBuffer[1], HEX);
-		Serial.print(F(" "));
-		Serial.print(rawHIDAndSerialBuffer[2], HEX);
-		Serial.print(F(" "));
-		Serial.print(rawHIDAndSerialBuffer[3], HEX);
-		Serial.print(F(" "));
-		Serial.println(rawHIDAndSerialBuffer[4], HEX);*/
-#endif // DEBUG
 		if (read != sizeof(rawHIDAndSerialBuffer)) {
-			memset(rawHIDAndSerialBuffer, 0, sizeof(rawHIDAndSerialBuffer));
-			rawHIDAndSerialBuffer[0] = PROTOCOL_RESPONSE_ERROR;
+#ifdef DEBUG
+			Serial.print(F("T"));
+			Serial.println(read);
+			Serial.println(rawHIDAndSerialBuffer[0], HEX);
+#endif // DEBUG
+			sendError();
+			return;
 		}
-		RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
-
-		RawHID.enable();
+		sendResponse();
 	}
 }

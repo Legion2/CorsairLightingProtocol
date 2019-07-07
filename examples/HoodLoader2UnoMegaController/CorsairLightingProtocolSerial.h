@@ -21,6 +21,7 @@
 #include <CorsairLightingProtocolResponse.h>
 #include <ILEDController.h>
 
+//The maximum time in milliseconds needed to receive 64-byte data
 #define SERIAL_TIMEOUT 2
 #define SERIAL_BAUD 1000000
 
@@ -29,7 +30,6 @@ public:
 	CorsairLightingProtocolSerial(ILEDController* a, const uint8_t* firmwareVersion);
 	void begin();
 	bool available() const;
-	// should be called in SerialEvent()
 	void handleSerial();
 	void getCommand(Command& command);
 	void handleCommand(const Command& command);
