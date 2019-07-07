@@ -39,7 +39,7 @@ action "Build SingleStripLightingNodePRO" {
   needs = ["Install FastLED"]
   env = {
     BOARD_NAME = "arduino:avr:micro"
-    SKETCH_PATH = "./examples/LightingNodePRO/SingleStripLightingNodePRO.ino"
+    SKETCH_PATH = "./examples/SingleStripLightingNodePRO/SingleStripLightingNodePRO.ino"
   }
 }
 
