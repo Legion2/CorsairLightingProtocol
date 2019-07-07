@@ -36,6 +36,11 @@ void CorsairLightingProtocolSerial::handleSerial()
 		if (read == sizeof(rawCommand)) {
 			commandAvailable = true;
 		}
+		else {
+			commandAvailable = false;
+			byte data[] = { PROTOCOL_RESPONSE_ERROR, (byte)read };
+			sendX(data, sizeof(data));
+		}
 	}
 }
 

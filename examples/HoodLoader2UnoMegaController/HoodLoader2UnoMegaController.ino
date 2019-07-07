@@ -55,7 +55,10 @@ void loop() {
 	}
 
 	if (ledController.updateLEDs()) {
-		FastLED.show();
+		//FastLED.show();
+	}
+	else {
+		delay(2);
 	}
 }
 

@@ -17,10 +17,13 @@
 #define _CLPUSBSerialBridge_h
 
 #include "Arduino.h"
+#include <CorsairLightingProtocolConstants.h>
 
-#define RAWHID_TO_SERIAL_BUFFER_SIZE 64
-#define SERIAL_TO_RAWHID_BUFFER_SIZE 64
-#define SERIAL_TIMEOUT 3
+#if (COMMAND_SIZE == RESPONSE_SIZE)
+	#define RAWHID_AND_SERIAL_BUFFER_SIZE COMMAND_SIZE
+#endif
+
+#define SERIAL_TIMEOUT 4
 #define SERIAL_BAUD 1000000
 
 #define RESET_PIN IO_MCU_RESET_PIN
@@ -29,13 +32,8 @@ class CLPUSBSerialBridge {
 public:
 	virtual void begin();
 	virtual void handleHID();
-	virtual void handleResponse();
-	// should be called in SerialEvent()
-	virtual void handleSerial();
 private:
-	byte rawHIDBuffer[RAWHID_TO_SERIAL_BUFFER_SIZE];
-	byte tx_buffer[SERIAL_TO_RAWHID_BUFFER_SIZE];
-	bool responseAvailable = false;
+	byte rawHIDAndSerialBuffer[RAWHID_AND_SERIAL_BUFFER_SIZE];
 };
 
 #endif

@@ -16,6 +16,7 @@
 
 #include "CLPUSBSerialBridge.h"
 #include <RawHID.h>
+#include <CorsairLightingProtocolConstants.h>
 
 void resetIOMCU() {
 	digitalWrite(RESET_PIN, LOW);
@@ -30,48 +31,42 @@ void CLPUSBSerialBridge::begin()
 {
 	Serial1.begin(SERIAL_BAUD);
 	Serial1.setTimeout(SERIAL_TIMEOUT);
-	RawHID.begin(rawHIDBuffer, sizeof(rawHIDBuffer));
+	RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 }
 
 void CLPUSBSerialBridge::handleHID()
 {
-#ifdef DEBUG
 	if (RawHID.available()) {
-		Serial.print(F("H"));
-		Serial.println(rawHIDBuffer[0], HEX);
-	}
-#endif // DEBUG
-	while (RawHID.available())
-	{
-		Serial1.write(RawHID.read());
-	}
-}
-
-void CLPUSBSerialBridge::handleResponse()
-{
-	if (responseAvailable) {
 #ifdef DEBUG
-		Serial.print(F("C"));
-		Serial.println(tx_buffer[1], HEX);
+	/*	Serial.print(F("H"));
+		Serial.println(rawHIDAndSerialBuffer[0], HEX);*/
 #endif // DEBUG
-		RawHID.write(tx_buffer, sizeof(tx_buffer));
-		responseAvailable = false;
-	}
-}
+		while (Serial1.available()) {
+			Serial1.read();
+		}
 
-void CLPUSBSerialBridge::handleSerial()
-{
-	if (Serial1.available())
-	{
-		size_t read = Serial1.readBytes(tx_buffer, sizeof(tx_buffer));
-		if (read == sizeof(tx_buffer)) {
-			responseAvailable = true;
-		}
+		Serial1.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+
+		size_t read = Serial1.readBytes(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 #ifdef DEBUG
-		else {
-			Serial.print(F("T"));
-			Serial.println(read);
-		}
+/*		Serial.print(F("T"));
+		Serial.println(read);
+		*/Serial.print(rawHIDAndSerialBuffer[0], HEX);/*
+		Serial.print(F(" "));
+		Serial.print(rawHIDAndSerialBuffer[1], HEX);
+		Serial.print(F(" "));
+		Serial.print(rawHIDAndSerialBuffer[2], HEX);
+		Serial.print(F(" "));
+		Serial.print(rawHIDAndSerialBuffer[3], HEX);
+		Serial.print(F(" "));
+		Serial.println(rawHIDAndSerialBuffer[4], HEX);*/
 #endif // DEBUG
+		if (read != sizeof(rawHIDAndSerialBuffer)) {
+			memset(rawHIDAndSerialBuffer, 0, sizeof(rawHIDAndSerialBuffer));
+			rawHIDAndSerialBuffer[0] = PROTOCOL_RESPONSE_ERROR;
+		}
+		RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+
+		RawHID.enable();
 	}
 }
