@@ -25,6 +25,8 @@
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
+#if defined(USBCON)
+
 class CorsairLightingProtocol : public CorsairLightingProtocolResponse
 {
 public:
@@ -43,4 +45,5 @@ private:
 	IFanController* const fanController;
 };
 
+#endif
 #endif
