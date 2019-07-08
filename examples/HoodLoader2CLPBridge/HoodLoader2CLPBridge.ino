@@ -13,31 +13,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CorsairLightingNodePRO.h"
+#include "CLPUSBSerialBridge.h"
 
-CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version)
-{
-	ledController.addLeds(0, ledsChannel1);
-	ledController.addLeds(1, ledsChannel2);
+CLPUSBSerialBridge usbToSerialBridge;
+
+void setup() {
+#ifdef DEBUG
+	Serial.begin(1000000);
+#endif // DEBUG
+	usbToSerialBridge.begin();
 }
 
-void CorsairLightingNodePRO::begin()
-{
-	cLP.begin();
-}
-
-void CorsairLightingNodePRO::update() {
-#if not defined(USBCON)
-	cLP.handleSerial();
-#endif
-	if (cLP.available())
-	{
-		Command command;
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
-
-	if (ledController.updateLEDs()) {
-		FastLED.show();
-	}
+void loop() {
+	usbToSerialBridge.handleHID();
 }

@@ -13,31 +13,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CorsairLightingNodePRO.h"
+#ifndef _CLPUSBSerialBridge_h
+#define _CLPUSBSerialBridge_h
 
-CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version)
-{
-	ledController.addLeds(0, ledsChannel1);
-	ledController.addLeds(1, ledsChannel2);
-}
+#include "Arduino.h"
+#include <CorsairLightingProtocolConstants.h>
 
-void CorsairLightingNodePRO::begin()
-{
-	cLP.begin();
-}
-
-void CorsairLightingNodePRO::update() {
-#if not defined(USBCON)
-	cLP.handleSerial();
+#if (COMMAND_SIZE == RESPONSE_SIZE)
+	#define RAWHID_AND_SERIAL_BUFFER_SIZE COMMAND_SIZE
 #endif
-	if (cLP.available())
-	{
-		Command command;
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
 
-	if (ledController.updateLEDs()) {
-		FastLED.show();
-	}
-}
+#define SERIAL_SYNCHRONIZATION_TIMEOUT 20
+#define SERIAL_RESPONSE_TIMEOUT 10
+#define SERIAL_BAUD 1000000
+
+#define RESET_PIN IO_MCU_RESET_PIN
+
+class CLPUSBSerialBridge {
+public:
+	virtual void begin();
+	virtual void handleHID();
+private:
+	byte rawHIDAndSerialBuffer[RAWHID_AND_SERIAL_BUFFER_SIZE];
+
+	void sendError();
+	void sendResponse();
+};
+
+#endif

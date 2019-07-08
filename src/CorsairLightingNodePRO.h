@@ -19,6 +19,7 @@
 #include "Arduino.h"
 #include "LEDController.h"
 #include "CorsairLightingProtocol.h"
+#include "CorsairLightingProtocolSerial.h"
 #include <FastLED.h>
 
 #define CHANNEL_LED_COUNT 60
@@ -32,7 +33,11 @@ public:
 	void update();
 protected:
 	LEDController<CHANNEL_LED_COUNT> ledController;
+#if defined(USBCON)
 	CorsairLightingProtocol cLP;
+#else
+	CorsairLightingProtocolSerial cLP;
+#endif
 };
 
 #endif

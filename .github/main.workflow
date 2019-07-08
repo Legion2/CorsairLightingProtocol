@@ -1,6 +1,11 @@
 workflow "Test" {
   on = "push"
-  resolves = ["Build examples"]
+  resolves = [
+    "Build LightingNodePRO",
+    "Build CommanderPRO",
+    "Build SingleStripLightingNodePRO",
+    "Build HoodLoader2UnoMegaController",
+  ]
 }
 
 action "Install FastLED" {
@@ -11,10 +16,38 @@ action "Install FastLED" {
   }
 }
 
-action "Build examples" {
+action "Build LightingNodePRO" {
   uses = "Legion2/arduino-builder-action@master"
   needs = ["Install FastLED"]
   env = {
     BOARD_NAME = "arduino:avr:leonardo"
+    SKETCH_PATH = "./examples/LightingNodePRO/LightingNodePRO.ino"
+  }
+}
+
+action "Build CommanderPRO" {
+  uses = "Legion2/arduino-builder-action@master"
+  needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:leonardo"
+    SKETCH_PATH = "./examples/CommanderPRO/CommanderPRO.ino"
+  }
+}
+
+action "Build SingleStripLightingNodePRO" {
+  uses = "Legion2/arduino-builder-action@master"
+  needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:micro"
+    SKETCH_PATH = "./examples/SingleStripLightingNodePRO/SingleStripLightingNodePRO.ino"
+  }
+}
+
+action "Build HoodLoader2UnoMegaController" {
+  uses = "Legion2/arduino-builder-action@master"
+  needs = ["Install FastLED"]
+  env = {
+    BOARD_NAME = "arduino:avr:uno"
+    SKETCH_PATH = "./examples/HoodLoader2UnoMegaController/HoodLoader2UnoMegaController.ino"
   }
 }
