@@ -27,12 +27,11 @@
 ## Requirements
 The library is compatible with all boards using the MCU ATmega32U4.
 This includes **Arduino Leonardo**, **SparkFun Pro Micro** and **Arduino Micro**.
-It also supports the Arduino Uno and Arduino Mega, **but** for that the [HoodLoader2](https://github.com/NicoHood/HoodLoader2) bootloader is required.
+It also supports the Arduino Uno and Arduino Mega, **but** this requires the [HoodLoader2](https://github.com/NicoHood/HoodLoader2) bootloader, see [this wiki](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega) for more details.
 It is **not** compatible with Arduino Nano.
+In the rest of the documentation "Arduino" is used as synonym for all supported boards regardless of the manufacturer.
 
-In the rest of the documentation the board with the ATmega32U4 is called "Arduino" regardless of the manufacturer.
-
-As an IDE Visual Studio with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is recommended.
+As an IDE [Visual Studio](https://visualstudio.microsoft.com/downloads/) with the extension [Visual Micro](https://marketplace.visualstudio.com/items?itemName=VisualMicro.ArduinoIDEforVisualStudio) is recommended.
 Visual Micro provides the required functionality for free, but sometimes ask you to buy the full version.
 Using the Arduino IDE is difficult, but you can find a tutorial in the [wiki](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-Arduino-IDE).
 
