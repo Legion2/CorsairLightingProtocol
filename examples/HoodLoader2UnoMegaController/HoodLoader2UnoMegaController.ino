@@ -13,9 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolSerial.h>
-#include <LEDController.h>
 #include <CorsairLightingNodePRO.h>
+#include <LEDController.h>
 #include <FastLED.h>
 
 #define CHANNEL_LED_COUNT 60
@@ -24,7 +25,8 @@
 #define DATA_PIN_CHANNEL_2 3
 
 LEDController<CHANNEL_LED_COUNT> ledController(true);
-CorsairLightingProtocolSerial cLPS(&ledController, firmware_version);
+CorsairLightingProtocol cLP(&ledController, firmware_version);
+CorsairLightingProtocolSerial cLPS(&cLP);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];
@@ -38,17 +40,10 @@ void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLeds(0, ledsChannel1);
 	ledController.addLeds(1, ledsChannel2);
-	cLPS.begin();
 }
 
 void loop() {
-	cLPS.handleSerial();
-	if (cLPS.available())
-	{
-		Command command;
-		cLPS.getCommand(command);
-		cLPS.handleCommand(command);
-	}
+	cLPS.update();
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();

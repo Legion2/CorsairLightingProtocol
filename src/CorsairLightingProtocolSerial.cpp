@@ -14,22 +14,25 @@
    limitations under the License.
 */
 #include "CorsairLightingProtocolSerial.h"
-#include "CorsairLightingFirmware.h"
 
-CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(ILEDController* a, const uint8_t* firmwareVersion) : ledController(a), corsairLightingFirmware(firmwareVersion) {}
-
-void CorsairLightingProtocolSerial::begin()
+CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP) : cLP(cLP)
 {
 	Serial.begin(SERIAL_BAUD);
 	Serial.setTimeout(SERIAL_TIMEOUT);
 }
 
-bool CorsairLightingProtocolSerial::available() const
+void CorsairLightingProtocolSerial::update()
 {
-	return commandAvailable;
+	bool available = handleSerial();
+	if (available)
+	{
+		Command command;
+		memcpy(command.raw, rawCommand, sizeof(command.raw));
+		cLP->handleCommand(command, this);
+	}
 }
 
-void CorsairLightingProtocolSerial::handleSerial()
+bool CorsairLightingProtocolSerial::handleSerial()
 {
 	if (Serial.available()) {
 		delay(SERIAL_TIMEOUT);
@@ -45,35 +48,14 @@ void CorsairLightingProtocolSerial::handleSerial()
 	if (Serial.available()) {
 		size_t read = Serial.readBytes(rawCommand, sizeof(rawCommand));
 		if (read == sizeof(rawCommand)) {
-			commandAvailable = true;
+			return true;
 		}
 		else {
-			commandAvailable = false;
 			byte data[] = { PROTOCOL_RESPONSE_ERROR, (byte)read };
 			sendX(data, sizeof(data));
 		}
 	}
-}
-
-void CorsairLightingProtocolSerial::getCommand(Command& command)
-{
-	if (available()) {
-		memcpy(command.raw, rawCommand, sizeof(command.raw));
-		commandAvailable = false;
-	}
-}
-
-void CorsairLightingProtocolSerial::handleCommand(const Command& command)
-{
-	if (command.command >= 0x10 && command.command < 0x30) {
-		sendError();
-	}
-	else if (command.command >= 0x30 && command.command < 0x40) {
-		ledController->handleLEDControl(command, this);
-	}
-	else {
-		corsairLightingFirmware.handleFirmwareCommand(command, this);
-	}
+	return false;
 }
 
 void CorsairLightingProtocolSerial::sendX(const uint8_t* data, const size_t x) const

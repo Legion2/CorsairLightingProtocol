@@ -15,27 +15,14 @@
 */
 #include "CorsairLightingNodePRO.h"
 
-CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version)
+CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version), connectionAdapter(&cLP)
 {
 	ledController.addLeds(0, ledsChannel1);
 	ledController.addLeds(1, ledsChannel2);
 }
 
-void CorsairLightingNodePRO::begin()
-{
-	cLP.begin();
-}
-
 void CorsairLightingNodePRO::update() {
-#if not defined(USBCON)
-	cLP.handleSerial();
-#endif
-	if (cLP.available())
-	{
-		Command command;
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
+	connectionAdapter.update();
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();

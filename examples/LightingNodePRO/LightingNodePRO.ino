@@ -28,7 +28,6 @@ void setup() {
 	disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	cLNP.begin();
 }
 
 void loop() {

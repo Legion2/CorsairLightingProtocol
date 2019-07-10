@@ -13,27 +13,29 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CorsairLightingProtocolSerial_h
-#define _CorsairLightingProtocolSerial_h
+#ifndef _CORSAIRLIGHTINGPROTOCOLHID_h
+#define _CORSAIRLIGHTINGPROTOCOLHID_h
 
-#include <CorsairLightingProtocol.h>
-#include <CorsairLightingProtocolConstants.h>
-#include <CorsairLightingProtocolResponse.h>
+#include "Arduino.h"
 
-//The maximum time in milliseconds needed to receive 64-byte data
-#define SERIAL_TIMEOUT 2
-#define SERIAL_BAUD 1000000
+#include "CorsairLightingProtocol.h"
+#include "CorsairLightingProtocolResponse.h"
+#include "CorsairLightingProtocolConstants.h"
 
-class CorsairLightingProtocolSerial : CorsairLightingProtocolResponse {
+#if defined(USBCON)
+
+class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP);
+	CorsairLightingProtocolHID(CorsairLightingProtocol* cLP);
 	void update();
-private:
-	byte rawCommand[COMMAND_SIZE];
+protected:
+	uint8_t rawhidData[COMMAND_SIZE];
 	CorsairLightingProtocol* const cLP;
 
-	bool handleSerial();
+	bool available() const;
+	void getCommand(Command& command);
 	void sendX(const uint8_t* data, const size_t x) const override;
 };
 
+#endif
 #endif
