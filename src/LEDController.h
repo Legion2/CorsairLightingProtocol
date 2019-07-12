@@ -64,6 +64,8 @@
 #define GROUP_EXTRA_ALTERNATING 0x00
 #define GROUP_EXTRA_RANDOM  0x01
 
+#define GROUP_TEMP_GROUP_EXTERNAL 255
+
 struct LEDGroup {
 	byte ledIndex = 0;//start index of the leds of this group
 	byte ledCount = 0;//number of leds in this group
@@ -71,6 +73,7 @@ struct LEDGroup {
 	byte speed = GROUP_SPEED_HIGH;
 	byte direction = GROUP_DIRECTION_FORWARD;
 	byte extra = 0x00;
+	byte tempGroup = GROUP_TEMP_GROUP_EXTERNAL;
 
 	CRGB color1;
 	CRGB color2;

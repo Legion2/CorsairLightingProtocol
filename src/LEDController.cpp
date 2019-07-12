@@ -87,7 +87,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			group.speed = data[4];
 			group.direction = data[5];
 			group.extra = data[6];
-			// byte 7 is 0xFF
+			group.tempGroup = data[7];
 			group.color1.r = data[8];
 			group.color1.g = data[9];
 			group.color1.b = data[10];

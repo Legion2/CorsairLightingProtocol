@@ -18,6 +18,7 @@
 #include "Arduino.h"
 #include <FastLED.h>
 #include "LEDController.h"
+#include "TemperatureController.h"
 
 template<size_t CHANNEL_LED_COUNT>
 class FastLEDController : public LEDController {
@@ -31,10 +32,13 @@ class FastLEDController : public LEDController {
 
 public:
 	FastLEDController(bool useEEPROM);
+	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	virtual void addLeds(uint8_t channel, CRGB * led_buffer);
 	virtual bool updateLEDs();
 	virtual size_t getEEPROMSize();
 protected:
+	TemperatureController* const temperatureController;
+
 	bool trigger_update = false;
 
 	LEDBufferData volatileData[CHANNEL_NUM];
@@ -64,7 +68,13 @@ protected:
 #endif
 
 template<size_t CHANNEL_LED_COUNT>
-FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(bool useEEPROM) : useEEPROM(useEEPROM) {
+FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(bool useEEPROM) : temperatureController(NULL), useEEPROM(useEEPROM) {
+	load();
+}
+
+template<size_t CHANNEL_LED_COUNT>
+inline FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(TemperatureController* temperatureController, bool useEEPROM) : temperatureController(temperatureController), useEEPROM(useEEPROM)
+{
 	load();
 }
 
@@ -264,7 +274,14 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 				}
 				case GROUP_MODE_Temperature:
 				{
-					const uint16_t& currentTemperature = volatileData[channelId].temp;
+					uint16_t currentTemperature;
+					const uint8_t& tempGroup = group.tempGroup;
+					if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
+						currentTemperature = volatileData[channelId].temp;
+					}
+					else if (tempGroup < TEMPERATURE_NUM && temperatureController != NULL) {
+						currentTemperature = temperatureController->getTemperature(tempGroup);
+					}
 
 					CRGB color;
 					if (currentTemperature < group.temp1) {

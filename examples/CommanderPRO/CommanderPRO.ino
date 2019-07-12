@@ -36,8 +36,8 @@
 
 const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x08, 0x00 };
 
-FastLEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
+FastLEDController<CHANNEL_LED_COUNT> ledController(&temperatureController, true);
 SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController, firmware_version);
 CorsairLightingProtocolHID cHID(&cLP);
