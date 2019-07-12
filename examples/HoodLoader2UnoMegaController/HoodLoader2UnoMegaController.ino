@@ -13,23 +13,39 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include <CorsairLightingProtocol.h>
+#include <CorsairLightingProtocolSerial.h>
 #include <CorsairLightingNodePRO.h>
+#include <FastLEDController.h>
 #include <FastLED.h>
+
+#define CHANNEL_LED_COUNT 60
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
+FastLEDController<CHANNEL_LED_COUNT> ledController(true);
+CorsairLightingProtocol cLP(&ledController, firmware_version);
+CorsairLightingProtocolSerial cLPS(&cLP);
+
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];
 
-CorsairLightingNodePRO cLNP(ledsChannel1, ledsChannel2);
-
 void setup() {
-	disableBuildInLEDs();
+	/*
+	YOU MUST NOT USE Serial!
+	Serial is used by CorsairLightingProtocolSerial!
+	*/
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
+	ledController.addLeds(0, ledsChannel1);
+	ledController.addLeds(1, ledsChannel2);
 }
 
 void loop() {
-	cLNP.update();
+	cLPS.update();
+
+	if (ledController.updateLEDs()) {
+		FastLED.show();
+	}
 }

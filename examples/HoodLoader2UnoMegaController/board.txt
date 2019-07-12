@@ -1,0 +1,6 @@
+# CorsairLightingProtocol build property overrides
+#
+
+##############################################################
+
+build.extra_flags=-DSERIAL_RX_BUFFER_SIZE=128

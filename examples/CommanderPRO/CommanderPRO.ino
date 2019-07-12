@@ -16,7 +16,8 @@
 #include "SimpleFanController.h"
 #include "ThermistorTemperatureController.h"
 #include <CorsairLightingProtocol.h>
-#include <LEDController.h>
+#include <CorsairLightingProtocolHID.h>
+#include <FastLEDController.h>
 #include <FastLED.h>
 
 #define DATA_PIN_CHANNEL_1 2
@@ -35,10 +36,11 @@
 
 const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x08, 0x00 };
 
-LEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
+FastLEDController<CHANNEL_LED_COUNT> ledController(&temperatureController, true);
 SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController, firmware_version);
+CorsairLightingProtocolHID cHID(&cLP);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
 CRGB ledsChannel2[CHANNEL_LED_COUNT];
@@ -47,8 +49,6 @@ PWMFan fan1(PWM_FAN_PIN_1, 0, 2000);
 PWMFan fan2(PWM_FAN_PIN_2, 0, 2000);
 PWMFan fan3(PWM_FAN_PIN_3, 0, 2000);
 PWMFan fan4(PWM_FAN_PIN_4, 0, 2000);
-
-Command command;
 
 void setup() {
 	disableBuildInLEDs();
@@ -62,15 +62,10 @@ void setup() {
 	fanController.addFan(1, &fan2);
 	fanController.addFan(2, &fan3);
 	fanController.addFan(3, &fan4);
-	cLP.begin();
 }
 
 void loop() {
-	if (cLP.available())
-	{
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
+	cHID.update();
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();

@@ -21,11 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+
 // Include guard
 #pragma once
 
 #include <Arduino.h>
 #include "HID.h"
+#if defined(USBCON)
+
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
 // Interrupt Out Endpoint is optional, contoll endpoint is used by default
@@ -155,3 +158,4 @@ protected:
 	int featureLength;
 };
 extern RawHID_ RawHID;
+#endif

@@ -18,25 +18,21 @@
 #define _CorsairLightingProtocol_h
 
 #include "Arduino.h"
-#include "ILEDController.h"
-#include "CorsairLightingFirmware.h"
-#include "IFanController.h"
-#include "ITemperatureController.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
 
-class CorsairLightingProtocol : public CorsairLightingProtocolResponse
+#include "CorsairLightingFirmware.h"
+#include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolResponse.h"
+#include "IFanController.h"
+#include "ILEDController.h"
+#include "ITemperatureController.h"
+
+class CorsairLightingProtocol
 {
 public:
 	CorsairLightingProtocol(ILEDController* l, const uint8_t* firmwareVersion);
 	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, const uint8_t* firmwareVersion);
-	void begin();
-	bool available() const;
-	void getCommand(Command& command);
-	void handleCommand(const Command& command);
-	void sendX(const uint8_t * data, const size_t x) const override;
+	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
 private:
-	uint8_t rawhidData[COMMAND_SIZE];
 	CorsairLightingFirmware corsairLightingFirmware;
 	ILEDController* const ledController;
 	ITemperatureController* const temperatureController;

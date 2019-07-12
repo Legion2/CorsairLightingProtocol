@@ -13,18 +13,4 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CorsairLightingNodePRO.h"
-
-CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version), connectionAdapter(&cLP)
-{
-	ledController.addLeds(0, ledsChannel1);
-	ledController.addLeds(1, ledsChannel2);
-}
-
-void CorsairLightingNodePRO::update() {
-	connectionAdapter.update();
-
-	if (ledController.updateLEDs()) {
-		FastLED.show();
-	}
-}
+#include "FastLEDController.h"

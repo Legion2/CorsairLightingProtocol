@@ -14,6 +14,7 @@
    limitations under the License.
 */
 #include <CorsairLightingNodePRO.h>
+#include <CorsairLightingProtocolHID.h>
 #include <FastLED.h>
 
 // The number of LEDs per channel, there are two channels.
@@ -32,14 +33,12 @@
 // If enabled, the Hardware Lighting configured in iCUE works without a USB connection and even after a restart of the Arduino.
 #define USE_EEPROM true
 
-LEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
+FastLEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
 CorsairLightingProtocol cLP(&ledController, firmware_version);
+CorsairLightingProtocolHID cHID(&cLP);
 
 // This array conatins all RGB values for all LEDs of the both channels.
 CRGB leds[NUM_LEDS];
-
-// This variable stores the current command which was received.
-Command command;
 
 void setup() {
 #ifdef DEBUG
@@ -49,20 +48,12 @@ void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 	ledController.addLeds(0, leds);
 	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
-	cLP.begin();
 }
 
 void loop() {
-	if (cLP.available())
-	{
-		cLP.getCommand(command);
-		cLP.handleCommand(command);
-	}
+	cHID.update();
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
-	}
-	else {
-		delay(3);
 	}
 }
