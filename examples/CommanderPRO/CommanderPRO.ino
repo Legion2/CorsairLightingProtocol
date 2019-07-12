@@ -17,7 +17,7 @@
 #include "ThermistorTemperatureController.h"
 #include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolHID.h>
-#include <LEDController.h>
+#include <FastLEDController.h>
 #include <FastLED.h>
 
 #define DATA_PIN_CHANNEL_1 2
@@ -36,7 +36,7 @@
 
 const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x08, 0x00 };
 
-LEDController<CHANNEL_LED_COUNT> ledController(true);
+FastLEDController<CHANNEL_LED_COUNT> ledController(true);
 ThermistorTemperatureController temperatureController;
 SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController, firmware_version);

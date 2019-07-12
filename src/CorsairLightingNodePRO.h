@@ -17,7 +17,7 @@
 #define _CORSAIRLIGHTINGNODEPRO_h
 
 #include "Arduino.h"
-#include "LEDController.h"
+#include "FastLEDController.h"
 #include "CorsairLightingProtocol.h"
 #include "CorsairLightingProtocolHID.h"
 #include "CorsairLightingProtocolSerial.h"
@@ -32,7 +32,7 @@ public:
 	CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2);
 	void update();
 protected:
-	LEDController<CHANNEL_LED_COUNT> ledController;
+	FastLEDController<CHANNEL_LED_COUNT> ledController;
 	CorsairLightingProtocol cLP;
 #if defined(USBCON)
 	CorsairLightingProtocolHID connectionAdapter;

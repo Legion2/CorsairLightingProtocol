@@ -16,7 +16,7 @@
 #include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolSerial.h>
 #include <CorsairLightingNodePRO.h>
-#include <LEDController.h>
+#include <FastLEDController.h>
 #include <FastLED.h>
 
 #define CHANNEL_LED_COUNT 60
@@ -24,7 +24,7 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-LEDController<CHANNEL_LED_COUNT> ledController(true);
+FastLEDController<CHANNEL_LED_COUNT> ledController(true);
 CorsairLightingProtocol cLP(&ledController, firmware_version);
 CorsairLightingProtocolSerial cLPS(&cLP);
 
