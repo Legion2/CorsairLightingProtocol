@@ -57,7 +57,7 @@ iCUE groups the LEDs into groups of ten.
 So if you have 20 LEDs, set the amount to 2.
 Now you can create lighting effects in the "Lighting Channel #" tabs.
 
-The example "SingleStripLightingNodePRO" only requires one LED Stip connected to the Arduino.
+The example "SingleStripLightingNodePRO" only requires one LED strip connected to the Arduino.
 Because the "SingleStripLightingNodePRO" concatenate the two channels a total of 120 leds can be controlled on a single LED Strip.
 
 ## Use the library
@@ -84,11 +84,14 @@ The tool displays the current DeviceID, you can type in a new DeviceID that is s
 After that you can upload another sketch.
 
 ## Debugging
-For debugging don't use the integrated debugger of Visual Studio, it will most likely break the USB comunication.
+For debugging don't use the integrated debugger of Visual Studio, it will most likely break the USB communication.
 Use the `DEBUG` macro and the Serial Monitor.
 With the `-DDEBUG` flag you can enable debugging in the whole project.
 Add this flag in the board.txt file to the `build.extra_flags`.
-A Serial Monitor MUST be opened, otherwise the USB connection is blocked for the Corsair Lighting Protocol.
+
+For advanced debugging you can use the [DebugSketch](examples/DebugSketch/DebugSketch.ino).
+In the board.txt file the default values for the debugging options can be set.
+After uploading the sketch open the serial monitor with baudrate 115200 and set the line ending to "Line Feed"/"Newline" (`\n`).
 
 # DISCLAIMERS
 This is a DO IT YOURSELF project, use at your own risk.

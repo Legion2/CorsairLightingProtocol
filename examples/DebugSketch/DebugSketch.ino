@@ -52,11 +52,11 @@ void loop() {
 	if (Serial.available()) {
 		static String cmd = "";
 		cmd = Serial.readStringUntil('\n');
-		proccessCommand(cmd);
+		processCommand(cmd);
 	}
 }
 
-void proccessCommand(String& cmd) {
+void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
 		byte DeviceId[4];
 		EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
