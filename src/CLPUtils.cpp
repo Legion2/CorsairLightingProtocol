@@ -33,3 +33,12 @@ void disableBuildInLEDs()
 #endif
 #endif
 }
+
+void printDeviceID(const uint8_t* deviceId) {
+	char tmp[16];
+	for (size_t i = 0; i < 4; i++) {
+		sprintf(tmp, "%.2X", deviceId[i]);
+		Serial.print(tmp);
+		if (i < 3) Serial.print(F(" "));
+	}
+}

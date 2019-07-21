@@ -32,5 +32,7 @@ inline uint8_t convert255To100(uint8_t value)
 }
 // This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
 void disableBuildInLEDs();
+// Print the given DeviceID to Serial
+void printDeviceID(const uint8_t* deviceId);
 
 #endif
