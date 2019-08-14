@@ -18,13 +18,13 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
-      uses: Legion2/download-release-action@master
+      uses: Legion2/download-release-action@v1.0.0
       env:
         TARGET_PATH: libraries
       with:
         args: FastLED/FastLED 3.2.0
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@master
-      env:
-        BOARD_NAME: ${{ matrix.board }}
-        SKETCH_PATH: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+      uses: Legion2/arduino-builder-action@actions-v2
+      with:
+        board: ${{ matrix.board }}
+        sketchPath: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
