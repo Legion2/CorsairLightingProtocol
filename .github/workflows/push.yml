@@ -2,8 +2,17 @@ on: [push, pull_request]
 name: Test
 jobs:
   test:
-    name: Test sketches
+    name: Test ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool]
+        board: [arduino:avr:leonardo, arduino:avr:micro]
+        include:
+        - sketch: HoodLoader2UnoMegaController
+          board: arduino:avr:uno
+        - sketch: HoodLoader2UnoMegaController
+          board: arduino:avr:mega
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
@@ -12,23 +21,8 @@ jobs:
         TARGET_PATH: libraries
       with:
         args: FastLED/FastLED 3.2.0
-    - name: Build HoodLoader2UnoMegaController
+    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
       uses: Legion2/arduino-builder-action@master
       env:
-        BOARD_NAME: arduino:avr:uno
-        SKETCH_PATH: ./examples/HoodLoader2UnoMegaController/HoodLoader2UnoMegaController.ino
-    - name: Build SingleStripLightingNodePRO
-      uses: Legion2/arduino-builder-action@master
-      env:
-        BOARD_NAME: arduino:avr:micro
-        SKETCH_PATH: ./examples/SingleStripLightingNodePRO/SingleStripLightingNodePRO.ino
-    - name: Build CommanderPRO
-      uses: Legion2/arduino-builder-action@master
-      env:
-        BOARD_NAME: arduino:avr:leonardo
-        SKETCH_PATH: ./examples/CommanderPRO/CommanderPRO.ino
-    - name: Build LightingNodePRO
-      uses: Legion2/arduino-builder-action@master
-      env:
-        BOARD_NAME: arduino:avr:leonardo
-        SKETCH_PATH: ./examples/LightingNodePRO/LightingNodePRO.ino
+        BOARD_NAME: ${{ matrix.board }}
+        SKETCH_PATH: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
