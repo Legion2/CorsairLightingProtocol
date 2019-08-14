@@ -28,3 +28,4 @@ jobs:
       with:
         board: ${{ matrix.board }}
         sketchPath: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+ 
