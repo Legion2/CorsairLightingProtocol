@@ -14,6 +14,7 @@ jobs:
           test: 1
         - sketch: HoodLoader2UnoMegaController
           board: "arduino:avr:mega"
+          test: 1
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
