@@ -10,9 +10,9 @@ jobs:
         board: ["arduino:avr:leonardo", "arduino:avr:micro"]
         include:
         - sketch: HoodLoader2UnoMegaController
-          board: arduino:avr:uno
+          board: "arduino:avr:uno"
         - sketch: HoodLoader2UnoMegaController
-          board: arduino:avr:mega
+          board: "arduino:avr:mega"
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
