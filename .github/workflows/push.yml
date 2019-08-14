@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool]
-        board: [arduino:avr:leonardo, arduino:avr:micro]
+        board: ["arduino:avr:leonardo", "arduino:avr:micro"]
         include:
         - sketch: HoodLoader2UnoMegaController
           board: arduino:avr:uno
