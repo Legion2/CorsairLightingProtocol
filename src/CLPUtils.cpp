@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "LEDController.h"
+#include "CLPUtils.h"
 
 uint16_t fromBigEndian(const byte& byte1, const byte& byte2) {
 	uint16_t t = byte1;
