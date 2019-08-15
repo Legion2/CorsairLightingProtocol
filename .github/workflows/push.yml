@@ -22,7 +22,7 @@ jobs:
         board: ${{ matrix.board }}
         sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
   testUnoMega:
-    name: Test ${{ matrix.sketch }} for ${{ matrix.board }}
+    name: Test UnoMega ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -42,6 +42,7 @@ jobs:
         board: ${{ matrix.board }}
         sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
   test16u2:
+    name: Test 16u2 ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
