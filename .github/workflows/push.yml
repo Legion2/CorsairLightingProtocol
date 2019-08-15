@@ -8,13 +8,6 @@ jobs:
       matrix:
         sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool]
         board: ["arduino:avr:leonardo", "arduino:avr:micro"]
-        include:
-        - sketch: HoodLoader2UnoMegaController
-          board: "arduino:avr:uno"
-          test: 1
-        - sketch: HoodLoader2UnoMegaController
-          board: "arduino:avr:mega"
-          test: 1
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
@@ -27,5 +20,45 @@ jobs:
       uses: Legion2/arduino-builder-action@actions-v2
       with:
         board: ${{ matrix.board }}
-        sketchPath: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
- 
+        sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+  testUnoMega:
+    name: Test ${{ matrix.sketch }} for ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sketch: [HoodLoader2UnoMegaController]
+        board: ["arduino:avr:uno", "arduino:avr:mega"]
+    steps:
+    - uses: actions/checkout@master
+    - name: Install FastLED
+      uses: Legion2/download-release-action@v1.0.0
+      env:
+        TARGET_PATH: libraries
+      with:
+        args: FastLED/FastLED 3.2.0
+    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+      uses: Legion2/arduino-builder-action@actions-v2
+      with:
+        board: ${{ matrix.board }}
+        sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+  test16u2:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sketch: [HoodLoader2CLPBridge]
+        board: ["arduino:avr:leonardo", "arduino:avr:micro"]
+    steps:
+    - uses: actions/checkout@master
+    - name: Install HoodLoader2
+      run: |
+        mkdir -p hardware/HoodLoader2
+        cd hardware/HoodLoader2
+        wget -O hoodloader.zip https://github.com/NicoHood/HoodLoader2/releases/download/2.0.5/2.0.5-boards_manager.zip
+        unzip hoodloader.zip
+        rm hoodloader.zip
+        mv * avr
+    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+      uses: Legion2/arduino-builder-action@actions-v2
+      with:
+        board: ${{ matrix.board }}
+        sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
