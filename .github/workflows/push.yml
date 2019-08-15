@@ -11,11 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
-      uses: Legion2/download-release-action@v1.0.0
-      env:
-        TARGET_PATH: libraries
+      uses: Legion2/download-release-action@master
       with:
-        args: FastLED/FastLED 3.2.0
+        repository: FastLED/FastLED
+        tag: '3.2.0'
+        path: libraries
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
       uses: Legion2/arduino-builder-action@actions-v2
       with:
@@ -31,11 +31,11 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
-      uses: Legion2/download-release-action@v1.0.0
-      env:
-        TARGET_PATH: libraries
+      uses: Legion2/download-release-action@master
       with:
-        args: FastLED/FastLED 3.2.0
+        repository: FastLED/FastLED
+        tag: '3.2.0'
+        path: libraries
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
       uses: Legion2/arduino-builder-action@actions-v2
       with:
@@ -51,11 +51,11 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
-      uses: Legion2/download-release-action@v1.0.0
-      env:
-        TARGET_PATH: libraries
+      uses: Legion2/download-release-action@master
       with:
-        args: FastLED/FastLED 3.2.0
+        repository: FastLED/FastLED
+        tag: '3.2.0'
+        path: libraries
     - name: Install HoodLoader2
       run: |
         mkdir -p hardware/HoodLoader2
