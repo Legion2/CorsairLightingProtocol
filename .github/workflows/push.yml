@@ -19,6 +19,7 @@ jobs:
     - name: Install SparkFun boards
       if: contains(matrix.board, 'SparkFun')
       run: |
+        mkdir -p hardware/SparkFun
         cd hardware/SparkFun
         wget https://github.com/sparkfun/Arduino_Boards/raw/master/IDE_Board_Manager/sparkfunboards.1.1.5.tar.bz2
         tar -xvjf sparkfunboards.1.1.5.tar.bz2
