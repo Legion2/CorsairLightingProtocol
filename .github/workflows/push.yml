@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         sketch: [HoodLoader2UnoMegaController]
-        board: ["arduino:avr:uno", "arduino:avr:mega"]
+        board: ["arduino:avr:uno", "arduino:avr:mega:cpu=atmega2560"]
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
@@ -47,7 +47,7 @@ jobs:
     strategy:
       matrix:
         sketch: [HoodLoader2CLPBridge]
-        board: ["arduino:avr:leonardo", "arduino:avr:micro"]
+        board: ["HoodLoader2:avr:HoodLoader2atmega16u2:board=uno", "HoodLoader2:avr:HoodLoader2atmega16u2:board=mega2560"]
     steps:
     - uses: actions/checkout@master
     - name: Install HoodLoader2
