@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool]
-        board: ["arduino:avr:leonardo", "arduino:avr:micro"]
+        board: ["arduino:avr:leonardo", "arduino:avr:micro", "SparkFun:avr:promicro:cpu=16MHzatmega32U4"]
     steps:
     - uses: actions/checkout@master
     - name: Install FastLED
@@ -16,8 +16,16 @@ jobs:
         repository: FastLED/FastLED
         tag: '3.2.0'
         path: libraries
+    - name: Install SparkFun boards
+      if: contains(matrix.board, 'SparkFun')
+      run: |
+        cd hardware/SparkFun
+        wget https://github.com/sparkfun/Arduino_Boards/raw/master/IDE_Board_Manager/sparkfunboards.1.1.5.tar.bz2
+        tar -xvjf sparkfunboards.1.1.5.tar.bz2
+        rm sparkfunboards.1.1.5.tar.bz2
+        mv avr-1.1.5 avr
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@actions-v2
+      uses: Legion2/arduino-builder-action@v2.0.0
       with:
         board: ${{ matrix.board }}
         sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
@@ -37,7 +45,7 @@ jobs:
         tag: '3.2.0'
         path: libraries
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@actions-v2
+      uses: Legion2/arduino-builder-action@v2.0.0
       with:
         board: ${{ matrix.board }}
         sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
@@ -56,16 +64,21 @@ jobs:
         repository: FastLED/FastLED
         tag: '3.2.0'
         path: libraries
+    - name: Download HoodLoader2
+      uses: Legion2/download-release-action@master
+      with:
+        repository: NicoHood/HoodLoader2
+        tag: '2.0.5'
+        path: hardware/HoodLoader2
+        file: '2.0.5-boards_manager.zip'
     - name: Install HoodLoader2
       run: |
-        mkdir -p hardware/HoodLoader2
         cd hardware/HoodLoader2
-        wget -O hoodloader.zip https://github.com/NicoHood/HoodLoader2/releases/download/2.0.5/2.0.5-boards_manager.zip
-        unzip hoodloader.zip
-        rm hoodloader.zip
+        unzip 2.0.5-boards_manager.zip
+        rm 2.0.5-boards_manager.zip
         mv * avr
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@actions-v2
+      uses: Legion2/arduino-builder-action@v2.0.0
       with:
         board: ${{ matrix.board }}
         sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
