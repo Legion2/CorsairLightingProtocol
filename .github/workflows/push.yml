@@ -50,6 +50,12 @@ jobs:
         board: ["HoodLoader2:avr:HoodLoader2atmega16u2:board=uno", "HoodLoader2:avr:HoodLoader2atmega16u2:board=mega2560"]
     steps:
     - uses: actions/checkout@master
+    - name: Install FastLED
+      uses: Legion2/download-release-action@v1.0.0
+      env:
+        TARGET_PATH: libraries
+      with:
+        args: FastLED/FastLED 3.2.0
     - name: Install HoodLoader2
       run: |
         mkdir -p hardware/HoodLoader2
