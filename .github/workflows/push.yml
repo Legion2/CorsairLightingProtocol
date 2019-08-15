@@ -75,6 +75,8 @@ jobs:
     - name: Install HoodLoader2
       run: |
         cd hardware/HoodLoader2
+        id
+        ls -la
         mv 2.0.5-boards_manager.zip some.zip
         unzip some.zip
         rm some.zip
