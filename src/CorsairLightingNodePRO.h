@@ -25,7 +25,7 @@
 
 #define CHANNEL_LED_COUNT 60
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0x10 };
+const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x0A, 0x04 };
 
 class CorsairLightingNodePRO {
 public:
