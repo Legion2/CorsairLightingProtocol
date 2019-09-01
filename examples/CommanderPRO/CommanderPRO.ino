@@ -34,7 +34,7 @@
 
 #define CHANNEL_LED_COUNT 60
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x08, 0x00 };
+const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0xD4 };
 
 ThermistorTemperatureController temperatureController;
 FastLEDController<CHANNEL_LED_COUNT> ledController(&temperatureController, true);
