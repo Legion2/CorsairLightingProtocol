@@ -75,12 +75,10 @@ jobs:
     - name: Install HoodLoader2
       run: |
         cd hardware/HoodLoader2
-        id
-        ls -la
-        mv 2.0.5-boards_manager.zip some.zip
-        unzip some.zip
-        rm some.zip
-        mv * avr
+        sudo mv 2.0.5-boards_manager.zip some.zip
+        sudo unzip some.zip
+        sudo rm some.zip
+        sudo mv * avr
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
       uses: Legion2/arduino-builder-action@v2.0.0
       with:
