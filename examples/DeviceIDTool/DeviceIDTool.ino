@@ -17,17 +17,9 @@
 // UPLOAD THIS TO THE ARDUINO AND OPEN SERIAL MONITOR WITH BOUDRATE 115200
 //
 #include <EEPROM.h>
+#include <CLPUtils.h>
 
 #define EEPROM_ADDRESS_DEVICE_ID 0
-
-void printDeviceID(uint8_t* deviceId) {
-	char tmp[16];
-	for (size_t i = 0; i < 4; i++) {
-		sprintf(tmp, "%.2X", deviceId[i]);
-		Serial.print(tmp);
-		if (i < 3) Serial.print(F(" "));
-	}
-}
 
 bool isNullID(uint8_t* deviceId) {
 	return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]);

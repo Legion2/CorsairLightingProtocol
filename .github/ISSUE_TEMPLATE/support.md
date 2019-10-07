@@ -1,8 +1,8 @@
 ---
-name: Tech-support
-about: Have a problem using this project
+name: Support
+about: You have a problem using this project and need help?
 title: ''
-labels: ''
+labels: support
 assignees: ''
 
 ---

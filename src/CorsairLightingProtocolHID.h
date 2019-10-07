@@ -24,6 +24,11 @@
 
 #if defined(USBCON)
 
+#if defined(DEBUG) && defined(VERBOSE)
+extern bool printCommand;
+extern bool printResponse;
+#endif
+
 class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
 	CorsairLightingProtocolHID(CorsairLightingProtocol* cLP);

@@ -33,10 +33,8 @@
 #define CHANNEL_MODE_SOFTWARE_PLAYBACK 0x02
 
 //Port types
-#define PORT_TYPE_DISABLED 0x00
-#define PORT_TYPE_RGB_LED_STRIP 0x01
-#define PORT_TYPE_RGB_LED_SP_FANS 0x02
-#define PORT_TYPE_RGB_LED_LL_FANS 0x03
+#define PORT_TYPE_WS2812B 0x01
+#define PORT_TYPE_UCS1903 0x02
 
 //LED group mode
 #define GROUP_MODE_Rainbow_Wave 0x00
@@ -88,7 +86,7 @@ struct LEDChannel {
 	uint8_t brightness = CHANNEL_LED_BRIGHTNESS_MAX;
 	uint8_t ledMode = CHANNEL_MODE_ON;
 	uint8_t ledCount = 0;
-	uint8_t ledPortType = PORT_TYPE_RGB_LED_STRIP;
+	uint8_t ledPortType = PORT_TYPE_WS2812B;
 
 	LEDGroup groups[GROUPS_NUM];
 	uint8_t groupsSet = 0;
@@ -112,6 +110,8 @@ protected:
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
 	virtual bool setLEDMode(uint8_t channel, uint8_t mode);
 	virtual bool setLEDBrightness(uint8_t channel, uint8_t brightness);
+	// The type of led controller: WS2812B or UCS1903
+	// one of PORT_TYPE_*
 	virtual bool setLEDPortType(uint8_t channel, uint8_t ledPortType);
 	virtual void clearLEDColorValues(uint8_t channel) = 0;
 	virtual bool clearLEDGroups(uint8_t channel);
