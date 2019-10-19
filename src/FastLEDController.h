@@ -36,6 +36,7 @@ public:
 	virtual void addLeds(uint8_t channel, CRGB * led_buffer);
 	virtual bool updateLEDs();
 	virtual size_t getEEPROMSize();
+	virtual bool isValidLEDGroup(const LEDGroup& ledGroup) override;
 protected:
 	TemperatureController* const temperatureController;
 
@@ -144,7 +145,7 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 		}
 		case CHANNEL_MODE_ON:
 		{
-			for (int i = 0; i < channel.groupsSet; i++) {
+			for (uint8_t i = 0; i < channel.groupsSet; i++) {
 				LEDGroup& group = channel.groups[i];
 				switch (group.mode)
 				{
@@ -450,9 +451,20 @@ inline size_t FastLEDController<CHANNEL_LED_COUNT>::getEEPROMSize()
 }
 
 template<size_t CHANNEL_LED_COUNT>
+inline bool FastLEDController<CHANNEL_LED_COUNT>::isValidLEDGroup(const LEDGroup& ledGroup)
+{
+	return LEDController::isValidLEDGroup(ledGroup) && CHANNEL_LED_COUNT >= (int)ledGroup.ledIndex + ledGroup.ledCount;
+}
+
+template<size_t CHANNEL_LED_COUNT>
 bool FastLEDController<CHANNEL_LED_COUNT>::load() {
 	if (useEEPROM) {
 		EEPROM.get(EEPROM_ADDRESS, channels);
+		for (LEDChannel& channel: channels) {
+			if (!isValidLEDChannel(channel)) {
+				channel = LEDChannel();
+			}
+		}
 		return true;
 	}
 	return false;
@@ -485,7 +497,7 @@ inline void FastLEDController<CHANNEL_LED_COUNT>::setLEDExternalTemperature(uint
 template<size_t CHANNEL_LED_COUNT>
 inline void FastLEDController<CHANNEL_LED_COUNT>::setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len)
 {
-	size_t copyLength = min(CHANNEL_LED_COUNT - offset, len);
+	int copyLength = min((int)CHANNEL_LED_COUNT - offset, (int)len);
 	if (copyLength >= 0) {
 		memcpy(volatileData[channel].values_buffer[color] + offset, values, copyLength);
 	}

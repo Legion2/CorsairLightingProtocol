@@ -14,6 +14,7 @@
    limitations under the License.
 */
 #include "LEDController.h"
+#include "TemperatureController.h"
 
 void LEDController::handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response)
 {
@@ -101,6 +102,11 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			group.temp2 = fromBigEndian(data[19], data[20]);
 			group.temp3 = fromBigEndian(data[21], data[22]);
 
+			if (!isValidLEDGroup(group)) {
+				response->sendError();
+				return;
+			}
+
 			trigger_save |= setLEDGroup(channel, channels[channel].groupsSet++, group);
 			break;
 		}
@@ -154,6 +160,30 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 	}
 	response->send(nullptr, 0);
+}
+
+bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
+{
+	if (ledChannel.ledMode <= CHANNEL_MODE_SOFTWARE_PLAYBACK
+		&& ledChannel.ledPortType <= PORT_TYPE_UCS1903
+		&& ledChannel.groupsSet < GROUPS_NUM) {
+		for (uint8_t i = 0; i < ledChannel.groupsSet; i++) {
+			if (!isValidLEDGroup(ledChannel.groups[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool LEDController::isValidLEDGroup(const LEDGroup& ledGroup)
+{
+	return ledGroup.mode <= GROUP_MODE_Rainbow
+		&& ledGroup.speed <= GROUP_SPEED_LOW
+		&& ledGroup.direction <= GROUP_DIRECTION_FORWARD
+		&& (ledGroup.tempGroup == GROUP_TEMP_GROUP_EXTERNAL
+			|| ledGroup.tempGroup < TEMPERATURE_NUM);
 }
 
 uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t set)
