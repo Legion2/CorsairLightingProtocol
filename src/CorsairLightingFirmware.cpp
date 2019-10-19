@@ -49,8 +49,7 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 	}
 	case WRITE_DEVICE_ID:
 	{
-		memcpy(DeviceId, command.data, sizeof(DeviceId));
-		EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
+		setDeciceID(command.data);
 		response->send(DeviceId, sizeof(DeviceId));
 		break;
 	}
@@ -60,6 +59,17 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 		break;
 	}
 	}
+}
+
+void CorsairLightingFirmware::getDeviceID(uint8_t* deviceID)
+{
+	memcpy(deviceID, DeviceId, sizeof(DeviceId));
+}
+
+void CorsairLightingFirmware::setDeciceID(const uint8_t* deviceID)
+{
+	memcpy(DeviceId, deviceID, sizeof(DeviceId));
+	EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
 }
 
 CorsairLightingFirmware corsairLightingNodePROFirmware()
