@@ -15,7 +15,9 @@
 */
 #include "CorsairLightingProtocolSerial.h"
 
-CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP) : cLP(cLP)
+CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP) : cLP(cLP){}
+
+void CorsairLightingProtocolSerial::setup()
 {
 	Serial.begin(SERIAL_BAUD);
 	Serial.setTimeout(SERIAL_TIMEOUT);
