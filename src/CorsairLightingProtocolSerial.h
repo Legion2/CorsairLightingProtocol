@@ -27,6 +27,7 @@
 class CorsairLightingProtocolSerial : CorsairLightingProtocolResponse {
 public:
 	CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP);
+	void setup();
 	void update();
 private:
 	byte rawCommand[COMMAND_SIZE];

@@ -50,6 +50,10 @@ void CLPUSBSerialBridge::sendError() {
 }
 
 void CLPUSBSerialBridge::sendResponse() {
+#ifdef DEBUG
+	Serial.print(F("R"));
+	Serial.println(rawHIDAndSerialBuffer[0], HEX);
+#endif // DEBUG
 	RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 	// free the shared buffer to receive new data
 	RawHID.enable();
@@ -58,7 +62,14 @@ void CLPUSBSerialBridge::sendResponse() {
 void CLPUSBSerialBridge::handleHID()
 {
 	if (RawHID.available()) {
+#ifdef DEBUG
+		Serial.print(F("C"));
+		Serial.println(rawHIDAndSerialBuffer[0], HEX);
+#endif // DEBUG
 		if (!waitForSynchronization()) {
+#ifdef DEBUG
+			Serial.println(F("S"));
+#endif // DEBUG
 			sendError();
 			return;
 		}
