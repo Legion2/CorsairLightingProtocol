@@ -148,8 +148,8 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 		}
 		case CHANNEL_MODE_ON:
 		{
-			for (uint8_t i = 0; i < channel.groupsSet; i++) {
-				LEDGroup& group = channel.groups[i];
+			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
+				LEDGroup& group = channel.groups[groupIndex];
 				switch (group.mode)
 				{
 				case GROUP_MODE_Rainbow_Wave:
