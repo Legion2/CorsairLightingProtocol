@@ -23,7 +23,7 @@
 template<size_t CHANNEL_LED_COUNT>
 class FastLEDController : public LEDController {
 	struct LEDBufferData {
-		CRGB * led_buffer;
+		CRGB * led_buffer = nullptr;
 		// store an array for each color
 		uint8_t values_buffer[3][CHANNEL_LED_COUNT];
 		// current temperature
@@ -136,6 +136,9 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 	bool updated = false;
 
 	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
+		if (volatileData[channelId].led_buffer == nullptr) {
+			continue;
+		}
 		LEDChannel& channel = channels[channelId];
 		switch (channel.ledMode)
 		{
