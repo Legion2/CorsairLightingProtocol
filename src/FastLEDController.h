@@ -69,7 +69,7 @@ protected:
 #endif
 
 template<size_t CHANNEL_LED_COUNT>
-FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(bool useEEPROM) : temperatureController(NULL), useEEPROM(useEEPROM) {
+FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(bool useEEPROM) : temperatureController(nullptr), useEEPROM(useEEPROM) {
 	load();
 }
 
@@ -283,7 +283,7 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 					if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
 						currentTemperature = volatileData[channelId].temp;
 					}
-					else if (tempGroup < TEMPERATURE_NUM && temperatureController != NULL) {
+					else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
 						currentTemperature = temperatureController->getTemperature(tempGroup);
 					}
 

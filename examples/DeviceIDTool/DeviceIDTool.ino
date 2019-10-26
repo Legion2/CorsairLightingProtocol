@@ -53,10 +53,10 @@ void loop() {
 		else {
 			uint8_t newDeviceID[4];
 
-			newDeviceID[0] = strtol(&inputString[0], NULL, 16);
-			newDeviceID[1] = strtol(&inputString[3], NULL, 16);
-			newDeviceID[2] = strtol(&inputString[6], NULL, 16);
-			newDeviceID[3] = strtol(&inputString[9], NULL, 16);
+			newDeviceID[0] = strtol(&inputString[0], nullptr, 16);
+			newDeviceID[1] = strtol(&inputString[3], nullptr, 16);
+			newDeviceID[2] = strtol(&inputString[6], nullptr, 16);
+			newDeviceID[3] = strtol(&inputString[9], nullptr, 16);
 			Serial.println(F("Set DeviceID to: "));
 			printDeviceID(newDeviceID);
 			Serial.println();

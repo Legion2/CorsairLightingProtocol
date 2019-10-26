@@ -57,7 +57,7 @@ protected:
 	bool save();
 
 	TemperatureController* const temperatureController;
-	PWMFan* fans[FAN_NUM] = { NULL };
+	PWMFan* fans[FAN_NUM] = { nullptr };
 	bool force3PinMode = false;
 	FanData fanData[FAN_NUM];
 	uint16_t externalTemp[FAN_NUM];

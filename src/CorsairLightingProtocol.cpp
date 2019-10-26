@@ -17,7 +17,7 @@
 #include "CorsairLightingFirmware.h"
 #include "LEDController.h"
 
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
+CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(nullptr), fanController(nullptr) {}
 
 CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
 
@@ -27,7 +27,7 @@ void CorsairLightingProtocol::handleCommand(const Command& command, CorsairLight
 		corsairLightingFirmware.handleFirmwareCommand(command, response);
 	}
 	else if (command.command >= 0x10 && command.command < 0x20) {
-		if (temperatureController != NULL) {
+		if (temperatureController != nullptr) {
 			temperatureController->handleTemperatureControl(command, response);
 		}
 		else {
@@ -35,7 +35,7 @@ void CorsairLightingProtocol::handleCommand(const Command& command, CorsairLight
 		}
 	}
 	else if (command.command >= 0x20 && command.command < 0x30) {
-		if (fanController != NULL) {
+		if (fanController != nullptr) {
 			fanController->handleFanControl(command, response);
 		}
 		else {
