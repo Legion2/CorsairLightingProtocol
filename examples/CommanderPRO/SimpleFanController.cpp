@@ -51,7 +51,7 @@ bool SimpleFanController::updateFans()
 		}
 
 		for (uint8_t i = 0; i < FAN_NUM; i++) {
-			if (fans[i] == NULL) {
+			if (fans[i] == nullptr) {
 				continue;
 			}
 			if (fanData[i].mode == FAN_CONTROL_MODE_FIXED_RPM || fanData[i].mode == FAN_CONTROL_MODE_FIXED_POWER) {
@@ -105,7 +105,7 @@ void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed)
 {
 	fanData[fan].speed = speed;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_RPM;
-	fanData[fan].power = fans[fan] != NULL ? fans[fan]->calculatePowerFromSpeed(speed) : 0;
+	fanData[fan].power = fans[fan] != nullptr ? fans[fan]->calculatePowerFromSpeed(speed) : 0;
 	trigger_save = true;
 }
 
@@ -118,7 +118,7 @@ void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage)
 {
 	fanData[fan].power = percentage;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_POWER;
-	fanData[fan].speed = fans[fan] != NULL ? fans[fan]->calculateSpeedFromPower(percentage) : 0;
+	fanData[fan].speed = fans[fan] != nullptr ? fans[fan]->calculateSpeedFromPower(percentage) : 0;
 	trigger_save = true;
 }
 

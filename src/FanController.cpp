@@ -75,7 +75,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 		}
 		uint8_t percentage = convert100To255(command.data[1]);
 		setFanPower(fan, percentage);
-		response->send(NULL, 0);
+		response->send(nullptr, 0);
 		break;
 	}
 	case WRITE_FAN_SPEED:
@@ -87,7 +87,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 		}
 		uint16_t speed = fromBigEndian(command.data[1], command.data[2]);
 		setFanSpeed(fan, speed);
-		response->send(NULL, 0);
+		response->send(nullptr, 0);
 		break;
 	}
 	case WRITE_FAN_CURVE:
@@ -104,7 +104,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			fanCurve.rpms[i] = fromBigEndian(command.data[14 + i * 2], command.data[15 + i * 2]);
 		}
 		setFanCurve(fan, group, fanCurve);
-		response->send(NULL, 0);
+		response->send(nullptr, 0);
 		break;
 	}
 	case WRITE_FAN_EXTERNAL_TEMP:
@@ -116,7 +116,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 		}
 		uint16_t temp = fromBigEndian(command.data[1], command.data[2]);
 		setFanExternalTemperature(fan, temp);
-		response->send(NULL, 0);
+		response->send(nullptr, 0);
 		break;
 	}
 	case WRITE_FAN_FORCE_THREE_PIN_MODE:
@@ -132,7 +132,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 		}
 		
-		response->send(NULL, 0);
+		response->send(nullptr, 0);
 		break;
 	}
 	case WRITE_FAN_DETECTION_TYPE:
@@ -152,7 +152,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 		}
 		setFanDetectionType(fan, type);
-		response->send(NULL, 0);
+		response->send(nullptr, 0);
 		break;
 	}
 	case READ_FAN_DETECTION_TYPE:

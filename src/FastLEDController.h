@@ -23,7 +23,7 @@
 template<size_t CHANNEL_LED_COUNT>
 class FastLEDController : public LEDController {
 	struct LEDBufferData {
-		CRGB * led_buffer;
+		CRGB * led_buffer = nullptr;
 		// store an array for each color
 		uint8_t values_buffer[3][CHANNEL_LED_COUNT];
 		// current temperature
@@ -69,7 +69,7 @@ protected:
 #endif
 
 template<size_t CHANNEL_LED_COUNT>
-FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(bool useEEPROM) : temperatureController(NULL), useEEPROM(useEEPROM) {
+FastLEDController<CHANNEL_LED_COUNT>::FastLEDController(bool useEEPROM) : temperatureController(nullptr), useEEPROM(useEEPROM) {
 	load();
 }
 
@@ -136,6 +136,9 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 	bool updated = false;
 
 	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
+		if (volatileData[channelId].led_buffer == nullptr) {
+			continue;
+		}
 		LEDChannel& channel = channels[channelId];
 		switch (channel.ledMode)
 		{
@@ -145,8 +148,8 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 		}
 		case CHANNEL_MODE_ON:
 		{
-			for (uint8_t i = 0; i < channel.groupsSet; i++) {
-				LEDGroup& group = channel.groups[i];
+			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
+				LEDGroup& group = channel.groups[groupIndex];
 				switch (group.mode)
 				{
 				case GROUP_MODE_Rainbow_Wave:
@@ -280,7 +283,7 @@ bool FastLEDController<CHANNEL_LED_COUNT>::updateLEDs()
 					if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
 						currentTemperature = volatileData[channelId].temp;
 					}
-					else if (tempGroup < TEMPERATURE_NUM && temperatureController != NULL) {
+					else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
 						currentTemperature = temperatureController->getTemperature(tempGroup);
 					}
 
