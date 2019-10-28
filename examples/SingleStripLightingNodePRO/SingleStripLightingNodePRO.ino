@@ -33,7 +33,7 @@
 // If enabled, the Hardware Lighting configured in iCUE works without a USB connection and even after a restart of the Arduino.
 #define USE_EEPROM true
 
-FastLEDController<CHANNEL_LED_COUNT> ledController(USE_EEPROM);
+FastLEDController ledController(USE_EEPROM);
 CorsairLightingProtocol cLP(&ledController, firmware_version);
 CorsairLightingProtocolHID cHID(&cLP);
 
@@ -46,8 +46,8 @@ void setup() {
 #endif
 	disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-	ledController.addLeds(0, leds);
-	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]));
+	ledController.addLeds(0, leds, CHANNEL_LED_COUNT);
+	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]), CHANNEL_LED_COUNT);
 }
 
 void loop() {

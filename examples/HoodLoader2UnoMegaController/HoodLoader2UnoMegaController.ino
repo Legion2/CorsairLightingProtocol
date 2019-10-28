@@ -24,7 +24,7 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-FastLEDController<CHANNEL_LED_COUNT> ledController(true);
+FastLEDController ledController(true);
 CorsairLightingProtocol cLP(&ledController, firmware_version);
 CorsairLightingProtocolSerial cLPS(&cLP);
 
@@ -39,8 +39,8 @@ void setup() {
 	cLPS.setup();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	ledController.addLeds(0, ledsChannel1);
-	ledController.addLeds(1, ledsChannel2);
+	ledController.addLeds(0, ledsChannel1, CHANNEL_LED_COUNT);
+	ledController.addLeds(1, ledsChannel2, CHANNEL_LED_COUNT);
 }
 
 void loop() {

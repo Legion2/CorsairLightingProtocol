@@ -14,3 +14,449 @@
    limitations under the License.
 */
 #include "FastLEDController.h"
+#include <EEPROM.h>
+
+FastLEDController::FastLEDController(bool useEEPROM) : temperatureController(nullptr), useEEPROM(useEEPROM)
+{
+	load();
+}
+
+FastLEDController::FastLEDController(TemperatureController* temperatureController, bool useEEPROM) : temperatureController(temperatureController), useEEPROM(useEEPROM)
+{
+	load();
+}
+
+FastLEDController::~FastLEDController()
+{
+	for (auto& vData : volatileData) {
+		for (uint8_t*& buffer : vData.values_buffer) {
+			delete[] buffer;
+		}
+	}
+}
+
+void FastLEDController::addLeds(uint8_t channel, CRGB* led_buffer, uint8_t count) {
+	if (channel >= CHANNEL_NUM || led_buffer == nullptr || volatileData[channel].led_buffer != nullptr) {
+		return;
+	}
+	volatileData[channel].ledCount = count;
+	volatileData[channel].led_buffer = led_buffer;
+	for (uint8_t*& buffer : volatileData[channel].values_buffer) {
+		buffer = new uint8_t[count];
+	}
+}
+
+void FastLEDController::addColors(CRGB* led_buffer, const CRGB& color, const uint8_t* values, uint8_t length) {
+	for (int i = 0; i < length; i++) {
+		led_buffer[i] += color % values[i];
+	}
+}
+
+int FastLEDController::applySpeed(int duration, byte speed) {
+	switch (speed)
+	{
+	case GROUP_SPEED_HIGH:
+		return duration / 2;
+	case GROUP_SPEED_MEDIUM:
+		return duration;
+	case GROUP_SPEED_LOW:
+		return duration * 2;
+	default:
+		return duration;
+	}
+}
+
+/*
+returns the current step of the animation
+*/
+int FastLEDController::animation_step(int duration, int steps) {
+	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+	return currentStep;
+}
+/*
+returns the number of steps since the last update
+*/
+int FastLEDController::animation_step_count(int duration, int steps) {
+	long lastAnimationNumber = lastUpdate / duration;
+	long currentAnimationNumber = currentUpdate / duration;
+	int lastStep = ((lastUpdate % duration) / ((float)duration)) * steps;
+	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+
+	return currentStep - lastStep + (currentAnimationNumber - lastAnimationNumber) * steps;
+}
+
+bool FastLEDController::updateLEDs()
+{
+	lastUpdate = currentUpdate;
+	currentUpdate = millis();
+
+	bool updated = false;
+
+	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
+		if (volatileData[channelId].led_buffer == nullptr) {
+			continue;
+		}
+		LEDChannel& channel = channels[channelId];
+
+		switch (channel.ledMode)
+		{
+		case CHANNEL_MODE_DISABLED:
+		{
+			break;
+		}
+		case CHANNEL_MODE_ON:
+		{
+			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
+				LEDGroup& group = channel.groups[groupIndex];
+				if (volatileData[channelId].ledCount < (int)group.ledIndex + group.ledCount) {
+					continue;
+				}
+
+				switch (group.mode)
+				{
+				case GROUP_MODE_Rainbow_Wave:
+				{
+					int duration = applySpeed(3300, group.speed);
+					int count = animation_step_count(duration, 256);
+					if (count > 0) {
+						int step = animation_step(duration, 256);
+						int move = group.direction == GROUP_DIRECTION_FORWARD ? -3 : 3;
+						for (int i = 0; i < group.ledCount; i++) {
+							volatileData[channelId].led_buffer[group.ledIndex + i] = CHSV(step + (i * move), 255, 255) % channel.brightness;
+						}
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Color_Shift:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 512);
+					if (count > 0) {
+						int step = animation_step(duration, 512);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = group.color2;
+								group.color2 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						uint8_t scale;
+						if (step < 128) {
+							scale = 0;
+						}
+						else if (step < 384) {
+							scale = ease8InOutApprox(step - 128);
+						}
+						else {
+							scale = 255;
+						}
+
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Color_Pulse:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 512);
+					if (count > 0) {
+						int step = animation_step(duration, 512);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						uint8_t scale = ease8InOutApprox((uint8_t)step);
+						if (step >= 256) {
+							scale = 255 - scale;
+						}
+
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % scale % channel.brightness);
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Color_Wave:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 10000);
+					if (count > 0) {
+						int step = animation_step(duration, 10000);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = group.color2;
+								group.color2 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						float valley = step / 10000.0;
+						for (int i = 0; i < group.ledCount; i++) {
+							float pos = (i % 17) / 17.0;
+
+							float distanceWave;
+							CRGB color;
+							const bool flag = (i % 34) < 17;
+							if (pos < valley) {
+								color = flag ? group.color1 : group.color2;
+								distanceWave = abs(valley - 0.5 - pos);
+							}
+							else {
+								color = flag ? group.color2 : group.color1;
+								distanceWave = abs(valley + 0.5 - pos);
+							}
+
+							uint8_t scale;
+							if (distanceWave > 0.25) {
+								scale = 0;
+							}
+							else {
+								scale = 255 - ease8InOutApprox((distanceWave * 4) * 256);
+							}
+							volatileData[channelId].led_buffer[group.ledIndex + i] = (color % scale) % channel.brightness;
+						}
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Static:
+				{
+					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
+					break;
+				}
+				case GROUP_MODE_Temperature:
+				{
+					uint16_t currentTemperature;
+					const uint8_t& tempGroup = group.tempGroup;
+					if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
+						currentTemperature = volatileData[channelId].temp;
+					}
+					else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
+						currentTemperature = temperatureController->getTemperature(tempGroup);
+					}
+
+					CRGB color;
+					if (currentTemperature < group.temp1) {
+						color = group.color1;
+					}
+					else if (currentTemperature < group.temp2) {
+						color = group.color1.lerp16(group.color2, ((currentTemperature - group.temp1) / ((float)(group.temp2 - group.temp1))) * 65535);
+					}
+					else if (currentTemperature < group.temp3) {
+						color = group.color2.lerp16(group.color3, ((currentTemperature - group.temp2) / ((float)(group.temp3 - group.temp2))) * 65535);
+					}
+					else {
+						color = group.color3;
+					}
+
+					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, color % channel.brightness);
+					updated = true;
+					break;
+				}
+				case GROUP_MODE_Visor:
+				{
+					int duration = applySpeed(150 * group.ledCount, group.speed);
+					int steps = group.ledCount * 2;
+					int count = animation_step_count(duration, steps);
+					if (count > 0) {
+						int step = animation_step(duration, steps);
+						if (step >= group.ledCount ? count > step - group.ledCount : count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, CRGB::Black);
+						for (int i = 0; i < 4; i++) {
+							int led = (((step - i) % steps) + steps) % steps;
+							if (led >= group.ledCount) {
+								led = steps - led - 1;
+							}
+							volatileData[channelId].led_buffer[group.ledIndex + led] = group.color1 % channel.brightness;
+						}
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Marquee:
+				{
+					int duration = applySpeed(700, group.speed);
+					int count = animation_step_count(duration, 3);
+					if (count > 0) {
+						int step = animation_step(duration, 3);
+						for (int i = 0; i < group.ledCount; i++) {
+							volatileData[channelId].led_buffer[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 % channel.brightness : CRGB::Black;
+						}
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Blink:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 2);
+					if (count > 0) {
+						int step = animation_step(duration, 2);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+								group.color3 = group.color1;
+								group.color1 = group.color2;
+								group.color2 = group.color3;
+							}
+						}
+
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Sequential:
+				{
+					int steps = group.ledCount;
+					int duration = applySpeed(60 * steps, group.speed);
+					int count = animation_step_count(duration, steps);
+					if (count > 0) {
+						int step = animation_step(duration, steps);
+						if (count > step) {
+							if (group.extra == GROUP_EXTRA_RANDOM) {
+								group.color2 = group.color1;
+								group.color1 = CHSV(random8(), 255, 255);
+							}
+						}
+
+						if (group.direction == GROUP_DIRECTION_FORWARD) {
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], step + 1, group.color1 % channel.brightness);
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex + step + 1], group.ledCount - (step + 1), group.color2 % channel.brightness);
+						}
+						else {
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex + group.ledCount - (step + 1)], step + 1, group.color1 % channel.brightness);
+							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount - (step + 1), group.color2 % channel.brightness);
+						}
+						updated = true;
+					}
+					break;
+				}
+				case GROUP_MODE_Rainbow:
+				{
+					int duration = applySpeed(3000, group.speed);
+					int count = animation_step_count(duration, 256);
+					if (count > 0) {
+						int step = animation_step(duration, 256);
+						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, CHSV(step, 255, 255) % channel.brightness);
+						updated = true;
+					}
+					break;
+				}
+				default:
+				{
+#ifdef DEBUG
+					Serial.print(F("unkown group mode: "));
+					Serial.print(group.mode, HEX);
+					Serial.println();
+#endif
+					break;
+				}
+				}
+			}
+			updated = true;
+			break;
+		}
+		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
+		{
+			if (trigger_update) {
+				auto& data = volatileData[channelId];
+				fill_solid(data.led_buffer, data.ledCount, CRGB::Black);
+				addColors(data.led_buffer, CRGB::Red, data.values_buffer[0], data.ledCount);
+				addColors(data.led_buffer, CRGB::Green, data.values_buffer[1], data.ledCount);
+				addColors(data.led_buffer, CRGB::Blue, data.values_buffer[2], data.ledCount);
+				updated = true;
+			}
+			break;
+		}
+		default:
+		{
+#ifdef DEBUG
+			Serial.print(F("unkown led channel mode: "));
+			Serial.print(channel.ledMode, HEX);
+			Serial.println();
+			break;
+#endif
+		}
+		}
+	}
+	trigger_update = false;
+	return updated;
+}
+
+size_t FastLEDController::getEEPROMSize()
+{
+	return sizeof(channels);
+}
+
+bool FastLEDController::load() {
+	if (useEEPROM) {
+		EEPROM.get(EEPROM_ADDRESS, channels);
+		for (LEDChannel& channel : channels) {
+			if (!isValidLEDChannel(channel)) {
+				channel = LEDChannel();
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool FastLEDController::save() {
+	if (useEEPROM) {
+#ifdef DEBUG
+		Serial.println(F("Save to EEPROM."));
+#endif
+		EEPROM.put(EEPROM_ADDRESS, channels);
+		return true;
+	}
+	return false;
+}
+
+void FastLEDController::triggerLEDUpdate()
+{
+	trigger_update = true;
+}
+
+void FastLEDController::setLEDExternalTemperature(uint8_t channel, uint16_t temp)
+{
+	volatileData[channel].temp = temp;
+}
+
+void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len)
+{
+	int copyLength = min((int)volatileData[channel].ledCount - offset, (int)len);
+	if (copyLength > 0) {
+		memcpy(volatileData[channel].values_buffer[color] + offset, values, copyLength);
+	}
+}
+
+void FastLEDController::clearLEDColorValues(uint8_t channel)
+{
+	memset(volatileData[channel].values_buffer[0], 0, sizeof(volatileData[channel].ledCount));
+}

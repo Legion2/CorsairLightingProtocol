@@ -32,7 +32,7 @@ public:
 	CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2);
 	void update();
 protected:
-	FastLEDController<CHANNEL_LED_COUNT> ledController;
+	FastLEDController ledController;
 	CorsairLightingProtocol cLP;
 #if defined(USBCON)
 	CorsairLightingProtocolHID connectionAdapter;
