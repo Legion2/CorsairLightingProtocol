@@ -27,9 +27,9 @@
 class FastLEDController : public LEDController {
 	struct LEDBufferData {
 		uint8_t ledCount = 0;
-		CRGB * led_buffer = nullptr;
+		CRGB* led_buffer = nullptr;
 		// store an array for each color
-		uint8_t *values_buffer[3] = { nullptr };
+		uint8_t* values_buffer[3] = { nullptr };
 		// current temperature
 		uint16_t temp;
 	};
@@ -38,7 +38,7 @@ public:
 	FastLEDController(bool useEEPROM);
 	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	~FastLEDController();
-	virtual void addLeds(uint8_t channel, CRGB * led_buffer, uint8_t count);
+	virtual void addLeds(uint8_t channel, CRGB* led_buffer, uint8_t count);
 	CRGB* getLeds(uint8_t channel);
 	uint8_t getLedCount(uint8_t channel);
 	virtual bool updateLEDs();
