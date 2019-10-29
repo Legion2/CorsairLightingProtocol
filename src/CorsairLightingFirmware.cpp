@@ -21,7 +21,7 @@ CorsairLightingFirmware::CorsairLightingFirmware(const uint8_t* firmwareVersion)
 	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
 }
 
-void CorsairLightingFirmware::handleFirmwareCommand(const Command & command, const CorsairLightingProtocolResponse* response)
+void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response)
 {
 	switch (command.command)
 	{

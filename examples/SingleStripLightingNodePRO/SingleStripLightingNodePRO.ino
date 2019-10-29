@@ -17,8 +17,7 @@
 #include <CorsairLightingProtocolHID.h>
 #include <FastLED.h>
 
-// The number of LEDs per channel, there are two channels.
-// 60 LEDs per channel is the maximum iCUE can handle.
+// The number of LEDs per channel.
 #define CHANNEL_LED_COUNT 50
 
 // Total count of LEDs on all channels, the value is calculated based on the leds per channel.
@@ -29,15 +28,11 @@
 // In this example we use only one pin where both channel are connected in series.
 #define DATA_PIN 2
 
-// Should the EEPROM of the Arduino be used to store persistent information like the Hardware Lighting.
-// If enabled, the Hardware Lighting configured in iCUE works without a USB connection and even after a restart of the Arduino.
-#define USE_EEPROM true
-
-FastLEDController ledController(USE_EEPROM);
+FastLEDController ledController(true);
 CorsairLightingProtocol cLP(&ledController, firmware_version);
 CorsairLightingProtocolHID cHID(&cLP);
 
-// This array conatins all RGB values for all LEDs of the both channels.
+// This array conatins all RGB values for the LEDs of the both channels.
 CRGB leds[NUM_LEDS];
 
 void setup() {

@@ -35,7 +35,11 @@ class FastLEDController : public LEDController {
 	};
 
 public:
+	// Create a new FastLEDController and specify if the EEPROM of the Arduino should be used. See the other contructor for more details.
 	FastLEDController(bool useEEPROM);
+	// Create a new FastLEDController and specify if the EEPROM of the Arduino should be used to store persistent information like
+	// the Hardware Lighting. If enabled, the hardware lighting configured in iCUE works without a USB connection and even after a
+	// restart of the Arduino. Also the the TemperatureController used for temperature related lighting can be passed here.
 	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	~FastLEDController();
 	virtual void addLeds(uint8_t channel, CRGB* led_buffer, uint8_t count);
