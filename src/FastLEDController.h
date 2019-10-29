@@ -39,6 +39,8 @@ public:
 	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	~FastLEDController();
 	virtual void addLeds(uint8_t channel, CRGB * led_buffer, uint8_t count);
+	CRGB* getLeds(uint8_t channel);
+	uint8_t getLedCount(uint8_t channel);
 	virtual bool updateLEDs();
 	virtual size_t getEEPROMSize();
 protected:

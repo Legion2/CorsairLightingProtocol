@@ -46,6 +46,22 @@ void FastLEDController::addLeds(uint8_t channel, CRGB* led_buffer, uint8_t count
 	}
 }
 
+CRGB* FastLEDController::getLeds(uint8_t channel)
+{
+	if (channel >= CHANNEL_NUM) {
+		return nullptr;
+	}
+	return volatileData[channel].led_buffer;
+}
+
+uint8_t FastLEDController::getLedCount(uint8_t channel)
+{
+	if (channel >= CHANNEL_NUM) {
+		return 0;
+	}
+	return volatileData[channel].ledCount;
+}
+
 void FastLEDController::addColors(CRGB* led_buffer, const CRGB& color, const uint8_t* values, uint8_t length) {
 	for (int i = 0; i < length; i++) {
 		led_buffer[i] += color % values[i];
