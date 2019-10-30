@@ -43,11 +43,11 @@ Additionally, the [FastLED](http://fastled.io/) library must be installed.
 
 ## Create a Lighting Node PRO
 Open the example "LightingNodePRO", you can find it in the Visual Micro Explorer or the [examples directory](examples).
-The library [FastLED](http://fastled.io/) is used to control the LEDs, for more information on [how to wiring the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
-After you did the wiring or at least know which pin is the data pin, you can set this pin in the example sketch and upload it to the Arduino.
+The library [FastLED](http://fastled.io/) is used to control the LEDs. For more information on [how to wire the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
+After you have done the wiring or at least know which pin is the data pin, you can set this pin in the example sketch and upload it to the Arduino.
 In Visual Studio use the "Release" [configuration](https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/debugger/how-to-set-debug-and-release-configurations.md#change-the-build-configuration).
 
-To verify the library works as expected open the Windows settings -> devices -> connected devices. Somewhere in the list of devices, there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
+To verify that the library works as expected, open the Windows settings -> devices -> connected devices. Somewhere in the list of devices, there should be a device called "Lighting Node PRO". (If not, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues))
 Open [iCUE](https://www.corsair.com/icue) there should also be the "Lighting Node PRO".
 
 ![iCUE RGB Strip example](docs/iCUE.jpg)
@@ -58,7 +58,7 @@ So if you have 20 LEDs, set the amount to 2.
 Now you can create lighting effects in the "Lighting Channel #" tabs.
 
 The example "SingleStripLightingNodePRO" only requires one LED strip connected to the Arduino.
-Because the "SingleStripLightingNodePRO" concatenate the two channels a total of 120 LEDs can be controlled on a single LED Strip.
+Because the "SingleStripLightingNodePRO" concatenate the two channels, a total of 120 LEDs can be controlled on a single LED Strip.
 
 ## Use the library
 If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the [board.txt](examples/LightingNodePRO/board.txt) in the root directory of your sketch.
@@ -84,7 +84,7 @@ The tool displays the current DeviceID, you can type in a new DeviceID that is s
 After that, you can upload another sketch.
 
 ## Debugging
-For debugging don't use the integrated debugger of Visual Studio, it will most likely break the USB communication.
+For debugging don't use the integrated debugger of Visual Studio, as it will most likely break the USB communication.
 Use the `DEBUG` macro and the Serial Monitor.
 With the `-DDEBUG` flag you can enable debugging in the whole project.
 Add this flag in the board.txt file to the `build.extra_flags`.
