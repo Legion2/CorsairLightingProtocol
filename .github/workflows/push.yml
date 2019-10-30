@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool]
+        sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool, RepeatAndScale]
         board: ["arduino:avr:leonardo", "arduino:avr:micro", "SparkFun:avr:promicro:cpu=16MHzatmega32U4"]
     steps:
     - uses: actions/checkout@master
