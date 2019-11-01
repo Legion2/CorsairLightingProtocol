@@ -17,8 +17,8 @@
 
 CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version), connectionAdapter(&cLP)
 {
-	ledController.addLeds(0, ledsChannel1);
-	ledController.addLeds(1, ledsChannel2);
+	ledController.addLeds(0, ledsChannel1, CHANNEL_LED_COUNT);
+	ledController.addLeds(1, ledsChannel2, CHANNEL_LED_COUNT);
 }
 
 void CorsairLightingNodePRO::update() {

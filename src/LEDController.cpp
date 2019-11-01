@@ -186,6 +186,11 @@ bool LEDController::isValidLEDGroup(const LEDGroup& ledGroup)
 			|| ledGroup.tempGroup < TEMPERATURE_NUM);
 }
 
+const LEDChannel& LEDController::getChannel(uint8_t channelIndex)
+{
+	return channels[channelIndex];
+}
+
 uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t set)
 {
 	return channels[channel].groups[set].ledCount;

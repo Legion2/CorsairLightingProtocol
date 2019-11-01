@@ -94,9 +94,10 @@ struct LEDChannel {
 
 class LEDController : public ILEDController {
 public:
-	virtual void handleLEDControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
+	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
 	virtual bool isValidLEDChannel(const LEDChannel& ledChannel);
 	virtual bool isValidLEDGroup(const LEDGroup& ledGroup);
+	const LEDChannel& getChannel(uint8_t channelIndex);
 protected:
 	LEDChannel channels[CHANNEL_NUM];
 	// Indicates that the configuration of the channels has been changed and should be saved
