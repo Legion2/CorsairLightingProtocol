@@ -24,8 +24,8 @@ CorsairLightingNodePRO cLNP;
 void setup() {
 	disableBuildInLEDs();
 	auto ledController = cLNP.getFastLEDController();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledController->getLeds(0), ledController->getLedCount(0));
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledController->getLeds(1), ledController->getLedCount(1));
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledController->getLEDs(0), ledController->getLEDCount(0));
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledController->getLEDs(1), ledController->getLEDCount(1));
 }
 
 void loop() {

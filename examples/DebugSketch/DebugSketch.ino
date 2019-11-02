@@ -37,8 +37,8 @@ void setup() {
 	Serial.setTimeout(100);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	ledController.addLeds(0, ledsChannel1, CHANNEL_LED_COUNT);
-	ledController.addLeds(1, ledsChannel2, CHANNEL_LED_COUNT);
+	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);
+	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT);
 }
 
 void loop() {

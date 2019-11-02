@@ -31,8 +31,8 @@ CorsairLightingProtocolHID cHID(&cLP);
 void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 100);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 144);
-	ledController.addLeds(0, ledsChannel1, 50);
-	ledController.addLeds(1, ledsChannel2, 60);
+	ledController.addLEDs(0, ledsChannel1, 50);
+	ledController.addLEDs(1, ledsChannel2, 60);
 }
 
 void loop() {
