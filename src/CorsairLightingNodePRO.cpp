@@ -15,7 +15,9 @@
 */
 #include "CorsairLightingNodePRO.h"
 
-CorsairLightingNodePRO::CorsairLightingNodePRO() : ledController(true), cLP(&ledController, firmware_version), connectionAdapter(&cLP)
+#if defined(USBCON)
+
+CorsairLightingNodePRO::CorsairLightingNodePRO() : ledController(true), cLP(&ledController, &firmware), connectionAdapter(&cLP)
 {
 	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT_DEFAULT);
 	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT_DEFAULT);
@@ -33,3 +35,5 @@ FastLEDController* CorsairLightingNodePRO::getFastLEDController()
 {
 	return &ledController;
 }
+
+#endif

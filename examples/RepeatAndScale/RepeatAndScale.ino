@@ -13,7 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingNodePRO.h>
+#include <CorsairLightingFirmware.h>
+#include <FastLEDController.h>
+#include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolHID.h>
 #include <FastLEDControllerUtils.h>
 #include <FastLED.h>
@@ -24,8 +26,9 @@
 CRGB ledsChannel1[100];
 CRGB ledsChannel2[144];
 
+CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
-CorsairLightingProtocol cLP(&ledController, firmware_version);
+CorsairLightingProtocol cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 void setup() {

@@ -13,10 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#include <CorsairLightingFirmware.h>
+#include <FastLEDController.h>
 #include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolSerial.h>
-#include <CorsairLightingNodePRO.h>
-#include <FastLEDController.h>
 #include <FastLED.h>
 
 #define CHANNEL_LED_COUNT 96
@@ -24,8 +24,9 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
+CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
-CorsairLightingProtocol cLP(&ledController, firmware_version);
+CorsairLightingProtocol cLP(&ledController, &firmware);
 CorsairLightingProtocolSerial cLPS(&cLP);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];

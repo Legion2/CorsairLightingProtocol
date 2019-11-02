@@ -15,6 +15,7 @@
 */
 #include "SimpleFanController.h"
 #include "ThermistorTemperatureController.h"
+#include <CorsairLightingFirmware.h>
 #include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolHID.h>
 #include <FastLEDController.h>
@@ -34,12 +35,11 @@
 
 #define CHANNEL_LED_COUNT 96
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0xD4 };
-
+CorsairLightingFirmware firmware = corsairCommanderPROFirmware();
 ThermistorTemperatureController temperatureController;
 FastLEDController ledController(&temperatureController, true);
 SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
-CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController, firmware_version);
+CorsairLightingProtocol cLP(&ledController, &temperatureController, &fanController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];

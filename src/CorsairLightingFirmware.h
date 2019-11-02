@@ -30,8 +30,6 @@
 
 #define FIRMWARE_VERSION_SIZE 3
 
-const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
-
 class CorsairLightingFirmware {
 public:
 	CorsairLightingFirmware(const uint8_t* firmwareVersion);
@@ -40,6 +38,10 @@ protected:
 	const uint8_t* firmwareVersion;
 	uint8_t DeviceId[4];
 };
+
+CorsairLightingFirmware corsairLightingNodePROFirmware();
+
+CorsairLightingFirmware corsairCommanderPROFirmware();
 
 #endif
 

@@ -17,14 +17,15 @@
 #define _CORSAIRLIGHTINGNODEPRO_h
 
 #include "Arduino.h"
+#include "CorsairLightingFirmware.h" 
 #include "FastLEDController.h"
 #include "CorsairLightingProtocol.h"
 #include "CorsairLightingProtocolHID.h"
 #include <FastLED.h>
 
-#define CHANNEL_LED_COUNT_DEFAULT 96
+#if defined(USBCON)
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x0A, 0x04 };
+#define CHANNEL_LED_COUNT_DEFAULT 96
 
 class CorsairLightingNodePRO {
 public:
@@ -34,10 +35,11 @@ public:
 protected:
 	CRGB ledsChannel1[CHANNEL_LED_COUNT_DEFAULT];
 	CRGB ledsChannel2[CHANNEL_LED_COUNT_DEFAULT];
+	CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 	FastLEDController ledController;
 	CorsairLightingProtocol cLP;
 	CorsairLightingProtocolHID connectionAdapter;
 };
 
 #endif
-
+#endif

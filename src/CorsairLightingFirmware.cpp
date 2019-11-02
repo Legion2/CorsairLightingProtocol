@@ -16,6 +16,12 @@
 #include <EEPROM.h>
 #include "CorsairLightingFirmware.h"
 
+const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
+
+const uint8_t corsairLightingNodePROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x0A, 0x04 };
+
+const uint8_t corsairCommanderPROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0xD4 };
+
 CorsairLightingFirmware::CorsairLightingFirmware(const uint8_t* firmwareVersion) : firmwareVersion(firmwareVersion)
 {
 	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
@@ -54,4 +60,14 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 		break;
 	}
 	}
+}
+
+CorsairLightingFirmware corsairLightingNodePROFirmware()
+{
+	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
+}
+
+CorsairLightingFirmware corsairCommanderPROFirmware()
+{
+	return CorsairLightingFirmware(corsairCommanderPROFirmwareVersion);
 }

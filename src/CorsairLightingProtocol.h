@@ -29,11 +29,11 @@
 class CorsairLightingProtocol
 {
 public:
-	CorsairLightingProtocol(ILEDController* l, const uint8_t* firmwareVersion);
-	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, const uint8_t* firmwareVersion);
+	CorsairLightingProtocol(ILEDController* l, CorsairLightingFirmware* c);
+	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, CorsairLightingFirmware* c);
 	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
 private:
-	CorsairLightingFirmware corsairLightingFirmware;
+	CorsairLightingFirmware* const corsairLightingFirmware;
 	ILEDController* const ledController;
 	ITemperatureController* const temperatureController;
 	IFanController* const fanController;
