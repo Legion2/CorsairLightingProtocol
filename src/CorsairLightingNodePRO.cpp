@@ -15,10 +15,10 @@
 */
 #include "CorsairLightingNodePRO.h"
 
-CorsairLightingNodePRO::CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2) : ledController(true), cLP(&ledController, firmware_version), connectionAdapter(&cLP)
+CorsairLightingNodePRO::CorsairLightingNodePRO() : ledController(true), cLP(&ledController, firmware_version), connectionAdapter(&cLP)
 {
-	ledController.addLeds(0, ledsChannel1, CHANNEL_LED_COUNT);
-	ledController.addLeds(1, ledsChannel2, CHANNEL_LED_COUNT);
+	ledController.addLeds(0, ledsChannel1, CHANNEL_LED_COUNT_DEFAULT);
+	ledController.addLeds(1, ledsChannel2, CHANNEL_LED_COUNT_DEFAULT);
 }
 
 void CorsairLightingNodePRO::update() {
@@ -27,4 +27,9 @@ void CorsairLightingNodePRO::update() {
 	if (ledController.updateLEDs()) {
 		FastLED.show();
 	}
+}
+
+FastLEDController* CorsairLightingNodePRO::getFastLEDController()
+{
+	return &ledController;
 }

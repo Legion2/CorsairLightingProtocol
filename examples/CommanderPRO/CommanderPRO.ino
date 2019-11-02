@@ -32,7 +32,7 @@
 #define PWM_FAN_PIN_3 9
 #define PWM_FAN_PIN_4 10
 
-#define CHANNEL_LED_COUNT 60
+#define CHANNEL_LED_COUNT 96
 
 const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x09, 0xD4 };
 

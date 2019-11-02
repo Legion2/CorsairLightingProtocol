@@ -19,15 +19,13 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-CRGB ledsChannel1[CHANNEL_LED_COUNT];
-CRGB ledsChannel2[CHANNEL_LED_COUNT];
-
-CorsairLightingNodePRO cLNP(ledsChannel1, ledsChannel2);
+CorsairLightingNodePRO cLNP;
 
 void setup() {
 	disableBuildInLEDs();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
+	auto ledController = cLNP.getFastLEDController();
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledController->getLeds(0), ledController->getLedCount(0));
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledController->getLeds(1), ledController->getLedCount(1));
 }
 
 void loop() {

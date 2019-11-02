@@ -20,25 +20,23 @@
 #include "FastLEDController.h"
 #include "CorsairLightingProtocol.h"
 #include "CorsairLightingProtocolHID.h"
-#include "CorsairLightingProtocolSerial.h"
 #include <FastLED.h>
 
-#define CHANNEL_LED_COUNT 60
+#define CHANNEL_LED_COUNT_DEFAULT 96
 
 const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x0A, 0x04 };
 
 class CorsairLightingNodePRO {
 public:
-	CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2);
+	CorsairLightingNodePRO();
 	void update();
+	FastLEDController* getFastLEDController();
 protected:
+	CRGB ledsChannel1[CHANNEL_LED_COUNT_DEFAULT];
+	CRGB ledsChannel2[CHANNEL_LED_COUNT_DEFAULT];
 	FastLEDController ledController;
 	CorsairLightingProtocol cLP;
-#if defined(USBCON)
 	CorsairLightingProtocolHID connectionAdapter;
-#else
-	CorsairLightingProtocolSerial connectionAdapter;
-#endif
 };
 
 #endif

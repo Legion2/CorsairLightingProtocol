@@ -19,7 +19,7 @@
 #include <FastLEDController.h>
 #include <FastLED.h>
 
-#define CHANNEL_LED_COUNT 60
+#define CHANNEL_LED_COUNT 96
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
