@@ -13,9 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
-#ifndef _CorsairLightingProtocol_h
-#define _CorsairLightingProtocol_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -38,5 +36,3 @@ private:
 	ITemperatureController* const temperatureController;
 	IFanController* const fanController;
 };
-
-#endif

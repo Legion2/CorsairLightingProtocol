@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _FastLEDControllerUtils_h
-#define _FastLEDControllerUtils_h
+#pragma once
 
 #include "Arduino.h"
 #include "FastLEDController.h"
@@ -30,4 +29,3 @@ namespace CLP
 	//Repeat a channel's leds color to control more leds than provided by iCUE.
 	void repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times);
 }
-#endif

@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ThermistorTemperatureController_h
-#define _ThermistorTemperatureController_h
+#pragma once
 
 #include "TemperatureController.h"
 /*
@@ -35,6 +34,3 @@ protected:
 
 	uint8_t sensorPins[TEMPERATURE_NUM] = { 0 };
 };
-
-#endif
-

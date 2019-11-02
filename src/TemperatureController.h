@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _TemperatureController_h
-#define _TemperatureController_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -45,5 +44,3 @@ protected:
 	// The voltage in mV.
 	virtual uint16_t getVoltageRail3V3() = 0;
 };
-
-#endif

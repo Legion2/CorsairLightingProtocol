@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CORSAIRLIGHTINGNODEPRO_h
-#define _CORSAIRLIGHTINGNODEPRO_h
+#pragma once
 
 #include "Arduino.h"
 #include "CorsairLightingFirmware.h" 
@@ -41,5 +40,4 @@ protected:
 	CorsairLightingProtocolHID connectionAdapter;
 };
 
-#endif
 #endif

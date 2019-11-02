@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ITemperatureController_h
-#define _ITemperatureController_h
+#pragma once
 
 #include "Arduino.h"
 #include "CorsairLightingProtocolResponse.h"
@@ -24,5 +23,3 @@ class ITemperatureController {
 public:
 	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };
-
-#endif

@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CORSAIRLIGHTINGFIRMWARE_h
-#define _CORSAIRLIGHTINGFIRMWARE_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -42,6 +41,3 @@ protected:
 CorsairLightingFirmware corsairLightingNodePROFirmware();
 
 CorsairLightingFirmware corsairCommanderPROFirmware();
-
-#endif
-

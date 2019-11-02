@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CLPUtils_h
-#define _CLPUtils_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -34,5 +33,3 @@ inline uint8_t convert255To100(uint8_t value)
 void disableBuildInLEDs();
 // Print the given DeviceID to Serial
 void printDeviceID(const uint8_t* deviceId);
-
-#endif
