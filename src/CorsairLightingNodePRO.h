@@ -13,33 +13,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CORSAIRLIGHTINGNODEPRO_h
-#define _CORSAIRLIGHTINGNODEPRO_h
+#pragma once
 
 #include "Arduino.h"
+#include "CorsairLightingFirmware.h" 
 #include "FastLEDController.h"
 #include "CorsairLightingProtocol.h"
 #include "CorsairLightingProtocolHID.h"
-#include "CorsairLightingProtocolSerial.h"
 #include <FastLED.h>
 
-#define CHANNEL_LED_COUNT 60
+#if defined(USBCON)
 
-const uint8_t firmware_version[FIRMWARE_VERSION_SIZE] PROGMEM = { 0x00, 0x0A, 0x04 };
+#define CHANNEL_LED_COUNT_DEFAULT 96
 
 class CorsairLightingNodePRO {
 public:
-	CorsairLightingNodePRO(CRGB* ledsChannel1, CRGB* ledsChannel2);
+	CorsairLightingNodePRO();
 	void update();
+	FastLEDController* getFastLEDController();
 protected:
+	CRGB ledsChannel1[CHANNEL_LED_COUNT_DEFAULT];
+	CRGB ledsChannel2[CHANNEL_LED_COUNT_DEFAULT];
+	CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 	FastLEDController ledController;
 	CorsairLightingProtocol cLP;
-#if defined(USBCON)
 	CorsairLightingProtocolHID connectionAdapter;
-#else
-	CorsairLightingProtocolSerial connectionAdapter;
-#endif
 };
 
 #endif
-

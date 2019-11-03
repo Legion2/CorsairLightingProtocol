@@ -13,7 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingNodePRO.h>
+#include <CorsairLightingFirmware.h>
+#include <FastLEDController.h>
+#include <CorsairLightingProtocol.h>
 #include <CorsairLightingProtocolHID.h>
 #include <FastLED.h>
 
@@ -28,8 +30,9 @@
 // In this example we use only one pin where both channel are connected in series.
 #define DATA_PIN 2
 
+CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
-CorsairLightingProtocol cLP(&ledController, firmware_version);
+CorsairLightingProtocol cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 // This array conatins all RGB values for the LEDs of the both channels.
@@ -39,10 +42,10 @@ void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
 #endif
-	disableBuildInLEDs();
+	CLP::disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-	ledController.addLeds(0, leds, CHANNEL_LED_COUNT);
-	ledController.addLeds(1, &(leds[CHANNEL_LED_COUNT]), CHANNEL_LED_COUNT);
+	ledController.addLEDs(0, leds, CHANNEL_LED_COUNT);
+	ledController.addLEDs(1, &(leds[CHANNEL_LED_COUNT]), CHANNEL_LED_COUNT);
 }
 
 void loop() {

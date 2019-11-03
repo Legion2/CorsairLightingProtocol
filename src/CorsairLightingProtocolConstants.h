@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CorsairLightingProtocolConstants_h
-#define _CorsairLightingProtocolConstants_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -69,5 +68,3 @@ struct Command {
 		uint8_t raw[COMMAND_SIZE];
 	};
 };
-
-#endif

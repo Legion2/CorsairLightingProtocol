@@ -35,7 +35,7 @@ FastLEDController::~FastLEDController()
 	}
 }
 
-void FastLEDController::addLeds(uint8_t channel, CRGB* led_buffer, uint8_t count) {
+void FastLEDController::addLEDs(uint8_t channel, CRGB* led_buffer, uint8_t count) {
 	if (channel >= CHANNEL_NUM || led_buffer == nullptr || volatileData[channel].led_buffer != nullptr) {
 		return;
 	}
@@ -46,7 +46,7 @@ void FastLEDController::addLeds(uint8_t channel, CRGB* led_buffer, uint8_t count
 	}
 }
 
-CRGB* FastLEDController::getLeds(uint8_t channel)
+CRGB* FastLEDController::getLEDs(uint8_t channel)
 {
 	if (channel >= CHANNEL_NUM) {
 		return nullptr;
@@ -54,7 +54,7 @@ CRGB* FastLEDController::getLeds(uint8_t channel)
 	return volatileData[channel].led_buffer;
 }
 
-uint8_t FastLEDController::getLedCount(uint8_t channel)
+uint8_t FastLEDController::getLEDCount(uint8_t channel)
 {
 	if (channel >= CHANNEL_NUM) {
 		return 0;

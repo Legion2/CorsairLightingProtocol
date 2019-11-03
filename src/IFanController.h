@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _IFanController_h
-#define _IFanController_h
+#pragma once
 
 #include "Arduino.h"
 #include "CorsairLightingProtocolResponse.h"
@@ -24,5 +23,3 @@ class IFanController {
 public:
 	virtual void handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };
-
-#endif

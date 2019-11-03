@@ -19,8 +19,8 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 {
 	auto& channel = controller->getChannel(channelIndex);
 	if (channel.ledMode == CHANNEL_MODE_SOFTWARE_PLAYBACK) {
-		auto leds = controller->getLeds(channelIndex);
-		for (uint8_t fanIndex = 0; fanIndex < controller->getLedCount(channelIndex) / 16; fanIndex++) {
+		auto leds = controller->getLEDs(channelIndex);
+		for (uint8_t fanIndex = 0; fanIndex < controller->getLEDCount(channelIndex) / 16; fanIndex++) {
 			for (uint8_t ledIndex = 0; ledIndex < 8; ledIndex++) {
 				CRGB temp = leds[fanIndex * 16 + ledIndex];
 				leds[fanIndex * 16 + ledIndex] = leds[fanIndex * 16 + 15 - ledIndex];
@@ -32,8 +32,8 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 
 void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize)
 {
-	auto leds = controller->getLeds(channelIndex);
-	float scaleFactor = (float)controller->getLedCount(channelIndex) / scaleToSize;
+	auto leds = controller->getLEDs(channelIndex);
+	float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
 	for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
 		leds[ledIndex] = leds[(int)(ledIndex * scaleFactor)];
 	}
@@ -41,8 +41,8 @@ void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleTo
 
 void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times)
 {
-	auto leds = controller->getLeds(channelIndex);
-	auto count = controller->getLedCount(channelIndex);
+	auto leds = controller->getLEDs(channelIndex);
+	auto count = controller->getLEDCount(channelIndex);
 	//skip first iteration, because leds already contains the data at the first position
 	for (int i = 1; i < times; i++) {
 		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);

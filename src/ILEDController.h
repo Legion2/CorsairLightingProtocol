@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _ILEDController_h
-#define _ILEDController_h
+#pragma once
 
 #include "Arduino.h"
 #include "CorsairLightingProtocolResponse.h"
@@ -24,5 +23,3 @@ class ILEDController {
 public:
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };
-
-#endif

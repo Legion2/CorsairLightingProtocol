@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CORSAIRLIGHTINGPROTOCOLHID_h
-#define _CORSAIRLIGHTINGPROTOCOLHID_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -42,5 +41,4 @@ protected:
 	void sendX(const uint8_t* data, const size_t x) const override;
 };
 
-#endif
 #endif
