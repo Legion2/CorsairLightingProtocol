@@ -18,18 +18,22 @@
 #include "Arduino.h"
 
 #define toBigEndian(a) highByte(a), lowByte(a)
-uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
-// convert value from range 0-100 to 0-255
-inline uint8_t convert100To255(uint8_t value)
+
+namespace CLP
 {
-	return value * 2.5546875f;
+	uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
+	// convert value from range 0-100 to 0-255
+	inline uint8_t convert100To255(uint8_t value)
+	{
+		return value * 2.5546875f;
+	}
+	// convert value from range 0-255 to 0-100
+	inline uint8_t convert255To100(uint8_t value)
+	{
+		return value / 2.5546875f;
+	}
+	// This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
+	void disableBuildInLEDs();
+	// Print the given DeviceID to Serial
+	void printDeviceID(const uint8_t* deviceId);
 }
-// convert value from range 0-255 to 0-100
-inline uint8_t convert255To100(uint8_t value)
-{
-	return value / 2.5546875f;
-}
-// This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
-void disableBuildInLEDs();
-// Print the given DeviceID to Serial
-void printDeviceID(const uint8_t* deviceId);

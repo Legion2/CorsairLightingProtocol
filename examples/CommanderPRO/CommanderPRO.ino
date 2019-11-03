@@ -51,7 +51,7 @@ PWMFan fan3(PWM_FAN_PIN_3, 0, 2000);
 PWMFan fan4(PWM_FAN_PIN_4, 0, 2000);
 
 void setup() {
-	disableBuildInLEDs();
+	CLP::disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);
