@@ -35,7 +35,7 @@ void setup() {
 		; // wait for serial port to connect. Needed for native USB
 	}
 	Serial.print(F("Current DeviceID: "));
-	printDeviceID(deviceID);
+	CLP::printDeviceID(deviceID);
 	Serial.println();
 	Serial.println(F("Set a new DeviceID by typing it in the Serial Monitor. The new DeviceID must be in same format as above. 4 Blocks with 2 digits separated by white space."));
 	Serial.println();
@@ -58,7 +58,7 @@ void loop() {
 			newDeviceID[2] = strtol(&inputString[6], nullptr, 16);
 			newDeviceID[3] = strtol(&inputString[9], nullptr, 16);
 			Serial.println(F("Set DeviceID to: "));
-			printDeviceID(newDeviceID);
+			CLP::printDeviceID(newDeviceID);
 			Serial.println();
 			if (isNullID(newDeviceID)) {
 				Serial.println(F("This is a special DeviceID, it will generate a new random DeviceID next time iCUE controls the device!"));
