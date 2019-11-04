@@ -106,12 +106,13 @@ bool FastLEDController::updateLEDs()
 	lastUpdate = currentUpdate;
 	currentUpdate = millis();
 
-	bool updated = false;
+	bool anyUpdate = false;
 
 	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
 		if (volatileData[channelId].led_buffer == nullptr) {
 			continue;
 		}
+		bool updated = false;
 		LEDChannel& channel = channels[channelId];
 
 		switch (channel.ledMode)
@@ -252,6 +253,7 @@ bool FastLEDController::updateLEDs()
 				case GROUP_MODE_Static:
 				{
 					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
+					updated = true;
 					break;
 				}
 				case GROUP_MODE_Temperature:
@@ -395,7 +397,6 @@ bool FastLEDController::updateLEDs()
 				}
 				}
 			}
-			updated = true;
 			break;
 		}
 		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
@@ -420,14 +421,25 @@ bool FastLEDController::updateLEDs()
 #endif
 		}
 		}
+		if (updated) {
+			anyUpdate = true;
+			if (volatileData[channelId].onUpdateCallback != nullptr) {
+				volatileData[channelId].onUpdateCallback();
+			}
+		}
 	}
 	trigger_update = false;
-	return updated;
+	return anyUpdate;
 }
 
 size_t FastLEDController::getEEPROMSize()
 {
 	return sizeof(channels);
+}
+
+void FastLEDController::onUpdateHook(uint8_t channel, void (*callback)(void))
+{
+	volatileData[channel].onUpdateCallback = callback;
 }
 
 bool FastLEDController::load() {

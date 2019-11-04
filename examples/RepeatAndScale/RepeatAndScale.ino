@@ -36,14 +36,18 @@ void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 144);
 	ledController.addLEDs(0, ledsChannel1, 50);
 	ledController.addLEDs(1, ledsChannel2, 60);
+	ledController.onUpdateHook(0, []() {
+		CLP::repeat(&ledController, 0, 2);
+	});
+	ledController.onUpdateHook(1, []() {
+		CLP::scale(&ledController, 1, 144);
+	});
 }
 
 void loop() {
 	cHID.update();
 
 	if (ledController.updateLEDs()) {
-		CLP::repeat(&ledController, 0, 2);
-		CLP::scale(&ledController, 1, 144);
 		FastLED.show();
 	}
 }
