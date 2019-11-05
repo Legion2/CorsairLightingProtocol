@@ -32,6 +32,7 @@ class FastLEDController : public LEDController {
 		uint8_t* values_buffer[3] = { nullptr };
 		// current temperature
 		uint16_t temp;
+		void (*onUpdateCallback)(void) = nullptr;
 	};
 
 public:
@@ -47,6 +48,10 @@ public:
 	uint8_t getLEDCount(uint8_t channel);
 	virtual bool updateLEDs();
 	virtual size_t getEEPROMSize();
+	// Register an update hook, which is exectuted after a channel has been updated. This can be used to apply transforamtions to the
+	// channel before the data is displayed by FastLED. The first argument is the channel for which the hook is registered, the second
+	// argument is the callback, which is a void function with no arguments.
+	void onUpdateHook(uint8_t channel, void (*callback)(void));
 protected:
 	TemperatureController* const temperatureController;
 

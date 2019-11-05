@@ -93,7 +93,7 @@ You can repeat or scale LED channel controlled by iCUE onto physical LED strips.
 This is very useful if you have very long LED strips that are longer than 60/96 LEDs.
 This is the maximum number iCUE supports.
 
-To repeat or scale a LED channel you must apply the `CLP::repeat` or the `CLP:scale` function in the arduino `loop` before `FastLED.show();`.
+To repeat or scale a LED channel you must apply the `CLP::repeat` or the `CLP:scale` function in the update hook of the FastLEDController.
 The functions must be included from `FastLEDControllerUtils.h`.
 See the [RepeatAndScale](examples/RepeatAndScale/RepeatAndScale.ino) example for the complete code.
 Both functions take the FastLEDController pointer and the channel index as arguments.
