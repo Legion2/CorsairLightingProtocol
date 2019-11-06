@@ -17,7 +17,7 @@
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
+#include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
@@ -30,11 +30,11 @@ extern bool printResponse;
 
 class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocolHID(CorsairLightingProtocol* cLP);
+	CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP);
 	void update();
 protected:
 	uint8_t rawhidData[COMMAND_SIZE];
-	CorsairLightingProtocol* const cLP;
+	CorsairLightingProtocolController* const cLP;
 
 	bool available() const;
 	void getCommand(Command& command);

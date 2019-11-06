@@ -13,10 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingFirmware.h>
-#include <FastLEDController.h>
 #include <CorsairLightingProtocol.h>
-#include <CorsairLightingProtocolHID.h>
 #include <FastLED.h>
 #include <EEPROM.h>
 
@@ -27,7 +24,7 @@
 
 CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
-CorsairLightingProtocol cLP(&ledController, &firmware);
+CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cLPS(&cLP);
 
 CRGB ledsChannel1[CHANNEL_LED_COUNT];
@@ -65,7 +62,7 @@ void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
 		byte DeviceId[4];
 		EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
-		printDeviceID(DeviceId);
+		CLP::printDeviceID(DeviceId);
 		Serial.println();
 	}
 #ifdef VERBOSE

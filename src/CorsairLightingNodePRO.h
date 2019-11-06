@@ -36,7 +36,7 @@ protected:
 	CRGB ledsChannel2[CHANNEL_LED_COUNT_DEFAULT];
 	CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 	FastLEDController ledController;
-	CorsairLightingProtocol cLP;
+	CorsairLightingProtocolController cLP;
 	CorsairLightingProtocolHID connectionAdapter;
 };
 

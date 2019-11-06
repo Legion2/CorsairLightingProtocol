@@ -15,7 +15,7 @@
 */
 #pragma once
 
-#include <CorsairLightingProtocol.h>
+#include <CorsairLightingProtocolController.h>
 #include <CorsairLightingProtocolConstants.h>
 #include <CorsairLightingProtocolResponse.h>
 
@@ -25,12 +25,12 @@
 
 class CorsairLightingProtocolSerial : CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP);
+	CorsairLightingProtocolSerial(CorsairLightingProtocolController* cLP);
 	void setup();
 	void update();
 private:
 	byte rawCommand[COMMAND_SIZE];
-	CorsairLightingProtocol* const cLP;
+	CorsairLightingProtocolController* const cLP;
 
 	bool handleSerial();
 	void sendX(const uint8_t* data, const size_t x) const override;

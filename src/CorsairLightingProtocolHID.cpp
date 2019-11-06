@@ -27,7 +27,7 @@ bool printCommand = PRINT_COMMAND;
 bool printResponse = PRINT_RESPONSE;
 #endif
 
-CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocol* cLP) : cLP(cLP)
+CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP) : cLP(cLP)
 {
 	RawHID.begin(rawhidData, sizeof(rawhidData));
 }

@@ -17,7 +17,6 @@
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
 #include "ITemperatureController.h"
 
 #define TEMPERATURE_NUM 4
