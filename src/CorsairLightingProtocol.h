@@ -24,11 +24,37 @@
 #include "ILEDController.h"
 #include "ITemperatureController.h"
 
+/**
+ * The central call which integrates all components. The main components of the CorsairLightingProtocol are the CorsairLightingFirmware
+ * and the LEDController. There can also be an optional TemperatureController and FanController which are required if the device should
+ * be an Commander PRO.
+ */
 class CorsairLightingProtocol
 {
 public:
+	/**
+	 * The constructor used to create a Lighting Node PRO.
+	 * 
+	 * @param l The LEDController which should be used to control the LEDs of the created Lighting Node PRO
+	 * @param c The CorsairLightingFirmware used to handle Firmware related commands
+	 */
 	CorsairLightingProtocol(ILEDController* l, CorsairLightingFirmware* c);
+	/**
+	 * The constructor used to create an Commander PRO.
+	 * 
+	 * @param l The LEDController which should be used to control the LEDs of the created Commander PRO
+	 * @param t The TemperatureController which used to messure the temperature of the created Commander PRO
+	 * @param f The FanController used to control the fans of the created Commander PRO
+	 * @param c The CorsairLightingFirmware used to handle Firmware related commands
+	 */
 	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, CorsairLightingFirmware* c);
+	/**
+	 * The only public function of the CorsairLightingProtocol. It must be called to process a command with was received from iCUE. This
+	 * function is normaly called by CorsairLightingProtocolHID and CorsairLightingProtocolSerial adapters.
+	 * 
+	 * @param command The command received from iCUE
+	 * @param response The response callback which can be called to response to the command
+	 */
 	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
 private:
 	CorsairLightingFirmware* const corsairLightingFirmware;
