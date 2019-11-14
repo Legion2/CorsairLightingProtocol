@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _SimpleFanController_h
-#define _SimpleFanController_h
+#pragma once
 
 #include "Arduino.h"
 #include "FanController.h"
@@ -57,7 +56,7 @@ protected:
 	bool save();
 
 	TemperatureController* const temperatureController;
-	PWMFan* fans[FAN_NUM] = { NULL };
+	PWMFan* fans[FAN_NUM] = { nullptr };
 	bool force3PinMode = false;
 	FanData fanData[FAN_NUM];
 	uint16_t externalTemp[FAN_NUM];
@@ -66,6 +65,3 @@ protected:
 	bool trigger_save = false;
 	long lastUpdate = 0;
 };
-
-#endif
-

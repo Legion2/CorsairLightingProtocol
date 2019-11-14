@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CLPUSBSerialBridge_h
-#define _CLPUSBSerialBridge_h
+#pragma once
 
 #include "Arduino.h"
 #include <CorsairLightingProtocolConstants.h>
@@ -39,5 +38,3 @@ private:
 	void sendError();
 	void sendResponse();
 };
-
-#endif

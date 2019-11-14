@@ -13,12 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _FanController_h
-#define _FanController_h
+#pragma once
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
 #include "IFanController.h"
 
 #define FAN_NUM 6
@@ -67,5 +65,3 @@ protected:
 	// One of FAN_MASK_*
 	virtual void setFanDetectionType(uint8_t fan, uint8_t type) = 0;
 };
-
-#endif

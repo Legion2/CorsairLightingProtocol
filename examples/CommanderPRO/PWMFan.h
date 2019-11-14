@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _PWMFan_h
-#define _PWMFan_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -31,5 +30,3 @@ protected:
 	const uint16_t minRPM;
 	const uint16_t maxRPM;
 };
-
-#endif

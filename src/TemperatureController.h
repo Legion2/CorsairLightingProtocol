@@ -13,12 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _TemperatureController_h
-#define _TemperatureController_h
+#pragma once
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
 #include "ITemperatureController.h"
 
 #define TEMPERATURE_NUM 4
@@ -32,7 +30,7 @@
 
 class TemperatureController : public ITemperatureController {
 public:
-	virtual void handleTemperatureControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
+	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
 	virtual uint16_t getTemperature(uint8_t temperatureSensor);
 protected:
 	// The temperature in hundredths of a degree Celsius.
@@ -45,5 +43,3 @@ protected:
 	// The voltage in mV.
 	virtual uint16_t getVoltageRail3V3() = 0;
 };
-
-#endif

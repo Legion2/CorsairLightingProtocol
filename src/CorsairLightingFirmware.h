@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CORSAIRLIGHTINGFIRMWARE_h
-#define _CORSAIRLIGHTINGFIRMWARE_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -30,8 +29,6 @@
 
 #define FIRMWARE_VERSION_SIZE 3
 
-const uint8_t bootloader_version[] PROGMEM = { 0x00, 0x02 };
-
 class CorsairLightingFirmware {
 public:
 	CorsairLightingFirmware(const uint8_t* firmwareVersion);
@@ -41,5 +38,6 @@ protected:
 	uint8_t DeviceId[4];
 };
 
-#endif
+CorsairLightingFirmware corsairLightingNodePROFirmware();
 
+CorsairLightingFirmware corsairCommanderPROFirmware();

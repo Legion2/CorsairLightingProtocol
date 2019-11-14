@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CorsairLightingProtocolCallback_h
-#define _CorsairLightingProtocolCallback_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -26,5 +25,3 @@ public:
 	// Send x byte data via the CorsairLightingProtocol.
 	virtual void sendX(const uint8_t* data, const size_t x) const = 0;
 };
-
-#endif

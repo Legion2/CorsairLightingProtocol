@@ -13,21 +13,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CorsairLightingProtocol.h"
-#include "CorsairLightingFirmware.h"
+#include "CorsairLightingProtocolController.h"
 #include "LEDController.h"
 
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(NULL), fanController(NULL) {}
+CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDController* aLEDController, CorsairLightingFirmware* corsairLightingFirmware) : corsairLightingFirmware(corsairLightingFirmware), ledController(aLEDController), temperatureController(nullptr), fanController(nullptr) {}
 
-CorsairLightingProtocol::CorsairLightingProtocol(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController, const uint8_t* firmwareVersion) : corsairLightingFirmware(firmwareVersion), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
+CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController, CorsairLightingFirmware* corsairLightingFirmware) : corsairLightingFirmware(corsairLightingFirmware), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
 
-void CorsairLightingProtocol::handleCommand(const Command& command, CorsairLightingProtocolResponse* response)
+void CorsairLightingProtocolController::handleCommand(const Command& command, CorsairLightingProtocolResponse* response)
 {
 	if (command.command < 0x10) {
-		corsairLightingFirmware.handleFirmwareCommand(command, response);
+		corsairLightingFirmware->handleFirmwareCommand(command, response);
 	}
 	else if (command.command >= 0x10 && command.command < 0x20) {
-		if (temperatureController != NULL) {
+		if (temperatureController != nullptr) {
 			temperatureController->handleTemperatureControl(command, response);
 		}
 		else {
@@ -35,7 +34,7 @@ void CorsairLightingProtocol::handleCommand(const Command& command, CorsairLight
 		}
 	}
 	else if (command.command >= 0x20 && command.command < 0x30) {
-		if (fanController != NULL) {
+		if (fanController != nullptr) {
 			fanController->handleFanControl(command, response);
 		}
 		else {

@@ -15,7 +15,7 @@
 */
 #include "CorsairLightingProtocolSerial.h"
 
-CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocol* cLP) : cLP(cLP){}
+CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocolController* cLP) : cLP(cLP) {}
 
 void CorsairLightingProtocolSerial::setup()
 {

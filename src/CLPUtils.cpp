@@ -15,14 +15,14 @@
 */
 #include "CLPUtils.h"
 
-uint16_t fromBigEndian(const byte& byte1, const byte& byte2) {
+uint16_t CLP::fromBigEndian(const byte& byte1, const byte& byte2) {
 	uint16_t t = byte1;
 	t = t << 8;
 	t |= byte2;
 	return t;
 }
 
-void disableBuildInLEDs()
+void CLP::disableBuildInLEDs()
 {
 #ifndef DEBUG
 #ifdef LED_BUILTIN_RX
@@ -34,7 +34,7 @@ void disableBuildInLEDs()
 #endif
 }
 
-void printDeviceID(const uint8_t* deviceId) {
+void CLP::printDeviceID(const uint8_t* deviceId) {
 	char tmp[16];
 	for (size_t i = 0; i < 4; i++) {
 		sprintf(tmp, "%.2X", deviceId[i]);

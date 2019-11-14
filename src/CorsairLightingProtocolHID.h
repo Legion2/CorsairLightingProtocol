@@ -13,12 +13,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef _CORSAIRLIGHTINGPROTOCOLHID_h
-#define _CORSAIRLIGHTINGPROTOCOLHID_h
+#pragma once
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
+#include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
@@ -31,16 +30,15 @@ extern bool printResponse;
 
 class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocolHID(CorsairLightingProtocol* cLP);
+	CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP);
 	void update();
 protected:
 	uint8_t rawhidData[COMMAND_SIZE];
-	CorsairLightingProtocol* const cLP;
+	CorsairLightingProtocolController* const cLP;
 
 	bool available() const;
 	void getCommand(Command& command);
 	void sendX(const uint8_t* data, const size_t x) const override;
 };
 
-#endif
 #endif

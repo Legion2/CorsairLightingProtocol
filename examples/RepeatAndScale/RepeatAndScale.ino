@@ -16,33 +16,28 @@
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
 
-// The number of LEDs per channel.
-#define CHANNEL_LED_COUNT 50
+#define DATA_PIN_CHANNEL_1 2
+#define DATA_PIN_CHANNEL_2 3
 
-// Total count of LEDs on all channels, the value is calculated based on the leds per channel.
-#define NUM_LEDS (CHANNEL_LED_COUNT * 2)
-
-// The Arduino pin where the physical LEDs are connected.
-// You can use two pins, one for each channel.
-// In this example we use only one pin where both channel are connected in series.
-#define DATA_PIN 2
+CRGB ledsChannel1[100];
+CRGB ledsChannel2[144];
 
 CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
-// This array conatins all RGB values for the LEDs of the both channels.
-CRGB leds[NUM_LEDS];
-
 void setup() {
-#ifdef DEBUG
-	Serial.begin(115200);
-#endif
-	CLP::disableBuildInLEDs();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-	ledController.addLEDs(0, leds, CHANNEL_LED_COUNT);
-	ledController.addLEDs(1, &(leds[CHANNEL_LED_COUNT]), CHANNEL_LED_COUNT);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 100);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 144);
+	ledController.addLEDs(0, ledsChannel1, 50);
+	ledController.addLEDs(1, ledsChannel2, 60);
+	ledController.onUpdateHook(0, []() {
+		CLP::repeat(&ledController, 0, 2);
+	});
+	ledController.onUpdateHook(1, []() {
+		CLP::scale(&ledController, 1, 144);
+	});
 }
 
 void loop() {

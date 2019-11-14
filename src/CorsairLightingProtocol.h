@@ -13,30 +13,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+#pragma once
 
-#ifndef _CorsairLightingProtocol_h
-#define _CorsairLightingProtocol_h
-
-#include "Arduino.h"
-
+// central include file for CorsairLightingProtocolController
 #include "CorsairLightingFirmware.h"
+#include "CorsairLightingNodePRO.h"
 #include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolController.h"
+#include "CorsairLightingProtocolHID.h"
 #include "CorsairLightingProtocolResponse.h"
+#include "CorsairLightingProtocolSerial.h"
 #include "IFanController.h"
+#include "FanController.h"
 #include "ILEDController.h"
+#include "LEDController.h"
+#include "FastLEDController.h"
 #include "ITemperatureController.h"
-
-class CorsairLightingProtocol
-{
-public:
-	CorsairLightingProtocol(ILEDController* l, const uint8_t* firmwareVersion);
-	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, const uint8_t* firmwareVersion);
-	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
-private:
-	CorsairLightingFirmware corsairLightingFirmware;
-	ILEDController* const ledController;
-	ITemperatureController* const temperatureController;
-	IFanController* const fanController;
-};
-
-#endif
+#include "TemperatureController.h"
+#include "FastLEDControllerUtils.h"
+#include "CLPUtils.h"

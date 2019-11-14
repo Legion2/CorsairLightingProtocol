@@ -98,9 +98,9 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			group.color3.r = data[14];
 			group.color3.g = data[15];
 			group.color3.b = data[16];
-			group.temp1 = fromBigEndian(data[17], data[18]);
-			group.temp2 = fromBigEndian(data[19], data[20]);
-			group.temp3 = fromBigEndian(data[21], data[22]);
+			group.temp1 = CLP::fromBigEndian(data[17], data[18]);
+			group.temp2 = CLP::fromBigEndian(data[19], data[20]);
+			group.temp3 = CLP::fromBigEndian(data[21], data[22]);
 
 			if (!isValidLEDGroup(group)) {
 				response->sendError();
@@ -112,7 +112,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_EXTERNAL_TEMP:
 		{
-			setLEDExternalTemperature(channel, fromBigEndian(data[2], data[3]));
+			setLEDExternalTemperature(channel, CLP::fromBigEndian(data[2], data[3]));
 			break;
 		}
 		case WRITE_LED_GROUPS_CLEAR:
@@ -127,7 +127,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_BRIGHTNESS:
 		{
-			uint8_t brightness = convert100To255(data[1]);
+			uint8_t brightness = CLP::convert100To255(data[1]);
 			trigger_save |= setLEDBrightness(channel, brightness);
 			break;
 		}
@@ -184,6 +184,11 @@ bool LEDController::isValidLEDGroup(const LEDGroup& ledGroup)
 		&& ledGroup.direction <= GROUP_DIRECTION_FORWARD
 		&& (ledGroup.tempGroup == GROUP_TEMP_GROUP_EXTERNAL
 			|| ledGroup.tempGroup < TEMPERATURE_NUM);
+}
+
+const LEDChannel& LEDController::getChannel(uint8_t channelIndex)
+{
+	return channels[channelIndex];
 }
 
 uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t set)
