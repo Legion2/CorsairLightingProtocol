@@ -28,20 +28,20 @@ FastLEDController::FastLEDController(TemperatureController* temperatureControlle
 
 FastLEDController::~FastLEDController()
 {
-	for (auto& vData : volatileData) {
-		for (uint8_t*& buffer : vData.values_buffer) {
+	for (auto& data : channelData) {
+		for (uint8_t*& buffer : data.valuesBuffer) {
 			delete[] buffer;
 		}
 	}
 }
 
-void FastLEDController::addLEDs(uint8_t channel, CRGB* led_buffer, uint8_t count) {
-	if (channel >= CHANNEL_NUM || led_buffer == nullptr || volatileData[channel].led_buffer != nullptr) {
+void FastLEDController::addLEDs(uint8_t channel, CRGB* leds, uint8_t count) {
+	if (channel >= CHANNEL_NUM || leds == nullptr || channelData[channel].leds != nullptr) {
 		return;
 	}
-	volatileData[channel].ledCount = count;
-	volatileData[channel].led_buffer = led_buffer;
-	for (uint8_t*& buffer : volatileData[channel].values_buffer) {
+	channelData[channel].ledCount = count;
+	channelData[channel].leds = leds;
+	for (uint8_t*& buffer : channelData[channel].valuesBuffer) {
 		buffer = new uint8_t[count];
 	}
 }
@@ -51,7 +51,7 @@ CRGB* FastLEDController::getLEDs(uint8_t channel)
 	if (channel >= CHANNEL_NUM) {
 		return nullptr;
 	}
-	return volatileData[channel].led_buffer;
+	return channelData[channel].leds;
 }
 
 uint8_t FastLEDController::getLEDCount(uint8_t channel)
@@ -59,12 +59,12 @@ uint8_t FastLEDController::getLEDCount(uint8_t channel)
 	if (channel >= CHANNEL_NUM) {
 		return 0;
 	}
-	return volatileData[channel].ledCount;
+	return channelData[channel].ledCount;
 }
 
-void FastLEDController::addColors(CRGB* led_buffer, const CRGB& color, const uint8_t* values, uint8_t length) {
+void FastLEDController::addColors(CRGB* leds, const CRGB& color, const uint8_t* values, uint8_t length) {
 	for (int i = 0; i < length; i++) {
-		led_buffer[i] += color % values[i];
+		leds[i] += color % values[i];
 	}
 }
 
@@ -109,7 +109,7 @@ bool FastLEDController::updateLEDs()
 	bool anyUpdate = false;
 
 	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
-		if (volatileData[channelId].led_buffer == nullptr) {
+		if (channelData[channelId].leds == nullptr) {
 			continue;
 		}
 		bool updated = false;
@@ -125,7 +125,7 @@ bool FastLEDController::updateLEDs()
 		{
 			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
 				LEDGroup& group = channel.groups[groupIndex];
-				if (volatileData[channelId].ledCount < (int)group.ledIndex + group.ledCount) {
+				if (channelData[channelId].ledCount < (int)group.ledIndex + group.ledCount) {
 					continue;
 				}
 
@@ -139,7 +139,7 @@ bool FastLEDController::updateLEDs()
 						int step = animation_step(duration, 256);
 						int move = group.direction == GROUP_DIRECTION_FORWARD ? -3 : 3;
 						for (int i = 0; i < group.ledCount; i++) {
-							volatileData[channelId].led_buffer[group.ledIndex + i] = CHSV(step + (i * move), 255, 255) % channel.brightness;
+							channelData[channelId].leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255) % channel.brightness;
 						}
 						updated = true;
 					}
@@ -173,7 +173,7 @@ bool FastLEDController::updateLEDs()
 							scale = 255;
 						}
 
-						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
 						updated = true;
 					}
 					break;
@@ -199,7 +199,7 @@ bool FastLEDController::updateLEDs()
 							scale = 255 - scale;
 						}
 
-						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % scale % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, group.color1 % scale % channel.brightness);
 						updated = true;
 					}
 					break;
@@ -244,7 +244,7 @@ bool FastLEDController::updateLEDs()
 							else {
 								scale = 255 - ease8InOutApprox((distanceWave * 4) * 256);
 							}
-							volatileData[channelId].led_buffer[group.ledIndex + i] = (color % scale) % channel.brightness;
+							channelData[channelId].leds[group.ledIndex + i] = (color % scale) % channel.brightness;
 						}
 						updated = true;
 					}
@@ -252,7 +252,7 @@ bool FastLEDController::updateLEDs()
 				}
 				case GROUP_MODE_Static:
 				{
-					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
+					fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
 					updated = true;
 					break;
 				}
@@ -261,7 +261,7 @@ bool FastLEDController::updateLEDs()
 					uint16_t currentTemperature;
 					const uint8_t& tempGroup = group.tempGroup;
 					if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
-						currentTemperature = volatileData[channelId].temp;
+						currentTemperature = channelData[channelId].temp;
 					}
 					else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
 						currentTemperature = temperatureController->getTemperature(tempGroup);
@@ -281,7 +281,7 @@ bool FastLEDController::updateLEDs()
 						color = group.color3;
 					}
 
-					fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, color % channel.brightness);
+					fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, color % channel.brightness);
 					updated = true;
 					break;
 				}
@@ -302,13 +302,13 @@ bool FastLEDController::updateLEDs()
 								group.color2 = group.color3;
 							}
 						}
-						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, CRGB::Black);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, CRGB::Black);
 						for (int i = 0; i < 4; i++) {
 							int led = (((step - i) % steps) + steps) % steps;
 							if (led >= group.ledCount) {
 								led = steps - led - 1;
 							}
-							volatileData[channelId].led_buffer[group.ledIndex + led] = group.color1 % channel.brightness;
+							channelData[channelId].leds[group.ledIndex + led] = group.color1 % channel.brightness;
 						}
 						updated = true;
 					}
@@ -321,7 +321,7 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 3);
 						for (int i = 0; i < group.ledCount; i++) {
-							volatileData[channelId].led_buffer[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 % channel.brightness : CRGB::Black;
+							channelData[channelId].leds[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 % channel.brightness : CRGB::Black;
 						}
 						updated = true;
 					}
@@ -344,7 +344,7 @@ bool FastLEDController::updateLEDs()
 							}
 						}
 
-						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
 						updated = true;
 					}
 					break;
@@ -364,12 +364,12 @@ bool FastLEDController::updateLEDs()
 						}
 
 						if (group.direction == GROUP_DIRECTION_FORWARD) {
-							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], step + 1, group.color1 % channel.brightness);
-							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex + step + 1], group.ledCount - (step + 1), group.color2 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex], step + 1, group.color1 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1], group.ledCount - (step + 1), group.color2 % channel.brightness);
 						}
 						else {
-							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex + group.ledCount - (step + 1)], step + 1, group.color1 % channel.brightness);
-							fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount - (step + 1), group.color2 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex + group.ledCount - (step + 1)], step + 1, group.color1 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount - (step + 1), group.color2 % channel.brightness);
 						}
 						updated = true;
 					}
@@ -381,7 +381,7 @@ bool FastLEDController::updateLEDs()
 					int count = animation_step_count(duration, 256);
 					if (count > 0) {
 						int step = animation_step(duration, 256);
-						fill_solid(&volatileData[channelId].led_buffer[group.ledIndex], group.ledCount, CHSV(step, 255, 255) % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, CHSV(step, 255, 255) % channel.brightness);
 						updated = true;
 					}
 					break;
@@ -402,11 +402,11 @@ bool FastLEDController::updateLEDs()
 		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
 		{
 			if (trigger_update) {
-				auto& data = volatileData[channelId];
-				fill_solid(data.led_buffer, data.ledCount, CRGB::Black);
-				addColors(data.led_buffer, CRGB::Red, data.values_buffer[0], data.ledCount);
-				addColors(data.led_buffer, CRGB::Green, data.values_buffer[1], data.ledCount);
-				addColors(data.led_buffer, CRGB::Blue, data.values_buffer[2], data.ledCount);
+				auto& data = channelData[channelId];
+				fill_solid(data.leds, data.ledCount, CRGB::Black);
+				addColors(data.leds, CRGB::Red, data.valuesBuffer[0], data.ledCount);
+				addColors(data.leds, CRGB::Green, data.valuesBuffer[1], data.ledCount);
+				addColors(data.leds, CRGB::Blue, data.valuesBuffer[2], data.ledCount);
 				updated = true;
 			}
 			break;
@@ -423,8 +423,8 @@ bool FastLEDController::updateLEDs()
 		}
 		if (updated) {
 			anyUpdate = true;
-			if (volatileData[channelId].onUpdateCallback != nullptr) {
-				volatileData[channelId].onUpdateCallback();
+			if (channelData[channelId].onUpdateCallback != nullptr) {
+				channelData[channelId].onUpdateCallback();
 			}
 		}
 	}
@@ -439,7 +439,7 @@ size_t FastLEDController::getEEPROMSize()
 
 void FastLEDController::onUpdateHook(uint8_t channel, void (*callback)(void))
 {
-	volatileData[channel].onUpdateCallback = callback;
+	channelData[channel].onUpdateCallback = callback;
 }
 
 bool FastLEDController::load() {
@@ -473,18 +473,18 @@ void FastLEDController::triggerLEDUpdate()
 
 void FastLEDController::setLEDExternalTemperature(uint8_t channel, uint16_t temp)
 {
-	volatileData[channel].temp = temp;
+	channelData[channel].temp = temp;
 }
 
 void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len)
 {
-	int copyLength = min((int)volatileData[channel].ledCount - offset, (int)len);
+	int copyLength = min((int)channelData[channel].ledCount - offset, (int)len);
 	if (copyLength > 0) {
-		memcpy(volatileData[channel].values_buffer[color] + offset, values, copyLength);
+		memcpy(channelData[channel].valuesBuffer[color] + offset, values, copyLength);
 	}
 }
 
 void FastLEDController::clearLEDColorValues(uint8_t channel)
 {
-	memset(volatileData[channel].values_buffer[0], 0, sizeof(volatileData[channel].ledCount));
+	memset(channelData[channel].valuesBuffer[0], 0, sizeof(channelData[channel].ledCount));
 }
