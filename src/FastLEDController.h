@@ -25,11 +25,11 @@
 #endif
 
 class FastLEDController : public LEDController {
-	struct LEDBufferData {
+	struct ChannelData {
 		uint8_t ledCount = 0;
-		CRGB* led_buffer = nullptr;
-		// store an array for each color
-		uint8_t* values_buffer[3] = { nullptr };
+		CRGB* leds = nullptr;
+		// store an array for each color, used for software playback
+		uint8_t* valuesBuffer[3] = { nullptr };
 		// current temperature
 		uint16_t temp;
 		void (*onUpdateCallback)(void) = nullptr;
@@ -43,7 +43,7 @@ public:
 	// restart of the Arduino. Also the the TemperatureController used for temperature related lighting can be passed here.
 	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	~FastLEDController();
-	virtual void addLEDs(uint8_t channel, CRGB* led_buffer, uint8_t count);
+	virtual void addLEDs(uint8_t channel, CRGB* leds, uint8_t count);
 	CRGB* getLEDs(uint8_t channel);
 	uint8_t getLEDCount(uint8_t channel);
 	virtual bool updateLEDs();
@@ -57,7 +57,7 @@ protected:
 
 	bool trigger_update = false;
 
-	LEDBufferData volatileData[CHANNEL_NUM];
+	ChannelData channelData[CHANNEL_NUM];
 
 	long lastUpdate = 0;
 	long currentUpdate = 0;
@@ -65,7 +65,7 @@ protected:
 	int applySpeed(int duration, byte speed);
 	int animation_step(int duration, int steps);
 	int animation_step_count(int duration, int steps);
-	void addColors(CRGB* led_buffer, const CRGB& color, const uint8_t* values, uint8_t length);
+	void addColors(CRGB* leds, const CRGB& color, const uint8_t* values, uint8_t length);
 
 	const bool useEEPROM;
 	bool load() override;

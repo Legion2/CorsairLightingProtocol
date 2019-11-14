@@ -17,7 +17,6 @@
 
 #include "Arduino.h"
 
-#include "CorsairLightingProtocol.h"
 #include "IFanController.h"
 
 #define FAN_NUM 6

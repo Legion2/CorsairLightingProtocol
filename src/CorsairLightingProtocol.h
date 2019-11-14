@@ -15,24 +15,20 @@
 */
 #pragma once
 
-#include "Arduino.h"
-
+// central include file for CorsairLightingProtocolController
 #include "CorsairLightingFirmware.h"
+#include "CorsairLightingNodePRO.h"
 #include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolController.h"
+#include "CorsairLightingProtocolHID.h"
 #include "CorsairLightingProtocolResponse.h"
+#include "CorsairLightingProtocolSerial.h"
 #include "IFanController.h"
+#include "FanController.h"
 #include "ILEDController.h"
+#include "LEDController.h"
+#include "FastLEDController.h"
 #include "ITemperatureController.h"
-
-class CorsairLightingProtocol
-{
-public:
-	CorsairLightingProtocol(ILEDController* l, CorsairLightingFirmware* c);
-	CorsairLightingProtocol(ILEDController* l, ITemperatureController* t, IFanController* f, CorsairLightingFirmware* c);
-	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
-private:
-	CorsairLightingFirmware* const corsairLightingFirmware;
-	ILEDController* const ledController;
-	ITemperatureController* const temperatureController;
-	IFanController* const fanController;
-};
+#include "TemperatureController.h"
+#include "FastLEDControllerUtils.h"
+#include "CLPUtils.h"

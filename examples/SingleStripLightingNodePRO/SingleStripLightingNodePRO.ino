@@ -13,10 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <CorsairLightingFirmware.h>
-#include <FastLEDController.h>
 #include <CorsairLightingProtocol.h>
-#include <CorsairLightingProtocolHID.h>
 #include <FastLED.h>
 
 // The number of LEDs per channel.
@@ -32,7 +29,7 @@
 
 CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
-CorsairLightingProtocol cLP(&ledController, &firmware);
+CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 // This array conatins all RGB values for the LEDs of the both channels.
