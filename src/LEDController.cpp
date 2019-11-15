@@ -191,6 +191,14 @@ const LEDChannel& LEDController::getChannel(uint8_t channelIndex)
 	return channels[channelIndex];
 }
 
+void LEDController::reset()
+{
+	for (auto& channel : channels) {
+		channel = LEDChannel();
+	}
+	save();
+}
+
 uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t set)
 {
 	return channels[channel].groups[set].ledCount;
