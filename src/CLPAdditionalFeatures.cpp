@@ -13,23 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#pragma once
-
-// central include file for CorsairLightingProtocolController
-#include "CorsairLightingFirmware.h"
-#include "CorsairLightingNodePRO.h"
-#include "CorsairLightingProtocolConstants.h"
-#include "CorsairLightingProtocolController.h"
-#include "CorsairLightingProtocolHID.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolSerial.h"
-#include "IFanController.h"
-#include "FanController.h"
-#include "ILEDController.h"
-#include "LEDController.h"
-#include "FastLEDController.h"
-#include "ITemperatureController.h"
-#include "TemperatureController.h"
-#include "FastLEDControllerUtils.h"
 #include "CLPAdditionalFeatures.h"
 #include "CLPUtils.h"
+
+bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
+	byte deviceId[4];
+	firmware->getDeviceID(deviceId);
+	return CLP::isResetID(deviceId);
+}
+
+void CLP::reset(CorsairLightingFirmware* firmware) {
+	byte deviceId[4] = { 0x00 };
+	firmware->setDeviceID(deviceId);
+}
