@@ -34,7 +34,7 @@ public:
 	CorsairLightingFirmware(const uint8_t* firmwareVersion);
 	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response);
 	void getDeviceID(uint8_t* deviceID) const;
-	void setDeciceID(const uint8_t* deviceID);
+	void setDeviceID(const uint8_t* deviceID);
 protected:
 	const uint8_t* firmwareVersion;
 	uint8_t deviceId[4];

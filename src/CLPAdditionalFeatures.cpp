@@ -24,5 +24,5 @@ bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
 
 void CLP::reset(CorsairLightingFirmware* firmware) {
 	byte deviceId[4] = { 0x00 };
-	firmware->setDeciceID(deviceId);
+	firmware->setDeviceID(deviceId);
 }

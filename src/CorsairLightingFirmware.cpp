@@ -49,7 +49,7 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 	}
 	case WRITE_DEVICE_ID:
 	{
-		setDeciceID(command.data);
+		setDeviceID(command.data);
 		response->send(deviceId, sizeof(deviceId));
 		break;
 	}
@@ -66,7 +66,7 @@ void CorsairLightingFirmware::getDeviceID(uint8_t* deviceID) const
 	memcpy(deviceID, deviceId, sizeof(deviceId));
 }
 
-void CorsairLightingFirmware::setDeciceID(const uint8_t* deviceID)
+void CorsairLightingFirmware::setDeviceID(const uint8_t* deviceID)
 {
 	memcpy(deviceId, deviceID, sizeof(deviceId));
 	EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, deviceId);
