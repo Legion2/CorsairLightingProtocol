@@ -24,7 +24,7 @@ const uint8_t corsairCommanderPROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM 
 
 CorsairLightingFirmware::CorsairLightingFirmware(const uint8_t* firmwareVersion) : firmwareVersion(firmwareVersion)
 {
-	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
+	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, deviceId);
 }
 
 void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response)
@@ -44,13 +44,13 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 	}
 	case READ_DEVICE_ID:
 	{
-		response->send(DeviceId, sizeof(DeviceId));
+		response->send(deviceId, sizeof(deviceId));
 		break;
 	}
 	case WRITE_DEVICE_ID:
 	{
 		setDeciceID(command.data);
-		response->send(DeviceId, sizeof(DeviceId));
+		response->send(deviceId, sizeof(deviceId));
 		break;
 	}
 	case READ_BOOTLOADER_VERSION:
@@ -63,13 +63,13 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 
 void CorsairLightingFirmware::getDeviceID(uint8_t* deviceID) const
 {
-	memcpy(deviceID, DeviceId, sizeof(DeviceId));
+	memcpy(deviceID, deviceId, sizeof(deviceId));
 }
 
 void CorsairLightingFirmware::setDeciceID(const uint8_t* deviceID)
 {
-	memcpy(DeviceId, deviceID, sizeof(DeviceId));
-	EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
+	memcpy(deviceId, deviceID, sizeof(deviceId));
+	EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, deviceId);
 }
 
 CorsairLightingFirmware corsairLightingNodePROFirmware()

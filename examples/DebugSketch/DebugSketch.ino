@@ -59,9 +59,9 @@ void loop() {
 
 void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
-		byte DeviceId[4];
-		firmware.getDeviceID(DeviceId);
-		CLP::printDeviceID(DeviceId);
+		byte deviceId[4];
+		firmware.getDeviceID(deviceId);
+		CLP::printDeviceID(deviceId);
 		Serial.println();
 	}
 #ifdef VERBOSE

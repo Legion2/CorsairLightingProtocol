@@ -37,7 +37,7 @@ public:
 	void setDeciceID(const uint8_t* deviceID);
 protected:
 	const uint8_t* firmwareVersion;
-	uint8_t DeviceId[4];
+	uint8_t deviceId[4];
 };
 
 CorsairLightingFirmware corsairLightingNodePROFirmware();
