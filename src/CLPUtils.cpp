@@ -39,7 +39,7 @@ bool CLP::isNullID(const uint8_t* deviceId) {
 }
 
 bool CLP::isResetID(const uint8_t* deviceId) {
-	return !(deviceId[0] == 0xFF | deviceId[1] == 0xFF | deviceId[2] == 0xFF | deviceId[3] == 0xFF);
+	return deviceId[0] == 0xFF && deviceId[1] == 0xFF && deviceId[2] == 0xFF && deviceId[3] == 0xFF;
 }
 
 void CLP::printDeviceID(const uint8_t* deviceId) {

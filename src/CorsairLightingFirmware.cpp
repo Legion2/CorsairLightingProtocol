@@ -61,7 +61,7 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 	}
 }
 
-void CorsairLightingFirmware::getDeviceID(uint8_t* deviceID)
+void CorsairLightingFirmware::getDeviceID(uint8_t* deviceID) const
 {
 	memcpy(deviceID, DeviceId, sizeof(DeviceId));
 }
