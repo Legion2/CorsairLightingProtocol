@@ -56,13 +56,18 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 #define SERIAL_NUMBER "FB66DF55421900F5"
 #endif
 
-const char STRING_SERIAL_NUMBER[] PROGMEM = SERIAL_NUMBER;
+const char defaultSerialNumber[] PROGMEM = SERIAL_NUMBER;
 
-RawHID_::RawHID_(void) : PluggableUSBModule(ENDPOINT_COUNT, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), featureReport(NULL), featureLength(0)
+RawHID_::RawHID_(void) : PluggableUSBModule(ENDPOINT_COUNT, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), data(nullptr), serialNumber(defaultSerialNumber), featureReport(nullptr), featureLength(0)
 {
 	setTimeout(10);
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
+}
+
+void RawHID_::setSerialNumber(const char* argSerialNumber)
+{
+	serialNumber = argSerialNumber;
 }
 
 int RawHID_::getInterface(uint8_t* interfaceCount)
@@ -162,7 +167,7 @@ bool RawHID_::setup(USBSetup& setup)
 uint8_t RawHID_::getShortName(char *name)
 {
 	name[0] = '\0';
-	strncat_P(name, STRING_SERIAL_NUMBER, ISERIAL_MAX_LEN - 1);
+	strncat_P(name, serialNumber, ISERIAL_MAX_LEN - 1);
 	return strlen(name);
 }
 

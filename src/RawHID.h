@@ -50,6 +50,12 @@ class RawHID_ : public PluggableUSBModule, public Stream
 {
 public:
 	RawHID_(void);
+	/**
+	 * Set the Serial Number of the USB device. Else a default Serial Number.
+	 *
+	 * @param serialNumber the Serial Number. The Serial Number string must be located in program space (flash).
+	 */
+	void setSerialNumber(const char* serialNumber);
 
     void setFeatureReport(void* report, int length){
         if(length > 0){
@@ -138,9 +144,9 @@ public:
 
 protected:
     // Implementation of the PUSBListNode
-    int getInterface(uint8_t* interfaceCount);
-    int getDescriptor(USBSetup& setup);
-    bool setup(USBSetup& setup);
+    int getInterface(uint8_t* interfaceCount) override;
+    int getDescriptor(USBSetup& setup) override;
+    bool setup(USBSetup& setup) override;
 	uint8_t getShortName(char* name) override;
 
     EPTYPE_DESCRIPTOR_SIZE epType[ENDPOINT_COUNT];
@@ -151,6 +157,7 @@ protected:
 	int dataLength;
 	int dataAvailable;
 	uint8_t* data;
+	const char* serialNumber;
 
 	uint8_t* featureReport;
 	int featureLength;

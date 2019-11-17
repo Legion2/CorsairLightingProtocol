@@ -32,6 +32,11 @@ CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolCo
 	RawHID.begin(rawhidData, sizeof(rawhidData));
 }
 
+CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP, const char* serialNumber) : CorsairLightingProtocolHID(cLP)
+{
+	RawHID.setSerialNumber(serialNumber);
+}
+
 void CorsairLightingProtocolHID::update()
 {
 	if (available())

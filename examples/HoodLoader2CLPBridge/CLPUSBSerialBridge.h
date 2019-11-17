@@ -30,7 +30,25 @@
 
 class CLPUSBSerialBridge {
 public:
+	/**
+	 * Create a new CLPUSBSerialBridge with the default Serial Number.
+	 */
+	CLPUSBSerialBridge() {};
+	/**
+	 * Create a new CLPUSBSerialBridge and set a Serial Number.
+	 *
+	 * @param serialNumber the Serial Number of the USB device
+	 */
+	CLPUSBSerialBridge(const char* serialNumber);
+	/**
+	 * Setup the bridge connections. 
+	 * Must be called in the Arduino setup function.
+	 */
 	virtual void begin();
+	/**
+	 * Reads data from USB and sents it via Serial to the main MCU. Wait for the response and set it back to the USB host.
+	 * MUST be called in the Arduino loop function.
+	 */
 	virtual void handleHID();
 private:
 	byte rawHIDAndSerialBuffer[RAWHID_AND_SERIAL_BUFFER_SIZE];

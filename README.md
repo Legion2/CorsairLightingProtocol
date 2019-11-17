@@ -79,11 +79,26 @@ These commands are understood by the library and converted into lighting effects
 ## Use multiple Devices
 Each device has two unique IDs, that is, they should be unique.
 You must give each device a unique ID.
-There are two IDs that must be changed `SERIAL_NUMBER` and `DeviceID`.
+There are two IDs that must be changed `Serial Number` and `DeviceID`.
 
-The `SERIAL_NUMBER` can be changed in the board.txt file.
-Uncomment the line with `SERIAL_NUMBER` and change some characters at the end, don't change the length and only use HEX characters(0-9 and A-F).
-The `DeviceID` can be changed with the [tool](examples/DeviceIDTool/DeviceIDTool.ino)
+The Serial Number can be set in the constructor of `CorsairLightingProtocolHID` and `CLPUSBSerialBridge` as shown in the [example](examples/AdditionalFeatures/AdditionalFeatures.ino).
+```C++
+const char mySerialNumber[] PROGMEM = "202B6949A967";
+CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);
+```
+The Serial Number MAY only consist of HEX characters (0-9 and A-F).
+
+The DeviceID can be set with the `setDeviceID` function of `CorsairLightingFirmware`.
+```C++
+void setup() {
+    byte deviceId[4] = { 0x9A, 0xDA, 0xA7, 0x8E };
+    firmware.setDeciceID(deviceId);
+    ...
+}
+```
+
+### Alternative
+The `DeviceID` can be changed with the [DeviceIDTool](examples/DeviceIDTool/DeviceIDTool.ino).
 Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 115200.
 The tool displays the current DeviceID, you can type in a new DeviceID that is saved on the Arduino.
 After that, you can upload another sketch.
@@ -107,10 +122,15 @@ For both functions it's **important**, that the CRGB arrays have at least the le
 This means if your LED channel from iCUE has 50 LEDs and you use the `repeat` function to control 100 physical LEDs you MUST declare the CRGB array at least with a length of 100.
 
 ## Debugging
+> Note: Only works with Visual Studio
+
 For debugging don't use the integrated debugger of Visual Studio, as it will most likely break the USB communication.
-Use the `DEBUG` macro and the Serial Monitor.
-With the `-DDEBUG` flag you can enable debugging in the whole project.
-Add this flag in the board.txt file to the `build.extra_flags`.
+Use Serial Monitor and upload the sketch with the Debug mode enabled.
+To enable the Debug mode, add the following line to the `board.txt`:
+```
+build.extra_flags={build.usb_flags} -DDEBUG
+```
+If the `board.txt` file already contains `build.extra_flags` add ` -DDEBUG` to the end of the line and remove the `#` at the beginning of the line if there is one.
 
 For advanced debugging you can use the [DebugSketch](examples/DebugSketch/DebugSketch.ino).
 In the board.txt file, the default values for the debugging options can be set.
