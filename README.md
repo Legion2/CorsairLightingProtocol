@@ -36,7 +36,7 @@ Using the Arduino IDE is difficult, but you can find a tutorial in the [wiki](ht
 You have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
 
 ## Install the library
-Use the [Library-Manager](https://www.visualmicro.com/page/User-Guide.aspx?doc=Library-Manager.html#) to install this library or download a [release](https://github.com/Legion2/CorsairLightingProtocol/releases).
+Use the [Library-Manager](https://www.visualmicro.com/page/User-Guide.aspx?doc=Library-Manager.html#) to install this library (Corsair Lighting Protocol).
 Additionally, the [FastLED](http://fastled.io/) library must be installed.
 
 ## Create a Lighting Node PRO
@@ -63,6 +63,7 @@ If you want to use this library in your own sketch don't forget to use Visual St
 
 # Misc
 
+- [API Documentation](https://legion2.github.io/CorsairLightingProtocol/)
 - [How it works](#how-it-works)
 - [Use multiple Devices](#use-multiple-devices)
 - [Repeat or scale LED channel](#repeat-or-scale-led-channel)
