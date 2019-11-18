@@ -13,8 +13,6 @@ jobs:
       run: sudo apt install doxygen graphviz
     - name: Run doxygen
       run: doxygen extra/doxygen.conf
-    - name: Add images
-      run: cp -r docs doxygen/
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v2.5.1
       env:
