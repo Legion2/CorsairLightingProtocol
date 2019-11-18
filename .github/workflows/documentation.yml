@@ -1,0 +1,23 @@
+name: Create Documentation
+
+on: [push]
+
+jobs:
+  doxygen:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install doxygen
+      run: sudo apt install doxygen graphviz
+    - name: Run doxygen
+      run: doxygen extra/doxygen.conf
+    - name: Add images
+      run: cp -r docs doxygen/
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v2.5.1
+      env:
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: doxygen/html
