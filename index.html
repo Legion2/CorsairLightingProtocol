@@ -100,9 +100,10 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Repeat or scale LED channels to arbitrary size.</li>
 </ul>
 <div class="image">
-<img src="docs/Overview.png" alt="Overview"/>
-</div>
-<h1>Getting started</h1>
+<img src="Overview.png" alt="Overview.png"/>
+<div class="caption">
+Overview</div></div>
+ <h1>Getting started</h1>
 <ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#install-the-library">Install the library</a></li>
@@ -119,9 +120,10 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p>Open the example "LightingNodePRO", you can find it in the Visual Micro Explorer or the [examples directory](examples). The library <a href="http://fastled.io/">FastLED</a> is used to control the LEDs. For more information on <a href="https://github.com/FastLED/FastLED/wiki/Wiring-leds">how to wire the leds</a> and <a href="https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds">how to set up the LEDs in the code</a> see the links. After you have done the wiring or at least know which pin is the data pin, you can set this pin in the example sketch and upload it to the Arduino. In Visual Studio use the "Release" <a href="https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/debugger/how-to-set-debug-and-release-configurations.md#change-the-build-configuration">configuration</a>.</p>
 <p>To verify that the library works as expected, open the Windows settings -&gt; devices -&gt; connected devices. Somewhere in the list of devices, there should be a device called "Lighting Node PRO". (If not, please open an <a href="https://github.com/Legion2/CorsairLightingProtocol/issues">Issue</a>) Open <a href="https://www.corsair.com/icue">iCUE</a> there should also be the "Lighting Node PRO".</p>
 <div class="image">
-<img src="docs/iCUE.jpg" alt="iCUE RGB Strip example"/>
-</div>
-<p>In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the LEDs you have. iCUE groups the LEDs into groups of ten. So if you have 20 LEDs, set the amount to 2. Now you can create lighting effects in the "Lighting Channel #" tabs.</p>
+<img src="iCUE.jpg" alt="iCUE.jpg"/>
+<div class="caption">
+iCUE RGB Strip example</div></div>
+<p> In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the LEDs you have. iCUE groups the LEDs into groups of ten. So if you have 20 LEDs, set the amount to 2. Now you can create lighting effects in the "Lighting Channel #" tabs.</p>
 <p>The example "SingleStripLightingNodePRO" only requires one LED strip connected to the Arduino. Because the "SingleStripLightingNodePRO" concatenate the two channels, a total of 120 LEDs can be controlled on a single LED Strip.</p>
 <h2>Use the library</h2>
 <p>If you want to use this library in your own sketch don't forget to use Visual Studio as IDE and include the <a href="examples/LightingNodePRO/board.txt">board.txt</a> in the root directory of your sketch.</p>
