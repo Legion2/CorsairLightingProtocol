@@ -63,6 +63,7 @@ If you want to use this library in your own sketch don't forget to use Visual St
 
 # Misc
 
+- [API Documentation](https://legion2.github.io/CorsairLightingProtocol/)
 - [How it works](#how-it-works)
 - [Use multiple Devices](#use-multiple-devices)
 - [Repeat or scale LED channel](#repeat-or-scale-led-channel)
