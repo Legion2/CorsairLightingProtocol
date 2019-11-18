@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classILEDController.html" title="ILEDController" alt="" coords="5,5,113,32"/>
+<area shape="rect" id="node2" href="$classLEDController.html" title="LEDController" alt="" coords="161,5,265,32"/>
+<area shape="rect" id="node3" href="$classFastLEDController.html" title="FastLEDController" alt="" coords="313,5,444,32"/>
+</map>

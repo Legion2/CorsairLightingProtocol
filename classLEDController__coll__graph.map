@@ -1,0 +1,5 @@
+<map id="LEDController" name="LEDController">
+<area shape="rect" id="node2" href="$classILEDController.html" title="ILEDController" alt="" coords="5,95,113,121"/>
+<area shape="rect" id="node3" href="$structLEDChannel.html" title="LEDChannel" alt="" coords="138,95,234,121"/>
+<area shape="rect" id="node4" href="$structLEDGroup.html" title="LEDGroup" alt="" coords="145,5,227,32"/>
+</map>

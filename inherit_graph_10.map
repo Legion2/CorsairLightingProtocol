@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classITemperatureController.html" title="ITemperatureController" alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node2" href="$classTemperatureController.html" title="TemperatureController" alt="" coords="208,5,359,32"/>
+<area shape="rect" id="node3" href="$classThermistorTemperatureController.html" title="ThermistorTemperatureController" alt="" coords="407,5,620,32"/>
+</map>

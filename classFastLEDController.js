@@ -1,0 +1,28 @@
+var classFastLEDController =
+[
+    [ "FastLEDController", "classFastLEDController.html#a813338755bdd59b3b0c3d1e0bc38bb98", null ],
+    [ "FastLEDController", "classFastLEDController.html#a4e702c4da34c188f4e80a2853d3e3acf", null ],
+    [ "~FastLEDController", "classFastLEDController.html#a4c811fe515a209b1e7a59f437ed7f3f1", null ],
+    [ "addColors", "classFastLEDController.html#abec308ecc72606cebb98a5c1e022c9bb", null ],
+    [ "addLEDs", "classFastLEDController.html#a735a6e94ab2e5067e2a727c9b28f810e", null ],
+    [ "animation_step", "classFastLEDController.html#ac6ba09d931849281ffefd140ee706571", null ],
+    [ "animation_step_count", "classFastLEDController.html#aa7af3674079b8d3ff64b2fe2729ec2b5", null ],
+    [ "applySpeed", "classFastLEDController.html#a60260194ce48945d2d6f49a14cd58c97", null ],
+    [ "clearLEDColorValues", "classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08", null ],
+    [ "getEEPROMSize", "classFastLEDController.html#ac7dafabd0ec9eac0e5f954397fa8c876", null ],
+    [ "getLEDCount", "classFastLEDController.html#a75a97bbfb670484b39d524076faebefb", null ],
+    [ "getLEDs", "classFastLEDController.html#ab7673bdc98e6fd5833e114eac5ca1a52", null ],
+    [ "load", "classFastLEDController.html#a56002f0ea8de239baa0cbc888b4774b2", null ],
+    [ "onUpdateHook", "classFastLEDController.html#aeb39d7e2fbb2ccef50a2905966f5ee17", null ],
+    [ "save", "classFastLEDController.html#a2ce2ba878427f50acdc23d5027674f30", null ],
+    [ "setLEDColorValues", "classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc", null ],
+    [ "setLEDExternalTemperature", "classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba", null ],
+    [ "triggerLEDUpdate", "classFastLEDController.html#ac301c35a440fac6a36d3fe7abf2c9609", null ],
+    [ "updateLEDs", "classFastLEDController.html#a6525215f48c7aa2584422dd487e1f924", null ],
+    [ "channelData", "classFastLEDController.html#aadbef33bc86c4ec97128f704127acef7", null ],
+    [ "currentUpdate", "classFastLEDController.html#a559fead7032022a40ac84bb678ba885c", null ],
+    [ "lastUpdate", "classFastLEDController.html#ad8de641716a750bff20ebd777217a01b", null ],
+    [ "temperatureController", "classFastLEDController.html#ad166fcf8400a62cb0bac96163ca16b98", null ],
+    [ "trigger_update", "classFastLEDController.html#ae8d9eb0d7fdab87a0a0c9d6dd1c3bb63", null ],
+    [ "useEEPROM", "classFastLEDController.html#a10a90a52848157d4c15da60799277253", null ]
+];

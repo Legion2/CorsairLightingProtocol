@@ -1,0 +1,8 @@
+<map id="FastLEDController" name="FastLEDController">
+<area shape="rect" id="node2" href="$classLEDController.html" title="LEDController" alt="" coords="131,191,235,218"/>
+<area shape="rect" id="node3" href="$classILEDController.html" title="ILEDController" alt="" coords="5,95,113,121"/>
+<area shape="rect" id="node4" href="$structLEDChannel.html" title="LEDChannel" alt="" coords="138,95,234,121"/>
+<area shape="rect" id="node5" href="$structLEDGroup.html" title="LEDGroup" alt="" coords="145,5,227,32"/>
+<area shape="rect" id="node6" href="$classTemperatureController.html" title="TemperatureController" alt="" coords="260,191,411,218"/>
+<area shape="rect" id="node7" href="$classITemperatureController.html" title="ITemperatureController" alt="" coords="258,95,413,121"/>
+</map>
