@@ -1,6 +1,9 @@
 name: Create Documentation
 
-on: [push]
+on: 
+  push:
+    branches:
+    - dev
 
 jobs:
   doxygen:
