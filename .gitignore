@@ -267,3 +267,5 @@ __vm/
 *.vcxproj
 *.vcxproj.filters
 *.vcxitems
+
+/doxygen
