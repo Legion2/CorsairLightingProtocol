@@ -31,6 +31,7 @@ extern bool printResponse;
 class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
 	CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP);
+	CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP, const char* serialNumber);
 	void update();
 protected:
 	uint8_t rawhidData[COMMAND_SIZE];

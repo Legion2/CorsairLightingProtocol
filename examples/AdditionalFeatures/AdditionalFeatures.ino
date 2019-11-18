@@ -22,10 +22,12 @@
 CRGB ledsChannel1[60];
 CRGB ledsChannel2[60];
 
+const char mySerialNumber[] PROGMEM = "202B6949A967";
+
 CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
-CorsairLightingProtocolHID cHID(&cLP);
+CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);
 
 void setup() {
 	CLP::disableBuildInLEDs();
