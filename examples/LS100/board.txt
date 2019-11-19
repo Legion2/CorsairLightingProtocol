@@ -1,0 +1,6 @@
+# CorsairLightingProtocol build property overrides
+
+build.vid=0x1b1c
+build.pid=0x0c1e
+build.usb_product="LS100"
+build.usb_manufacturer="Corsair"

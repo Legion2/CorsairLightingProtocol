@@ -77,6 +77,11 @@ CorsairLightingFirmware corsairLightingNodePROFirmware()
 	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
 }
 
+CorsairLightingFirmware corsairLS100Firmware()
+{
+	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
+}
+
 CorsairLightingFirmware corsairCommanderPROFirmware()
 {
 	return CorsairLightingFirmware(corsairCommanderPROFirmwareVersion);
