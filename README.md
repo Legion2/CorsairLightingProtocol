@@ -41,7 +41,10 @@ Use the [Library-Manager](https://www.ardu-badge.com/Corsair%20Lighting%20Protoc
 Additionally, the [FastLED](http://fastled.io/) library must be installed.
 
 ## Create a Lighting Node PRO
-1. Open the example "LightingNodePRO", you can find it in Arduino IDE in the Examples menu -> Corsair Lighting Protocol -> LightingNodePRO or in the [examples directory](examples) if you download this project.
+This guide will teach you how to create a Lighting Node PRO with an Arduino Leonardo compatible board.
+If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega).
+
+1. Open the example "LightingNodePRO", you can find it in Arduino IDE in the File menu->Examples->Corsair Lighting Protocol->LightingNodePRO or in the [examples directory](examples) if you download this project.
 
    ![open example sketch](docs/open-example.png)
 1. Follow [these steps](https://github.com/Legion2/CorsairLightingProtocolBoards#how-to-use-these-boards-in-arduino) to install the CLP Boards and upload the sketch to your Arduino.
@@ -50,7 +53,7 @@ Additionally, the [FastLED](http://fastled.io/) library must be installed.
    
    ![the wiring](docs/board-wiring.jpg)
 1. Verify that your device works as expected.
-   Open the Windows settings -> devices -> connected devices.
+   Open the Windows settings->devices->Other devices.
    Somewhere in the list of devices, there should be a device called "Lighting Node PRO".
 1. Now open [iCUE](https://www.corsair.com/icue) there should be the "Lighting Node PRO".
 
