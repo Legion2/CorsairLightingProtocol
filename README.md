@@ -93,7 +93,7 @@ The DeviceID can be set with the `setDeviceID` function of `CorsairLightingFirmw
 ```C++
 void setup() {
     byte deviceId[4] = { 0x9A, 0xDA, 0xA7, 0x8E };
-    firmware.setDeciceID(deviceId);
+    firmware.setDeviceID(deviceId);
     ...
 }
 ```
