@@ -28,4 +28,36 @@ namespace CLP
 	void scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize);
 	//Repeat a channel's leds color to control more leds than provided by iCUE.
 	void repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times);
+
+	/**
+	 * Define the scaling information for a segment of a strip. A segment is an isolated part of a strip that you want to scale independent of other segments.
+	 */
+	struct SegmentScaling {
+		/**
+		 * The length of the segment in iCUE for example 10 for the normal LED strips
+		 */
+		int segmentLenght;
+		/**
+		 * The size to which the segment will be scaled using Integer scaling
+		 */
+		int scaleToSize;
+	};
+	/**
+	 * Scales a channel's segment to a given size. This can be used to apply function can be used to applay different scaling factors to the different parts of a LED strip.
+	 * Integer scaling is used.
+	 * 
+	 * @param controller the FastLEDController controlling the leds
+	 * @param channelIndex the index of the channel you want to scale a segment on
+	 * @param segments the segments defining the size before and after scaling
+	 * @param segmentsCount the number of segments
+	 */
+	void scaleSegment(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount);
+
+	/**
+	 * Reverse the leds of a channel, after this operation, the first led is the last and the last is the first.
+	 *
+	 * @param controller the FastLEDController controlling the leds
+	 * @param channelIndex the index of the channel you want to reverse
+	 */
+	void reverse(FastLEDController* controller, uint8_t channelIndex);
 }
