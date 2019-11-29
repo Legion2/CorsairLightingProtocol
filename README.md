@@ -16,7 +16,7 @@
 * Lighting Node PRO
 * Commander PRO
 * Lighting Node CORE
-* Smart Lighting Controller (LS100)
+* LS100 Smart Lighting Controller
 
 ![Overview](docs/Overview.png)
 
