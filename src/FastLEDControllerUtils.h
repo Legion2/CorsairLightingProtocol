@@ -51,7 +51,7 @@ namespace CLP
 	 * @param segments the segments defining the size before and after scaling
 	 * @param segmentsCount the number of segments
 	 */
-	void scaleSegment(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount);
+	void scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount);
 
 	/**
 	 * Reverse the leds of a channel, after this operation, the first led is the last and the last is the first.

@@ -50,7 +50,7 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 	}
 }
 
-void CLP::scaleSegment(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount)
+void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount)
 {
 	auto leds = controller->getLEDs(channelIndex);
 	int ledStripIndexAfterScaling = 0;
