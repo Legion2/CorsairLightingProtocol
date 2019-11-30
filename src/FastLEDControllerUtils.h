@@ -30,7 +30,7 @@ namespace CLP
 	void repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times);
 
 	/**
-	 * Define the scaling information for a segment of a channel. A segment is an part of a channel that you want to scale independent of other segments.
+	 * Define the scaling information for a segment of a channel. A segment is a part of a channel that can be scale independently of other segments.
 	 */
 	struct SegmentScaling {
 		/**
@@ -43,7 +43,7 @@ namespace CLP
 		int scaleToSize;
 	};
 	/**
-	 * Scales a channel's segment to a given size. This can be used to apply different scaling factors to the different parts of a LED strip.
+	 * Scales a channel's segments to given sizes. This can be used to apply different scaling factors to the different parts of a LED strip.
 	 * Integer scaling is used.
 	 * 
 	 * @param controller the FastLEDController controlling the LEDs
