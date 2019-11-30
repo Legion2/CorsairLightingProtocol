@@ -14,6 +14,7 @@
    limitations under the License.
 */
 #include "FastLEDControllerUtils.h"
+#include <math.h>
 
 void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex)
 {
@@ -33,9 +34,9 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize)
 {
 	auto leds = controller->getLEDs(channelIndex);
-	float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
+	const float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
 	for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
-		leds[ledIndex] = leds[(int)(ledIndex * scaleFactor)];
+		leds[ledIndex] = leds[round(ledIndex * scaleFactor)];
 	}
 }
 
@@ -46,5 +47,36 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 	//skip first iteration, because leds already contains the data at the first position
 	for (int i = 1; i < times; i++) {
 		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
+	}
+}
+
+void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount)
+{
+	auto leds = controller->getLEDs(channelIndex);
+	int ledStripIndexAfterScaling = 0;
+	int ledStripIndexBeforeScaling = 0;
+	for (int i = 0; i < segmentsCount; i++) {
+		ledStripIndexAfterScaling += segments[i].scaleToSize;
+		ledStripIndexBeforeScaling += segments[i].segmentLength;
+	}
+
+	for (int i = segmentsCount - 1; i >= 0; i--) {
+		const float scaleFactor = (float)segments[i].segmentLength / segments[i].scaleToSize;
+		ledStripIndexAfterScaling -= segments[i].scaleToSize;
+		ledStripIndexBeforeScaling -= segments[i].segmentLength;
+		for (int ledIndex = segments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
+			leds[ledStripIndexAfterScaling + ledIndex] = leds[ledStripIndexBeforeScaling + round(ledIndex * scaleFactor)];
+		}
+	}
+}
+
+void CLP::reverse(FastLEDController* controller, uint8_t channelIndex)
+{
+	auto leds = controller->getLEDs(channelIndex);
+	auto maxIndex = controller->getLEDCount(channelIndex) - 1;
+	for (int ledIndex = 0; ledIndex < maxIndex - ledIndex; ledIndex++) {
+		CRGB temp = leds[ledIndex];
+		leds[ledIndex] = leds[maxIndex - ledIndex];
+		leds[maxIndex - ledIndex] = temp;
 	}
 }
