@@ -27,6 +27,11 @@ void resetIOMCU() {
 #endif // DEBUG
 }
 
+CLPUSBSerialBridge::CLPUSBSerialBridge(const char* serialNumber)
+{
+	RawHID.setSerialNumber(serialNumber);
+}
+
 void CLPUSBSerialBridge::begin()
 {
 	Serial1.begin(SERIAL_BAUD);

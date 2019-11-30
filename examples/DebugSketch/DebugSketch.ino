@@ -15,7 +15,6 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
-#include <EEPROM.h>
 
 #define CHANNEL_LED_COUNT 96
 
@@ -60,9 +59,9 @@ void loop() {
 
 void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
-		byte DeviceId[4];
-		EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, DeviceId);
-		CLP::printDeviceID(DeviceId);
+		byte deviceId[4];
+		firmware.getDeviceID(deviceId);
+		CLP::printDeviceID(deviceId);
 		Serial.println();
 	}
 #ifdef VERBOSE

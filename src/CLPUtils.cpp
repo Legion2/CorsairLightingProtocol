@@ -34,6 +34,14 @@ void CLP::disableBuildInLEDs()
 #endif
 }
 
+bool CLP::isNullID(const uint8_t* deviceId) {
+	return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]);
+}
+
+bool CLP::isResetID(const uint8_t* deviceId) {
+	return deviceId[0] == 0xFF && deviceId[1] == 0xFF && deviceId[2] == 0xFF && deviceId[3] == 0xFF;
+}
+
 void CLP::printDeviceID(const uint8_t* deviceId) {
 	char tmp[16];
 	for (size_t i = 0; i < 4; i++) {

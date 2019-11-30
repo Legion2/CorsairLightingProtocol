@@ -15,21 +15,23 @@
 */
 #pragma once
 
-// central include file for CorsairLightingProtocolController
+#include "Arduino.h"
 #include "CorsairLightingFirmware.h"
-#include "CorsairLightingNodePRO.h"
-#include "CorsairLightingProtocolConstants.h"
-#include "CorsairLightingProtocolController.h"
-#include "CorsairLightingProtocolHID.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolSerial.h"
-#include "IFanController.h"
-#include "FanController.h"
-#include "ILEDController.h"
-#include "LEDController.h"
-#include "FastLEDController.h"
-#include "ITemperatureController.h"
-#include "TemperatureController.h"
-#include "FastLEDControllerUtils.h"
-#include "CLPAdditionalFeatures.h"
-#include "CLPUtils.h"
+
+namespace CLP
+{
+	/**
+	 * Check if the device should be reseted. The check is based on the DeviceID from the firmware.
+	 *
+	 * @param firmware the firmware used by this device
+	 * @return if the device should be reset
+	 */
+	bool shouldReset(const CorsairLightingFirmware* firmware);
+
+	/**
+	 * Reset the DeviceID of the firmware.
+	 *
+	 * @param firmware reset this firmware
+	 */
+	void reset(CorsairLightingFirmware* firmware);
+}

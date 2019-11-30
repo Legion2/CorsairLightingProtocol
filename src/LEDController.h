@@ -98,6 +98,10 @@ public:
 	virtual bool isValidLEDChannel(const LEDChannel& ledChannel);
 	virtual bool isValidLEDGroup(const LEDGroup& ledGroup);
 	const LEDChannel& getChannel(uint8_t channelIndex);
+	/**
+	 * Reset all persistent data to default values of the LEDController.
+	 */
+	virtual void reset();
 protected:
 	LEDChannel channels[CHANNEL_NUM];
 	// Indicates that the configuration of the channels has been changed and should be saved

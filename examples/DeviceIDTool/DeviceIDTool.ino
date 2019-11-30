@@ -21,10 +21,6 @@
 
 #define EEPROM_ADDRESS_DEVICE_ID 0
 
-bool isNullID(uint8_t* deviceId) {
-	return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]);
-}
-
 void setup() {
 	Serial.begin(115200);
 	Serial.setTimeout(100);
@@ -60,8 +56,11 @@ void loop() {
 			Serial.println(F("Set DeviceID to: "));
 			CLP::printDeviceID(newDeviceID);
 			Serial.println();
-			if (isNullID(newDeviceID)) {
+			if (CLP::isNullID(newDeviceID)) {
 				Serial.println(F("This is a special DeviceID, it will generate a new random DeviceID next time iCUE controls the device!"));
+			}
+			if (CLP::isResetID(newDeviceID)) {
+				Serial.println(F("This is a special DeviceID, it will reset the device and then generate a new DeviceID!"));
 			}
 			Serial.println();
 			EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, newDeviceID);

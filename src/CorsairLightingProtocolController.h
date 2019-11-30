@@ -39,7 +39,7 @@ public:
 	 */
 	CorsairLightingProtocolController(ILEDController* l, CorsairLightingFirmware* c);
 	/**
-	 * The constructor used to create an Commander PRO.
+	 * The constructor used to create a Commander PRO.
 	 * 
 	 * @param l The LEDController which should be used to control the LEDs of the created Commander PRO
 	 * @param t The TemperatureController which used to messure the temperature of the created Commander PRO

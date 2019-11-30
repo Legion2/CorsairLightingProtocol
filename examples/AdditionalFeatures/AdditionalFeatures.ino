@@ -16,34 +16,33 @@
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
 
-// Hint: The Arduino Uno does not have as much memory as the Arduino Mega, it may be that problems occur when a higher value is set here.
-#define CHANNEL_LED_COUNT 60
-
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
+
+CRGB ledsChannel1[60];
+CRGB ledsChannel2[60];
+
+const char mySerialNumber[] PROGMEM = "202B6949A967";
 
 CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
-CorsairLightingProtocolSerial cLPS(&cLP);
-
-CRGB ledsChannel1[CHANNEL_LED_COUNT];
-CRGB ledsChannel2[CHANNEL_LED_COUNT];
+CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);
 
 void setup() {
-	/*
-	YOU MUST NOT USE Serial!
-	Serial is used by CorsairLightingProtocolSerial!
-	*/
-	cLPS.setup();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);
-	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT);
+	CLP::disableBuildInLEDs();
+	if (CLP::shouldReset(&firmware)) {
+		CLP::reset(&firmware);
+		ledController.reset();
+	}
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 60);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 60);
+	ledController.addLEDs(0, ledsChannel1, 60);
+	ledController.addLEDs(1, ledsChannel2, 60);
 }
 
 void loop() {
-	cLPS.update();
+	cHID.update();
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();

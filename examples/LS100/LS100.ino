@@ -16,34 +16,27 @@
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
 
-// Hint: The Arduino Uno does not have as much memory as the Arduino Mega, it may be that problems occur when a higher value is set here.
-#define CHANNEL_LED_COUNT 60
-
+// Hint: The channels of the LS100 are swapped in iCUE, so the first channel in iCUE is here channel 2
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
+CRGB ledsChannel1[135];
+CRGB ledsChannel2[135];
+
+CorsairLightingFirmware firmware = corsairLS100Firmware();
 FastLEDController ledController(true);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
-CorsairLightingProtocolSerial cLPS(&cLP);
-
-CRGB ledsChannel1[CHANNEL_LED_COUNT];
-CRGB ledsChannel2[CHANNEL_LED_COUNT];
+CorsairLightingProtocolHID cHID(&cLP);
 
 void setup() {
-	/*
-	YOU MUST NOT USE Serial!
-	Serial is used by CorsairLightingProtocolSerial!
-	*/
-	cLPS.setup();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
-	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);
-	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 135);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 135);
+	ledController.addLEDs(0, ledsChannel1, 135);
+	ledController.addLEDs(1, ledsChannel2, 135);
 }
 
 void loop() {
-	cLPS.update();
+	cHID.update();
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
