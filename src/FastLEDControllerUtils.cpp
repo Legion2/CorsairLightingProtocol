@@ -57,13 +57,13 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 	int ledStripIndexBeforeScaling = 0;
 	for (int i = 0; i < segmentsCount; i++) {
 		ledStripIndexAfterScaling += segments[i].scaleToSize;
-		ledStripIndexBeforeScaling += segments[i].segmentLenght;
+		ledStripIndexBeforeScaling += segments[i].segmentLength;
 	}
 
 	for (int i = segmentsCount - 1; i >= 0; i--) {
-		const float scaleFactor = (float)segments[i].segmentLenght / segments[i].scaleToSize;
+		const float scaleFactor = (float)segments[i].segmentLength / segments[i].scaleToSize;
 		ledStripIndexAfterScaling -= segments[i].scaleToSize;
-		ledStripIndexBeforeScaling -= segments[i].segmentLenght;
+		ledStripIndexBeforeScaling -= segments[i].segmentLength;
 		for (int ledIndex = segments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
 			leds[ledStripIndexAfterScaling + ledIndex] = leds[ledStripIndexBeforeScaling + round(ledIndex * scaleFactor)];
 		}
