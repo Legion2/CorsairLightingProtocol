@@ -1,5 +1,8 @@
 var annotated_dup =
 [
+    [ "CLP", null, [
+      [ "SegmentScaling", "structCLP_1_1SegmentScaling.html", "structCLP_1_1SegmentScaling" ]
+    ] ],
     [ "CLPUSBSerialBridge", "classCLPUSBSerialBridge.html", "classCLPUSBSerialBridge" ],
     [ "Command", "structCommand.html", "structCommand" ],
     [ "CorsairLightingFirmware", "classCorsairLightingFirmware.html", "classCorsairLightingFirmware" ],
