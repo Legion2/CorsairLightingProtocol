@@ -39,6 +39,7 @@ Command	KEYWORD3
 FanCurve	KEYWORD3
 LEDChannel	KEYWORD3
 LEDGroup	KEYWORD3
+SegmentScaling  KEYWORD3
 
 #######################################
 # Constants (LITERAL1)
