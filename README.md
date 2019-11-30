@@ -18,7 +18,7 @@
 * Lighting Node CORE
 * LS100 Smart Lighting Controller
 
-![Overview](docs/Overview.png)
+![Overview](extra/images/overview.png)
 
 # Getting started
 
@@ -46,12 +46,12 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
 
 1. Open the example "LightingNodePRO", you can find it in Arduino IDE in the File menu->Examples->Corsair Lighting Protocol->LightingNodePRO or in the [examples directory](examples) if you download this project.
 
-   ![open example sketch](docs/open-example.png)
+   ![open example sketch](extra/images/open-example.png)
 1. Follow [these steps](https://github.com/Legion2/CorsairLightingProtocolBoards#how-to-use-these-boards-in-arduino) to install the CLP Boards and upload the sketch to your Arduino.
 1. Do the wiring.
    For more information on [how to wire the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
    
-   ![the wiring](docs/board-wiring.jpg)
+   ![the wiring](extra/images/board-wiring.jpg)
 1. Verify that your device works as expected.
    Open the Windows settings->devices->Other devices.
    Somewhere in the list of devices, there should be a device called "Lighting Node PRO".
@@ -59,7 +59,7 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
 
 ## Use the Lighting Node PRO
 
-![iCUE RGB Strip example](docs/iCUE.jpg)
+![iCUE RGB Strip example](extra/images/iCUE.jpg)
 
 In iCUE open the "Lighting Setup" tab of the Lighting Node PRO(LNP) and set for both Lighting Channels the device to "RGB Light Strip" and the amount to a tenth of the LEDs you have.
 iCUE groups the LEDs into groups of ten.
