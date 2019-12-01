@@ -58,6 +58,10 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 		response->send_P(bootloader_version, sizeof(bootloader_version));
 		break;
 	}
+	default:
+	{
+		response->sendError();
+	}
 	}
 }
 

@@ -152,7 +152,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 #ifdef DEBUG
 			Serial.print(F("unkown command: "));
 			Serial.print(command.command, HEX);
-			Serial.print("\n");
+			Serial.println();
 #endif
 			response->sendError();
 			return;
