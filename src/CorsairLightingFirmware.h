@@ -42,6 +42,8 @@ protected:
 
 CorsairLightingFirmware corsairLightingNodePROFirmware();
 
+CorsairLightingFirmware corsairLightingNodeCOREFirmware();
+
 CorsairLightingFirmware corsairLS100Firmware();
 
 CorsairLightingFirmware corsairCommanderPROFirmware();
