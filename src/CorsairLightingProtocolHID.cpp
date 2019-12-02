@@ -61,7 +61,9 @@ void CorsairLightingProtocolHID::getCommand(Command& command)
 #if defined(DEBUG) && defined(VERBOSE)
 		if (printCommand) {
 			Serial.print(F("Received Command: "));
-			Serial.println(command.command, HEX);
+			Serial.print(command.command, HEX);
+			Serial.print(" ");
+			Serial.println(command.data[0], HEX);
 		}
 #endif
 	}
