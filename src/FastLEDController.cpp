@@ -125,7 +125,8 @@ bool FastLEDController::updateLEDs()
 		{
 			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
 				LEDGroup& group = channel.groups[groupIndex];
-				if (channelData[channelId].ledCount < (int)group.ledIndex + group.ledCount) {
+				int groupLedCount = min((int)channelData[channelId].ledCount - group.ledIndex, (int)group.ledCount);
+				if (groupLedCount <= 0) {
 					continue;
 				}
 
@@ -138,7 +139,7 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 256);
 						int move = group.direction == GROUP_DIRECTION_FORWARD ? -3 : 3;
-						for (int i = 0; i < group.ledCount; i++) {
+						for (int i = 0; i < groupLedCount; i++) {
 							channelData[channelId].leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255) % channel.brightness;
 						}
 						updated = true;
@@ -173,7 +174,7 @@ bool FastLEDController::updateLEDs()
 							scale = 255;
 						}
 
-						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
 						updated = true;
 					}
 					break;
@@ -199,7 +200,7 @@ bool FastLEDController::updateLEDs()
 							scale = 255 - scale;
 						}
 
-						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, group.color1 % scale % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1 % scale % channel.brightness);
 						updated = true;
 					}
 					break;
@@ -222,7 +223,7 @@ bool FastLEDController::updateLEDs()
 							}
 						}
 						float valley = step / 10000.0;
-						for (int i = 0; i < group.ledCount; i++) {
+						for (int i = 0; i < groupLedCount; i++) {
 							float pos = (i % 17) / 17.0;
 
 							float distanceWave;
@@ -252,7 +253,7 @@ bool FastLEDController::updateLEDs()
 				}
 				case GROUP_MODE_Static:
 				{
-					fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, group.color1 % channel.brightness);
+					fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1 % channel.brightness);
 					updated = true;
 					break;
 				}
@@ -281,18 +282,18 @@ bool FastLEDController::updateLEDs()
 						color = group.color3;
 					}
 
-					fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, color % channel.brightness);
+					fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, color % channel.brightness);
 					updated = true;
 					break;
 				}
 				case GROUP_MODE_Visor:
 				{
-					int duration = applySpeed(150 * group.ledCount, group.speed);
-					int steps = group.ledCount * 2;
+					int duration = applySpeed(150 * groupLedCount, group.speed);
+					int steps = groupLedCount * 2;
 					int count = animation_step_count(duration, steps);
 					if (count > 0) {
 						int step = animation_step(duration, steps);
-						if (step >= group.ledCount ? count > step - group.ledCount : count > step) {
+						if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
 							if (group.extra == GROUP_EXTRA_RANDOM) {
 								group.color1 = CHSV(random8(), 255, 255);
 							}
@@ -302,10 +303,10 @@ bool FastLEDController::updateLEDs()
 								group.color2 = group.color3;
 							}
 						}
-						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, CRGB::Black);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, CRGB::Black);
 						for (int i = 0; i < 4; i++) {
 							int led = (((step - i) % steps) + steps) % steps;
-							if (led >= group.ledCount) {
+							if (led >= groupLedCount) {
 								led = steps - led - 1;
 							}
 							channelData[channelId].leds[group.ledIndex + led] = group.color1 % channel.brightness;
@@ -320,7 +321,7 @@ bool FastLEDController::updateLEDs()
 					int count = animation_step_count(duration, 3);
 					if (count > 0) {
 						int step = animation_step(duration, 3);
-						for (int i = 0; i < group.ledCount; i++) {
+						for (int i = 0; i < groupLedCount; i++) {
 							channelData[channelId].leds[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 % channel.brightness : CRGB::Black;
 						}
 						updated = true;
@@ -344,14 +345,14 @@ bool FastLEDController::updateLEDs()
 							}
 						}
 
-						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
 						updated = true;
 					}
 					break;
 				}
 				case GROUP_MODE_Sequential:
 				{
-					int steps = group.ledCount;
+					int steps = groupLedCount;
 					int duration = applySpeed(60 * steps, group.speed);
 					int count = animation_step_count(duration, steps);
 					if (count > 0) {
@@ -365,11 +366,11 @@ bool FastLEDController::updateLEDs()
 
 						if (group.direction == GROUP_DIRECTION_FORWARD) {
 							fill_solid(&channelData[channelId].leds[group.ledIndex], step + 1, group.color1 % channel.brightness);
-							fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1], group.ledCount - (step + 1), group.color2 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2 % channel.brightness);
 						}
 						else {
-							fill_solid(&channelData[channelId].leds[group.ledIndex + group.ledCount - (step + 1)], step + 1, group.color1 % channel.brightness);
-							fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount - (step + 1), group.color2 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex + groupLedCount - (step + 1)], step + 1, group.color1 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount - (step + 1), group.color2 % channel.brightness);
 						}
 						updated = true;
 					}
@@ -381,7 +382,7 @@ bool FastLEDController::updateLEDs()
 					int count = animation_step_count(duration, 256);
 					if (count > 0) {
 						int step = animation_step(duration, 256);
-						fill_solid(&channelData[channelId].leds[group.ledIndex], group.ledCount, CHSV(step, 255, 255) % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, CHSV(step, 255, 255) % channel.brightness);
 						updated = true;
 					}
 					break;
