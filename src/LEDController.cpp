@@ -144,7 +144,12 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_PORT_TYPE:
 		{
-			trigger_save |= setLEDPortType(channel, data[1]);
+			PortType portType =  static_cast<PortType>(data[1]);
+			if (!isValidPortType(portType)) {
+				response->sendError();
+				return;
+			}
+			trigger_save |= setLEDPortType(channel, portType);
 			break;
 		}
 		default:
@@ -158,14 +163,14 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			return;
 		}
 		}
-	}
+		}
 	response->send(nullptr, 0);
-}
+	}
 
 bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
 {
 	if (ledChannel.ledMode <= CHANNEL_MODE_SOFTWARE_PLAYBACK
-		&& ledChannel.ledPortType <= PORT_TYPE_UCS1903
+		&& isValidPortType(ledChannel.ledPortType)
 		&& ledChannel.groupsSet < GROUPS_NUM) {
 		for (uint8_t i = 0; i < ledChannel.groupsSet; i++) {
 			if (!isValidLEDGroup(ledChannel.groups[i])) {
@@ -236,7 +241,7 @@ bool LEDController::setLEDBrightness(uint8_t channel, uint8_t brightness)
 	return false;
 }
 
-bool LEDController::setLEDPortType(uint8_t channel, uint8_t ledPortType)
+bool LEDController::setLEDPortType(uint8_t channel, PortType ledPortType)
 {
 	if (channels[channel].ledPortType != ledPortType) {
 		channels[channel].ledPortType = ledPortType;

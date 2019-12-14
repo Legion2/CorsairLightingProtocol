@@ -16,12 +16,15 @@
 #pragma once
 
 #include "TemperatureController.h"
-/*
-Thermistor Schematic :
-    | ---- [10k - Resistor] ----- | ----- [Thermistor] ---- |
-    |                             |                         |
- [Ground]                     Analog Pin                  [+5v]
-*/
+/**
+ * 
+ * Thermistor Schematic:
+ * <pre>
+ *     | ---- [10k - Resistor] ---- | ---- [Thermistor] ---- |
+ *     |                            |                        |
+ *  [Ground]                    Analog Pin                 [+5v]
+ * </pre>
+ */
 class ThermistorTemperatureController : public TemperatureController {
 public:
 	void addSensor(uint8_t index, uint8_t pin);

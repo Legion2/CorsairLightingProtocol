@@ -23,18 +23,19 @@
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
 
-//LED brightness
-#define CHANNEL_LED_BRIGHTNESS_MIN 0
-#define CHANNEL_LED_BRIGHTNESS_MAX 100
-
 //Channel modes
 #define CHANNEL_MODE_DISABLED 0x00
 #define CHANNEL_MODE_ON 0x01
 #define CHANNEL_MODE_SOFTWARE_PLAYBACK 0x02
 
-//Port types
-#define PORT_TYPE_WS2812B 0x01
-#define PORT_TYPE_UCS1903 0x02
+enum class PortType : byte {
+	WS2812B = 0x01,
+	UCS1903 = 0x02
+};
+
+bool inline isValidPortType(PortType portType) {
+	return portType == PortType::WS2812B || portType == PortType::UCS1903;
+}
 
 //LED group mode
 #define GROUP_MODE_Rainbow_Wave 0x00
@@ -89,10 +90,13 @@ struct LEDGroup {
 };
 
 struct LEDChannel {
-	uint8_t brightness = CHANNEL_LED_BRIGHTNESS_MAX;
+	/**
+	 * Brightness of the channel in range 0-255.
+	 */
+	uint8_t brightness = 255;
 	uint8_t ledMode = CHANNEL_MODE_ON;
 	uint8_t ledCount = 0;
-	uint8_t ledPortType = PORT_TYPE_WS2812B;
+	PortType ledPortType = PortType::WS2812B;
 
 	LEDGroup groups[GROUPS_NUM];
 	uint8_t groupsSet = 0;
@@ -127,7 +131,12 @@ protected:
 	 * @return the number of leds in the group
 	 */
 	virtual uint8_t getLEDStripMask(uint8_t channel, uint8_t group);
-	// The temperature in hundredths of a degree Celsius.
+	/**
+	 *  Set the external temperature for a channel.
+	 *
+	 * @param channel the channel index
+	 * @param temp the temperature in hundredths of a degree Celsius.
+	 */
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
 	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
@@ -139,9 +148,13 @@ protected:
 	 * @param brightness the brightness in the range 0-255
 	 */
 	virtual bool setLEDBrightness(uint8_t channel, uint8_t brightness);
-	// The type of led controller: WS2812B or UCS1903
-	// one of PORT_TYPE_*
-	virtual bool setLEDPortType(uint8_t channel, uint8_t ledPortType);
+	/**
+	 * The type of led controller: WS2812B or UCS1903
+	 *
+	 * @param channel the channel index
+	 * @param ledPortType the port type
+	 */
+	virtual bool setLEDPortType(uint8_t channel, PortType ledPortType);
 	virtual void clearLEDColorValues(uint8_t channel) = 0;
 	virtual bool clearLEDGroups(uint8_t channel);
 	virtual bool save() = 0;

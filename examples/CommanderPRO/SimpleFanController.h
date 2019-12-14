@@ -33,14 +33,30 @@ struct FanData {
 	FanCurve fanCurve;
 };
 
-// This simple Fan Controller implementation does not implement all features of a Fan Controller.
-// It should only demonstrate how to implement your own Fan Controller.
+/**
+ * This simple Fan Controller implementation does not implement all features of a Fan Controller.
+ * It should only demonstrate how to implement your own Fan Controller.
+ */
 class SimpleFanController : public FanController {
 public:
-	// Fan Contorller must use the EEPROM else on startup the fans can't be controlled
-	// updateRate it the time between fan speed updates in ms
+	/**
+	 * Fan Controller must use the EEPROM else on startup the fans can't be controlled
+	 * 
+	 * @param temperatureController the TemperatureController used to get the temperature to control the fans
+	 * @param updateRate is the time between fan speed updates in ms
+	 * @param eEPROMAdress the address where the data is stored in EEPROM
+	 */
 	SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate, uint16_t eEPROMAdress);
+	/**
+	 * Add a fan to the Controller.
+	 * 
+	 * @param index the index of the fan
+	 * @param fan the fan object
+	 */
 	void addFan(uint8_t index, PWMFan* fan);
+	/**
+	 * Update the fan speeds based on the temperature and commands.
+	 */
 	virtual bool updateFans();
 protected:
 	virtual uint16_t getFanSpeed(uint8_t fan) override;

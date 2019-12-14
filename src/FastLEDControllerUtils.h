@@ -20,13 +20,30 @@
 
 namespace CLP
 {
-	//Make it possible to use up to 96 leds per channel from iCUE by using the LL Fan option. This function transforms the LL fans layout to a normal strip layout.
-	//This function can be combined with scale and repeat function but must be invoked first.
+	/**
+	 * Make it possible to use up to 96 leds per channel from iCUE by using the LL Fan option. This function transforms the LL fans layout to a normal strip layout.
+	 * This function can be combined with scale and repeat function but must be invoked first.
+	 * 
+	 * @param controller the FastLEDController controlling the LEDs
+	 * @param channelIndex the index of the channel
+	 */
 	void transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex);
-	//Scales a channel's length to a given size, the size can be larger or smaller than the default length given to the FastLEDController::addLEDs function
-	//Integer scaling is used, so no interpolation between color values is done and the animation don't look blurry.
+	/**
+	 * Scales a channel's length to a given size, the size can be larger or smaller than the default length given to the FastLEDController::addLEDs function
+	 * Integer scaling is used, so no interpolation between color values is done and the animation don't look blurry.
+	 * 
+	 * @param controller the FastLEDController controlling the LEDs
+	 * @param channelIndex the index of the channel
+	 * @param scaleToSize the final size after scaling
+	 */
 	void scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize);
-	//Repeat a channel's leds color to control more leds than provided by iCUE.
+	/**
+	 * Repeat a channel's leds color to control more leds than provided by iCUE.
+	 * 
+	 * @param controller the FastLEDController controlling the LEDs
+	 * @param channelIndex the index of the channel
+	 * @param times the number of time the colors should be repeated
+	 */
 	void repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times);
 
 	/**

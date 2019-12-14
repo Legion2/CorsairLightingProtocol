@@ -38,9 +38,13 @@
 #define FAN_CURVE_TEMP_GROUP_EXTERNAL 255
 
 struct FanCurve {
-	// The temperatures in hundredths of a degree Celsius.
+	/**
+	 * The temperatures in hundredths of a degree Celsius.
+	 */
 	uint16_t temperatures[FAN_CURVE_POINTS_NUM];
-	// The fan speeds in RPM.
+	/**
+	 * The fan speeds in RPM.
+	 */
 	uint16_t rpms[FAN_CURVE_POINTS_NUM];
 };
 
@@ -48,11 +52,26 @@ class FanController : public IFanController {
 public:
 	virtual void handleFanControl(const Command & command, const CorsairLightingProtocolResponse* response) override;
 protected:
-	// Fan Speed in RPM.
+	/**
+	 * Get the fan speed.
+	 * 
+	 * @param fan index of the fan
+	 * @return fan speed in RPM.
+	 */
 	virtual uint16_t getFanSpeed(uint8_t fan) = 0;
-	// Fan Speed in RPM.
+	/**
+	 * Set the fan speed to a fixed value.
+	 * 
+	 * @param fan index of the fan
+	 * @param speed fan speed in RPM.
+	 */
 	virtual void setFanSpeed(uint8_t fan, uint16_t speed) = 0;
-	// percentage 255 mean 100%.
+	/**
+	 * Get the power percentage of a fan.
+	 * 
+	 * @param fan index of the fan
+	 * @return power percentage, in range 0-255 with 255 mean 100%.
+	 */
 	virtual uint8_t getFanPower(uint8_t fan) = 0;
 	// percentage 255 mean 100%.
 	virtual void setFanPower(uint8_t fan, uint8_t percentage) = 0;
