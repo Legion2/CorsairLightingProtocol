@@ -62,12 +62,6 @@ uint8_t FastLEDController::getLEDCount(uint8_t channel)
 	return channelData[channel].ledCount;
 }
 
-void FastLEDController::addColors(CRGB* leds, const CRGB& color, const uint8_t* values, uint8_t length) {
-	for (int i = 0; i < length; i++) {
-		leds[i] += color % values[i];
-	}
-}
-
 int FastLEDController::applySpeed(int duration, byte speed) {
 	switch (speed)
 	{
@@ -404,10 +398,9 @@ bool FastLEDController::updateLEDs()
 		{
 			if (trigger_update) {
 				auto& data = channelData[channelId];
-				fill_solid(data.leds, data.ledCount, CRGB::Black);
-				addColors(data.leds, CRGB::Red, data.valuesBuffer[0], data.ledCount);
-				addColors(data.leds, CRGB::Green, data.valuesBuffer[1], data.ledCount);
-				addColors(data.leds, CRGB::Blue, data.valuesBuffer[2], data.ledCount);
+				for (int i = 0; i < data.ledCount; i++) {
+					data.leds[i] = CRGB(dim8_video(data.valuesBuffer[0][i]), dim8_video(data.valuesBuffer[1][i]), dim8_video(data.valuesBuffer[2][i]));
+				}
 				updated = true;
 			}
 			break;

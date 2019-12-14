@@ -65,7 +65,6 @@ protected:
 	int applySpeed(int duration, byte speed);
 	int animation_step(int duration, int steps);
 	int animation_step_count(int duration, int steps);
-	void addColors(CRGB* leds, const CRGB& color, const uint8_t* values, uint8_t length);
 
 	const bool useEEPROM;
 	bool load() override;
