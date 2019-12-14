@@ -76,16 +76,11 @@ int FastLEDController::applySpeed(int duration, byte speed) {
 	}
 }
 
-/*
-returns the current step of the animation
-*/
 int FastLEDController::animation_step(int duration, int steps) {
 	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
 	return currentStep;
 }
-/*
-returns the number of steps since the last update
-*/
+
 int FastLEDController::animation_step_count(int duration, int steps) {
 	long lastAnimationNumber = lastUpdate / duration;
 	long currentAnimationNumber = currentUpdate / duration;
@@ -134,7 +129,7 @@ bool FastLEDController::updateLEDs()
 						int step = animation_step(duration, 256);
 						int move = group.direction == GROUP_DIRECTION_FORWARD ? -3 : 3;
 						for (int i = 0; i < groupLedCount; i++) {
-							channelData[channelId].leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255) % channel.brightness;
+							channelData[channelId].leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255);
 						}
 						updated = true;
 					}
@@ -168,7 +163,7 @@ bool FastLEDController::updateLEDs()
 							scale = 255;
 						}
 
-						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1.lerp8(group.color2, scale) % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1.lerp8(group.color2, scale));
 						updated = true;
 					}
 					break;
@@ -194,7 +189,7 @@ bool FastLEDController::updateLEDs()
 							scale = 255 - scale;
 						}
 
-						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1 % scale % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1 % scale);
 						updated = true;
 					}
 					break;
@@ -239,7 +234,7 @@ bool FastLEDController::updateLEDs()
 							else {
 								scale = 255 - ease8InOutApprox((distanceWave * 4) * 256);
 							}
-							channelData[channelId].leds[group.ledIndex + i] = (color % scale) % channel.brightness;
+							channelData[channelId].leds[group.ledIndex + i] = (color % scale);
 						}
 						updated = true;
 					}
@@ -247,7 +242,7 @@ bool FastLEDController::updateLEDs()
 				}
 				case GROUP_MODE_Static:
 				{
-					fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1 % channel.brightness);
+					fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1);
 					updated = true;
 					break;
 				}
@@ -276,7 +271,7 @@ bool FastLEDController::updateLEDs()
 						color = group.color3;
 					}
 
-					fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, color % channel.brightness);
+					fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, color);
 					updated = true;
 					break;
 				}
@@ -303,7 +298,7 @@ bool FastLEDController::updateLEDs()
 							if (led >= groupLedCount) {
 								led = steps - led - 1;
 							}
-							channelData[channelId].leds[group.ledIndex + led] = group.color1 % channel.brightness;
+							channelData[channelId].leds[group.ledIndex + led] = group.color1;
 						}
 						updated = true;
 					}
@@ -316,7 +311,7 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 3);
 						for (int i = 0; i < groupLedCount; i++) {
-							channelData[channelId].leds[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 % channel.brightness : CRGB::Black;
+							channelData[channelId].leds[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 : CRGB::Black;
 						}
 						updated = true;
 					}
@@ -339,7 +334,7 @@ bool FastLEDController::updateLEDs()
 							}
 						}
 
-						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, step == 0 ? group.color1 % channel.brightness : CRGB::Black);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, step == 0 ? group.color1 : CRGB::Black);
 						updated = true;
 					}
 					break;
@@ -359,12 +354,12 @@ bool FastLEDController::updateLEDs()
 						}
 
 						if (group.direction == GROUP_DIRECTION_FORWARD) {
-							fill_solid(&channelData[channelId].leds[group.ledIndex], step + 1, group.color1 % channel.brightness);
-							fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex], step + 1, group.color1);
+							fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2);
 						}
 						else {
-							fill_solid(&channelData[channelId].leds[group.ledIndex + groupLedCount - (step + 1)], step + 1, group.color1 % channel.brightness);
-							fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount - (step + 1), group.color2 % channel.brightness);
+							fill_solid(&channelData[channelId].leds[group.ledIndex + groupLedCount - (step + 1)], step + 1, group.color1);
+							fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount - (step + 1), group.color2);
 						}
 						updated = true;
 					}
@@ -376,7 +371,7 @@ bool FastLEDController::updateLEDs()
 					int count = animation_step_count(duration, 256);
 					if (count > 0) {
 						int step = animation_step(duration, 256);
-						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, CHSV(step, 255, 255) % channel.brightness);
+						fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, CHSV(step, 255, 255));
 						updated = true;
 					}
 					break;
@@ -390,6 +385,7 @@ bool FastLEDController::updateLEDs()
 #endif
 					break;
 				}
+				nscale8_video(&channelData[channelId].leds[group.ledIndex], groupLedCount, channel.brightness);
 				}
 			}
 			break;
@@ -399,7 +395,7 @@ bool FastLEDController::updateLEDs()
 			if (trigger_update) {
 				auto& data = channelData[channelId];
 				for (int i = 0; i < data.ledCount; i++) {
-					data.leds[i] = CRGB(dim8_video(data.valuesBuffer[0][i]), dim8_video(data.valuesBuffer[1][i]), dim8_video(data.valuesBuffer[2][i]));
+					data.leds[i] = CRGB(data.valuesBuffer[0][i], data.valuesBuffer[1][i], data.valuesBuffer[2][i]);
 				}
 				updated = true;
 			}

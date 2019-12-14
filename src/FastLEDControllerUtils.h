@@ -60,4 +60,12 @@ namespace CLP
 	 * @param channelIndex the index of the channel you want to reverse
 	 */
 	void reverse(FastLEDController* controller, uint8_t channelIndex);
+
+	/**
+	 * Simple gamma correction with gamma value 2. This approximation of the gamma correction is sufficient for most led strips.
+	 *
+	 * @param controller the FastLEDController controlling the LEDs
+	 * @param channelIndex the index of the channel
+	 */
+	void gammaCorrection(FastLEDController* controller, uint8_t channelIndex);
 }

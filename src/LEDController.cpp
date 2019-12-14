@@ -199,14 +199,14 @@ void LEDController::reset()
 	save();
 }
 
-uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t set)
+uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t groupIndex)
 {
-	return channels[channel].groups[set].ledCount;
+	return channels[channel].groups[groupIndex].ledCount;
 }
 
-bool LEDController::setLEDGroup(uint8_t channel, uint8_t set, LEDGroup& group)
+bool LEDController::setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group)
 {
-	channels[channel].groups[set] = group;
+	channels[channel].groups[groupIndex] = group;
 	return true;
 }
 
