@@ -15,6 +15,7 @@
 */
 #include "FastLEDControllerUtils.h"
 #include <math.h>
+#include <FastLED.h>
 
 void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex)
 {
@@ -78,5 +79,15 @@ void CLP::reverse(FastLEDController* controller, uint8_t channelIndex)
 		CRGB temp = leds[ledIndex];
 		leds[ledIndex] = leds[maxIndex - ledIndex];
 		leds[maxIndex - ledIndex] = temp;
+	}
+}
+
+void CLP::gammaCorrection(FastLEDController* controller, uint8_t channelIndex) {
+	auto leds = controller->getLEDs(channelIndex);
+	auto count = controller->getLEDCount(channelIndex);
+	for (int ledIndex = 0; ledIndex < count; ledIndex++) {
+		leds[ledIndex].r = dim8_video(leds[ledIndex].r);
+		leds[ledIndex].g = dim8_video(leds[ledIndex].g);
+		leds[ledIndex].b = dim8_video(leds[ledIndex].b);
 	}
 }

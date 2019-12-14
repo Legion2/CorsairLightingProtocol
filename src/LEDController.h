@@ -65,8 +65,14 @@
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
 struct LEDGroup {
-	byte ledIndex = 0;//start index of the leds of this group
-	byte ledCount = 0;//number of leds in this group
+	/**
+	 * start index of the leds of this group
+	 */
+	byte ledIndex = 0;
+	/**
+	 * number of leds in this group
+	 */
+	byte ledCount = 0;
 	byte mode = GROUP_MODE_Rainbow_Wave;
 	byte speed = GROUP_SPEED_HIGH;
 	byte direction = GROUP_DIRECTION_FORWARD;
@@ -104,18 +110,34 @@ public:
 	virtual void reset();
 protected:
 	LEDChannel channels[CHANNEL_NUM];
-	// Indicates that the configuration of the channels has been changed and should be saved
+	/**
+	 * Indicates that the configuration of the channels has been changed and should be saved
+	 */
 	bool trigger_save = false;
 
-	//Trigger update of the LEDs
+	/**
+	 * Trigger update of the LEDs
+	 */
 	virtual void triggerLEDUpdate() = 0;
-	// The led count of the group
-	virtual uint8_t getLEDStripMask(uint8_t channel, uint8_t set);
+	/**
+	 * The led count of the group
+	 *
+	 * @param channel the channel index
+	 * @param group the group index
+	 * @return the number of leds in the group
+	 */
+	virtual uint8_t getLEDStripMask(uint8_t channel, uint8_t group);
 	// The temperature in hundredths of a degree Celsius.
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
-	virtual bool setLEDGroup(uint8_t channel, uint8_t set, LEDGroup& group);
+	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
 	virtual bool setLEDMode(uint8_t channel, uint8_t mode);
+	/**
+	 * The brightness of the channel. This only applies to HW lighting.
+	 *
+	 * @param channel the channel index
+	 * @param brightness the brightness in the range 0-255
+	 */
 	virtual bool setLEDBrightness(uint8_t channel, uint8_t brightness);
 	// The type of led controller: WS2812B or UCS1903
 	// one of PORT_TYPE_*

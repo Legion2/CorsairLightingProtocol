@@ -28,19 +28,32 @@ class FastLEDController : public LEDController {
 	struct ChannelData {
 		uint8_t ledCount = 0;
 		CRGB* leds = nullptr;
-		// store an array for each color, used for software playback
+		/**
+		 * store an array for each color, used for software playback
+		 */
 		uint8_t* valuesBuffer[3] = { nullptr };
-		// current temperature
+		/**
+		 * current temperature
+		 */
 		uint16_t temp;
 		void (*onUpdateCallback)(void) = nullptr;
 	};
 
 public:
-	// Create a new FastLEDController and specify if the EEPROM of the Arduino should be used. See the other contructor for more details.
+	/**
+	 * Create a new FastLEDController and specify if the EEPROM of the Arduino should be used. See the other contructor for more details.
+	 * 
+	 * @param useEEPROM specify if the EEPROM should be used
+	 */
 	FastLEDController(bool useEEPROM);
-	// Create a new FastLEDController and specify if the EEPROM of the Arduino should be used to store persistent information like
-	// the Hardware Lighting. If enabled, the hardware lighting configured in iCUE works without a USB connection and even after a
-	// restart of the Arduino. Also the the TemperatureController used for temperature related lighting can be passed here.
+	/**
+	 * Create a new FastLEDController and specify if the EEPROM of the Arduino should be used to store persistent information like
+	 * the Hardware Lighting. If enabled, the hardware lighting configured in iCUE works without a USB connection and even after a
+	 * restart of the Arduino. Also the the TemperatureController used for temperature related lighting can be passed here.
+	 *
+	 * @param temperatureController used for temperature based lighting
+	 * @param useEEPROM specify if the EEPROM should be used
+	 */
 	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	~FastLEDController();
 	virtual void addLEDs(uint8_t channel, CRGB* leds, uint8_t count);
@@ -48,9 +61,13 @@ public:
 	uint8_t getLEDCount(uint8_t channel);
 	virtual bool updateLEDs();
 	virtual size_t getEEPROMSize();
-	// Register an update hook, which is exectuted after a channel has been updated. This can be used to apply transforamtions to the
-	// channel before the data is displayed by FastLED. The first argument is the channel for which the hook is registered, the second
-	// argument is the callback, which is a void function with no arguments.
+	/**
+	 * Register an update hook, which is exectuted after a channel has been updated. This can be used to apply transforamtions to the
+	 * channel before the data is displayed by FastLED.
+	 *
+	 * @param channel the channel for which the hook is registered
+	 * @param callback the callback, which is executed after the update
+	 */
 	void onUpdateHook(uint8_t channel, void (*callback)(void));
 protected:
 	TemperatureController* const temperatureController;
@@ -63,9 +80,22 @@ protected:
 	long currentUpdate = 0;
 
 	int applySpeed(int duration, byte speed);
+	/**
+	 * Calculates the index of the current step of the animation.
+	 *
+	 * @param duration the duration on the animation
+	 * @param steps the number of steps of the animation
+	 * @return the current step of the animation
+	 */
 	int animation_step(int duration, int steps);
+	/**
+	 * Calculates the number of steps of the animation, since the last update of the animation.
+	 * 
+	 * @param duration the duration on the animation
+	 * @param steps the number of steps of the animation
+	 * @return the number of steps since the last update
+	 */
 	int animation_step_count(int duration, int steps);
-	void addColors(CRGB* leds, const CRGB& color, const uint8_t* values, uint8_t length);
 
 	const bool useEEPROM;
 	bool load() override;
