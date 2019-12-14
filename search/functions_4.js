@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setserialnumber',['setSerialNumber',['../classRawHID__.html#a3d2a63a5f433c48925a7a712f333819c',1,'RawHID_']]]
+  ['getledstripmask',['getLEDStripMask',['../classLEDController.html#a5a7166a7a923da180a8152e6e5c3c8e4',1,'LEDController']]]
 ];

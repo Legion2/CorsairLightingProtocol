@@ -20,7 +20,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"structLEDGroup.html#a277a647d95245fe762629cd0be8fcae2"
+"structLEDGroup.html#a32a991a53747d69aaf9b89a36eaf400b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

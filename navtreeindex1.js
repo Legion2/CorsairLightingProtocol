@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"structLEDGroup.html#a277a647d95245fe762629cd0be8fcae2":[0,0,18,11],
 "structLEDGroup.html#a32a991a53747d69aaf9b89a36eaf400b":[0,0,18,3],
 "structLEDGroup.html#a3cab41c9970983617d4e84c19acb2aac":[0,0,18,7],
 "structLEDGroup.html#a568e9a89baa0c6bf0999b0d049a9dd8d":[0,0,18,5],

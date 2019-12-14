@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['ifancontroller',['IFanController',['../classIFanController.html',1,'']]],
-  ['iledcontroller',['ILEDController',['../classILEDController.html',1,'']]],
-  ['itemperaturecontroller',['ITemperatureController',['../classITemperatureController.html',1,'']]]
+  ['getledstripmask',['getLEDStripMask',['../classLEDController.html#a5a7166a7a923da180a8152e6e5c3c8e4',1,'LEDController']]]
 ];

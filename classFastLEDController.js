@@ -3,7 +3,6 @@ var classFastLEDController =
     [ "FastLEDController", "classFastLEDController.html#a813338755bdd59b3b0c3d1e0bc38bb98", null ],
     [ "FastLEDController", "classFastLEDController.html#a4e702c4da34c188f4e80a2853d3e3acf", null ],
     [ "~FastLEDController", "classFastLEDController.html#a4c811fe515a209b1e7a59f437ed7f3f1", null ],
-    [ "addColors", "classFastLEDController.html#abec308ecc72606cebb98a5c1e022c9bb", null ],
     [ "addLEDs", "classFastLEDController.html#a735a6e94ab2e5067e2a727c9b28f810e", null ],
     [ "animation_step", "classFastLEDController.html#ac6ba09d931849281ffefd140ee706571", null ],
     [ "animation_step_count", "classFastLEDController.html#aa7af3674079b8d3ff64b2fe2729ec2b5", null ],

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['pwmfan',['PWMFan',['../classPWMFan.html',1,'']]]
+  ['ifancontroller',['IFanController',['../classIFanController.html',1,'']]],
+  ['iledcontroller',['ILEDController',['../classILEDController.html',1,'']]],
+  ['itemperaturecontroller',['ITemperatureController',['../classITemperatureController.html',1,'']]]
 ];
