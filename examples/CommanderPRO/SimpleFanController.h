@@ -28,7 +28,7 @@ struct FanData {
 	uint8_t mode = FAN_CONTROL_MODE_FIXED_POWER;
 	uint8_t power = 0;
 	uint16_t speed = 0;
-	uint8_t detectionType = FAN_DETECTION_TYPE_DISCONNECTED;
+	FanDetectionType detectionType = FanDetectionType::Disconnected;
 	uint8_t tempGroup;
 	FanCurve fanCurve;
 };
@@ -66,8 +66,8 @@ protected:
 	virtual void setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve) override;
 	virtual void setFanExternalTemperature(uint8_t fan, uint16_t temp) override;
 	virtual void setFanForce3PinMode(bool flag) override;
-	virtual uint8_t getFanDetectionType(uint8_t fan) override;
-	virtual void setFanDetectionType(uint8_t fan, uint8_t type) override;
+	virtual FanDetectionType getFanDetectionType(uint8_t fan) override;
+	virtual void setFanDetectionType(uint8_t fan, FanDetectionType type) override;
 	bool load();
 	bool save();
 

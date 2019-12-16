@@ -140,12 +140,12 @@ void SimpleFanController::setFanForce3PinMode(bool flag)
 	force3PinMode = flag;
 }
 
-uint8_t SimpleFanController::getFanDetectionType(uint8_t fan)
+FanDetectionType SimpleFanController::getFanDetectionType(uint8_t fan)
 {
 	return fanData[fan].detectionType;
 }
 
-void SimpleFanController::setFanDetectionType(uint8_t fan, uint8_t type)
+void SimpleFanController::setFanDetectionType(uint8_t fan, FanDetectionType type)
 {
 	if (fanData[fan].detectionType != type) {
 		fanData[fan].detectionType = type;

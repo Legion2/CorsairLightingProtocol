@@ -33,7 +33,7 @@ enum class PortType : byte {
 	UCS1903 = 0x02
 };
 
-bool inline isValidPortType(PortType portType) {
+bool inline isValidPortType(const PortType portType) {
 	return portType == PortType::WS2812B || portType == PortType::UCS1903;
 }
 
