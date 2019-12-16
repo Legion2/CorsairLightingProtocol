@@ -17,7 +17,8 @@
 
 #include "TemperatureController.h"
 /**
- * 
+ * This TemperatureController uses Thermistors and Resistors to messure the temperature. It does not implement the voltage rail measurements.
+ *
  * Thermistor Schematic:
  * <pre>
  *     | ---- [10k - Resistor] ---- | ---- [Thermistor] ---- |
@@ -27,6 +28,12 @@
  */
 class ThermistorTemperatureController : public TemperatureController {
 public:
+	/**
+	 * Add a Sensor to the TemperatureController using an arduino analog pin connected as shown in {@link ThermistorTemperatureController}.
+	 *
+	 * @param index the index of the sensorPins
+	 * @param pin the arduino analog pin
+	 */
 	void addSensor(uint8_t index, uint8_t pin);
 protected:
 	virtual uint16_t getTemperatureValue(uint8_t temperatureSensor) override;

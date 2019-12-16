@@ -19,7 +19,16 @@
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
+/**
+ * The interface of a TemperatureController.
+ */
 class ITemperatureController {
 public:
+	/**
+	 * Handle a temperature command and send a response.
+	 *
+	 * @param command the command which should be handled
+	 * @param response the callback for the response
+	 */
 	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };

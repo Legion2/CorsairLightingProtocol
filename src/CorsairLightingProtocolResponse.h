@@ -23,7 +23,7 @@ public:
 	 * Send 64 bytes via the CorsairLightingProtocol. All unset bytes will be filled with zeros.
 	 *
 	 * @param data the array with the data
-	 * @param x the length of the array
+	 * @param size the length of the array
 	 */
 	virtual void send(const uint8_t* data, size_t size) const;
 	/**
@@ -34,7 +34,7 @@ public:
 	 * Send data from program memory.
 	 *
 	 * @param data the array with the data, the pointer must point to program memory
-	 * @param x the length of the array which should be send.
+	 * @param size the length of the array which should be send.
 	 */
 	virtual void send_P(const uint8_t* data, size_t size) const;
 	/**
