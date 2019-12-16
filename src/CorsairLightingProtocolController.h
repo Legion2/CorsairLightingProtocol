@@ -32,15 +32,15 @@ class CorsairLightingProtocolController
 {
 public:
 	/**
-	 * The constructor used to create a Lighting Node PRO.
-	 * 
+	 * The constructor used to create a Lighting only device.
+	 *
 	 * @param l The LEDController which should be used to control the LEDs of the created Lighting Node PRO
 	 * @param c The CorsairLightingFirmware used to handle Firmware related commands
 	 */
 	CorsairLightingProtocolController(ILEDController* l, CorsairLightingFirmware* c);
 	/**
-	 * The constructor used to create a Commander PRO.
-	 * 
+	 * The constructor used to create a device with lighting, temperature and fan controller functionality (Commander PRO).
+	 *
 	 * @param l The LEDController which should be used to control the LEDs of the created Commander PRO
 	 * @param t The TemperatureController which used to messure the temperature of the created Commander PRO
 	 * @param f The FanController used to control the fans of the created Commander PRO
@@ -48,9 +48,9 @@ public:
 	 */
 	CorsairLightingProtocolController(ILEDController* l, ITemperatureController* t, IFanController* f, CorsairLightingFirmware* c);
 	/**
-	 * The only public function of the CorsairLightingProtocolController. It must be called to process a command with was received from iCUE. This
-	 * function is normaly called by CorsairLightingProtocolHID and CorsairLightingProtocolSerial adapters.
-	 * 
+	 * The only public function of the CorsairLightingProtocolController. It must be called to process a command which was received from iCUE.
+	 * This function is normally called by CorsairLightingProtocolHID and CorsairLightingProtocolSerial adapters.
+	 *
 	 * @param command The command received from iCUE
 	 * @param response The response callback which can be called to response to the command
 	 */

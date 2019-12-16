@@ -28,14 +28,34 @@ extern bool printCommand;
 extern bool printResponse;
 #endif
 
+/**
+ * The HID Adapter for CorsairLightingProtocolController. This adapter uses the USB HID interface
+ * directly to mimic a corsair device. This adapter can only be used when the USB interface is
+ * accessable by the sketch.
+ */
 class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP);
-	CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP, const char* serialNumber);
+	/**
+	 * Create a new adapter for CorsairLightingProtocolController using the default Serial Number.
+	 *
+	 * @param controller the CorsairLightingProtocolController
+	 */
+	CorsairLightingProtocolHID(CorsairLightingProtocolController* controller);
+	/**
+	 * Create a new adapter for using the given Serial Number for the usb interface.
+	 *
+	 * @param controller the CorsairLightingProtocolController
+	 * @param serialNumber the Serial Number used for the USB interface
+	 */
+	CorsairLightingProtocolHID(CorsairLightingProtocolController* controller, const char* serialNumber);
+	/**
+	* Read commands form HID interface and pass them to the contoller.
+	* This function must be called in loop.
+	*/
 	void update();
 protected:
 	uint8_t rawhidData[COMMAND_SIZE];
-	CorsairLightingProtocolController* const cLP;
+	CorsairLightingProtocolController* const controller;
 
 	bool available() const;
 	void getCommand(Command& command);
