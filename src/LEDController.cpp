@@ -144,7 +144,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_PORT_TYPE:
 		{
-			PortType portType =  static_cast<PortType>(data[1]);
+			PortType portType = static_cast<PortType>(data[1]);
 			if (!isValidPortType(portType)) {
 				response->sendError();
 				return;
@@ -163,9 +163,9 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			return;
 		}
 		}
-		}
-	response->send(nullptr, 0);
 	}
+	response->send(nullptr, 0);
+}
 
 bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
 {
