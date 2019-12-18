@@ -28,11 +28,11 @@
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
 
-/**
- * The mode of an LEDChannel. The mode describes how the led lighting is done.
- *
- * @see LEDController#setLEDMode
- */
+ /**
+  * The mode of an LEDChannel. The mode describes how the led lighting is done.
+  *
+  * @see LEDController#setLEDMode()
+  */
 enum class ChannelMode : byte {
 	/** No lighting is active for the channel. The leds will not be updated. */
 	Disabled = 0x00,
@@ -74,18 +74,44 @@ bool inline isValidPortType(const PortType portType) {
 #define GROUP_MODE_Sequential 0x09
 #define GROUP_MODE_Rainbow 0x0A
 
-//LED group speed
-#define GROUP_SPEED_HIGH   0x00
-#define GROUP_SPEED_MEDIUM 0x01
-#define GROUP_SPEED_LOW    0x02
+/**
+ * The animation speed of a LEDGroup.
+ */
+enum class GroupSpeed : byte {
+	High = 0x00,
+	Medium = 0x01,
+	Low = 0x02
+};
 
-//LED group direction
-#define GROUP_DIRECTION_BACKWARD 0x00
-#define GROUP_DIRECTION_FORWARD  0x01
+bool inline isValidGroupSpeed(const GroupSpeed groupSpeed) {
+	return groupSpeed == GroupSpeed::High || groupSpeed == GroupSpeed::Medium || groupSpeed == GroupSpeed::Low;
+}
 
-//LED group extra
-#define GROUP_EXTRA_ALTERNATING 0x00
-#define GROUP_EXTRA_RANDOM  0x01
+/**
+ * The animation direction of a LEDGroup.
+ */
+enum class GroupDirection : byte {
+	Backward = 0x00,
+	Forward = 0x01
+};
+
+bool inline isValidGroupDirection(const GroupDirection groupDirection) {
+	return groupDirection == GroupDirection::Backward || groupDirection == GroupDirection::Forward;
+}
+
+/**
+ * Extra information for animations of a LEDGroup.
+ */
+enum class GroupExtra : byte {
+	Alternating = 0x00,
+	Random = 0x01
+};
+
+bool inline isValidGroupExtra(const GroupExtra groupExtra) {
+	return groupExtra == GroupExtra::Alternating || groupExtra == GroupExtra::Random;
+}
+
+
 
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
@@ -96,15 +122,15 @@ struct LEDGroup {
 	/**
 	 * start index of the leds of this group
 	 */
-	byte ledIndex = 0;
+	uint8_t ledIndex = 0;
 	/**
 	 * number of leds in this group
 	 */
-	byte ledCount = 0;
+	uint8_t ledCount = 0;
 	byte mode = GROUP_MODE_Rainbow_Wave;
-	byte speed = GROUP_SPEED_HIGH;
-	byte direction = GROUP_DIRECTION_FORWARD;
-	byte extra = 0x00;
+	GroupSpeed speed = GroupSpeed::High;
+	GroupDirection direction = GroupDirection::Forward;
+	GroupExtra extra = GroupExtra::Alternating;
 	byte tempGroup = GROUP_TEMP_GROUP_EXTERNAL;
 
 	CRGB color1;
@@ -141,21 +167,21 @@ public:
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
 	/**
 	 * Validates a LEDChannel by checking all constrains on the values. This function should be used after non type-safe operations on a LEDChannel.
-	 * 
+	 *
 	 * @param ledChannel the LEDChannel to validate
 	 * @return true if the LEDChannel is valid, false otherwise
 	 */
 	virtual bool isValidLEDChannel(const LEDChannel& ledChannel);
 	/**
 	 * Validates a LEDGroup by checking all constrains on the values. This function should be used after non type-safe operations on a LEDGroup.
-	 * 
+	 *
 	 * @param ledGroup the LEDGroup to validate
 	 * @return true if the LEDGroup is valid, false otherwise
 	 */
 	virtual bool isValidLEDGroup(const LEDGroup& ledGroup);
 	/**
 	 * Get the data of a Channel from this LEDController.
-	 * 
+	 *
 	 * @param channelIndex the index of the channel
 	 * @return a reference to the LEDChannel
 	 */
@@ -192,6 +218,13 @@ protected:
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
 	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
+	/**
+	 * Set the Channel mode.
+	 *
+	 * @param channel the channel index
+	 * @param mode the new mode
+	 * @return true if the mode was changed, false otherwise
+	 */
 	virtual bool setLEDMode(uint8_t channel, ChannelMode mode);
 	/**
 	 * The brightness of the channel. This only applies to HW lighting.

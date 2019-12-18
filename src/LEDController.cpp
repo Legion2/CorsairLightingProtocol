@@ -85,9 +85,9 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			group.ledIndex = data[1];
 			group.ledCount = data[2];
 			group.mode = data[3];
-			group.speed = data[4];
-			group.direction = data[5];
-			group.extra = data[6];
+			group.speed = static_cast<GroupSpeed>(data[4]);
+			group.direction = static_cast<GroupDirection>(data[5]);
+			group.extra = static_cast<GroupExtra>(data[6]);
 			group.tempGroup = data[7];
 			group.color1.r = data[8];
 			group.color1.g = data[9];
@@ -196,8 +196,9 @@ bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
 bool LEDController::isValidLEDGroup(const LEDGroup& ledGroup)
 {
 	return ledGroup.mode <= GROUP_MODE_Rainbow
-		&& ledGroup.speed <= GROUP_SPEED_LOW
-		&& ledGroup.direction <= GROUP_DIRECTION_FORWARD
+		&& isValidGroupSpeed(ledGroup.speed)
+		&& isValidGroupDirection(ledGroup.direction)
+		&& isValidGroupExtra(ledGroup.extra)
 		&& (ledGroup.tempGroup == GROUP_TEMP_GROUP_EXTERNAL
 			|| ledGroup.tempGroup < TEMPERATURE_NUM);
 }

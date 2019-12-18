@@ -28,7 +28,7 @@
  * The default LEDController. This controller uses the FastLED library to implement the Hardware Lighting effects. Also all RGB values
  * of the leds are stored into CRGB arrays which can be used by the FastLED library to show them on the real led strips. This controller
  * can stores the internal state to EEPROM and support HW playback without USB connection.
- * 
+ *
  * @see FastLED
  */
 class FastLEDController : public LEDController {
@@ -52,7 +52,7 @@ class FastLEDController : public LEDController {
 public:
 	/**
 	 * Create a new FastLEDController and specify if the EEPROM of the Arduino should be used. See the other contructor for more details.
-	 * 
+	 *
 	 * @param useEEPROM specify if the EEPROM should be used
 	 */
 	FastLEDController(bool useEEPROM);
@@ -69,7 +69,7 @@ public:
 	/**
 	 * Add a LED array on a channel with a given length. The length define how many leds iCUE can control. The real length of the
 	 * array can be greater, but iCUE will only write up to the given length.
-	 * 
+	 *
 	 * @param channel the index of the channel
 	 * @param leds the array to store the led data in
 	 * @param length the length of the array used by iCUE to write led data
@@ -77,7 +77,7 @@ public:
 	virtual void addLEDs(uint8_t channel, CRGB* leds, uint8_t length);
 	/**
 	 * Get the led data array for a channel.
-	 * 
+	 *
 	 * @param channel the index of the channel
 	 * @return the pointer to the led array or nullptr if there is no array
 	 * @see getLEDCount()
@@ -85,7 +85,7 @@ public:
 	CRGB* getLEDs(uint8_t channel);
 	/**
 	 * Get the length of the led data array.
-	 * 
+	 *
 	 * @param channel the index of the channel
 	 * @return the length of the array
 	 * @see getLEDs()
@@ -94,13 +94,13 @@ public:
 	/**
 	 * Update the displayed RGB values for the leds. This will write to the led data array of each Channel.
 	 * This method does not call {@code FastLED.show()}. This function must be called in loop.
-	 * 
+	 *
 	 * @return true if the led data of a channel was updated, false otherwise
 	 */
 	virtual bool updateLEDs();
 	/**
 	 * Get the total size of all data stored in EEPROM by this LEDController.
-	 * 
+	 *
 	 * @return the size in bytes
 	 */
 	virtual size_t getEEPROMSize();
@@ -122,7 +122,7 @@ protected:
 	long lastUpdate = 0;
 	long currentUpdate = 0;
 
-	int applySpeed(int duration, byte speed);
+	int applySpeed(int duration, const GroupSpeed speed);
 	/**
 	 * Calculates the index of the current step of the animation.
 	 *
@@ -133,7 +133,7 @@ protected:
 	int animation_step(int duration, int steps);
 	/**
 	 * Calculates the number of steps of the animation, since the last update of the animation.
-	 * 
+	 *
 	 * @param duration the duration on the animation
 	 * @param steps the number of steps of the animation
 	 * @return the number of steps since the last update
