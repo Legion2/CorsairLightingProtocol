@@ -125,7 +125,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			const ChannelMode mode = static_cast<ChannelMode>(data[1]);
 			if (!isValidChannelMode(mode)) {
 #ifdef DEBUG
-				Serial.print(F("unkown led channel mode: "));
+				Serial.print(F("unkown LED channel mode: "));
 				Serial.print(data[1], HEX);
 				Serial.println();
 #endif

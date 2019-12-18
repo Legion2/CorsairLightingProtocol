@@ -25,7 +25,7 @@
 class ILEDController {
 public:
 	/**
-	 * Handle led commands and send a response. This method is called for each received command.
+	 * Handle LED commands and send a response. This method is called for each received command.
 	 *
 	 * @param command the command which must be handled
 	 * @param response the callback for the response

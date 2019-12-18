@@ -45,7 +45,7 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 {
 	auto leds = controller->getLEDs(channelIndex);
 	auto count = controller->getLEDCount(channelIndex);
-	//skip first iteration, because leds already contains the data at the first position
+	//skip first iteration, because LEDs already contains the data at the first position
 	for (int i = 1; i < times; i++) {
 		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
 	}

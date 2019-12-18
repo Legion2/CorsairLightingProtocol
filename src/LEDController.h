@@ -17,7 +17,7 @@
 
 /**
  * @file
- * Defines types and constants of the led part of the protocol
+ * Defines types and constants of the LED part of the protocol
  */
 
 #include "Arduino.h"
@@ -29,12 +29,12 @@
 #define GROUPS_NUM 6
 
  /**
-  * The mode of an LEDChannel. The mode describes how the led lighting is done.
+  * The mode of an LEDChannel. The mode describes how the LED lighting is done.
   *
   * @see LEDController#setLEDMode()
   */
 enum class ChannelMode : byte {
-	/** No lighting is active for the channel. The leds will not be updated. */
+	/** No lighting is active for the channel. The LEDs will not be updated. */
 	Disabled = 0x00,
 	/** The Hardware Playback uses lighting effects defined by LEDGroups and LEDController renders the effects themself. This mode works even without an USB connection.  */
 	HardwarePlayback = 0x01,
@@ -114,15 +114,15 @@ bool inline isValidGroupExtra(const GroupExtra groupExtra) {
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
 /**
- * A LEDGroup is a contiguous range of leds on a strip. The LEDGroup defines the size, position and lighting effects of the led range.
+ * A LEDGroup is a contiguous range of LEDs on a strip. The LEDGroup defines the size, position and lighting effects of the LED range.
  */
 struct LEDGroup {
 	/**
-	 * start index of the leds of this group
+	 * start index of the LEDs of this group
 	 */
 	uint8_t ledIndex = 0;
 	/**
-	 * number of leds in this group
+	 * number of LEDs in this group
 	 */
 	uint8_t ledCount = 0;
 	byte mode = GROUP_MODE_Rainbow_Wave;
@@ -203,11 +203,11 @@ protected:
 	 */
 	virtual void triggerLEDUpdate() = 0;
 	/**
-	 * The led count of the group
+	 * Get the LED count of the group.
 	 *
 	 * @param channel the channel index
 	 * @param group the group index
-	 * @return the number of leds in the group
+	 * @return the number of LEDs in the group
 	 */
 	virtual uint8_t getLEDStripMask(uint8_t channel, uint8_t group);
 	/**
@@ -235,7 +235,7 @@ protected:
 	 */
 	virtual bool setLEDBrightness(uint8_t channel, uint8_t brightness);
 	/**
-	 * The type of led controller: WS2812B or UCS1903
+	 * Set the type of LED chipset: WS2812B or UCS1903
 	 *
 	 * @param channel the channel index
 	 * @param ledPortType the port type

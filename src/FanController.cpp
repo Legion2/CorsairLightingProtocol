@@ -175,7 +175,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 		}
 		FanDetectionType type = getFanDetectionType(fan);
-		uint8_t typeData[] = { static_cast<byte>(type) };
+		byte typeData[] = { static_cast<byte>(type) };
 		response->send(typeData, sizeof(typeData));
 		break;
 	}

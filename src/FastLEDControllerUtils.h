@@ -21,7 +21,7 @@
 namespace CLP
 {
 	/**
-	 * Make it possible to use up to 96 leds per channel from iCUE by using the LL Fan option. This function transforms the LL fans layout to a normal strip layout.
+	 * Make it possible to use up to 96 LEDs per channel from iCUE by using the LL Fan option. This function transforms the LL fans layout to a normal strip layout.
 	 * This function can be combined with scale and repeat function but must be invoked first.
 	 * 
 	 * @param controller the FastLEDController controlling the LEDs
@@ -38,7 +38,7 @@ namespace CLP
 	 */
 	void scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize);
 	/**
-	 * Repeat a channel's leds color to control more leds than provided by iCUE.
+	 * Repeat a channel's LEDs color to control more LEDs than provided by iCUE.
 	 * 
 	 * @param controller the FastLEDController controlling the LEDs
 	 * @param channelIndex the index of the channel
@@ -71,7 +71,7 @@ namespace CLP
 	void scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount);
 
 	/**
-	 * Reverse the LEDs of a channel, after this operation, the first led is the last and the last is the first.
+	 * Reverse the LEDs of a channel, after this operation, the first LED is the last and the last is the first.
 	 *
 	 * @param controller the FastLEDController controlling the LEDs
 	 * @param channelIndex the index of the channel you want to reverse
@@ -79,7 +79,7 @@ namespace CLP
 	void reverse(FastLEDController* controller, uint8_t channelIndex);
 
 	/**
-	 * Simple gamma correction with gamma value 2. This approximation of the gamma correction is sufficient for most led strips.
+	 * Simple gamma correction with gamma value 2. This approximation of the gamma correction is sufficient for most LED strips.
 	 *
 	 * @param controller the FastLEDController controlling the LEDs
 	 * @param channelIndex the index of the channel
