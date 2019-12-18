@@ -24,7 +24,17 @@
 #define EEPROM_ADDRESS 4
 #endif
 
+/**
+ * The default LEDController. This controller uses the FastLED library to implement the Hardware Lighting effects. Also all RGB values
+ * of the leds are stored into CRGB arrays which can be used by the FastLED library to show them on the real led strips. This controller
+ * can stores the internal state to EEPROM and support HW playback without USB connection.
+ * 
+ * @see FastLED
+ */
 class FastLEDController : public LEDController {
+	/**
+	 * Internal data stored for each Channel. These data are not persistent.
+	 */
 	struct ChannelData {
 		uint8_t ledCount = 0;
 		CRGB* leds = nullptr;
@@ -33,7 +43,7 @@ class FastLEDController : public LEDController {
 		 */
 		uint8_t* valuesBuffer[3] = { nullptr };
 		/**
-		 * current temperature
+		 * External temperature value used by this channel for temperature based lighting.
 		 */
 		uint16_t temp;
 		void (*onUpdateCallback)(void) = nullptr;
@@ -56,10 +66,43 @@ public:
 	 */
 	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
 	~FastLEDController();
-	virtual void addLEDs(uint8_t channel, CRGB* leds, uint8_t count);
+	/**
+	 * Add a LED array on a channel with a given length. The length define how many leds iCUE can control. The real length of the
+	 * array can be greater, but iCUE will only write up to the given length.
+	 * 
+	 * @param channel the index of the channel
+	 * @param leds the array to store the led data in
+	 * @param length the length of the array used by iCUE to write led data
+	 */
+	virtual void addLEDs(uint8_t channel, CRGB* leds, uint8_t length);
+	/**
+	 * Get the led data array for a channel.
+	 * 
+	 * @param channel the index of the channel
+	 * @return the pointer to the led array or nullptr if there is no array
+	 * @see getLEDCount()
+	 */
 	CRGB* getLEDs(uint8_t channel);
+	/**
+	 * Get the length of the led data array.
+	 * 
+	 * @param channel the index of the channel
+	 * @return the length of the array
+	 * @see getLEDs()
+	 */
 	uint8_t getLEDCount(uint8_t channel);
+	/**
+	 * Update the displayed RGB values for the leds. This will write to the led data array of each Channel.
+	 * This method does not call {@code FastLED.show()}. This function must be called in loop.
+	 * 
+	 * @return true if the led data of a channel was updated, false otherwise
+	 */
 	virtual bool updateLEDs();
+	/**
+	 * Get the total size of all data stored in EEPROM by this LEDController.
+	 * 
+	 * @return the size in bytes
+	 */
 	virtual size_t getEEPROMSize();
 	/**
 	 * Register an update hook, which is exectuted after a channel has been updated. This can be used to apply transforamtions to the

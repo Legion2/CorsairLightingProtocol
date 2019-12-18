@@ -18,7 +18,7 @@
 #include "Arduino.h"
 #include "CorsairLightingFirmware.h" 
 #include "FastLEDController.h"
-#include "CorsairLightingProtocol.h"
+#include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolHID.h"
 #include <FastLED.h>
 

@@ -15,7 +15,10 @@
 */
 #pragma once
 
-// central include file for CorsairLightingProtocolController
+/**
+ * @file
+ * The central include file for CorsairLightingProtocol.
+ */
 #include "CorsairLightingFirmware.h"
 #include "CorsairLightingNodePRO.h"
 #include "CorsairLightingProtocolConstants.h"

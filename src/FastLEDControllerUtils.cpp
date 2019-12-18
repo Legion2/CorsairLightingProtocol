@@ -20,7 +20,7 @@
 void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex)
 {
 	auto& channel = controller->getChannel(channelIndex);
-	if (channel.ledMode == CHANNEL_MODE_SOFTWARE_PLAYBACK) {
+	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);
 		for (uint8_t fanIndex = 0; fanIndex < controller->getLEDCount(channelIndex) / 16; fanIndex++) {
 			for (uint8_t ledIndex = 0; ledIndex < 8; ledIndex++) {

@@ -122,7 +122,18 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_MODE:
 		{
-			trigger_save |= setLEDMode(channel, data[1]);
+			const ChannelMode mode = static_cast<ChannelMode>(data[1]);
+			if (!isValidChannelMode(mode)) {
+#ifdef DEBUG
+				Serial.print(F("unkown led channel mode: "));
+				Serial.print(data[1], HEX);
+				Serial.println();
+#endif
+				response->sendError();
+				return;
+			}
+
+			trigger_save |= setLEDMode(channel, mode);
 			break;
 		}
 		case WRITE_LED_BRIGHTNESS:
@@ -144,7 +155,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_PORT_TYPE:
 		{
-			PortType portType = static_cast<PortType>(data[1]);
+			const PortType portType = static_cast<PortType>(data[1]);
 			if (!isValidPortType(portType)) {
 				response->sendError();
 				return;
@@ -169,7 +180,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 
 bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
 {
-	if (ledChannel.ledMode <= CHANNEL_MODE_SOFTWARE_PLAYBACK
+	if (isValidChannelMode(ledChannel.mode)
 		&& isValidPortType(ledChannel.ledPortType)
 		&& ledChannel.groupsSet < GROUPS_NUM) {
 		for (uint8_t i = 0; i < ledChannel.groupsSet; i++) {
@@ -223,10 +234,10 @@ bool LEDController::clearLEDGroups(uint8_t channel) {
 	return false;
 }
 
-bool LEDController::setLEDMode(uint8_t channel, uint8_t mode)
+bool LEDController::setLEDMode(uint8_t channel, ChannelMode mode)
 {
-	if (channels[channel].ledMode != mode) {
-		channels[channel].ledMode = mode;
+	if (channels[channel].mode != mode) {
+		channels[channel].mode = mode;
 		return true;
 	}
 	return false;

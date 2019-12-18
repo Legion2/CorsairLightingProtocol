@@ -15,6 +15,11 @@
 */
 #pragma once
 
+/**
+ * @file
+ * Defines types and constants of the fan protocol
+ */
+
 #include "Arduino.h"
 
 #include "IFanController.h"

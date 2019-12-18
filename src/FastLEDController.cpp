@@ -104,13 +104,13 @@ bool FastLEDController::updateLEDs()
 		bool updated = false;
 		LEDChannel& channel = channels[channelId];
 
-		switch (channel.ledMode)
+		switch (channel.mode)
 		{
-		case CHANNEL_MODE_DISABLED:
+		case ChannelMode::Disabled:
 		{
 			break;
 		}
-		case CHANNEL_MODE_ON:
+		case ChannelMode::HardwarePlayback:
 		{
 			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
 				LEDGroup& group = channel.groups[groupIndex];
@@ -390,7 +390,7 @@ bool FastLEDController::updateLEDs()
 			}
 			break;
 		}
-		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
+		case ChannelMode::SoftwarePlayback:
 		{
 			if (trigger_update) {
 				auto& data = channelData[channelId];
@@ -400,15 +400,6 @@ bool FastLEDController::updateLEDs()
 				updated = true;
 			}
 			break;
-		}
-		default:
-		{
-#ifdef DEBUG
-			Serial.print(F("unkown led channel mode: "));
-			Serial.print(channel.ledMode, HEX);
-			Serial.println();
-			break;
-#endif
 		}
 		}
 		if (updated) {

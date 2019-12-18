@@ -15,6 +15,10 @@
 */
 #pragma once
 
+/**
+ * @file
+ */
+
 #include "Arduino.h"
 
 #include "ITemperatureController.h"

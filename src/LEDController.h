@@ -15,6 +15,11 @@
 */
 #pragma once
 
+/**
+ * @file
+ * Defines types and constants of the led part of the protocol
+ */
+
 #include "Arduino.h"
 #include <FastLED.h>
 #include "ILEDController.h"
@@ -23,13 +28,32 @@
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
 
-//Channel modes
-#define CHANNEL_MODE_DISABLED 0x00
-#define CHANNEL_MODE_ON 0x01
-#define CHANNEL_MODE_SOFTWARE_PLAYBACK 0x02
+/**
+ * The mode of an LEDChannel. The mode describes how the led lighting is done.
+ *
+ * @see LEDController#setLEDMode
+ */
+enum class ChannelMode : byte {
+	/** No lighting is active for the channel. The leds will not be updated. */
+	Disabled = 0x00,
+	/** The Hardware Playback uses lighting effects defined by LEDGroups and LEDController renders the effects themself. This mode works even without an USB connection.  */
+	HardwarePlayback = 0x01,
+	/** All lighting effects are rendered by iCUE and only the RGB values are transferred via USB to the device. This requires an USB connection. */
+	SoftwarePlayback = 0x02
+};
 
+bool inline isValidChannelMode(const ChannelMode channelMode) {
+	return channelMode == ChannelMode::Disabled || channelMode == ChannelMode::HardwarePlayback || channelMode == ChannelMode::SoftwarePlayback;
+}
+
+/**
+ * The type of LED Chipset connected to a channel. These are the types implicitly defined by iCUE when doing the lighting setup in iCUE.
+ * These type is ignored by the LEDController.
+ */
 enum class PortType : byte {
+	/** WS2812B used by all new Corsair devices */
 	WS2812B = 0x01,
+	/** UCS1903 Only used for the SP fan */
 	UCS1903 = 0x02
 };
 
@@ -65,6 +89,9 @@ bool inline isValidPortType(const PortType portType) {
 
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
+/**
+ * A LEDGroup is a contiguous range of leds on a strip. The LEDGroup defines the size, position and lighting effects of the led range.
+ */
 struct LEDGroup {
 	/**
 	 * start index of the leds of this group
@@ -89,12 +116,15 @@ struct LEDGroup {
 	uint16_t temp3;
 };
 
+/**
+ * The definition of a Channel.
+ */
 struct LEDChannel {
 	/**
 	 * Brightness of the channel in range 0-255.
 	 */
 	uint8_t brightness = 255;
-	uint8_t ledMode = CHANNEL_MODE_ON;
+	ChannelMode mode = ChannelMode::HardwarePlayback;
 	uint8_t ledCount = 0;
 	PortType ledPortType = PortType::WS2812B;
 
@@ -102,11 +132,33 @@ struct LEDChannel {
 	uint8_t groupsSet = 0;
 };
 
+/**
+ * The abstract implemenation of an LEDController. This implementation handles the parsing and interpretation of incoming commands.
+ * It also defines the data model to store the all required data from the commands.
+ */
 class LEDController : public ILEDController {
 public:
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+	/**
+	 * Validates a LEDChannel by checking all constrains on the values. This function should be used after non type-safe operations on a LEDChannel.
+	 * 
+	 * @param ledChannel the LEDChannel to validate
+	 * @return true if the LEDChannel is valid, false otherwise
+	 */
 	virtual bool isValidLEDChannel(const LEDChannel& ledChannel);
+	/**
+	 * Validates a LEDGroup by checking all constrains on the values. This function should be used after non type-safe operations on a LEDGroup.
+	 * 
+	 * @param ledGroup the LEDGroup to validate
+	 * @return true if the LEDGroup is valid, false otherwise
+	 */
 	virtual bool isValidLEDGroup(const LEDGroup& ledGroup);
+	/**
+	 * Get the data of a Channel from this LEDController.
+	 * 
+	 * @param channelIndex the index of the channel
+	 * @return a reference to the LEDChannel
+	 */
 	const LEDChannel& getChannel(uint8_t channelIndex);
 	/**
 	 * Reset all persistent data to default values of the LEDController.
@@ -140,7 +192,7 @@ protected:
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
 	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
-	virtual bool setLEDMode(uint8_t channel, uint8_t mode);
+	virtual bool setLEDMode(uint8_t channel, ChannelMode mode);
 	/**
 	 * The brightness of the channel. This only applies to HW lighting.
 	 *
