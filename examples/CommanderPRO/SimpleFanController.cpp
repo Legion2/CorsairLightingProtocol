@@ -45,8 +45,8 @@ bool SimpleFanController::updateFans()
 	long currentUpdateNumber = currentUpdate / updateRate;
 	lastUpdate = currentUpdate;
 	if (lastUpdateNumber < currentUpdateNumber) {
-		if (trigger_save) {
-			trigger_save = false;
+		if (triggerSave) {
+			triggerSave = false;
 			save();
 		}
 
@@ -106,7 +106,7 @@ void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed)
 	fanData[fan].speed = speed;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_RPM;
 	fanData[fan].power = fans[fan] != nullptr ? fans[fan]->calculatePowerFromSpeed(speed) : 0;
-	trigger_save = true;
+	triggerSave = true;
 }
 
 uint8_t SimpleFanController::getFanPower(uint8_t fan)
@@ -119,7 +119,7 @@ void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage)
 	fanData[fan].power = percentage;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_POWER;
 	fanData[fan].speed = fans[fan] != nullptr ? fans[fan]->calculateSpeedFromPower(percentage) : 0;
-	trigger_save = true;
+	triggerSave = true;
 }
 
 void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve)
@@ -127,7 +127,7 @@ void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanC
 	fanData[fan].fanCurve = fanCurve;
 	fanData[fan].tempGroup = group;
 	fanData[fan].mode = FAN_CONTROL_MODE_CURVE;
-	trigger_save = true;
+	triggerSave = true;
 }
 
 void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp)
@@ -149,7 +149,7 @@ void SimpleFanController::setFanDetectionType(uint8_t fan, FanDetectionType type
 {
 	if (fanData[fan].detectionType != type) {
 		fanData[fan].detectionType = type;
-		trigger_save = true;
+		triggerSave = true;
 	}
 }
 

@@ -21,8 +21,8 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
 		triggerLEDUpdate();
-		if (trigger_save) {
-			trigger_save = false;
+		if (triggerSave) {
+			triggerSave = false;
 			save();
 		}
 	}
@@ -107,7 +107,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				return;
 			}
 
-			trigger_save |= setLEDGroup(channel, channels[channel].groupsSet++, group);
+			triggerSave |= setLEDGroup(channel, channels[channel].groupsSet++, group);
 			break;
 		}
 		case WRITE_LED_EXTERNAL_TEMP:
@@ -117,7 +117,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_GROUPS_CLEAR:
 		{
-			trigger_save |= clearLEDGroups(channel);
+			triggerSave |= clearLEDGroups(channel);
 			break;
 		}
 		case WRITE_LED_MODE:
@@ -133,13 +133,13 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				return;
 			}
 
-			trigger_save |= setLEDMode(channel, mode);
+			triggerSave |= setLEDMode(channel, mode);
 			break;
 		}
 		case WRITE_LED_BRIGHTNESS:
 		{
 			uint8_t brightness = CLP::convert100To255(data[1]);
-			trigger_save |= setLEDBrightness(channel, brightness);
+			triggerSave |= setLEDBrightness(channel, brightness);
 			break;
 		}
 		case WRITE_LED_COUNT:
@@ -160,7 +160,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				response->sendError();
 				return;
 			}
-			trigger_save |= setLEDPortType(channel, portType);
+			triggerSave |= setLEDPortType(channel, portType);
 			break;
 		}
 		default:

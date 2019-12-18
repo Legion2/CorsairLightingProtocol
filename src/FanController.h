@@ -26,11 +26,11 @@
 
 #define FAN_NUM 6
 
-/**
- * The actual state of a fan port.
- *
- * @see FanDetectionType
- */
+ /**
+  * The actual state of a fan port.
+  *
+  * @see FanDetectionType
+  */
 enum class FanMask : byte {
 	/** No fan connected */
 	Disconnected = 0x00,

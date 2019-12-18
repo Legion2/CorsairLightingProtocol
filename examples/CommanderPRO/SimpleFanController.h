@@ -78,6 +78,6 @@ protected:
 	uint16_t externalTemp[FAN_NUM];
 	uint16_t updateRate;
 	uint16_t eEPROMAdress;
-	bool trigger_save = false;
+	bool triggerSave = false;
 	long lastUpdate = 0;
 };

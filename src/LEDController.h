@@ -111,8 +111,6 @@ bool inline isValidGroupExtra(const GroupExtra groupExtra) {
 	return groupExtra == GroupExtra::Alternating || groupExtra == GroupExtra::Random;
 }
 
-
-
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
 /**
@@ -151,6 +149,9 @@ struct LEDChannel {
 	 */
 	uint8_t brightness = 255;
 	ChannelMode mode = ChannelMode::HardwarePlayback;
+	/**
+	 * The number of LEDs on this channel.
+	 */
 	uint8_t ledCount = 0;
 	PortType ledPortType = PortType::WS2812B;
 
@@ -193,9 +194,9 @@ public:
 protected:
 	LEDChannel channels[CHANNEL_NUM];
 	/**
-	 * Indicates that the configuration of the channels has been changed and should be saved
+	 * Indicates that the configuration of the channels has been changed and should be saved.
 	 */
-	bool trigger_save = false;
+	bool triggerSave = false;
 
 	/**
 	 * Trigger update of the LEDs
