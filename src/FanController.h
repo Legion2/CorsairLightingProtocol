@@ -82,6 +82,9 @@ struct FanCurve {
 	uint16_t rpms[FAN_CURVE_POINTS_NUM];
 };
 
+/**
+ * The abstract implementation of IFanController. This implementation handles the parsing and interpretation of incoming commands.
+ */
 class FanController : public IFanController {
 public:
 	virtual void handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) override;

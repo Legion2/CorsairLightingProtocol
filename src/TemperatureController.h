@@ -32,6 +32,9 @@
 #define VOLTAGE_RAIL_5V 1
 #define VOLTAGE_RAIL_3V3 2
 
+ /**
+  * The abstract implementation of the ITemperatureController. This implementation handles the commands parsing and processing. 
+  */
 class TemperatureController : public ITemperatureController {
 public:
 	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) override;

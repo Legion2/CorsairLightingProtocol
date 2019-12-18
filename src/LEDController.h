@@ -232,6 +232,7 @@ protected:
 	 *
 	 * @param channel the channel index
 	 * @param brightness the brightness in the range 0-255
+	 * @return true if the brightness was changed
 	 */
 	virtual bool setLEDBrightness(uint8_t channel, uint8_t brightness);
 	/**
@@ -239,6 +240,7 @@ protected:
 	 *
 	 * @param channel the channel index
 	 * @param ledPortType the port type
+	 * @return true if the port type was changed
 	 */
 	virtual bool setLEDPortType(uint8_t channel, PortType ledPortType);
 	virtual void clearLEDColorValues(uint8_t channel) = 0;
