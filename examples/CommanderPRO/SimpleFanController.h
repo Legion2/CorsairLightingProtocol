@@ -78,6 +78,9 @@ protected:
 	uint16_t externalTemp[FAN_NUM];
 	uint16_t updateRate;
 	uint16_t eEPROMAdress;
+	/**
+	 * Indicates that the configuration of the fans has been changed and should be saved.
+	 */
 	bool triggerSave = false;
 	long lastUpdate = 0;
 };

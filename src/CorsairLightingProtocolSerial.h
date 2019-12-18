@@ -25,7 +25,7 @@
 
 /**
  * The Serial adapter for CorsairLightingProtocolController. This adapter uses a Serial bridge to access
- * the USB interface of another arduino board. This is usefull for boards that don't have the USB
+ * the USB interface of another Arduino board. This is usefull for boards that don't have the USB
  * functionality build in.
  */
 class CorsairLightingProtocolSerial : CorsairLightingProtocolResponse {

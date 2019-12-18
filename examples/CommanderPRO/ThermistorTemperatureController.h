@@ -29,10 +29,10 @@
 class ThermistorTemperatureController : public TemperatureController {
 public:
 	/**
-	 * Add a Sensor to the TemperatureController using an arduino analog pin connected as shown in {@link ThermistorTemperatureController}.
+	 * Add a Sensor to the TemperatureController using an Arduino analog pin connected as shown in {@link ThermistorTemperatureController}.
 	 *
 	 * @param index the index of the sensorPins
-	 * @param pin the arduino analog pin
+	 * @param pin the Arduino analog pin
 	 */
 	void addSensor(uint8_t index, uint8_t pin);
 protected:

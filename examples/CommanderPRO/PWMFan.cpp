@@ -23,7 +23,7 @@ PWMFan::PWMFan(uint8_t pwmPin, uint16_t minRPM ,uint16_t maxRPM) : pwmPin(pwmPin
 	case TIMER0B:/* 3 */
 #ifdef DEBUG
 		Serial.println(F("Pin not supported as PWM fan pin"));
-		Serial.println(F("We don't want to mess up arduino time functions"));
+		Serial.println(F("We don't want to mess up Arduino time functions"));
 #endif // DEBUG
 		break;
 	case TIMER3A:/* 5 */
