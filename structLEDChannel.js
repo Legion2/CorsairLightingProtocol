@@ -4,6 +4,6 @@ var structLEDChannel =
     [ "groups", "structLEDChannel.html#a6462a191e287acedf9cbe2a952199240", null ],
     [ "groupsSet", "structLEDChannel.html#a4a488b83139f6d59c0f1e8584953a7d6", null ],
     [ "ledCount", "structLEDChannel.html#ab2d08e8b4c1add772dd362b922a013da", null ],
-    [ "ledMode", "structLEDChannel.html#a7838fd28134c06a26a1efbb774d3332b", null ],
-    [ "ledPortType", "structLEDChannel.html#a7bac38892acb8aa7db8712b33426ce6e", null ]
+    [ "ledPortType", "structLEDChannel.html#a046259095af3bb6907353f2cedf7bbca", null ],
+    [ "mode", "structLEDChannel.html#ab462e31e45c8a0342947fbbb7a7a393c", null ]
 ];

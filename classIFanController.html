@@ -88,6 +88,8 @@ $(document).ready(function(){initNavTree('classIFanController.html','');});
 <div class="title">IFanController Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="IFanController_8h_source.html">IFanController.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for IFanController:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -99,10 +101,58 @@ $(document).ready(function(){initNavTree('classIFanController.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adb6bdfe8b34746ee2b9731a7e6410c7d"><td class="memItemLeft" align="right" valign="top"><a id="adb6bdfe8b34746ee2b9731a7e6410c7d"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleFanControl</b> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response)=0</td></tr>
+<tr class="memitem:adb6bdfe8b34746ee2b9731a7e6410c7d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIFanController.html#adb6bdfe8b34746ee2b9731a7e6410c7d">handleFanControl</a> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response)=0</td></tr>
 <tr class="separator:adb6bdfe8b34746ee2b9731a7e6410c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The interface of a <a class="el" href="classFanController.html">FanController</a>. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="adb6bdfe8b34746ee2b9731a7e6410c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb6bdfe8b34746ee2b9731a7e6410c7d">&#9670;&nbsp;</a></span>handleFanControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void IFanController::handleFanControl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structCommand.html">Command</a> &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Handle a command and send back a response. This method is called if a new command for the <a class="el" href="classFanController.html">FanController</a> is received.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>the command which must be handled </td></tr>
+    <tr><td class="paramname">response</td><td>the callback used for the response </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classFanController.html#aae2b6c529da4067a80a73cb1db33c1ad">FanController</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="IFanController_8h_source.html">IFanController.h</a></li>
 </ul>

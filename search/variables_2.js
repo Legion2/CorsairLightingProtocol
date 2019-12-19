@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['trigger_5fsave',['trigger_save',['../classLEDController.html#af926d3dd06c97c9672dd62f9d7ba1205',1,'LEDController']]]
+  ['rpms',['rpms',['../structFanCurve.html#a632dbcfbbd0119a3b5a3e65082ffc760',1,'FanCurve']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reset',['reset',['../classLEDController.html#a3a1d62b958136769634d2d224a34ba8a',1,'LEDController']]]
+  ['onupdatehook',['onUpdateHook',['../classFastLEDController.html#aeb39d7e2fbb2ccef50a2905966f5ee17',1,'FastLEDController']]]
 ];

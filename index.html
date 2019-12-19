@@ -173,6 +173,8 @@ iCUE RGB Strip example</div></div>
 <p>You can repeat or scale LED channel controlled by iCUE onto physical LED strips. This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs. This is the maximum number iCUE supports.</p>
 <p>To repeat or scale a LED channel you must apply the <code>CLP::repeat</code> or the <code>CLP:scale</code> function in the update hook of the <a class="el" href="classFastLEDController.html">FastLEDController</a>. See the <a href="examples/RepeatAndScale/RepeatAndScale.ino">RepeatAndScale</a> example for the complete code. Both functions take the <a class="el" href="classFastLEDController.html">FastLEDController</a> pointer and the channel index as arguments. Additionally, the <code>repeat</code> function takes as an argument how often the LED channel should be repeated. For example, if you want to duplicate the channel you must pass <code>2</code> as argument. The <code>scale</code> function takes as third argument the length of the physical LED strip to which it scales the channel using integer scaling. For example you have 144 physical LEDs on you strip and 60 on the LED channel. Then the third argument of the <code>scale</code> function is <code>144</code>.</p>
 <p>For both functions it's <b>important</b>, that the CRGB arrays have at least the length of the physical LED strip. This means if your LED channel from iCUE has 50 LEDs and you use the <code>repeat</code> function to control 100 physical LEDs you MUST declare the CRGB array at least with a length of 100.</p>
+<h1>License</h1>
+<p>This project is licensed under the Apache 2.0 License.</p>
 <h1>DISCLAIMERS</h1>
 <p>This is a DO IT YOURSELF project, use at your own risk!</p>
 <h1>Credits</h1>

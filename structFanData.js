@@ -1,6 +1,6 @@
 var structFanData =
 [
-    [ "detectionType", "structFanData.html#a86c1ba2548cb1ae75007a3c33ce99eb9", null ],
+    [ "detectionType", "structFanData.html#a98717664e5308d8cf29d7ebde760956b", null ],
     [ "fanCurve", "structFanData.html#a0abaffd39f3b70ebce3382d82674b953", null ],
     [ "mode", "structFanData.html#ada92e777fc22e69af9c91753d69a20a1", null ],
     [ "power", "structFanData.html#a3970b17bdde1520569cab94e4f8b1b90", null ],

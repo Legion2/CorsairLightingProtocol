@@ -88,6 +88,8 @@ $(document).ready(function(){initNavTree('classITemperatureController.html','');
 <div class="title">ITemperatureController Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="ITemperatureController_8h_source.html">ITemperatureController.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for ITemperatureController:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -99,10 +101,58 @@ $(document).ready(function(){initNavTree('classITemperatureController.html','');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae62b7c0f37aa1a281298af3ed0e773b3"><td class="memItemLeft" align="right" valign="top"><a id="ae62b7c0f37aa1a281298af3ed0e773b3"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleTemperatureControl</b> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response)=0</td></tr>
+<tr class="memitem:ae62b7c0f37aa1a281298af3ed0e773b3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITemperatureController.html#ae62b7c0f37aa1a281298af3ed0e773b3">handleTemperatureControl</a> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response)=0</td></tr>
 <tr class="separator:ae62b7c0f37aa1a281298af3ed0e773b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The interface of a <a class="el" href="classTemperatureController.html">TemperatureController</a>. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae62b7c0f37aa1a281298af3ed0e773b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae62b7c0f37aa1a281298af3ed0e773b3">&#9670;&nbsp;</a></span>handleTemperatureControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ITemperatureController::handleTemperatureControl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structCommand.html">Command</a> &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Handle a temperature command and send a response.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>the command which should be handled </td></tr>
+    <tr><td class="paramname">response</td><td>the callback for the response </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classTemperatureController.html#aa5a7ba154a7fa89dcdf1de241fc4d061">TemperatureController</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="ITemperatureController_8h_source.html">ITemperatureController.h</a></li>
 </ul>

@@ -14,9 +14,9 @@ var classLEDController =
     [ "setLEDColorValues", "classLEDController.html#a66c68b7fe68ea04b750e7ce1619be987", null ],
     [ "setLEDExternalTemperature", "classLEDController.html#a0cd9f8d59afdb99860df3ae951935c25", null ],
     [ "setLEDGroup", "classLEDController.html#ace62f072476e37f46a17419d161e4804", null ],
-    [ "setLEDMode", "classLEDController.html#ae43d49da2f800f392a673cfe182bf5af", null ],
-    [ "setLEDPortType", "classLEDController.html#acd5adae0924b1bd87939a1b5b3407e4e", null ],
+    [ "setLEDMode", "classLEDController.html#ad86b10620d6a42b262a9ae9a27a57769", null ],
+    [ "setLEDPortType", "classLEDController.html#af894e3de293907ba4600c8c4b75fb96e", null ],
     [ "triggerLEDUpdate", "classLEDController.html#a3060ddaf40a577d3ab7a199ea5ccd4f9", null ],
     [ "channels", "classLEDController.html#a76c71ffec20065d9258fe8787413ae00", null ],
-    [ "trigger_save", "classLEDController.html#af926d3dd06c97c9672dd62f9d7ba1205", null ]
+    [ "triggerSave", "classLEDController.html#a461f02f241558c8292aa00ad21ff25ed", null ]
 ];

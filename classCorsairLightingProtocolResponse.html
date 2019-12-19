@@ -99,19 +99,176 @@ $(document).ready(function(){initNavTree('classCorsairLightingProtocolResponse.h
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a90f912e08ca3aface383ea56c2a8f786"><td class="memItemLeft" align="right" valign="top"><a id="a90f912e08ca3aface383ea56c2a8f786"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>send</b> (const uint8_t *data, size_t size) const</td></tr>
+<tr class="memitem:a90f912e08ca3aface383ea56c2a8f786"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolResponse.html#a90f912e08ca3aface383ea56c2a8f786">send</a> (const uint8_t *data, size_t size) const</td></tr>
 <tr class="separator:a90f912e08ca3aface383ea56c2a8f786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d6b96c9c47124c346147bbf3d84eabb"><td class="memItemLeft" align="right" valign="top"><a id="a9d6b96c9c47124c346147bbf3d84eabb"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>sendError</b> () const</td></tr>
+<tr class="memitem:a9d6b96c9c47124c346147bbf3d84eabb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolResponse.html#a9d6b96c9c47124c346147bbf3d84eabb">sendError</a> () const</td></tr>
 <tr class="separator:a9d6b96c9c47124c346147bbf3d84eabb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a478295b85e9b22cdd92a6c78f542fec0"><td class="memItemLeft" align="right" valign="top"><a id="a478295b85e9b22cdd92a6c78f542fec0"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>send_P</b> (const uint8_t *data, size_t size) const</td></tr>
+<tr class="memitem:a478295b85e9b22cdd92a6c78f542fec0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolResponse.html#a478295b85e9b22cdd92a6c78f542fec0">send_P</a> (const uint8_t *data, size_t size) const</td></tr>
 <tr class="separator:a478295b85e9b22cdd92a6c78f542fec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e4ac0bd25943fabb9507bbc560b9e44"><td class="memItemLeft" align="right" valign="top"><a id="a9e4ac0bd25943fabb9507bbc560b9e44"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>sendX</b> (const uint8_t *data, const size_t x) const =0</td></tr>
+<tr class="memitem:a9e4ac0bd25943fabb9507bbc560b9e44"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolResponse.html#a9e4ac0bd25943fabb9507bbc560b9e44">sendX</a> (const uint8_t *data, const size_t x) const =0</td></tr>
 <tr class="separator:a9e4ac0bd25943fabb9507bbc560b9e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a90f912e08ca3aface383ea56c2a8f786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90f912e08ca3aface383ea56c2a8f786">&#9670;&nbsp;</a></span>send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CorsairLightingProtocolResponse::send </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send 64 bytes via the CorsairLightingProtocol. All unset bytes will be filled with zeros.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>the array with the data </td></tr>
+    <tr><td class="paramname">size</td><td>the length of the array </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a478295b85e9b22cdd92a6c78f542fec0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a478295b85e9b22cdd92a6c78f542fec0">&#9670;&nbsp;</a></span>send_P()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CorsairLightingProtocolResponse::send_P </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send data from program memory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>the array with the data, the pointer must point to program memory </td></tr>
+    <tr><td class="paramname">size</td><td>the length of the array which should be send. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9d6b96c9c47124c346147bbf3d84eabb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d6b96c9c47124c346147bbf3d84eabb">&#9670;&nbsp;</a></span>sendError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CorsairLightingProtocolResponse::sendError </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send an error. </p>
+
+</div>
+</div>
+<a id="a9e4ac0bd25943fabb9507bbc560b9e44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e4ac0bd25943fabb9507bbc560b9e44">&#9670;&nbsp;</a></span>sendX()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CorsairLightingProtocolResponse::sendX </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send some bytes data via the CorsairLightingProtocol.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>the array with the data </td></tr>
+    <tr><td class="paramname">x</td><td>the length of the array which should be send. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classCorsairLightingProtocolHID.html#a5241e5fe726ba52831c3d7cbccbebc70">CorsairLightingProtocolHID</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="CorsairLightingProtocolResponse_8h_source.html">CorsairLightingProtocolResponse.h</a></li>
 <li>src/CorsairLightingProtocolResponse.cpp</li>

@@ -12,7 +12,11 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", null, [
-      [ "File List", "files.html", "files" ]
+      [ "File List", "files.html", "files" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Enumerations", "globals_enum.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
@@ -20,7 +24,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"structLEDGroup.html#a32a991a53747d69aaf9b89a36eaf400b"
+"classSimpleFanController.html#ae8b2825eddaa771ae748f872e928bc16"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

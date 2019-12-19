@@ -90,6 +90,8 @@ $(document).ready(function(){initNavTree('classLEDController.html','');});
 <div class="title">LEDController Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="LEDController_8h_source.html">LEDController.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for LEDController:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -109,17 +111,13 @@ $(document).ready(function(){initNavTree('classLEDController.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0341cbb1554bd7d0031ddb1e96f15ca1"><td class="memItemLeft" align="right" valign="top"><a id="a0341cbb1554bd7d0031ddb1e96f15ca1"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleLEDControl</b> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response) override</td></tr>
+<tr class="memitem:a0341cbb1554bd7d0031ddb1e96f15ca1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a0341cbb1554bd7d0031ddb1e96f15ca1">handleLEDControl</a> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response) override</td></tr>
 <tr class="separator:a0341cbb1554bd7d0031ddb1e96f15ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab9860937c90ae4cc6a8c6bafa2ab514"><td class="memItemLeft" align="right" valign="top"><a id="aab9860937c90ae4cc6a8c6bafa2ab514"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isValidLEDChannel</b> (const <a class="el" href="structLEDChannel.html">LEDChannel</a> &amp;ledChannel)</td></tr>
+<tr class="memitem:aab9860937c90ae4cc6a8c6bafa2ab514"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#aab9860937c90ae4cc6a8c6bafa2ab514">isValidLEDChannel</a> (const <a class="el" href="structLEDChannel.html">LEDChannel</a> &amp;ledChannel)</td></tr>
 <tr class="separator:aab9860937c90ae4cc6a8c6bafa2ab514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8fcc372c6e919bf6c75de4a1aad40a9"><td class="memItemLeft" align="right" valign="top"><a id="af8fcc372c6e919bf6c75de4a1aad40a9"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isValidLEDGroup</b> (const <a class="el" href="structLEDGroup.html">LEDGroup</a> &amp;ledGroup)</td></tr>
+<tr class="memitem:af8fcc372c6e919bf6c75de4a1aad40a9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#af8fcc372c6e919bf6c75de4a1aad40a9">isValidLEDGroup</a> (const <a class="el" href="structLEDGroup.html">LEDGroup</a> &amp;ledGroup)</td></tr>
 <tr class="separator:af8fcc372c6e919bf6c75de4a1aad40a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f5f3d1ff38e3145ffceff245d8d192e"><td class="memItemLeft" align="right" valign="top"><a id="a7f5f3d1ff38e3145ffceff245d8d192e"></a>
-const <a class="el" href="structLEDChannel.html">LEDChannel</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getChannel</b> (uint8_t channelIndex)</td></tr>
+<tr class="memitem:a7f5f3d1ff38e3145ffceff245d8d192e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structLEDChannel.html">LEDChannel</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a7f5f3d1ff38e3145ffceff245d8d192e">getChannel</a> (uint8_t channelIndex)</td></tr>
 <tr class="separator:a7f5f3d1ff38e3145ffceff245d8d192e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a1d62b958136769634d2d224a34ba8a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a3a1d62b958136769634d2d224a34ba8a">reset</a> ()</td></tr>
 <tr class="separator:a3a1d62b958136769634d2d224a34ba8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,8 +128,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a3060ddaf40a577d3ab7a199ea5ccd4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a7166a7a923da180a8152e6e5c3c8e4"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a5a7166a7a923da180a8152e6e5c3c8e4">getLEDStripMask</a> (uint8_t channel, uint8_t group)</td></tr>
 <tr class="separator:a5a7166a7a923da180a8152e6e5c3c8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd9f8d59afdb99860df3ae951935c25"><td class="memItemLeft" align="right" valign="top"><a id="a0cd9f8d59afdb99860df3ae951935c25"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDExternalTemperature</b> (uint8_t channel, uint16_t temp)=0</td></tr>
+<tr class="memitem:a0cd9f8d59afdb99860df3ae951935c25"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a0cd9f8d59afdb99860df3ae951935c25">setLEDExternalTemperature</a> (uint8_t channel, uint16_t temp)=0</td></tr>
 <tr class="separator:a0cd9f8d59afdb99860df3ae951935c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace62f072476e37f46a17419d161e4804"><td class="memItemLeft" align="right" valign="top"><a id="ace62f072476e37f46a17419d161e4804"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDGroup</b> (uint8_t channel, uint8_t groupIndex, <a class="el" href="structLEDGroup.html">LEDGroup</a> &amp;group)</td></tr>
@@ -139,14 +136,12 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDGroup</
 <tr class="memitem:a66c68b7fe68ea04b750e7ce1619be987"><td class="memItemLeft" align="right" valign="top"><a id="a66c68b7fe68ea04b750e7ce1619be987"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDColorValues</b> (uint8_t channel, uint8_t color, uint8_t offset, const uint8_t *values, size_t len)=0</td></tr>
 <tr class="separator:a66c68b7fe68ea04b750e7ce1619be987"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae43d49da2f800f392a673cfe182bf5af"><td class="memItemLeft" align="right" valign="top"><a id="ae43d49da2f800f392a673cfe182bf5af"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDMode</b> (uint8_t channel, uint8_t mode)</td></tr>
-<tr class="separator:ae43d49da2f800f392a673cfe182bf5af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad86b10620d6a42b262a9ae9a27a57769"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#ad86b10620d6a42b262a9ae9a27a57769">setLEDMode</a> (uint8_t channel, <a class="el" href="LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bc">ChannelMode</a> mode)</td></tr>
+<tr class="separator:ad86b10620d6a42b262a9ae9a27a57769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf9030aa97cede5d578f44bdd679a4d0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#aaf9030aa97cede5d578f44bdd679a4d0">setLEDBrightness</a> (uint8_t channel, uint8_t brightness)</td></tr>
 <tr class="separator:aaf9030aa97cede5d578f44bdd679a4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd5adae0924b1bd87939a1b5b3407e4e"><td class="memItemLeft" align="right" valign="top"><a id="acd5adae0924b1bd87939a1b5b3407e4e"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDPortType</b> (uint8_t channel, uint8_t ledPortType)</td></tr>
-<tr class="separator:acd5adae0924b1bd87939a1b5b3407e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af894e3de293907ba4600c8c4b75fb96e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#af894e3de293907ba4600c8c4b75fb96e">setLEDPortType</a> (uint8_t channel, <a class="el" href="LEDController_8h.html#ad0d4a02109cc26b7f5a6113eb6ee1211">PortType</a> ledPortType)</td></tr>
+<tr class="separator:af894e3de293907ba4600c8c4b75fb96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b196384633dcf4a1a3b16ad36afc8db"><td class="memItemLeft" align="right" valign="top"><a id="a1b196384633dcf4a1a3b16ad36afc8db"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDColorValues</b> (uint8_t channel)=0</td></tr>
 <tr class="separator:a1b196384633dcf4a1a3b16ad36afc8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,10 +160,38 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a76c71ffec20065d9258fe8787413ae00"><td class="memItemLeft" align="right" valign="top"><a id="a76c71ffec20065d9258fe8787413ae00"></a>
 <a class="el" href="structLEDChannel.html">LEDChannel</a>&#160;</td><td class="memItemRight" valign="bottom"><b>channels</b> [CHANNEL_NUM]</td></tr>
 <tr class="separator:a76c71ffec20065d9258fe8787413ae00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af926d3dd06c97c9672dd62f9d7ba1205"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#af926d3dd06c97c9672dd62f9d7ba1205">trigger_save</a> = false</td></tr>
-<tr class="separator:af926d3dd06c97c9672dd62f9d7ba1205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a461f02f241558c8292aa00ad21ff25ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a461f02f241558c8292aa00ad21ff25ed">triggerSave</a> = false</td></tr>
+<tr class="separator:a461f02f241558c8292aa00ad21ff25ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The abstract implemenation of an <a class="el" href="classLEDController.html">LEDController</a>. This implementation handles the parsing and interpretation of incoming commands. It also defines the data model to store the all required data from the commands. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7f5f3d1ff38e3145ffceff245d8d192e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5f3d1ff38e3145ffceff245d8d192e">&#9670;&nbsp;</a></span>getChannel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structLEDChannel.html">LEDChannel</a> &amp; LEDController::getChannel </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channelIndex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the data of a Channel from this <a class="el" href="classLEDController.html">LEDController</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channelIndex</td><td>the index of the channel </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a reference to the <a class="el" href="structLEDChannel.html">LEDChannel</a> </dd></dl>
+
+</div>
+</div>
 <a id="a5a7166a7a923da180a8152e6e5c3c8e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a7166a7a923da180a8152e6e5c3c8e4">&#9670;&nbsp;</a></span>getLEDStripMask()</h2>
 
@@ -202,7 +225,7 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The led count of the group</p>
+<p>Get the LED count of the group.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">channel</td><td>the channel index </td></tr>
@@ -210,7 +233,121 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the number of leds in the group </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of LEDs in the group </dd></dl>
+
+</div>
+</div>
+<a id="a0341cbb1554bd7d0031ddb1e96f15ca1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0341cbb1554bd7d0031ddb1e96f15ca1">&#9670;&nbsp;</a></span>handleLEDControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LEDController::handleLEDControl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structCommand.html">Command</a> &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Handle LED commands and send a response. This method is called for each received command.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>the command which must be handled </td></tr>
+    <tr><td class="paramname">response</td><td>the callback for the response </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classILEDController.html#ae61806c3cf179ca17a41e64f93b900e2">ILEDController</a>.</p>
+
+</div>
+</div>
+<a id="aab9860937c90ae4cc6a8c6bafa2ab514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab9860937c90ae4cc6a8c6bafa2ab514">&#9670;&nbsp;</a></span>isValidLEDChannel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LEDController::isValidLEDChannel </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structLEDChannel.html">LEDChannel</a> &amp;&#160;</td>
+          <td class="paramname"><em>ledChannel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Validates a <a class="el" href="structLEDChannel.html">LEDChannel</a> by checking all constrains on the values. This function should be used after non type-safe operations on a <a class="el" href="structLEDChannel.html">LEDChannel</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ledChannel</td><td>the <a class="el" href="structLEDChannel.html">LEDChannel</a> to validate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the <a class="el" href="structLEDChannel.html">LEDChannel</a> is valid, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="af8fcc372c6e919bf6c75de4a1aad40a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8fcc372c6e919bf6c75de4a1aad40a9">&#9670;&nbsp;</a></span>isValidLEDGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LEDController::isValidLEDGroup </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structLEDGroup.html">LEDGroup</a> &amp;&#160;</td>
+          <td class="paramname"><em>ledGroup</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Validates a <a class="el" href="structLEDGroup.html">LEDGroup</a> by checking all constrains on the values. This function should be used after non type-safe operations on a <a class="el" href="structLEDGroup.html">LEDGroup</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ledGroup</td><td>the <a class="el" href="structLEDGroup.html">LEDGroup</a> to validate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the <a class="el" href="structLEDGroup.html">LEDGroup</a> is valid, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -281,6 +418,143 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the brightness was changed </dd></dl>
+
+</div>
+</div>
+<a id="a0cd9f8d59afdb99860df3ae951935c25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cd9f8d59afdb99860df3ae951935c25">&#9670;&nbsp;</a></span>setLEDExternalTemperature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void LEDController::setLEDExternalTemperature </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>temp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the external temperature for a channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+    <tr><td class="paramname">temp</td><td>the temperature in hundredths of a degree Celsius. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba">FastLEDController</a>.</p>
+
+</div>
+</div>
+<a id="ad86b10620d6a42b262a9ae9a27a57769"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad86b10620d6a42b262a9ae9a27a57769">&#9670;&nbsp;</a></span>setLEDMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LEDController::setLEDMode </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bc">ChannelMode</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the Channel mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+    <tr><td class="paramname">mode</td><td>the new mode </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the mode was changed, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="af894e3de293907ba4600c8c4b75fb96e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af894e3de293907ba4600c8c4b75fb96e">&#9670;&nbsp;</a></span>setLEDPortType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LEDController::setLEDPortType </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="LEDController_8h.html#ad0d4a02109cc26b7f5a6113eb6ee1211">PortType</a>&#160;</td>
+          <td class="paramname"><em>ledPortType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the type of LED chipset: WS2812B or UCS1903</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+    <tr><td class="paramname">ledPortType</td><td>the port type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the port type was changed </dd></dl>
 
 </div>
 </div>
@@ -313,8 +587,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="af926d3dd06c97c9672dd62f9d7ba1205"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af926d3dd06c97c9672dd62f9d7ba1205">&#9670;&nbsp;</a></span>trigger_save</h2>
+<a id="a461f02f241558c8292aa00ad21ff25ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a461f02f241558c8292aa00ad21ff25ed">&#9670;&nbsp;</a></span>triggerSave</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -323,7 +597,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool LEDController::trigger_save = false</td>
+          <td class="memname">bool LEDController::triggerSave = false</td>
         </tr>
       </table>
   </td>
@@ -332,7 +606,7 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Indicates that the configuration of the channels has been changed and should be saved </p>
+<p>Indicates that the configuration of the channels has been changed and should be saved. </p>
 
 </div>
 </div>

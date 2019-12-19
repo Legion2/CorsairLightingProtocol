@@ -92,8 +92,7 @@ $(document).ready(function(){initNavTree('classPWMFan.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a59d0f42b9810877d9070eebe9b227530"><td class="memItemLeft" align="right" valign="top"><a id="a59d0f42b9810877d9070eebe9b227530"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PWMFan</b> (uint8_t pwmPin, uint16_t minRPM, uint16_t maxRPM)</td></tr>
+<tr class="memitem:a59d0f42b9810877d9070eebe9b227530"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPWMFan.html#a59d0f42b9810877d9070eebe9b227530">PWMFan</a> (uint8_t pwmPin, uint16_t minRPM, uint16_t maxRPM)</td></tr>
 <tr class="separator:a59d0f42b9810877d9070eebe9b227530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefe6c126a42c412acc069a3037f0d065"><td class="memItemLeft" align="right" valign="top"><a id="aefe6c126a42c412acc069a3037f0d065"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setPower</b> (uint8_t percentage)</td></tr>
@@ -117,6 +116,50 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>minRPM</b><
 const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>maxRPM</b></td></tr>
 <tr class="separator:a0da9fe6d63b62f6a82d49d77dcdc163a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a59d0f42b9810877d9070eebe9b227530"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59d0f42b9810877d9070eebe9b227530">&#9670;&nbsp;</a></span>PWMFan()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PWMFan::PWMFan </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>pwmPin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>minRPM</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>maxRPM</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PWM fan which maps speed to power using linear interpolation. This fan does not read the real RPM values. The Arduino timer for the given pin will be set to higher speed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pwmPin</td><td>the Arduino pwm pin for this fan. Not all PWM pins are supported. </td></tr>
+    <tr><td class="paramname">minRPM</td><td>the speed in RPM at 0% power </td></tr>
+    <tr><td class="paramname">maxRPM</td><td>the speed in RPM at 100% power </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>examples/CommanderPRO/<a class="el" href="PWMFan_8h_source.html">PWMFan.h</a></li>
 <li>examples/CommanderPRO/PWMFan.cpp</li>

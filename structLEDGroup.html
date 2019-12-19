@@ -88,25 +88,27 @@ $(document).ready(function(){initNavTree('structLEDGroup.html','');});
 <div class="title">LEDGroup Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="LEDController_8h_source.html">LEDController.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a1a6a54c8c38e83556a0e8e3f0a1a3523"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLEDGroup.html#a1a6a54c8c38e83556a0e8e3f0a1a3523">ledIndex</a> = 0</td></tr>
-<tr class="separator:a1a6a54c8c38e83556a0e8e3f0a1a3523"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a568e9a89baa0c6bf0999b0d049a9dd8d"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLEDGroup.html#a568e9a89baa0c6bf0999b0d049a9dd8d">ledCount</a> = 0</td></tr>
-<tr class="separator:a568e9a89baa0c6bf0999b0d049a9dd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae380b7ee8cac1757e5e17ba22c611b0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLEDGroup.html#aae380b7ee8cac1757e5e17ba22c611b0">ledIndex</a> = 0</td></tr>
+<tr class="separator:aae380b7ee8cac1757e5e17ba22c611b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaac2a9b1d3fbe7b7978c9816307d6355"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLEDGroup.html#aaac2a9b1d3fbe7b7978c9816307d6355">ledCount</a> = 0</td></tr>
+<tr class="separator:aaac2a9b1d3fbe7b7978c9816307d6355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cab41c9970983617d4e84c19acb2aac"><td class="memItemLeft" align="right" valign="top"><a id="a3cab41c9970983617d4e84c19acb2aac"></a>
 byte&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b> = GROUP_MODE_Rainbow_Wave</td></tr>
 <tr class="separator:a3cab41c9970983617d4e84c19acb2aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb58c343cb4b5fe394e9e9ad16c14525"><td class="memItemLeft" align="right" valign="top"><a id="afb58c343cb4b5fe394e9e9ad16c14525"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><b>speed</b> = GROUP_SPEED_HIGH</td></tr>
-<tr class="separator:afb58c343cb4b5fe394e9e9ad16c14525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32a991a53747d69aaf9b89a36eaf400b"><td class="memItemLeft" align="right" valign="top"><a id="a32a991a53747d69aaf9b89a36eaf400b"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><b>direction</b> = GROUP_DIRECTION_FORWARD</td></tr>
-<tr class="separator:a32a991a53747d69aaf9b89a36eaf400b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac42b168b29290cf498bb482c55f00f26"><td class="memItemLeft" align="right" valign="top"><a id="ac42b168b29290cf498bb482c55f00f26"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><b>extra</b> = 0x00</td></tr>
-<tr class="separator:ac42b168b29290cf498bb482c55f00f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add8a13af3172fcdfe9c6eb519cea9cee"><td class="memItemLeft" align="right" valign="top"><a id="add8a13af3172fcdfe9c6eb519cea9cee"></a>
+<a class="el" href="LEDController_8h.html#a05c95d02f87abb01cdda57601bc83a7f">GroupSpeed</a>&#160;</td><td class="memItemRight" valign="bottom"><b>speed</b> = GroupSpeed::High</td></tr>
+<tr class="separator:add8a13af3172fcdfe9c6eb519cea9cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfd909ef94583877e6afb4a6e1e7585c"><td class="memItemLeft" align="right" valign="top"><a id="acfd909ef94583877e6afb4a6e1e7585c"></a>
+<a class="el" href="LEDController_8h.html#a3599ca589487e9e96d4445c334fd0291">GroupDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><b>direction</b> = GroupDirection::Forward</td></tr>
+<tr class="separator:acfd909ef94583877e6afb4a6e1e7585c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adea722751cc7de42d7aab88bb84ab75e"><td class="memItemLeft" align="right" valign="top"><a id="adea722751cc7de42d7aab88bb84ab75e"></a>
+<a class="el" href="LEDController_8h.html#a357141c4090095b25ff15ab0a59c9b99">GroupExtra</a>&#160;</td><td class="memItemRight" valign="bottom"><b>extra</b> = GroupExtra::Alternating</td></tr>
+<tr class="separator:adea722751cc7de42d7aab88bb84ab75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af761bf0797507085b148e274539db2d0"><td class="memItemLeft" align="right" valign="top"><a id="af761bf0797507085b148e274539db2d0"></a>
 byte&#160;</td><td class="memItemRight" valign="bottom"><b>tempGroup</b> = GROUP_TEMP_GROUP_EXTERNAL</td></tr>
 <tr class="separator:af761bf0797507085b148e274539db2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,34 +131,36 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>temp2</b></td></t
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>temp3</b></td></tr>
 <tr class="separator:a277a647d95245fe762629cd0be8fcae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a568e9a89baa0c6bf0999b0d049a9dd8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a568e9a89baa0c6bf0999b0d049a9dd8d">&#9670;&nbsp;</a></span>ledCount</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A <a class="el" href="structLEDGroup.html">LEDGroup</a> is a contiguous range of LEDs on a strip. The <a class="el" href="structLEDGroup.html">LEDGroup</a> defines the size, position and lighting effects of the LED range. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="aaac2a9b1d3fbe7b7978c9816307d6355"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaac2a9b1d3fbe7b7978c9816307d6355">&#9670;&nbsp;</a></span>ledCount</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">byte LEDGroup::ledCount = 0</td>
+          <td class="memname">uint8_t LEDGroup::ledCount = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>number of leds in this group </p>
+<p>number of LEDs in this group </p>
 
 </div>
 </div>
-<a id="a1a6a54c8c38e83556a0e8e3f0a1a3523"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a6a54c8c38e83556a0e8e3f0a1a3523">&#9670;&nbsp;</a></span>ledIndex</h2>
+<a id="aae380b7ee8cac1757e5e17ba22c611b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae380b7ee8cac1757e5e17ba22c611b0">&#9670;&nbsp;</a></span>ledIndex</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">byte LEDGroup::ledIndex = 0</td>
+          <td class="memname">uint8_t LEDGroup::ledIndex = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>start index of the leds of this group </p>
+<p>start index of the LEDs of this group </p>
 
 </div>
 </div>

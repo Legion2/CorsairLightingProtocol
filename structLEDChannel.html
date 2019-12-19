@@ -88,6 +88,8 @@ $(document).ready(function(){initNavTree('structLEDChannel.html','');});
 <div class="title">LEDChannel Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="LEDController_8h_source.html">LEDController.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for LEDChannel:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -99,18 +101,16 @@ $(document).ready(function(){initNavTree('structLEDChannel.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a2bff6992c9fca2b3775984412d00b8c1"><td class="memItemLeft" align="right" valign="top"><a id="a2bff6992c9fca2b3775984412d00b8c1"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>brightness</b> = CHANNEL_LED_BRIGHTNESS_MAX</td></tr>
+<tr class="memitem:a2bff6992c9fca2b3775984412d00b8c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLEDChannel.html#a2bff6992c9fca2b3775984412d00b8c1">brightness</a> = 255</td></tr>
 <tr class="separator:a2bff6992c9fca2b3775984412d00b8c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7838fd28134c06a26a1efbb774d3332b"><td class="memItemLeft" align="right" valign="top"><a id="a7838fd28134c06a26a1efbb774d3332b"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ledMode</b> = CHANNEL_MODE_ON</td></tr>
-<tr class="separator:a7838fd28134c06a26a1efbb774d3332b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2d08e8b4c1add772dd362b922a013da"><td class="memItemLeft" align="right" valign="top"><a id="ab2d08e8b4c1add772dd362b922a013da"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ledCount</b> = 0</td></tr>
+<tr class="memitem:ab462e31e45c8a0342947fbbb7a7a393c"><td class="memItemLeft" align="right" valign="top"><a id="ab462e31e45c8a0342947fbbb7a7a393c"></a>
+<a class="el" href="LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bc">ChannelMode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b> = <a class="el" href="LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bcad8390cd6af7992ce37119b41b154c117">ChannelMode::HardwarePlayback</a></td></tr>
+<tr class="separator:ab462e31e45c8a0342947fbbb7a7a393c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2d08e8b4c1add772dd362b922a013da"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLEDChannel.html#ab2d08e8b4c1add772dd362b922a013da">ledCount</a> = 0</td></tr>
 <tr class="separator:ab2d08e8b4c1add772dd362b922a013da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bac38892acb8aa7db8712b33426ce6e"><td class="memItemLeft" align="right" valign="top"><a id="a7bac38892acb8aa7db8712b33426ce6e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ledPortType</b> = PORT_TYPE_WS2812B</td></tr>
-<tr class="separator:a7bac38892acb8aa7db8712b33426ce6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a046259095af3bb6907353f2cedf7bbca"><td class="memItemLeft" align="right" valign="top"><a id="a046259095af3bb6907353f2cedf7bbca"></a>
+<a class="el" href="LEDController_8h.html#ad0d4a02109cc26b7f5a6113eb6ee1211">PortType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ledPortType</b> = <a class="el" href="LEDController_8h.html#ad0d4a02109cc26b7f5a6113eb6ee1211a3c05d0de9c7795cf0be6a1d9b9bbad7b">PortType::WS2812B</a></td></tr>
+<tr class="separator:a046259095af3bb6907353f2cedf7bbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6462a191e287acedf9cbe2a952199240"><td class="memItemLeft" align="right" valign="top"><a id="a6462a191e287acedf9cbe2a952199240"></a>
 <a class="el" href="structLEDGroup.html">LEDGroup</a>&#160;</td><td class="memItemRight" valign="bottom"><b>groups</b> [GROUPS_NUM]</td></tr>
 <tr class="separator:a6462a191e287acedf9cbe2a952199240"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,6 +118,39 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ledPortType</b> = 
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>groupsSet</b> = 0</td></tr>
 <tr class="separator:a4a488b83139f6d59c0f1e8584953a7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The definition of a Channel. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2bff6992c9fca2b3775984412d00b8c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bff6992c9fca2b3775984412d00b8c1">&#9670;&nbsp;</a></span>brightness</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t LEDChannel::brightness = 255</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Brightness of the channel in range 0-255. </p>
+
+</div>
+</div>
+<a id="ab2d08e8b4c1add772dd362b922a013da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2d08e8b4c1add772dd362b922a013da">&#9670;&nbsp;</a></span>ledCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t LEDChannel::ledCount = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The number of LEDs on this channel. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/<a class="el" href="LEDController_8h_source.html">LEDController.h</a></li>
 </ul>

@@ -44,7 +44,7 @@
 <title>Node4&#45;&gt;Node2</title>
 <path fill="none" stroke="#9a32cd" stroke-dasharray="5,2" d="M238.7169,-61.1559C221.3665,-48.2395 197.43,-30.4201 182.8709,-19.5817"/>
 <polygon fill="#9a32cd" stroke="#9a32cd" points="236.9938,-64.2365 247.1052,-67.4005 241.1739,-58.6216 236.9938,-64.2365"/>
-<text text-anchor="middle" x="231.5" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000"> cLP</text>
+<text text-anchor="middle" x="242.5" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000"> controller</text>
 </g>
 </g>
 </svg>

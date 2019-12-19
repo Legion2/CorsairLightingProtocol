@@ -89,6 +89,8 @@ $(document).ready(function(){initNavTree('classTemperatureController.html','');}
 <div class="title">TemperatureController Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="TemperatureController_8h_source.html">TemperatureController.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for TemperatureController:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -108,31 +110,266 @@ $(document).ready(function(){initNavTree('classTemperatureController.html','');}
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa5a7ba154a7fa89dcdf1de241fc4d061"><td class="memItemLeft" align="right" valign="top"><a id="aa5a7ba154a7fa89dcdf1de241fc4d061"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleTemperatureControl</b> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response) override</td></tr>
+<tr class="memitem:aa5a7ba154a7fa89dcdf1de241fc4d061"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#aa5a7ba154a7fa89dcdf1de241fc4d061">handleTemperatureControl</a> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response) override</td></tr>
 <tr class="separator:aa5a7ba154a7fa89dcdf1de241fc4d061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86e1c68109d631902b55051b54c6c9c3"><td class="memItemLeft" align="right" valign="top"><a id="a86e1c68109d631902b55051b54c6c9c3"></a>
-virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getTemperature</b> (uint8_t temperatureSensor)</td></tr>
+<tr class="memitem:a86e1c68109d631902b55051b54c6c9c3"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#a86e1c68109d631902b55051b54c6c9c3">getTemperature</a> (uint8_t temperatureSensor)</td></tr>
 <tr class="separator:a86e1c68109d631902b55051b54c6c9c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aab55a3177ab87237a4e7a0c43cd3339f"><td class="memItemLeft" align="right" valign="top"><a id="aab55a3177ab87237a4e7a0c43cd3339f"></a>
-virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getTemperatureValue</b> (uint8_t temperatureSensor)=0</td></tr>
+<tr class="memitem:aab55a3177ab87237a4e7a0c43cd3339f"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#aab55a3177ab87237a4e7a0c43cd3339f">getTemperatureValue</a> (uint8_t temperatureSensor)=0</td></tr>
 <tr class="separator:aab55a3177ab87237a4e7a0c43cd3339f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa94526b5b50f73d97aa56cb21c70df95"><td class="memItemLeft" align="right" valign="top"><a id="aa94526b5b50f73d97aa56cb21c70df95"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isTemperatureSensorConnected</b> (uint8_t temperatureSensor)=0</td></tr>
+<tr class="memitem:aa94526b5b50f73d97aa56cb21c70df95"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#aa94526b5b50f73d97aa56cb21c70df95">isTemperatureSensorConnected</a> (uint8_t temperatureSensor)=0</td></tr>
 <tr class="separator:aa94526b5b50f73d97aa56cb21c70df95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4054ec6caf8fbb651322dbdf001abcb0"><td class="memItemLeft" align="right" valign="top"><a id="a4054ec6caf8fbb651322dbdf001abcb0"></a>
-virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getVoltageRail12V</b> ()=0</td></tr>
+<tr class="memitem:a4054ec6caf8fbb651322dbdf001abcb0"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#a4054ec6caf8fbb651322dbdf001abcb0">getVoltageRail12V</a> ()=0</td></tr>
 <tr class="separator:a4054ec6caf8fbb651322dbdf001abcb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc223f50a1c45c99d61653dbe3b4433f"><td class="memItemLeft" align="right" valign="top"><a id="afc223f50a1c45c99d61653dbe3b4433f"></a>
-virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getVoltageRail5V</b> ()=0</td></tr>
+<tr class="memitem:afc223f50a1c45c99d61653dbe3b4433f"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#afc223f50a1c45c99d61653dbe3b4433f">getVoltageRail5V</a> ()=0</td></tr>
 <tr class="separator:afc223f50a1c45c99d61653dbe3b4433f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9383efbee3d66a71184463dbf8d7e22"><td class="memItemLeft" align="right" valign="top"><a id="aa9383efbee3d66a71184463dbf8d7e22"></a>
-virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getVoltageRail3V3</b> ()=0</td></tr>
+<tr class="memitem:aa9383efbee3d66a71184463dbf8d7e22"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTemperatureController.html#aa9383efbee3d66a71184463dbf8d7e22">getVoltageRail3V3</a> ()=0</td></tr>
 <tr class="separator:aa9383efbee3d66a71184463dbf8d7e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The abstract implementation of the <a class="el" href="classITemperatureController.html">ITemperatureController</a>. This implementation handles the commands parsing and processing. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a86e1c68109d631902b55051b54c6c9c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86e1c68109d631902b55051b54c6c9c3">&#9670;&nbsp;</a></span>getTemperature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t TemperatureController::getTemperature </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>temperatureSensor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the temperature of a sensor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">temperatureSensor</td><td>the index of the temperature sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the temperature in hundredths of a degree Celsius. </dd></dl>
+
+</div>
+</div>
+<a id="aab55a3177ab87237a4e7a0c43cd3339f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab55a3177ab87237a4e7a0c43cd3339f">&#9670;&nbsp;</a></span>getTemperatureValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t TemperatureController::getTemperatureValue </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>temperatureSensor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the temperature of a sensor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">temperatureSensor</td><td>the index of the temperature sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the temperature in hundredths of a degree Celsius. </dd></dl>
+
+<p>Implemented in <a class="el" href="classThermistorTemperatureController.html#a441b6eead78894be30fb6a7ea4c6a021">ThermistorTemperatureController</a>.</p>
+
+</div>
+</div>
+<a id="a4054ec6caf8fbb651322dbdf001abcb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4054ec6caf8fbb651322dbdf001abcb0">&#9670;&nbsp;</a></span>getVoltageRail12V()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t TemperatureController::getVoltageRail12V </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the voltage of the 12V rail.</p>
+<dl class="section return"><dt>Returns</dt><dd>the voltage in mV </dd></dl>
+
+<p>Implemented in <a class="el" href="classThermistorTemperatureController.html#ade944b9712418871521a74c66730118f">ThermistorTemperatureController</a>.</p>
+
+</div>
+</div>
+<a id="aa9383efbee3d66a71184463dbf8d7e22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9383efbee3d66a71184463dbf8d7e22">&#9670;&nbsp;</a></span>getVoltageRail3V3()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t TemperatureController::getVoltageRail3V3 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the voltage of the 3.3V rail.</p>
+<dl class="section return"><dt>Returns</dt><dd>the voltage in mV </dd></dl>
+
+<p>Implemented in <a class="el" href="classThermistorTemperatureController.html#a691d29e492b34192971aa5fdb202fb2e">ThermistorTemperatureController</a>.</p>
+
+</div>
+</div>
+<a id="afc223f50a1c45c99d61653dbe3b4433f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc223f50a1c45c99d61653dbe3b4433f">&#9670;&nbsp;</a></span>getVoltageRail5V()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t TemperatureController::getVoltageRail5V </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the voltage of the 5V rail.</p>
+<dl class="section return"><dt>Returns</dt><dd>the voltage in mV </dd></dl>
+
+<p>Implemented in <a class="el" href="classThermistorTemperatureController.html#a724c3941597ff29a6172b0d0dbf5c4e0">ThermistorTemperatureController</a>.</p>
+
+</div>
+</div>
+<a id="aa5a7ba154a7fa89dcdf1de241fc4d061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5a7ba154a7fa89dcdf1de241fc4d061">&#9670;&nbsp;</a></span>handleTemperatureControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TemperatureController::handleTemperatureControl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structCommand.html">Command</a> &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Handle a temperature command and send a response.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>the command which should be handled </td></tr>
+    <tr><td class="paramname">response</td><td>the callback for the response </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classITemperatureController.html#ae62b7c0f37aa1a281298af3ed0e773b3">ITemperatureController</a>.</p>
+
+</div>
+</div>
+<a id="aa94526b5b50f73d97aa56cb21c70df95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa94526b5b50f73d97aa56cb21c70df95">&#9670;&nbsp;</a></span>isTemperatureSensorConnected()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool TemperatureController::isTemperatureSensorConnected </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>temperatureSensor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check if a temperature sensor is connected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">temperatureSensor</td><td>the index of the temperature sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a temperature sensor is connected </dd></dl>
+
+<p>Implemented in <a class="el" href="classThermistorTemperatureController.html#a6646c8976b174fa684c4a0f498a7748d">ThermistorTemperatureController</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="TemperatureController_8h_source.html">TemperatureController.h</a></li>
 <li>src/TemperatureController.cpp</li>

@@ -88,16 +88,49 @@ $(document).ready(function(){initNavTree('structFanCurve.html','');});
 <div class="title">FanCurve Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="FanController_8h_source.html">FanController.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a7abd3f5f3db84a78de03373bc28c8268"><td class="memItemLeft" align="right" valign="top"><a id="a7abd3f5f3db84a78de03373bc28c8268"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>temperatures</b> [FAN_CURVE_POINTS_NUM]</td></tr>
+<tr class="memitem:a7abd3f5f3db84a78de03373bc28c8268"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFanCurve.html#a7abd3f5f3db84a78de03373bc28c8268">temperatures</a> [FAN_CURVE_POINTS_NUM]</td></tr>
 <tr class="separator:a7abd3f5f3db84a78de03373bc28c8268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a632dbcfbbd0119a3b5a3e65082ffc760"><td class="memItemLeft" align="right" valign="top"><a id="a632dbcfbbd0119a3b5a3e65082ffc760"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>rpms</b> [FAN_CURVE_POINTS_NUM]</td></tr>
+<tr class="memitem:a632dbcfbbd0119a3b5a3e65082ffc760"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFanCurve.html#a632dbcfbbd0119a3b5a3e65082ffc760">rpms</a> [FAN_CURVE_POINTS_NUM]</td></tr>
 <tr class="separator:a632dbcfbbd0119a3b5a3e65082ffc760"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The definition of a fan curve to control fan speeds depending on the temperature. The fan curve is a mapping of temperature values to fan speed. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a632dbcfbbd0119a3b5a3e65082ffc760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a632dbcfbbd0119a3b5a3e65082ffc760">&#9670;&nbsp;</a></span>rpms</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t FanCurve::rpms[FAN_CURVE_POINTS_NUM]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The fan speeds in RPM. </p>
+
+</div>
+</div>
+<a id="a7abd3f5f3db84a78de03373bc28c8268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7abd3f5f3db84a78de03373bc28c8268">&#9670;&nbsp;</a></span>temperatures</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t FanCurve::temperatures[FAN_CURVE_POINTS_NUM]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The temperatures in hundredths of a degree Celsius. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/<a class="el" href="FanController_8h_source.html">FanController.h</a></li>
 </ul>

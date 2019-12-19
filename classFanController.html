@@ -89,6 +89,8 @@ $(document).ready(function(){initNavTree('classFanController.html','');});
 <div class="title">FanController Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="FanController_8h_source.html">FanController.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for FanController:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -108,40 +110,458 @@ $(document).ready(function(){initNavTree('classFanController.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aae2b6c529da4067a80a73cb1db33c1ad"><td class="memItemLeft" align="right" valign="top"><a id="aae2b6c529da4067a80a73cb1db33c1ad"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleFanControl</b> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response) override</td></tr>
+<tr class="memitem:aae2b6c529da4067a80a73cb1db33c1ad"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#aae2b6c529da4067a80a73cb1db33c1ad">handleFanControl</a> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response) override</td></tr>
 <tr class="separator:aae2b6c529da4067a80a73cb1db33c1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a875a8b83b0736fbfd80753bd6ba64aca"><td class="memItemLeft" align="right" valign="top"><a id="a875a8b83b0736fbfd80753bd6ba64aca"></a>
-virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getFanSpeed</b> (uint8_t fan)=0</td></tr>
+<tr class="memitem:a875a8b83b0736fbfd80753bd6ba64aca"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#a875a8b83b0736fbfd80753bd6ba64aca">getFanSpeed</a> (uint8_t fan)=0</td></tr>
 <tr class="separator:a875a8b83b0736fbfd80753bd6ba64aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98e2dca8577eb24654828182f56c0d85"><td class="memItemLeft" align="right" valign="top"><a id="a98e2dca8577eb24654828182f56c0d85"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setFanSpeed</b> (uint8_t fan, uint16_t speed)=0</td></tr>
+<tr class="memitem:a98e2dca8577eb24654828182f56c0d85"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#a98e2dca8577eb24654828182f56c0d85">setFanSpeed</a> (uint8_t fan, uint16_t speed)=0</td></tr>
 <tr class="separator:a98e2dca8577eb24654828182f56c0d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a474411f50ae4dbfd07b966e1698cfb5d"><td class="memItemLeft" align="right" valign="top"><a id="a474411f50ae4dbfd07b966e1698cfb5d"></a>
-virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getFanPower</b> (uint8_t fan)=0</td></tr>
+<tr class="memitem:a474411f50ae4dbfd07b966e1698cfb5d"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#a474411f50ae4dbfd07b966e1698cfb5d">getFanPower</a> (uint8_t fan)=0</td></tr>
 <tr class="separator:a474411f50ae4dbfd07b966e1698cfb5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba42a54ded3d60e039f09cbd6a3e1c49"><td class="memItemLeft" align="right" valign="top"><a id="aba42a54ded3d60e039f09cbd6a3e1c49"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setFanPower</b> (uint8_t fan, uint8_t percentage)=0</td></tr>
+<tr class="memitem:aba42a54ded3d60e039f09cbd6a3e1c49"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#aba42a54ded3d60e039f09cbd6a3e1c49">setFanPower</a> (uint8_t fan, uint8_t percentage)=0</td></tr>
 <tr class="separator:aba42a54ded3d60e039f09cbd6a3e1c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4876144ced0d17e66101efb092b6716d"><td class="memItemLeft" align="right" valign="top"><a id="a4876144ced0d17e66101efb092b6716d"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setFanCurve</b> (uint8_t fan, uint8_t group, <a class="el" href="structFanCurve.html">FanCurve</a> &amp;fanCurve)=0</td></tr>
+<tr class="memitem:a4876144ced0d17e66101efb092b6716d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#a4876144ced0d17e66101efb092b6716d">setFanCurve</a> (uint8_t fan, uint8_t group, <a class="el" href="structFanCurve.html">FanCurve</a> &amp;fanCurve)=0</td></tr>
 <tr class="separator:a4876144ced0d17e66101efb092b6716d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eefabaa467a01362505239bd097301f"><td class="memItemLeft" align="right" valign="top"><a id="a4eefabaa467a01362505239bd097301f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setFanExternalTemperature</b> (uint8_t fan, uint16_t temp)=0</td></tr>
+<tr class="memitem:a4eefabaa467a01362505239bd097301f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#a4eefabaa467a01362505239bd097301f">setFanExternalTemperature</a> (uint8_t fan, uint16_t temp)=0</td></tr>
 <tr class="separator:a4eefabaa467a01362505239bd097301f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8856d0ef922820e2b2038fbaff18e61"><td class="memItemLeft" align="right" valign="top"><a id="aa8856d0ef922820e2b2038fbaff18e61"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setFanForce3PinMode</b> (bool flag)=0</td></tr>
+<tr class="memitem:aa8856d0ef922820e2b2038fbaff18e61"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#aa8856d0ef922820e2b2038fbaff18e61">setFanForce3PinMode</a> (bool flag)=0</td></tr>
 <tr class="separator:aa8856d0ef922820e2b2038fbaff18e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcc273c8ac725b53610b9fdc1c1c183d"><td class="memItemLeft" align="right" valign="top"><a id="afcc273c8ac725b53610b9fdc1c1c183d"></a>
-virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getFanDetectionType</b> (uint8_t fan)=0</td></tr>
-<tr class="separator:afcc273c8ac725b53610b9fdc1c1c183d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac232e5137a3b9bb4638fbec3b1c0c1ef"><td class="memItemLeft" align="right" valign="top"><a id="ac232e5137a3b9bb4638fbec3b1c0c1ef"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setFanDetectionType</b> (uint8_t fan, uint8_t type)=0</td></tr>
-<tr class="separator:ac232e5137a3b9bb4638fbec3b1c0c1ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca10ec57dd384ac00c0676b273952370"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="FanController_8h.html#ae3ff603ab316f66ee1f087501f5db908">FanDetectionType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#aca10ec57dd384ac00c0676b273952370">getFanDetectionType</a> (uint8_t fan)=0</td></tr>
+<tr class="separator:aca10ec57dd384ac00c0676b273952370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd1e3e159efc78fb382deee4d08cf01"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFanController.html#a3bd1e3e159efc78fb382deee4d08cf01">setFanDetectionType</a> (uint8_t fan, <a class="el" href="FanController_8h.html#ae3ff603ab316f66ee1f087501f5db908">FanDetectionType</a> type)=0</td></tr>
+<tr class="separator:a3bd1e3e159efc78fb382deee4d08cf01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The abstract implementation of <a class="el" href="classIFanController.html">IFanController</a>. This implementation handles the parsing and interpretation of incoming commands. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aca10ec57dd384ac00c0676b273952370"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca10ec57dd384ac00c0676b273952370">&#9670;&nbsp;</a></span>getFanDetectionType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="FanController_8h.html#ae3ff603ab316f66ee1f087501f5db908">FanDetectionType</a> FanController::getFanDetectionType </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the fan DetectionType for a fan.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the FanDetectionType </dd></dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#a2511ab766ffcba88ce6ab7bc93c9f520">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="a474411f50ae4dbfd07b966e1698cfb5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a474411f50ae4dbfd07b966e1698cfb5d">&#9670;&nbsp;</a></span>getFanPower()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint8_t FanController::getFanPower </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the power percentage of a fan.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>power percentage, in range 0-255 with 255 mean 100%. </dd></dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#aea925840d062154cc848689ff9363ad3">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="a875a8b83b0736fbfd80753bd6ba64aca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875a8b83b0736fbfd80753bd6ba64aca">&#9670;&nbsp;</a></span>getFanSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t FanController::getFanSpeed </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the fan speed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>fan speed in RPM. </dd></dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#aa6952e52891a1318135b298ece099169">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="aae2b6c529da4067a80a73cb1db33c1ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae2b6c529da4067a80a73cb1db33c1ad">&#9670;&nbsp;</a></span>handleFanControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FanController::handleFanControl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structCommand.html">Command</a> &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Handle a command and send back a response. This method is called if a new command for the <a class="el" href="classFanController.html">FanController</a> is received.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>the command which must be handled </td></tr>
+    <tr><td class="paramname">response</td><td>the callback used for the response </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classIFanController.html#adb6bdfe8b34746ee2b9731a7e6410c7d">IFanController</a>.</p>
+
+</div>
+</div>
+<a id="a4876144ced0d17e66101efb092b6716d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4876144ced0d17e66101efb092b6716d">&#9670;&nbsp;</a></span>setFanCurve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void FanController::setFanCurve </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>group</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structFanCurve.html">FanCurve</a> &amp;&#160;</td>
+          <td class="paramname"><em>fanCurve</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set a FanCure for a fan.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+    <tr><td class="paramname">group</td><td>the temperature group used for getting the temperature for this fan </td></tr>
+    <tr><td class="paramname">fanCurve</td><td>the fan curve data </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#afbfd22387b248ac54714536c903426d9">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="a3bd1e3e159efc78fb382deee4d08cf01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bd1e3e159efc78fb382deee4d08cf01">&#9670;&nbsp;</a></span>setFanDetectionType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void FanController::setFanDetectionType </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="FanController_8h.html#ae3ff603ab316f66ee1f087501f5db908">FanDetectionType</a>&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the fan DetectionType for a fan.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+    <tr><td class="paramname">type</td><td>the FanDetectionType </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#af11433f2c644363353f4b9dc8f4d8207">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="a4eefabaa467a01362505239bd097301f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eefabaa467a01362505239bd097301f">&#9670;&nbsp;</a></span>setFanExternalTemperature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void FanController::setFanExternalTemperature </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>temp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the external temperature for a fan. The external temperature is provied by the iCUE.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+    <tr><td class="paramname">temp</td><td>The temperature in hundredths of a degree Celsius. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#aa5fcc500e5c375c7faaddd72d66fd19d">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="aa8856d0ef922820e2b2038fbaff18e61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8856d0ef922820e2b2038fbaff18e61">&#9670;&nbsp;</a></span>setFanForce3PinMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void FanController::setFanForce3PinMode </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO not sure what this does, currently unused</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flag</td><td>the value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#a09ca296a7bc72583cc695a153c01ecd6">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="aba42a54ded3d60e039f09cbd6a3e1c49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba42a54ded3d60e039f09cbd6a3e1c49">&#9670;&nbsp;</a></span>setFanPower()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void FanController::setFanPower </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>percentage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+    <tr><td class="paramname">percentage</td><td>255 mean 100%. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#ae8b2825eddaa771ae748f872e928bc16">SimpleFanController</a>.</p>
+
+</div>
+</div>
+<a id="a98e2dca8577eb24654828182f56c0d85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98e2dca8577eb24654828182f56c0d85">&#9670;&nbsp;</a></span>setFanSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void FanController::setFanSpeed </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fan</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>speed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the fan speed to a fixed value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fan</td><td>index of the fan </td></tr>
+    <tr><td class="paramname">speed</td><td>fan speed in RPM. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classSimpleFanController.html#a45d3c5f279a18df28159620c7c3b0623">SimpleFanController</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="FanController_8h_source.html">FanController.h</a></li>
 <li>src/FanController.cpp</li>

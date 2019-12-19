@@ -88,6 +88,8 @@ $(document).ready(function(){initNavTree('classCorsairLightingProtocolSerial.htm
 <div class="title">CorsairLightingProtocolSerial Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="CorsairLightingProtocolSerial_8h_source.html">CorsairLightingProtocolSerial.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for CorsairLightingProtocolSerial:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -107,16 +109,78 @@ $(document).ready(function(){initNavTree('classCorsairLightingProtocolSerial.htm
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4769e19cd9408d77ae70e16576b6770e"><td class="memItemLeft" align="right" valign="top"><a id="a4769e19cd9408d77ae70e16576b6770e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CorsairLightingProtocolSerial</b> (<a class="el" href="classCorsairLightingProtocolController.html">CorsairLightingProtocolController</a> *cLP)</td></tr>
-<tr class="separator:a4769e19cd9408d77ae70e16576b6770e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5b6968262e6e91b19e68fa42a7c6042"><td class="memItemLeft" align="right" valign="top"><a id="aa5b6968262e6e91b19e68fa42a7c6042"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setup</b> ()</td></tr>
+<tr class="memitem:ac8331a93dd8af688047830c8e2e5f839"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolSerial.html#ac8331a93dd8af688047830c8e2e5f839">CorsairLightingProtocolSerial</a> (<a class="el" href="classCorsairLightingProtocolController.html">CorsairLightingProtocolController</a> *controller)</td></tr>
+<tr class="separator:ac8331a93dd8af688047830c8e2e5f839"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5b6968262e6e91b19e68fa42a7c6042"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolSerial.html#aa5b6968262e6e91b19e68fa42a7c6042">setup</a> ()</td></tr>
 <tr class="separator:aa5b6968262e6e91b19e68fa42a7c6042"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a117b6611cc8d4b127f8b7b0c7242fe87"><td class="memItemLeft" align="right" valign="top"><a id="a117b6611cc8d4b127f8b7b0c7242fe87"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
+<tr class="memitem:a117b6611cc8d4b127f8b7b0c7242fe87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCorsairLightingProtocolSerial.html#a117b6611cc8d4b127f8b7b0c7242fe87">update</a> ()</td></tr>
 <tr class="separator:a117b6611cc8d4b127f8b7b0c7242fe87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The Serial adapter for <a class="el" href="classCorsairLightingProtocolController.html">CorsairLightingProtocolController</a>. This adapter uses a Serial bridge to access the USB interface of another Arduino board. This is usefull for boards that don't have the USB functionality build in. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac8331a93dd8af688047830c8e2e5f839"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8331a93dd8af688047830c8e2e5f839">&#9670;&nbsp;</a></span>CorsairLightingProtocolSerial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CorsairLightingProtocolSerial::CorsairLightingProtocolSerial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCorsairLightingProtocolController.html">CorsairLightingProtocolController</a> *&#160;</td>
+          <td class="paramname"><em>controller</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new adapter for the controller.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">controller</td><td>the <a class="el" href="classCorsairLightingProtocolController.html">CorsairLightingProtocolController</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa5b6968262e6e91b19e68fa42a7c6042"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b6968262e6e91b19e68fa42a7c6042">&#9670;&nbsp;</a></span>setup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CorsairLightingProtocolSerial::setup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Setup the Serial connection. This function must be called in setup. </p>
+
+</div>
+</div>
+<a id="a117b6611cc8d4b127f8b7b0c7242fe87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a117b6611cc8d4b127f8b7b0c7242fe87">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CorsairLightingProtocolSerial::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read commands from Serial connection and pass them to the controller This function must be called in loop. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="CorsairLightingProtocolSerial_8h_source.html">CorsairLightingProtocolSerial.h</a></li>
 <li>src/CorsairLightingProtocolSerial.cpp</li>
