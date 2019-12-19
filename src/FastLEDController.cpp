@@ -62,14 +62,14 @@ uint8_t FastLEDController::getLEDCount(uint8_t channel)
 	return channelData[channel].ledCount;
 }
 
-int FastLEDController::applySpeed(int duration, byte speed) {
+int FastLEDController::applySpeed(int duration, const GroupSpeed speed) {
 	switch (speed)
 	{
-	case GROUP_SPEED_HIGH:
+	case GroupSpeed::High:
 		return duration / 2;
-	case GROUP_SPEED_MEDIUM:
+	case GroupSpeed::Medium:
 		return duration;
-	case GROUP_SPEED_LOW:
+	case GroupSpeed::Low:
 		return duration * 2;
 	default:
 		return duration;
@@ -104,13 +104,13 @@ bool FastLEDController::updateLEDs()
 		bool updated = false;
 		LEDChannel& channel = channels[channelId];
 
-		switch (channel.ledMode)
+		switch (channel.mode)
 		{
-		case CHANNEL_MODE_DISABLED:
+		case ChannelMode::Disabled:
 		{
 			break;
 		}
-		case CHANNEL_MODE_ON:
+		case ChannelMode::HardwarePlayback:
 		{
 			for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
 				LEDGroup& group = channel.groups[groupIndex];
@@ -127,7 +127,7 @@ bool FastLEDController::updateLEDs()
 					int count = animation_step_count(duration, 256);
 					if (count > 0) {
 						int step = animation_step(duration, 256);
-						int move = group.direction == GROUP_DIRECTION_FORWARD ? -3 : 3;
+						int move = group.direction == GroupDirection::Forward ? -3 : 3;
 						for (int i = 0; i < groupLedCount; i++) {
 							channelData[channelId].leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255);
 						}
@@ -142,11 +142,11 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 512);
 						if (count > step) {
-							if (group.extra == GROUP_EXTRA_RANDOM) {
+							if (group.extra == GroupExtra::Random) {
 								group.color1 = group.color2;
 								group.color2 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GroupExtra::Alternating) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -175,10 +175,10 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 512);
 						if (count > step) {
-							if (group.extra == GROUP_EXTRA_RANDOM) {
+							if (group.extra == GroupExtra::Random) {
 								group.color1 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GroupExtra::Alternating) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -201,11 +201,11 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 10000);
 						if (count > step) {
-							if (group.extra == GROUP_EXTRA_RANDOM) {
+							if (group.extra == GroupExtra::Random) {
 								group.color1 = group.color2;
 								group.color2 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GroupExtra::Alternating) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -283,10 +283,10 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, steps);
 						if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
-							if (group.extra == GROUP_EXTRA_RANDOM) {
+							if (group.extra == GroupExtra::Random) {
 								group.color1 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GroupExtra::Alternating) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -324,10 +324,10 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, 2);
 						if (count > step) {
-							if (group.extra == GROUP_EXTRA_RANDOM) {
+							if (group.extra == GroupExtra::Random) {
 								group.color1 = CHSV(random8(), 255, 255);
 							}
-							else if (group.extra == GROUP_EXTRA_ALTERNATING) {
+							else if (group.extra == GroupExtra::Alternating) {
 								group.color3 = group.color1;
 								group.color1 = group.color2;
 								group.color2 = group.color3;
@@ -347,13 +347,13 @@ bool FastLEDController::updateLEDs()
 					if (count > 0) {
 						int step = animation_step(duration, steps);
 						if (count > step) {
-							if (group.extra == GROUP_EXTRA_RANDOM) {
+							if (group.extra == GroupExtra::Random) {
 								group.color2 = group.color1;
 								group.color1 = CHSV(random8(), 255, 255);
 							}
 						}
 
-						if (group.direction == GROUP_DIRECTION_FORWARD) {
+						if (group.direction == GroupDirection::Forward) {
 							fill_solid(&channelData[channelId].leds[group.ledIndex], step + 1, group.color1);
 							fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2);
 						}
@@ -390,7 +390,7 @@ bool FastLEDController::updateLEDs()
 			}
 			break;
 		}
-		case CHANNEL_MODE_SOFTWARE_PLAYBACK:
+		case ChannelMode::SoftwarePlayback:
 		{
 			if (trigger_update) {
 				auto& data = channelData[channelId];
@@ -400,15 +400,6 @@ bool FastLEDController::updateLEDs()
 				updated = true;
 			}
 			break;
-		}
-		default:
-		{
-#ifdef DEBUG
-			Serial.print(F("unkown led channel mode: "));
-			Serial.print(channel.ledMode, HEX);
-			Serial.println();
-			break;
-#endif
 		}
 		}
 		if (updated) {

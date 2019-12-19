@@ -19,7 +19,16 @@
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
+/**
+ * The interface of a LEDController.
+ */
 class ILEDController {
 public:
+	/**
+	 * Handle LED commands and send a response. This method is called for each received command.
+	 *
+	 * @param command the command which must be handled
+	 * @param response the callback for the response
+	 */
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };

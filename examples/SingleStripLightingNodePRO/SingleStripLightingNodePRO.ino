@@ -19,7 +19,7 @@
 // The number of LEDs per channel.
 #define CHANNEL_LED_COUNT 50
 
-// Total count of LEDs on all channels, the value is calculated based on the leds per channel.
+// Total count of LEDs on all channels, the value is calculated based on the LEDs per channel.
 #define NUM_LEDS (CHANNEL_LED_COUNT * 2)
 
 // The Arduino pin where the physical LEDs are connected.

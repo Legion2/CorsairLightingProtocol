@@ -16,14 +16,24 @@
 #pragma once
 
 #include "TemperatureController.h"
-/*
-Thermistor Schematic :
-    | ---- [10k - Resistor] ----- | ----- [Thermistor] ---- |
-    |                             |                         |
- [Ground]                     Analog Pin                  [+5v]
-*/
+/**
+ * This TemperatureController uses Thermistors and Resistors to messure the temperature. It does not implement the voltage rail measurements.
+ *
+ * Thermistor Schematic:
+ * <pre>
+ *     | ---- [10k - Resistor] ---- | ---- [Thermistor] ---- |
+ *     |                            |                        |
+ *  [Ground]                    Analog Pin                 [+5v]
+ * </pre>
+ */
 class ThermistorTemperatureController : public TemperatureController {
 public:
+	/**
+	 * Add a Sensor to the TemperatureController using an Arduino analog pin connected as shown in {@link ThermistorTemperatureController}.
+	 *
+	 * @param index the index of the sensorPins
+	 * @param pin the Arduino analog pin
+	 */
 	void addSensor(uint8_t index, uint8_t pin);
 protected:
 	virtual uint16_t getTemperatureValue(uint8_t temperatureSensor) override;

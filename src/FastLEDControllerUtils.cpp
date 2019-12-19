@@ -20,7 +20,7 @@
 void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex)
 {
 	auto& channel = controller->getChannel(channelIndex);
-	if (channel.ledMode == CHANNEL_MODE_SOFTWARE_PLAYBACK) {
+	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);
 		for (uint8_t fanIndex = 0; fanIndex < controller->getLEDCount(channelIndex) / 16; fanIndex++) {
 			for (uint8_t ledIndex = 0; ledIndex < 8; ledIndex++) {
@@ -45,7 +45,7 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 {
 	auto leds = controller->getLEDs(channelIndex);
 	auto count = controller->getLEDCount(channelIndex);
-	//skip first iteration, because leds already contains the data at the first position
+	//skip first iteration, because LEDs already contains the data at the first position
 	for (int i = 1; i < times; i++) {
 		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
 	}

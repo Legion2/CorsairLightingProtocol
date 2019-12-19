@@ -27,12 +27,12 @@ bool printCommand = PRINT_COMMAND;
 bool printResponse = PRINT_RESPONSE;
 #endif
 
-CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP) : cLP(cLP)
+CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller) : controller(controller)
 {
 	RawHID.begin(rawhidData, sizeof(rawhidData));
 }
 
-CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* cLP, const char* serialNumber) : CorsairLightingProtocolHID(cLP)
+CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller, const char* serialNumber) : CorsairLightingProtocolHID(controller)
 {
 	RawHID.setSerialNumber(serialNumber);
 }
@@ -43,7 +43,7 @@ void CorsairLightingProtocolHID::update()
 	{
 		Command command;
 		getCommand(command);
-		cLP->handleCommand(command, this);
+		controller->handleCommand(command, this);
 	}
 }
 

@@ -16,30 +16,38 @@
 #include "FanController.h"
 #include "CLPUtils.h"
 
+bool isValidFanMask(const FanMask fanMask) {
+	return fanMask == FanMask::Disconnected || fanMask == FanMask::ThreePin || fanMask == FanMask::FourPin;
+}
+
+bool isValidFanDetectionType(const FanDetectionType type) {
+	return type == FanDetectionType::Auto || type == FanDetectionType::ThreePin || type == FanDetectionType::FourPin || type == FanDetectionType::Disconnected;
+}
+
 void FanController::handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response)
 {
 	switch (command.command)
 	{
 	case READ_FAN_MASK:
 	{
-		uint8_t mask[FAN_NUM];
+		FanMask mask[FAN_NUM];
 		for (uint8_t i = 0; i < FAN_NUM; i++) {
 			switch (getFanDetectionType(i))
 			{
-			case FAN_DETECTION_TYPE_AUTO:
-				mask[i] = FAN_MASK_DISCONNECTED;//TODO
+			case FanDetectionType::Auto:
+				mask[i] = FanMask::Disconnected;//TODO
 				break;
-			case FAN_DETECTION_TYPE_3PIN:
-				mask[i] = FAN_MASK_3PIN;
+			case FanDetectionType::ThreePin:
+				mask[i] = FanMask::ThreePin;
 				break;
-			case FAN_DETECTION_TYPE_4PIN:
-				mask[i] = FAN_MASK_4PIN;
+			case FanDetectionType::FourPin:
+				mask[i] = FanMask::FourPin;
 				break;
-			case FAN_DETECTION_TYPE_DISCONNECTED:
-				mask[i] = FAN_MASK_DISCONNECTED;
+			case FanDetectionType::Disconnected:
+				mask[i] = FanMask::Disconnected;
 			}
 		}
-		response->send(mask, sizeof(mask));
+		response->send(reinterpret_cast<byte*>(mask), sizeof(mask));
 		break;
 	}
 	case READ_FAN_SPEED:
@@ -146,8 +154,8 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			response->sendError();
 			return;
 		}
-		const uint8_t& type = command.data[2];
-		if (type > 0x03) {
+		const FanDetectionType type = static_cast<FanDetectionType>(command.data[2]);
+		if (!isValidFanDetectionType(type)) {
 			response->sendError();
 			return;
 		}
@@ -166,8 +174,8 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			response->sendError();
 			return;
 		}
-		uint8_t type = getFanDetectionType(fan);
-		uint8_t typeData[] = { type };
+		FanDetectionType type = getFanDetectionType(fan);
+		byte typeData[] = { static_cast<byte>(type) };
 		response->send(typeData, sizeof(typeData));
 		break;
 	}

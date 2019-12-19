@@ -126,6 +126,9 @@ Then the third argument of the `scale` function is `144`.
 For both functions it's **important**, that the CRGB arrays have at least the length of the physical LED strip.
 This means if your LED channel from iCUE has 50 LEDs and you use the `repeat` function to control 100 physical LEDs you MUST declare the CRGB array at least with a length of 100.
 
+# License
+This project is licensed under the Apache 2.0 License.
+
 # DISCLAIMERS
 This is a DO IT YOURSELF project, use at your own risk!
 
