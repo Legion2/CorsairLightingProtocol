@@ -19,7 +19,16 @@
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
+/**
+ * The interface of a FanController.
+ */
 class IFanController {
 public:
+	/**
+	 * Handle a command and send back a response. This method is called if a new command for the FanController is received.
+	 *
+	 * @param command the command which must be handled
+	 * @param response the callback used for the response
+	 */
 	virtual void handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };

@@ -23,14 +23,32 @@
 #define SERIAL_TIMEOUT 2
 #define SERIAL_BAUD 1000000
 
+/**
+ * The Serial adapter for CorsairLightingProtocolController. This adapter uses a Serial bridge to access
+ * the USB interface of another Arduino board. This is usefull for boards that don't have the USB
+ * functionality build in.
+ */
 class CorsairLightingProtocolSerial : CorsairLightingProtocolResponse {
 public:
-	CorsairLightingProtocolSerial(CorsairLightingProtocolController* cLP);
+	/**
+	 * Create a new adapter for the controller.
+	 *
+	 * @param controller the CorsairLightingProtocolController
+	 */
+	CorsairLightingProtocolSerial(CorsairLightingProtocolController* controller);
+	/**
+	 * Setup the Serial connection.
+	 * This function must be called in setup.
+	 */
 	void setup();
+	/**
+	 * Read commands from Serial connection and pass them to the controller
+	 * This function must be called in loop.
+	 */
 	void update();
 private:
 	byte rawCommand[COMMAND_SIZE];
-	CorsairLightingProtocolController* const cLP;
+	CorsairLightingProtocolController* const controller;
 
 	bool handleSerial();
 	void sendX(const uint8_t* data, const size_t x) const override;

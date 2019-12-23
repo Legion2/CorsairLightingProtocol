@@ -13,22 +13,27 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#pragma once
+#include <CorsairLightingProtocol.h>
+#include <FastLED.h>
 
-#include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
+#define DATA_PIN_CHANNEL_1 2
 
-/**
- * The interface of a LEDController.
- */
-class ILEDController {
-public:
-	/**
-	 * Handle LED commands and send a response. This method is called for each received command.
-	 *
-	 * @param command the command which must be handled
-	 * @param response the callback for the response
-	 */
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
-};
+CRGB ledsChannel1[204];
+
+CorsairLightingFirmware firmware = corsairLightingNodeCOREFirmware();
+FastLEDController ledController(true);
+CorsairLightingProtocolController cLP(&ledController, &firmware);
+CorsairLightingProtocolHID cHID(&cLP);
+
+void setup() {
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 204);
+	ledController.addLEDs(0, ledsChannel1, 204);
+}
+
+void loop() {
+	cHID.update();
+
+	if (ledController.updateLEDs()) {
+		FastLED.show();
+	}
+}

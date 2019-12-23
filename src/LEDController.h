@@ -15,6 +15,11 @@
 */
 #pragma once
 
+/**
+ * @file
+ * Defines types and constants of the LED part of the protocol
+ */
+
 #include "Arduino.h"
 #include <FastLED.h>
 #include "ILEDController.h"
@@ -23,18 +28,38 @@
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
 
-//LED brightness
-#define CHANNEL_LED_BRIGHTNESS_MIN 0
-#define CHANNEL_LED_BRIGHTNESS_MAX 100
+ /**
+  * The mode of an LEDChannel. The mode describes how the LED lighting is done.
+  *
+  * @see LEDController#setLEDMode()
+  */
+enum class ChannelMode : byte {
+	/** No lighting is active for the channel. The LEDs will not be updated. */
+	Disabled = 0x00,
+	/** The Hardware Playback uses lighting effects defined by LEDGroups and LEDController renders the effects themself. This mode works even without an USB connection.  */
+	HardwarePlayback = 0x01,
+	/** All lighting effects are rendered by iCUE and only the RGB values are transferred via USB to the device. This requires an USB connection. */
+	SoftwarePlayback = 0x02
+};
 
-//Channel modes
-#define CHANNEL_MODE_DISABLED 0x00
-#define CHANNEL_MODE_ON 0x01
-#define CHANNEL_MODE_SOFTWARE_PLAYBACK 0x02
+bool inline isValidChannelMode(const ChannelMode channelMode) {
+	return channelMode == ChannelMode::Disabled || channelMode == ChannelMode::HardwarePlayback || channelMode == ChannelMode::SoftwarePlayback;
+}
 
-//Port types
-#define PORT_TYPE_WS2812B 0x01
-#define PORT_TYPE_UCS1903 0x02
+/**
+ * The type of LED Chipset connected to a channel. These are the types implicitly defined by iCUE when doing the lighting setup in iCUE.
+ * These type is ignored by the LEDController.
+ */
+enum class PortType : byte {
+	/** WS2812B used by all new Corsair devices */
+	WS2812B = 0x01,
+	/** UCS1903 Only used for the SP fan */
+	UCS1903 = 0x02
+};
+
+bool inline isValidPortType(const PortType portType) {
+	return portType == PortType::WS2812B || portType == PortType::UCS1903;
+}
 
 //LED group mode
 #define GROUP_MODE_Rainbow_Wave 0x00
@@ -49,28 +74,61 @@
 #define GROUP_MODE_Sequential 0x09
 #define GROUP_MODE_Rainbow 0x0A
 
-//LED group speed
-#define GROUP_SPEED_HIGH   0x00
-#define GROUP_SPEED_MEDIUM 0x01
-#define GROUP_SPEED_LOW    0x02
+/**
+ * The animation speed of a LEDGroup.
+ */
+enum class GroupSpeed : byte {
+	High = 0x00,
+	Medium = 0x01,
+	Low = 0x02
+};
 
-//LED group direction
-#define GROUP_DIRECTION_BACKWARD 0x00
-#define GROUP_DIRECTION_FORWARD  0x01
+bool inline isValidGroupSpeed(const GroupSpeed groupSpeed) {
+	return groupSpeed == GroupSpeed::High || groupSpeed == GroupSpeed::Medium || groupSpeed == GroupSpeed::Low;
+}
 
-//LED group extra
-#define GROUP_EXTRA_ALTERNATING 0x00
-#define GROUP_EXTRA_RANDOM  0x01
+/**
+ * The animation direction of a LEDGroup.
+ */
+enum class GroupDirection : byte {
+	Backward = 0x00,
+	Forward = 0x01
+};
+
+bool inline isValidGroupDirection(const GroupDirection groupDirection) {
+	return groupDirection == GroupDirection::Backward || groupDirection == GroupDirection::Forward;
+}
+
+/**
+ * Extra information for animations of a LEDGroup.
+ */
+enum class GroupExtra : byte {
+	Alternating = 0x00,
+	Random = 0x01
+};
+
+bool inline isValidGroupExtra(const GroupExtra groupExtra) {
+	return groupExtra == GroupExtra::Alternating || groupExtra == GroupExtra::Random;
+}
 
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
+/**
+ * A LEDGroup is a contiguous range of LEDs on a strip. The LEDGroup defines the size, position and lighting effects of the LED range.
+ */
 struct LEDGroup {
-	byte ledIndex = 0;//start index of the leds of this group
-	byte ledCount = 0;//number of leds in this group
+	/**
+	 * start index of the LEDs of this group
+	 */
+	uint8_t ledIndex = 0;
+	/**
+	 * number of LEDs in this group
+	 */
+	uint8_t ledCount = 0;
 	byte mode = GROUP_MODE_Rainbow_Wave;
-	byte speed = GROUP_SPEED_HIGH;
-	byte direction = GROUP_DIRECTION_FORWARD;
-	byte extra = 0x00;
+	GroupSpeed speed = GroupSpeed::High;
+	GroupDirection direction = GroupDirection::Forward;
+	GroupExtra extra = GroupExtra::Alternating;
 	byte tempGroup = GROUP_TEMP_GROUP_EXTERNAL;
 
 	CRGB color1;
@@ -82,21 +140,52 @@ struct LEDGroup {
 	uint16_t temp3;
 };
 
+/**
+ * The definition of a Channel.
+ */
 struct LEDChannel {
-	uint8_t brightness = CHANNEL_LED_BRIGHTNESS_MAX;
-	uint8_t ledMode = CHANNEL_MODE_ON;
+	/**
+	 * Brightness of the channel in range 0-255.
+	 */
+	uint8_t brightness = 255;
+	ChannelMode mode = ChannelMode::HardwarePlayback;
+	/**
+	 * The number of LEDs on this channel.
+	 */
 	uint8_t ledCount = 0;
-	uint8_t ledPortType = PORT_TYPE_WS2812B;
+	PortType ledPortType = PortType::WS2812B;
 
 	LEDGroup groups[GROUPS_NUM];
 	uint8_t groupsSet = 0;
 };
 
+/**
+ * The abstract implemenation of an LEDController. This implementation handles the parsing and interpretation of incoming commands.
+ * It also defines the data model to store the all required data from the commands.
+ */
 class LEDController : public ILEDController {
 public:
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+	/**
+	 * Validates a LEDChannel by checking all constrains on the values. This function should be used after non type-safe operations on a LEDChannel.
+	 *
+	 * @param ledChannel the LEDChannel to validate
+	 * @return true if the LEDChannel is valid, false otherwise
+	 */
 	virtual bool isValidLEDChannel(const LEDChannel& ledChannel);
+	/**
+	 * Validates a LEDGroup by checking all constrains on the values. This function should be used after non type-safe operations on a LEDGroup.
+	 *
+	 * @param ledGroup the LEDGroup to validate
+	 * @return true if the LEDGroup is valid, false otherwise
+	 */
 	virtual bool isValidLEDGroup(const LEDGroup& ledGroup);
+	/**
+	 * Get the data of a Channel from this LEDController.
+	 *
+	 * @param channelIndex the index of the channel
+	 * @return a reference to the LEDChannel
+	 */
 	const LEDChannel& getChannel(uint8_t channelIndex);
 	/**
 	 * Reset all persistent data to default values of the LEDController.
@@ -104,22 +193,56 @@ public:
 	virtual void reset();
 protected:
 	LEDChannel channels[CHANNEL_NUM];
-	// Indicates that the configuration of the channels has been changed and should be saved
-	bool trigger_save = false;
+	/**
+	 * Indicates that the configuration of the channels has been changed and should be saved.
+	 */
+	bool triggerSave = false;
 
-	//Trigger update of the LEDs
+	/**
+	 * Trigger update of the LEDs
+	 */
 	virtual void triggerLEDUpdate() = 0;
-	// The led count of the group
-	virtual uint8_t getLEDStripMask(uint8_t channel, uint8_t set);
-	// The temperature in hundredths of a degree Celsius.
+	/**
+	 * Get the LED count of the group.
+	 *
+	 * @param channel the channel index
+	 * @param group the group index
+	 * @return the number of LEDs in the group
+	 */
+	virtual uint8_t getLEDStripMask(uint8_t channel, uint8_t group);
+	/**
+	 *  Set the external temperature for a channel.
+	 *
+	 * @param channel the channel index
+	 * @param temp the temperature in hundredths of a degree Celsius.
+	 */
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
-	virtual bool setLEDGroup(uint8_t channel, uint8_t set, LEDGroup& group);
+	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
-	virtual bool setLEDMode(uint8_t channel, uint8_t mode);
+	/**
+	 * Set the Channel mode.
+	 *
+	 * @param channel the channel index
+	 * @param mode the new mode
+	 * @return true if the mode was changed, false otherwise
+	 */
+	virtual bool setLEDMode(uint8_t channel, ChannelMode mode);
+	/**
+	 * The brightness of the channel. This only applies to HW lighting.
+	 *
+	 * @param channel the channel index
+	 * @param brightness the brightness in the range 0-255
+	 * @return true if the brightness was changed
+	 */
 	virtual bool setLEDBrightness(uint8_t channel, uint8_t brightness);
-	// The type of led controller: WS2812B or UCS1903
-	// one of PORT_TYPE_*
-	virtual bool setLEDPortType(uint8_t channel, uint8_t ledPortType);
+	/**
+	 * Set the type of LED chipset: WS2812B or UCS1903
+	 *
+	 * @param channel the channel index
+	 * @param ledPortType the port type
+	 * @return true if the port type was changed
+	 */
+	virtual bool setLEDPortType(uint8_t channel, PortType ledPortType);
 	virtual void clearLEDColorValues(uint8_t channel) = 0;
 	virtual bool clearLEDGroups(uint8_t channel);
 	virtual bool save() = 0;

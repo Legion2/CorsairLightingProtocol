@@ -58,7 +58,7 @@ namespace CLP
 	bool isResetID(const uint8_t* deviceId);
 
 	/**
-	 * This will disable the RX and TX built in leds on Arduino Leonardo, Micro and Pro Micro.
+	 * This will disable the RX and TX built in LEDs on Arduino Leonardo, Micro and Pro Micro.
 	 */
 	void disableBuildInLEDs();
 

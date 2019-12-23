@@ -15,7 +15,7 @@
 */
 #include "CorsairLightingProtocolSerial.h"
 
-CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocolController* cLP) : cLP(cLP) {}
+CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocolController* controller) : controller(controller) {}
 
 void CorsairLightingProtocolSerial::setup()
 {
@@ -30,7 +30,7 @@ void CorsairLightingProtocolSerial::update()
 	{
 		Command command;
 		memcpy(command.raw, rawCommand, sizeof(command.raw));
-		cLP->handleCommand(command, this);
+		controller->handleCommand(command, this);
 	}
 }
 

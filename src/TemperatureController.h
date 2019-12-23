@@ -15,6 +15,10 @@
 */
 #pragma once
 
+/**
+ * @file
+ */
+
 #include "Arduino.h"
 
 #include "ITemperatureController.h"
@@ -28,18 +32,50 @@
 #define VOLTAGE_RAIL_5V 1
 #define VOLTAGE_RAIL_3V3 2
 
+ /**
+  * The abstract implementation of the ITemperatureController. This implementation handles the commands parsing and processing. 
+  */
 class TemperatureController : public ITemperatureController {
 public:
 	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+	/**
+	 * Get the temperature of a sensor.
+	 *
+	 * @param temperatureSensor the index of the temperature sensor
+	 * @return the temperature in hundredths of a degree Celsius.
+	 */
 	virtual uint16_t getTemperature(uint8_t temperatureSensor);
 protected:
-	// The temperature in hundredths of a degree Celsius.
+	/**
+	 * Get the temperature of a sensor.
+	 *
+	 * @param temperatureSensor the index of the temperature sensor
+	 * @return the temperature in hundredths of a degree Celsius.
+	 */
 	virtual uint16_t getTemperatureValue(uint8_t temperatureSensor) = 0;
+	/**
+	 * Check if a temperature sensor is connected.
+	 *
+	 * @param temperatureSensor the index of the temperature sensor
+	 * @return true if a temperature sensor is connected
+	 */
 	virtual bool isTemperatureSensorConnected(uint8_t temperatureSensor) = 0;
-	// The voltage in mV.
+	/**
+	 * Get the voltage of the 12V rail.
+	 *
+	 * @return the voltage in mV
+	 */
 	virtual uint16_t getVoltageRail12V() = 0;
-	// The voltage in mV.
+	/**
+	 * Get the voltage of the 5V rail.
+	 *
+	 * @return the voltage in mV
+	 */
 	virtual uint16_t getVoltageRail5V() = 0;
-	// The voltage in mV.
+	/**
+	 * Get the voltage of the 3.3V rail.
+	 *
+	 * @return the voltage in mV
+	 */
 	virtual uint16_t getVoltageRail3V3() = 0;
 };

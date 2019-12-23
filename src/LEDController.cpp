@@ -21,8 +21,8 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
 		triggerLEDUpdate();
-		if (trigger_save) {
-			trigger_save = false;
+		if (triggerSave) {
+			triggerSave = false;
 			save();
 		}
 	}
@@ -85,9 +85,9 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			group.ledIndex = data[1];
 			group.ledCount = data[2];
 			group.mode = data[3];
-			group.speed = data[4];
-			group.direction = data[5];
-			group.extra = data[6];
+			group.speed = static_cast<GroupSpeed>(data[4]);
+			group.direction = static_cast<GroupDirection>(data[5]);
+			group.extra = static_cast<GroupExtra>(data[6]);
 			group.tempGroup = data[7];
 			group.color1.r = data[8];
 			group.color1.g = data[9];
@@ -107,7 +107,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				return;
 			}
 
-			trigger_save |= setLEDGroup(channel, channels[channel].groupsSet++, group);
+			triggerSave |= setLEDGroup(channel, channels[channel].groupsSet++, group);
 			break;
 		}
 		case WRITE_LED_EXTERNAL_TEMP:
@@ -117,18 +117,29 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_GROUPS_CLEAR:
 		{
-			trigger_save |= clearLEDGroups(channel);
+			triggerSave |= clearLEDGroups(channel);
 			break;
 		}
 		case WRITE_LED_MODE:
 		{
-			trigger_save |= setLEDMode(channel, data[1]);
+			const ChannelMode mode = static_cast<ChannelMode>(data[1]);
+			if (!isValidChannelMode(mode)) {
+#ifdef DEBUG
+				Serial.print(F("unkown LED channel mode: "));
+				Serial.print(data[1], HEX);
+				Serial.println();
+#endif
+				response->sendError();
+				return;
+			}
+
+			triggerSave |= setLEDMode(channel, mode);
 			break;
 		}
 		case WRITE_LED_BRIGHTNESS:
 		{
 			uint8_t brightness = CLP::convert100To255(data[1]);
-			trigger_save |= setLEDBrightness(channel, brightness);
+			triggerSave |= setLEDBrightness(channel, brightness);
 			break;
 		}
 		case WRITE_LED_COUNT:
@@ -144,7 +155,12 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		}
 		case WRITE_LED_PORT_TYPE:
 		{
-			trigger_save |= setLEDPortType(channel, data[1]);
+			const PortType portType = static_cast<PortType>(data[1]);
+			if (!isValidPortType(portType)) {
+				response->sendError();
+				return;
+			}
+			triggerSave |= setLEDPortType(channel, portType);
 			break;
 		}
 		default:
@@ -152,7 +168,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 #ifdef DEBUG
 			Serial.print(F("unkown command: "));
 			Serial.print(command.command, HEX);
-			Serial.print("\n");
+			Serial.println();
 #endif
 			response->sendError();
 			return;
@@ -164,8 +180,8 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 
 bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
 {
-	if (ledChannel.ledMode <= CHANNEL_MODE_SOFTWARE_PLAYBACK
-		&& ledChannel.ledPortType <= PORT_TYPE_UCS1903
+	if (isValidChannelMode(ledChannel.mode)
+		&& isValidPortType(ledChannel.ledPortType)
 		&& ledChannel.groupsSet < GROUPS_NUM) {
 		for (uint8_t i = 0; i < ledChannel.groupsSet; i++) {
 			if (!isValidLEDGroup(ledChannel.groups[i])) {
@@ -180,8 +196,9 @@ bool LEDController::isValidLEDChannel(const LEDChannel& ledChannel)
 bool LEDController::isValidLEDGroup(const LEDGroup& ledGroup)
 {
 	return ledGroup.mode <= GROUP_MODE_Rainbow
-		&& ledGroup.speed <= GROUP_SPEED_LOW
-		&& ledGroup.direction <= GROUP_DIRECTION_FORWARD
+		&& isValidGroupSpeed(ledGroup.speed)
+		&& isValidGroupDirection(ledGroup.direction)
+		&& isValidGroupExtra(ledGroup.extra)
 		&& (ledGroup.tempGroup == GROUP_TEMP_GROUP_EXTERNAL
 			|| ledGroup.tempGroup < TEMPERATURE_NUM);
 }
@@ -199,14 +216,14 @@ void LEDController::reset()
 	save();
 }
 
-uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t set)
+uint8_t LEDController::getLEDStripMask(uint8_t channel, uint8_t groupIndex)
 {
-	return channels[channel].groups[set].ledCount;
+	return channels[channel].groups[groupIndex].ledCount;
 }
 
-bool LEDController::setLEDGroup(uint8_t channel, uint8_t set, LEDGroup& group)
+bool LEDController::setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group)
 {
-	channels[channel].groups[set] = group;
+	channels[channel].groups[groupIndex] = group;
 	return true;
 }
 
@@ -218,10 +235,10 @@ bool LEDController::clearLEDGroups(uint8_t channel) {
 	return false;
 }
 
-bool LEDController::setLEDMode(uint8_t channel, uint8_t mode)
+bool LEDController::setLEDMode(uint8_t channel, ChannelMode mode)
 {
-	if (channels[channel].ledMode != mode) {
-		channels[channel].ledMode = mode;
+	if (channels[channel].mode != mode) {
+		channels[channel].mode = mode;
 		return true;
 	}
 	return false;
@@ -236,7 +253,7 @@ bool LEDController::setLEDBrightness(uint8_t channel, uint8_t brightness)
 	return false;
 }
 
-bool LEDController::setLEDPortType(uint8_t channel, uint8_t ledPortType)
+bool LEDController::setLEDPortType(uint8_t channel, PortType ledPortType)
 {
 	if (channels[channel].ledPortType != ledPortType) {
 		channels[channel].ledPortType = ledPortType;

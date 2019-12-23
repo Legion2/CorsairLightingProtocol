@@ -20,6 +20,8 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
+#define BUTTON_PIN 4
+
 CRGB ledsChannel1[135];
 CRGB ledsChannel2[135];
 
@@ -33,12 +35,37 @@ void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 135);
 	ledController.addLEDs(0, ledsChannel1, 135);
 	ledController.addLEDs(1, ledsChannel2, 135);
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
 }
 
 void loop() {
+	static bool lightingEnabled = true;
 	cHID.update();
 
-	if (ledController.updateLEDs()) {
-		FastLED.show();
+    if (buttonClicked()) {
+        lightingEnabled = !lightingEnabled;
+        fill_solid(ledsChannel1, 135, CRGB::Black);
+        fill_solid(ledsChannel2, 135, CRGB::Black);
+        FastLED.show();
+    }
+
+	if (lightingEnabled && ledController.updateLEDs()) {
+        FastLED.show();
 	}
+}
+
+/**
+ * Handle button of the LS100. The button is optional.
+ *
+ * @return true if the button was pressed and then released.
+ */
+bool buttonClicked() {
+    static bool previousState = 1;
+    bool state = digitalRead(BUTTON_PIN);
+    if (previousState == 0 && state == 1) {
+        previousState = state;
+        return true;
+    }
+    previousState = state;
+    return false;
 }

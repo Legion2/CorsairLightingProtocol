@@ -28,19 +28,35 @@ struct FanData {
 	uint8_t mode = FAN_CONTROL_MODE_FIXED_POWER;
 	uint8_t power = 0;
 	uint16_t speed = 0;
-	uint8_t detectionType = FAN_DETECTION_TYPE_DISCONNECTED;
+	FanDetectionType detectionType = FanDetectionType::Disconnected;
 	uint8_t tempGroup;
 	FanCurve fanCurve;
 };
 
-// This simple Fan Controller implementation does not implement all features of a Fan Controller.
-// It should only demonstrate how to implement your own Fan Controller.
+/**
+ * This simple Fan Controller implementation does not implement all features of a Fan Controller.
+ * It should only demonstrate how to implement your own Fan Controller.
+ */
 class SimpleFanController : public FanController {
 public:
-	// Fan Contorller must use the EEPROM else on startup the fans can't be controlled
-	// updateRate it the time between fan speed updates in ms
+	/**
+	 * Fan Controller must use the EEPROM else on startup the fans can't be controlled
+	 * 
+	 * @param temperatureController the TemperatureController used to get the temperature to control the fans
+	 * @param updateRate is the time between fan speed updates in ms
+	 * @param eEPROMAdress the address where the data is stored in EEPROM
+	 */
 	SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate, uint16_t eEPROMAdress);
+	/**
+	 * Add a fan to the Controller.
+	 * 
+	 * @param index the index of the fan
+	 * @param fan the fan object
+	 */
 	void addFan(uint8_t index, PWMFan* fan);
+	/**
+	 * Update the fan speeds based on the temperature and commands.
+	 */
 	virtual bool updateFans();
 protected:
 	virtual uint16_t getFanSpeed(uint8_t fan) override;
@@ -50,8 +66,8 @@ protected:
 	virtual void setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve) override;
 	virtual void setFanExternalTemperature(uint8_t fan, uint16_t temp) override;
 	virtual void setFanForce3PinMode(bool flag) override;
-	virtual uint8_t getFanDetectionType(uint8_t fan) override;
-	virtual void setFanDetectionType(uint8_t fan, uint8_t type) override;
+	virtual FanDetectionType getFanDetectionType(uint8_t fan) override;
+	virtual void setFanDetectionType(uint8_t fan, FanDetectionType type) override;
 	bool load();
 	bool save();
 
@@ -62,6 +78,9 @@ protected:
 	uint16_t externalTemp[FAN_NUM];
 	uint16_t updateRate;
 	uint16_t eEPROMAdress;
-	bool trigger_save = false;
+	/**
+	 * Indicates that the configuration of the fans has been changed and should be saved.
+	 */
+	bool triggerSave = false;
 	long lastUpdate = 0;
 };

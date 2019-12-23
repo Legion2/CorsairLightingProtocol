@@ -58,6 +58,10 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 		response->send_P(bootloader_version, sizeof(bootloader_version));
 		break;
 	}
+	default:
+	{
+		response->sendError();
+	}
 	}
 }
 
@@ -73,6 +77,11 @@ void CorsairLightingFirmware::setDeviceID(const uint8_t* deviceID)
 }
 
 CorsairLightingFirmware corsairLightingNodePROFirmware()
+{
+	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
+}
+
+CorsairLightingFirmware corsairLightingNodeCOREFirmware()
 {
 	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
 }
