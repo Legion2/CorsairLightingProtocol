@@ -22,8 +22,9 @@
 
 #define BUTTON_PIN 4
 
+// Hint: The ATmega32U4 does not have enough memory for 135 leds on both channels
 CRGB ledsChannel1[135];
-CRGB ledsChannel2[135];
+CRGB ledsChannel2[54];
 
 CorsairLightingFirmware firmware = corsairLS100Firmware();
 FastLEDController ledController(true);
@@ -32,25 +33,25 @@ CorsairLightingProtocolHID cHID(&cLP);
 
 void setup() {
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 135);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 135);
+	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 54);
 	ledController.addLEDs(0, ledsChannel1, 135);
-	ledController.addLEDs(1, ledsChannel2, 135);
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
+	ledController.addLEDs(1, ledsChannel2, 54);
+	pinMode(BUTTON_PIN, INPUT_PULLUP);
 }
 
 void loop() {
 	static bool lightingEnabled = true;
 	cHID.update();
 
-    if (buttonClicked()) {
-        lightingEnabled = !lightingEnabled;
-        fill_solid(ledsChannel1, 135, CRGB::Black);
-        fill_solid(ledsChannel2, 135, CRGB::Black);
-        FastLED.show();
-    }
+	if (buttonClicked()) {
+		lightingEnabled = !lightingEnabled;
+		fill_solid(ledsChannel1, 135, CRGB::Black);
+		fill_solid(ledsChannel2, 54, CRGB::Black);
+		FastLED.show();
+	}
 
 	if (lightingEnabled && ledController.updateLEDs()) {
-        FastLED.show();
+		FastLED.show();
 	}
 }
 
@@ -60,12 +61,12 @@ void loop() {
  * @return true if the button was pressed and then released.
  */
 bool buttonClicked() {
-    static bool previousState = 1;
-    bool state = digitalRead(BUTTON_PIN);
-    if (previousState == 0 && state == 1) {
-        previousState = state;
-        return true;
-    }
-    previousState = state;
-    return false;
+	static bool previousState = 1;
+	bool state = digitalRead(BUTTON_PIN);
+	if (previousState == 0 && state == 1) {
+		previousState = state;
+		return true;
+	}
+	previousState = state;
+	return false;
 }
