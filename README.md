@@ -1,5 +1,5 @@
 [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol)
-![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)
+[![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush)
 
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
 
@@ -21,9 +21,12 @@
 ![Overview](extra/images/overview.png)
 
 # Getting started
+This project is an Arduino library called "Corsair Lighting Protocol".
+It can be used to control Arduino boards with iCUE.
+This project provides example sketches for easy use with Arduino IDE.
 
 - [Requirements](#requirements)
-- [Install the library](#install-the-library)
+- [Install the libraries](#install-the-libraries)
 - [Create a Lighting Node PRO](#create-a-lighting-node-pro)
 - [Use the Lighting Node PRO](#use-the-lighting-node-pro)
 
@@ -34,28 +37,39 @@ It also supports the Arduino Uno and Arduino Mega, **but** this requires the [Ho
 It is **not** compatible with Arduino Nano.
 In the rest of the documentation "Arduino" is used as a synonym for all supported boards regardless of the manufacturer.
 
-You have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
+When you have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
 
-## Install the library
-Use the [Library-Manager](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol/ide) to install this library (Corsair Lighting Protocol).
-Additionally, the [FastLED](http://fastled.io/) library must be installed.
+## Install the libraries
+To use this library you must install it with the Library-Manager.
+Open the Library-Manager in Arduino IDE via Tools->Manage Libraries...
+Search for "Corsair Lighting Protocol" and install the Corsair Lighting Protocol library.
+This library also requires the [FastLED](http://fastled.io/) library.
+Search for "FastLED" in the Library-Manager and install the FastLED library.
 
 ## Create a Lighting Node PRO
 This guide will teach you how to create a Lighting Node PRO with an Arduino Leonardo compatible board.
 If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega).
 
-1. Open the example "LightingNodePRO", you can find it in Arduino IDE in the File menu->Examples->Corsair Lighting Protocol->LightingNodePRO or in the [examples directory](examples) if you download this project.
+1. Open the example "LightingNodePRO", you can find it in Arduino IDE in the File menu->Examples->Corsair Lighting Protocol->LightingNodePRO.
+   If you can't open the LightingNodePRO example the Corsair Lighting Protocol library is not installed correctly.
 
    ![open example sketch](extra/images/open-example.png)
-1. Follow [these steps](https://github.com/Legion2/CorsairLightingProtocolBoards#how-to-use-these-boards-in-arduino) to install the CLP Boards and upload the sketch to your Arduino.
+1. Install the [CLP Boards](https://github.com/Legion2/CorsairLightingProtocolBoards).
+   They can be installed by following the [CLP Boards installation guide](https://github.com/Legion2/CorsairLightingProtocolBoards#how-to-use-these-boards-in-arduino).
+   After installation it should be possible to select the CLP Boards in the Arduino IDE as shown in the screenshot below.
+
+   ![select CLP Board](extra/images/select-board.png)
+1. Upload the "LightingNodePRO" sketch to your Arduino.
+
+   ![upload sketch](extra/images/upload-sketch.png)
 1. Do the wiring.
    For more information on [how to wire the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
    
    ![the wiring](extra/images/board-wiring.jpg)
-1. Verify that your device works as expected.
+1. Verify your device works as expected.
    Open the Windows settings->devices->Other devices.
    Somewhere in the list of devices, there should be a device called "Lighting Node PRO".
-1. Now open [iCUE](https://www.corsair.com/icue) there should be the "Lighting Node PRO".
+1. Now open [iCUE](https://www.corsair.com/icue) there you should see the "Lighting Node PRO".
 
 ## Use the Lighting Node PRO
 
@@ -66,11 +80,11 @@ iCUE groups the LEDs into groups of ten.
 So if you have 20 LEDs, set the amount to 2.
 Now you can create lighting effects in the "Lighting Channel #" tabs.
 
-# Misc
+# Documentation
 
 - [API Documentation](https://legion2.github.io/CorsairLightingProtocol/)
 - [How it works](#how-it-works)
-- [Use multiple Devices](#use-multiple-devices)
+- [Use of multiple devices](#use-of-multiple-devices)
 - [Repeat or scale LED channel](#repeat-or-scale-led-channel)
 
 ## How it works
@@ -82,7 +96,7 @@ iCUE sends these via the CorsairLightingProtocol to the Arduino.
 These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino.
 The [FastLED](http://fastled.io/) library is used to control the LEDs.
 
-## Use multiple Devices
+## Use of multiple devices
 Each device has two unique IDs, that is, they should be unique.
 You must give each device a unique ID.
 There are two IDs that must be changed `Serial Number` and `DeviceID`.
