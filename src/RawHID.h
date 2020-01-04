@@ -24,6 +24,9 @@ THE SOFTWARE.
 #pragma once
 
 #include <Arduino.h>
+
+#if defined(ARDUINO_ARCH_AVR)
+
 #include "HID.h"
 #if defined(USBCON)
 
@@ -163,4 +166,5 @@ protected:
 	int featureLength;
 };
 extern RawHID_ RawHID;
+#endif
 #endif

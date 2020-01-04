@@ -17,8 +17,7 @@
 #include "CorsairLightingProtocolConstants.h"
 
 void CorsairLightingProtocolResponse::send(const uint8_t* data, size_t size) const {
-	uint8_t response[RESPONSE_SIZE];
-	memset(response, 0x00, sizeof(response));
+	uint8_t response[RESPONSE_SIZE] = { 0x00 };
 	if (size + 1 > sizeof(response)) {
 		return;
 	}
@@ -28,18 +27,17 @@ void CorsairLightingProtocolResponse::send(const uint8_t* data, size_t size) con
 }
 
 void CorsairLightingProtocolResponse::sendError() const {
-	uint8_t response[RESPONSE_SIZE];
-	memset(response, 0x00, sizeof(response));
+	uint8_t response[RESPONSE_SIZE] = { 0x00 };
 	response[0] = PROTOCOL_RESPONSE_ERROR;
 	sendX(response, sizeof(response));
 }
 
 void CorsairLightingProtocolResponse::send_P(const uint8_t* data, size_t size) const {
-	uint8_t response[RESPONSE_SIZE];
-	memset(response, 0x00, sizeof(response));
+	uint8_t response[RESPONSE_SIZE] = { 0x00 };
 	if (size + 1 > sizeof(response)) {
 		return;
 	}
+	response[0] = PROTOCOL_RESPONSE_OK;
 	memcpy_P(response + 1, data, size);
 	sendX(response, sizeof(response));
 }

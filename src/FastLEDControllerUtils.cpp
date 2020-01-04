@@ -37,7 +37,7 @@ void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleTo
 	auto leds = controller->getLEDs(channelIndex);
 	const float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
 	for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
-		leds[ledIndex] = leds[round(ledIndex * scaleFactor)];
+		leds[ledIndex] = leds[lround(ledIndex * scaleFactor)];
 	}
 }
 
@@ -66,7 +66,7 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 		ledStripIndexAfterScaling -= segments[i].scaleToSize;
 		ledStripIndexBeforeScaling -= segments[i].segmentLength;
 		for (int ledIndex = segments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
-			leds[ledStripIndexAfterScaling + ledIndex] = leds[ledStripIndexBeforeScaling + round(ledIndex * scaleFactor)];
+			leds[ledStripIndexAfterScaling + ledIndex] = leds[ledStripIndexBeforeScaling + lround(ledIndex * scaleFactor)];
 		}
 	}
 }
