@@ -22,7 +22,6 @@ var annotated_dup =
     [ "LEDController", "classLEDController.html", "classLEDController" ],
     [ "LEDGroup", "structLEDGroup.html", "structLEDGroup" ],
     [ "PWMFan", "classPWMFan.html", "classPWMFan" ],
-    [ "RawHID_", "classRawHID__.html", "classRawHID__" ],
     [ "SimpleFanController", "classSimpleFanController.html", "classSimpleFanController" ],
     [ "TemperatureController", "classTemperatureController.html", "classTemperatureController" ],
     [ "ThermistorTemperatureController", "classThermistorTemperatureController.html", "classThermistorTemperatureController" ]

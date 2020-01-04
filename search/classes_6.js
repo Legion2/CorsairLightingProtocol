@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['segmentscaling',['SegmentScaling',['../structCLP_1_1SegmentScaling.html',1,'CLP']]],
-  ['simplefancontroller',['SimpleFanController',['../classSimpleFanController.html',1,'']]]
+  ['temperaturecontroller',['TemperatureController',['../classTemperatureController.html',1,'']]],
+  ['thermistortemperaturecontroller',['ThermistorTemperatureController',['../classThermistorTemperatureController.html',1,'']]]
 ];

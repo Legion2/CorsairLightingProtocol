@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['rawhid_5f',['RawHID_',['../classRawHID__.html',1,'']]]
+  ['segmentscaling',['SegmentScaling',['../structCLP_1_1SegmentScaling.html',1,'CLP']]],
+  ['simplefancontroller',['SimpleFanController',['../classSimpleFanController.html',1,'']]]
 ];

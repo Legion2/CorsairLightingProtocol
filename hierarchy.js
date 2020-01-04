@@ -28,12 +28,6 @@ var hierarchy =
     ] ],
     [ "LEDChannel", "structLEDChannel.html", null ],
     [ "LEDGroup", "structLEDGroup.html", null ],
-    [ "PluggableUSBModule", null, [
-      [ "RawHID_", "classRawHID__.html", null ]
-    ] ],
     [ "PWMFan", "classPWMFan.html", null ],
-    [ "CLP::SegmentScaling", "structCLP_1_1SegmentScaling.html", null ],
-    [ "Stream", null, [
-      [ "RawHID_", "classRawHID__.html", null ]
-    ] ]
+    [ "CLP::SegmentScaling", "structCLP_1_1SegmentScaling.html", null ]
 ];
