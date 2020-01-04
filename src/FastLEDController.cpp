@@ -467,5 +467,5 @@ void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_
 
 void FastLEDController::clearLEDColorValues(uint8_t channel)
 {
-	memset(channelData[channel].valuesBuffer[0], 0, sizeof(channelData[channel].ledCount));
+	memset(channelData[channel].valuesBuffer[0], 0, channelData[channel].ledCount);
 }

@@ -37,8 +37,8 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 			return;
 		}
 		uint16_t temp = getTemperatureValue(tempSensor);
-		uint8_t tempdata[] = { toBigEndian(temp) };
-		response->send(tempdata, sizeof(tempdata));
+		uint8_t tempData[] = { toBigEndian(temp) };
+		response->send(tempData, sizeof(tempData));
 		break;
 	}
 	case READ_VOLTAGE_VALUE:
@@ -69,8 +69,8 @@ void TemperatureController::handleTemperatureControl(const Command& command, con
 		}
 		}
 
-		uint8_t voltagedata[] = { toBigEndian(voltage) };
-		response->send(voltagedata, sizeof(voltagedata));
+		uint8_t voltageData[] = { toBigEndian(voltage) };
+		response->send(voltageData, sizeof(voltageData));
 		break;
 	}
 	default:

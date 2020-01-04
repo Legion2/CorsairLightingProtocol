@@ -45,6 +45,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 				break;
 			case FanDetectionType::Disconnected:
 				mask[i] = FanMask::Disconnected;
+				break;
 			}
 		}
 		response->send(reinterpret_cast<byte*>(mask), sizeof(mask));
