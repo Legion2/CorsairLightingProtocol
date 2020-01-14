@@ -35,9 +35,13 @@ public:
 	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response);
 	void getDeviceID(uint8_t* deviceID) const;
 	void setDeviceID(const uint8_t* deviceID);
+	uint8_t getStatus();
+	void setStatus(uint8_t status);
 protected:
 	const uint8_t* firmwareVersion;
 	uint8_t deviceId[4];
+private:
+	uint8_t status = PROTOCOL_STATUS_OK;
 };
 
 CorsairLightingFirmware corsairLightingNodePROFirmware();
