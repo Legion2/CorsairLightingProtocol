@@ -1,5 +1,4 @@
-[![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol)
-[![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush)
+# Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush)
 
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
 
@@ -88,11 +87,10 @@ Now you can create lighting effects in the "Lighting Channel #" tabs.
 - [Repeat or scale LED channel](#repeat-or-scale-led-channel)
 
 ## How it works
-This library uses the USB HID interface of the Arduino Micro or Leonardo.
-In the board.txt the unique VID and PID of a "Lighting Node PRO" are defined.
-After uploading a sketch with the library and these IDs, iCUE recognizes the Arduino as a Lighting Node PRO.
-In iCUE you can then select the "Lighting Node PRO" and set some lighting effects.
-iCUE sends these via the CorsairLightingProtocol to the Arduino.
+This library uses the USB HID interface of the ATmega32U4.
+After uploading a sketch with the library and selected CLP Boards, iCUE recognizes the Arduino as a Corsair device, because the CLP Boards use USB IDs of Corsair.
+In iCUE you can then select the device and set some lighting effects.
+iCUE sends these via the HID protocol to the Arduino.
 These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino.
 The [FastLED](http://fastled.io/) library is used to control the LEDs.
 

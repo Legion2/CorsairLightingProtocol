@@ -33,7 +33,7 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command, cons
 	{
 	case READ_STATUS:
 	{
-		uint8_t statusData[] = { PROTOCOL_STATUS_OK };
+		uint8_t statusData[] = { status };
 		response->send(statusData, sizeof(statusData));
 		break;
 	}
@@ -74,6 +74,16 @@ void CorsairLightingFirmware::setDeviceID(const uint8_t* deviceID)
 {
 	memcpy(deviceId, deviceID, sizeof(deviceId));
 	EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, deviceId);
+}
+
+uint8_t CorsairLightingFirmware::getStatus()
+{
+	return status;
+}
+
+void CorsairLightingFirmware::setStatus(uint8_t a_status)
+{
+	status = a_status;
 }
 
 CorsairLightingFirmware corsairLightingNodePROFirmware()

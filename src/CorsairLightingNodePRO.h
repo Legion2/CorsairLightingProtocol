@@ -22,7 +22,7 @@
 #include "CorsairLightingProtocolHID.h"
 #include <FastLED.h>
 
-#if defined(USBCON)
+#if defined(SUPPORT_RAW_HID)
 
 #define CHANNEL_LED_COUNT_DEFAULT 96
 
