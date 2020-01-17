@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Corsair Lighting Protocol: Main Page</title>
+<title>Corsair Lighting Protocol: Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,11 +82,10 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Corsair Lighting Protocol Documentation</div>  </div>
+<div class="title">Corsair Lighting Protocol [![arduino-library-badge](<a href="https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?">https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?</a>)](<a href="https://www.ardu-badge.com/Corsair%20Lighting%20Protocol">https://www.ardu-badge.com/Corsair%20Lighting%20Protocol</a>) [![Test Status](<a href="https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg">https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg</a>)](<a href="https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush">https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush</a>) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a href="https://www.ardu-badge.com/Corsair%20Lighting%20Protocol"></a> <a href="https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush"></a></p>
-<p><b>This library can be used to integrate custom/unofficial RGB strips with iCUE.</b></p>
+<div class="textblock"><p><b>This library can be used to integrate custom/unofficial RGB strips with iCUE.</b></p>
 <h2>Features</h2>
 <ul>
 <li>Add support of the Lighting Node PRO protocol to Arduino.</li>
@@ -175,7 +174,7 @@ iCUE RGB Strip example</div></div>
 <li><a href="#repeat-or-scale-led-channel">Repeat or scale LED channel</a></li>
 </ul>
 <h2>How it works</h2>
-<p>This library uses the USB HID interface of the Arduino Micro or Leonardo. In the board.txt the unique VID and PID of a "Lighting Node PRO" are defined. After uploading a sketch with the library and these IDs, iCUE recognizes the Arduino as a Lighting Node PRO. In iCUE you can then select the "Lighting Node PRO" and set some lighting effects. iCUE sends these via the CorsairLightingProtocol to the Arduino. These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino. The <a href="http://fastled.io/">FastLED</a> library is used to control the LEDs.</p>
+<p>This library uses the USB HID interface of the ATmega32U4. After uploading a sketch with the library and selected CLP Boards, iCUE recognizes the Arduino as a Corsair device, because the CLP Boards use USB IDs of Corsair. In iCUE you can then select the device and set some lighting effects. iCUE sends these via the HID protocol to the Arduino. These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino. The <a href="http://fastled.io/">FastLED</a> library is used to control the LEDs.</p>
 <h2>Use of multiple devices</h2>
 <p>Each device has two unique IDs, that is, they should be unique. You must give each device a unique ID. There are two IDs that must be changed <code>Serial Number</code> and <code>DeviceID</code>.</p>
 <p>The Serial Number can be set in the constructor of <code><a class="el" href="classCorsairLightingProtocolHID.html">CorsairLightingProtocolHID</a></code> and <code><a class="el" href="classCLPUSBSerialBridge.html">CLPUSBSerialBridge</a></code> as shown in the <a href="examples/AdditionalFeatures/AdditionalFeatures.ino">example</a>. </p><div class="fragment"><div class="line">{C++}</div><div class="line">const char mySerialNumber[] PROGMEM = &quot;202B6949A967&quot;;</div><div class="line">CorsairLightingProtocolHID cHID(&amp;cLP, mySerialNumber);</div></div><!-- fragment --><p> The Serial Number MAY only consist of HEX characters (0-9 and A-F).</p>

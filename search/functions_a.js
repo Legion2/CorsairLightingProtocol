@@ -14,6 +14,7 @@ var searchData=
   ['setledexternaltemperature',['setLEDExternalTemperature',['../classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba',1,'FastLEDController::setLEDExternalTemperature()'],['../classLEDController.html#a0cd9f8d59afdb99860df3ae951935c25',1,'LEDController::setLEDExternalTemperature()']]],
   ['setledmode',['setLEDMode',['../classLEDController.html#ad86b10620d6a42b262a9ae9a27a57769',1,'LEDController']]],
   ['setledporttype',['setLEDPortType',['../classLEDController.html#af894e3de293907ba4600c8c4b75fb96e',1,'LEDController']]],
+  ['setserialnumber',['setSerialNumber',['../classRawHID__.html#a3d2a63a5f433c48925a7a712f333819c',1,'RawHID_']]],
   ['setup',['setup',['../classCorsairLightingProtocolSerial.html#aa5b6968262e6e91b19e68fa42a7c6042',1,'CorsairLightingProtocolSerial']]],
   ['simplefancontroller',['SimpleFanController',['../classSimpleFanController.html#a22ddb9ff04ad0d946eab0772d0fa9005',1,'SimpleFanController']]]
 ];

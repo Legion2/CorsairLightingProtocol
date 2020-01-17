@@ -1,6 +1,7 @@
 var NAVTREE =
 [
   [ "Corsair Lighting Protocol", "index.html", [
+    [ "Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush)", "index.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -24,7 +25,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"globals.html"
+"classSimpleFanController.html#abdbc80a4f1f8162d74fc870fc597128a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
