@@ -255,6 +255,8 @@ bool FastLEDController::updateLEDs()
 					}
 					else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
 						currentTemperature = temperatureController->getTemperature(tempGroup);
+					} else {
+						break;
 					}
 
 					CRGB color;

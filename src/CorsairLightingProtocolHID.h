@@ -21,7 +21,9 @@
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
 
-#if defined(USBCON)
+#include "RawHID.h"
+
+#if defined(SUPPORT_RAW_HID)
 
 #if defined(DEBUG) && defined(VERBOSE)
 extern bool printCommand;
