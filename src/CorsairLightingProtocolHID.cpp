@@ -14,9 +14,8 @@
    limitations under the License.
 */
 #include "CorsairLightingProtocolHID.h"
-#include "RawHID.h"
 
-#if defined(USBCON)
+#if defined(SUPPORT_RAW_HID)
 
 #if (RAWHID_TX_SIZE != RESPONSE_SIZE)
 #error "USB endpoint must be the same size as the protocol response"

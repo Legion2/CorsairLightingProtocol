@@ -56,12 +56,14 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			Serial.println(F("WriteLedRgbValue"));
 #endif
 			// TODO
+			response->sendError();
+			return;
 			break;
 		}
 		case WRITE_LED_COLOR_VALUES:
 		{
 			const uint8_t offset = data[1];
-			const uint8_t inputLength = data[2];
+			const size_t inputLength = min((size_t)data[2], sizeof(data) - 4);
 			const uint8_t color = data[3];
 			if (color >= 3) {
 				response->sendError();

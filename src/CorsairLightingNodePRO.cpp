@@ -15,7 +15,7 @@
 */
 #include "CorsairLightingNodePRO.h"
 
-#if defined(USBCON)
+#if defined(SUPPORT_RAW_HID)
 
 CorsairLightingNodePRO::CorsairLightingNodePRO() : ledController(true), cLP(&ledController, &firmware), connectionAdapter(&cLP)
 {

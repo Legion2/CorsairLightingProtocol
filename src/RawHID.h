@@ -24,17 +24,16 @@ THE SOFTWARE.
 #pragma once
 
 #include <Arduino.h>
-#include "HID.h"
-#if defined(USBCON)
 
-#define EPTYPE_DESCRIPTOR_SIZE uint8_t
-// HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
-// Interrupt Out Endpoint is optional, contoll endpoint is used by default
-#define ENDPOINT_COUNT 1
+#if defined(ARDUINO_ARCH_AVR)
+#include <HID.h>
+#endif
 
-#define HID_ENDPOINT_IN	pluggedEndpoint
-#define HID_TX HID_ENDPOINT_IN
+#if defined(ARDUINO_ARCH_AVR) && defined(USBCON)
+#define SUPPORT_RAW_HID
+#endif
 
+#if defined(SUPPORT_RAW_HID)
 // RawHID might never work with multireports, because of OS problems
 // therefore we have to make it a single report with no idea. No other HID device will be supported then.
 #undef RAWHID_USAGE_PAGE
@@ -45,6 +44,18 @@ THE SOFTWARE.
 
 #define RAWHID_TX_SIZE 64
 #define RAWHID_RX_SIZE 64
+
+#endif
+
+#if defined(ARDUINO_ARCH_AVR) && defined(USBCON) // Arduino Core
+
+#define EPTYPE_DESCRIPTOR_SIZE uint8_t
+// HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
+// Interrupt Out Endpoint is optional, contoll endpoint is used by default
+#define ENDPOINT_COUNT 1
+
+#define HID_ENDPOINT_IN	pluggedEndpoint
+#define HID_TX HID_ENDPOINT_IN
 
 class RawHID_ : public PluggableUSBModule, public Stream
 {
