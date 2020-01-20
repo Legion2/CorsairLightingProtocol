@@ -14,37 +14,44 @@
    limitations under the License.
 */
 #include "CorsairLightingProtocolController.h"
+
 #include "LEDController.h"
 
-CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDController* aLEDController, CorsairLightingFirmware* corsairLightingFirmware) : corsairLightingFirmware(corsairLightingFirmware), ledController(aLEDController), temperatureController(nullptr), fanController(nullptr) {}
+CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDController* aLEDController,
+																	 CorsairLightingFirmware* corsairLightingFirmware)
+	: corsairLightingFirmware(corsairLightingFirmware),
+	  ledController(aLEDController),
+	  temperatureController(nullptr),
+	  fanController(nullptr) {}
 
-CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDController* aLEDController, ITemperatureController* temperatureController, IFanController* fanController, CorsairLightingFirmware* corsairLightingFirmware) : corsairLightingFirmware(corsairLightingFirmware), ledController(aLEDController), temperatureController(temperatureController), fanController(fanController) {}
+CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDController* aLEDController,
+																	 ITemperatureController* temperatureController,
+																	 IFanController* fanController,
+																	 CorsairLightingFirmware* corsairLightingFirmware)
+	: corsairLightingFirmware(corsairLightingFirmware),
+	  ledController(aLEDController),
+	  temperatureController(temperatureController),
+	  fanController(fanController) {}
 
-void CorsairLightingProtocolController::handleCommand(const Command& command, CorsairLightingProtocolResponse* response)
-{
+void CorsairLightingProtocolController::handleCommand(const Command& command,
+													  CorsairLightingProtocolResponse* response) {
 	if (command.command < 0x10) {
 		corsairLightingFirmware->handleFirmwareCommand(command, response);
-	}
-	else if (command.command >= 0x10 && command.command < 0x20) {
+	} else if (command.command >= 0x10 && command.command < 0x20) {
 		if (temperatureController != nullptr) {
 			temperatureController->handleTemperatureControl(command, response);
-		}
-		else {
+		} else {
 			response->sendError();
 		}
-	}
-	else if (command.command >= 0x20 && command.command < 0x30) {
+	} else if (command.command >= 0x20 && command.command < 0x30) {
 		if (fanController != nullptr) {
 			fanController->handleFanControl(command, response);
-		}
-		else {
+		} else {
 			response->sendError();
 		}
-	}
-	else if (command.command >= 0x30 && command.command < 0x40) {
+	} else if (command.command >= 0x30 && command.command < 0x40) {
 		ledController->handleLEDControl(command, response);
-	}
-	else {
+	} else {
 		response->sendError();
 	}
 }
