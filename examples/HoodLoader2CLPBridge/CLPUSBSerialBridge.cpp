@@ -29,13 +29,13 @@ void resetIOMCU() {
 
 CLPUSBSerialBridge::CLPUSBSerialBridge(const char* serialNumber)
 {
-	RawHID.setSerialNumber(serialNumber);
+	CLP::RawHID.setSerialNumber(serialNumber);
 }
 
 void CLPUSBSerialBridge::begin()
 {
 	Serial1.begin(SERIAL_BAUD);
-	RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+	CLP::RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 }
 
 bool waitForSynchronization() {
@@ -59,14 +59,14 @@ void CLPUSBSerialBridge::sendResponse() {
 	Serial.print(F("R"));
 	Serial.println(rawHIDAndSerialBuffer[0], HEX);
 #endif // DEBUG
-	RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+	CLP::RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 	// free the shared buffer to receive new data
-	RawHID.enable();
+	CLP::RawHID.enable();
 }
 
 void CLPUSBSerialBridge::handleHID()
 {
-	if (RawHID.available()) {
+	if (CLP::RawHID.available()) {
 #ifdef DEBUG
 		Serial.print(F("C"));
 		Serial.println(rawHIDAndSerialBuffer[0], HEX);
