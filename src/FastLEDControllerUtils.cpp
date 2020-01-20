@@ -14,11 +14,11 @@
    limitations under the License.
 */
 #include "FastLEDControllerUtils.h"
-#include <math.h>
-#include <FastLED.h>
 
-void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex)
-{
+#include <FastLED.h>
+#include <math.h>
+
+void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex) {
 	auto& channel = controller->getChannel(channelIndex);
 	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);
@@ -32,8 +32,7 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 	}
 }
 
-void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize)
-{
+void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize) {
 	auto leds = controller->getLEDs(channelIndex);
 	const float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
 	for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
@@ -41,18 +40,17 @@ void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleTo
 	}
 }
 
-void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times)
-{
+void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times) {
 	auto leds = controller->getLEDs(channelIndex);
 	auto count = controller->getLEDCount(channelIndex);
-	//skip first iteration, because LEDs already contains the data at the first position
+	// skip first iteration, because LEDs already contains the data at the first position
 	for (int i = 1; i < times; i++) {
 		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
 	}
 }
 
-void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments, int segmentsCount)
-{
+void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments,
+						int segmentsCount) {
 	auto leds = controller->getLEDs(channelIndex);
 	int ledStripIndexAfterScaling = 0;
 	int ledStripIndexBeforeScaling = 0;
@@ -66,13 +64,13 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 		ledStripIndexAfterScaling -= segments[i].scaleToSize;
 		ledStripIndexBeforeScaling -= segments[i].segmentLength;
 		for (int ledIndex = segments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
-			leds[ledStripIndexAfterScaling + ledIndex] = leds[ledStripIndexBeforeScaling + lround(ledIndex * scaleFactor)];
+			leds[ledStripIndexAfterScaling + ledIndex] =
+				leds[ledStripIndexBeforeScaling + lround(ledIndex * scaleFactor)];
 		}
 	}
 }
 
-void CLP::reverse(FastLEDController* controller, uint8_t channelIndex)
-{
+void CLP::reverse(FastLEDController* controller, uint8_t channelIndex) {
 	auto leds = controller->getLEDs(channelIndex);
 	auto maxIndex = controller->getLEDCount(channelIndex) - 1;
 	for (int ledIndex = 0; ledIndex < maxIndex - ledIndex; ledIndex++) {

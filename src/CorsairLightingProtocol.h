@@ -19,6 +19,8 @@
  * @file
  * The central include file for CorsairLightingProtocol.
  */
+#include "CLPAdditionalFeatures.h"
+#include "CLPUtils.h"
 #include "CorsairLightingFirmware.h"
 #include "CorsairLightingNodePRO.h"
 #include "CorsairLightingProtocolConstants.h"
@@ -26,13 +28,11 @@
 #include "CorsairLightingProtocolHID.h"
 #include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolSerial.h"
-#include "IFanController.h"
 #include "FanController.h"
-#include "ILEDController.h"
-#include "LEDController.h"
 #include "FastLEDController.h"
-#include "ITemperatureController.h"
-#include "TemperatureController.h"
 #include "FastLEDControllerUtils.h"
-#include "CLPAdditionalFeatures.h"
-#include "CLPUtils.h"
+#include "IFanController.h"
+#include "ILEDController.h"
+#include "ITemperatureController.h"
+#include "LEDController.h"
+#include "TemperatureController.h"

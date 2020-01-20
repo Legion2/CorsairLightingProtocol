@@ -16,8 +16,8 @@
 #pragma once
 
 #include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolResponse.h"
 
 /**
  * The interface of a FanController.
@@ -25,7 +25,8 @@
 class IFanController {
 public:
 	/**
-	 * Handle a command and send back a response. This method is called if a new command for the FanController is received.
+	 * Handle a command and send back a response. This method is called if a new command for the FanController is
+	 * received.
 	 *
 	 * @param command the command which must be handled
 	 * @param response the callback used for the response

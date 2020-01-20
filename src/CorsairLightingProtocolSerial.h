@@ -15,11 +15,11 @@
 */
 #pragma once
 
-#include <CorsairLightingProtocolController.h>
 #include <CorsairLightingProtocolConstants.h>
+#include <CorsairLightingProtocolController.h>
 #include <CorsairLightingProtocolResponse.h>
 
-//The maximum time in milliseconds needed to receive 64-byte data
+// The maximum time in milliseconds needed to receive 64-byte data
 #define SERIAL_TIMEOUT 2
 #define SERIAL_BAUD 1000000
 
@@ -46,6 +46,7 @@ public:
 	 * This function must be called in loop.
 	 */
 	void update();
+
 private:
 	byte rawCommand[COMMAND_SIZE];
 	CorsairLightingProtocolController* const controller;

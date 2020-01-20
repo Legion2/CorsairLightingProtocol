@@ -16,7 +16,8 @@
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
 
-// Hint: The Arduino Uno does not have as much memory as the Arduino Mega, it may be that problems occur when a higher value is set here.
+// Hint: The Arduino Uno does not have as much memory as the Arduino Mega, it may be that problems occur when a higher
+// value is set here.
 #define CHANNEL_LED_COUNT 60
 
 #define DATA_PIN_CHANNEL_1 2

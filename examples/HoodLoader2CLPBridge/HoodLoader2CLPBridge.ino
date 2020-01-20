@@ -20,7 +20,7 @@ CLPUSBSerialBridge usbToSerialBridge;
 void setup() {
 #ifdef DEBUG
 	Serial.begin(1000000);
-#endif // DEBUG
+#endif  // DEBUG
 	usbToSerialBridge.begin();
 }
 

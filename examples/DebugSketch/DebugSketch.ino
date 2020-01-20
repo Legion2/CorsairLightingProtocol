@@ -67,18 +67,15 @@ void processCommand(String& cmd) {
 #ifdef VERBOSE
 	else if (cmd == F("toggle command")) {
 		printCommand = !printCommand;
-	}
-	else if (cmd == F("toggle response")) {
+	} else if (cmd == F("toggle response")) {
 		printResponse = !printResponse;
 	}
-#endif // VERBOSE
+#endif  // VERBOSE
 	else if (cmd == F("toggle loop")) {
 		printLoop = !printLoop;
-	}
-	else if (cmd == F("toggle update")) {
+	} else if (cmd == F("toggle update")) {
 		printUpdate = !printUpdate;
-	}
-	else {
+	} else {
 		Serial.println(F("Unknown command"));
 	}
 }

@@ -21,16 +21,15 @@
  */
 
 #include "Arduino.h"
-
 #include "IFanController.h"
 
 #define FAN_NUM 6
 
- /**
-  * The actual state of a fan port.
-  *
-  * @see FanDetectionType
-  */
+/**
+ * The actual state of a fan port.
+ *
+ * @see FanDetectionType
+ */
 enum class FanMask : byte {
 	/** No fan connected */
 	Disconnected = 0x00,
@@ -83,11 +82,13 @@ struct FanCurve {
 };
 
 /**
- * The abstract implementation of IFanController. This implementation handles the parsing and interpretation of incoming commands.
+ * The abstract implementation of IFanController. This implementation handles the parsing and interpretation of incoming
+ * commands.
  */
 class FanController : public IFanController {
 public:
 	virtual void handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+
 protected:
 	/**
 	 * Get the fan speed.
