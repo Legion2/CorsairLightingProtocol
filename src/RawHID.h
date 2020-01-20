@@ -53,10 +53,7 @@ THE SOFTWARE.
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
 // Interrupt Out Endpoint is optional, contoll endpoint is used by default
 #define ENDPOINT_COUNT 1
-
-#define HID_ENDPOINT_IN	pluggedEndpoint
-#define HID_TX HID_ENDPOINT_IN
-
+namespace CLP {
 class RawHID_ : public PluggableUSBModule, public Stream
 {
 public:
@@ -150,7 +147,7 @@ public:
 	}
 
 	virtual size_t write(const uint8_t *buffer, size_t size){
-		return USB_Send(HID_TX | TRANSFER_RELEASE, buffer, size);
+		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
 	}
 
 protected:
@@ -174,4 +171,5 @@ protected:
 	int featureLength;
 };
 extern RawHID_ RawHID;
+}
 #endif

@@ -55,32 +55,32 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 
 const char defaultSerialNumber[] PROGMEM = SERIAL_NUMBER;
 
-RawHID_::RawHID_(void) : PluggableUSBModule(ENDPOINT_COUNT, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), data(nullptr), serialNumber(defaultSerialNumber), featureReport(nullptr), featureLength(0)
+CLP::RawHID_::RawHID_(void) : PluggableUSBModule(ENDPOINT_COUNT, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), data(nullptr), serialNumber(defaultSerialNumber), featureReport(nullptr), featureLength(0)
 {
 	setTimeout(10);
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
 }
 
-void RawHID_::setSerialNumber(const char* argSerialNumber)
+void CLP::RawHID_::setSerialNumber(const char* argSerialNumber)
 {
 	serialNumber = argSerialNumber;
 }
 
-int RawHID_::getInterface(uint8_t* interfaceCount)
+int CLP::RawHID_::getInterface(uint8_t* interfaceCount)
 {
 	// Maybe as optional device FastRawHID with different USAGE PAGE
 	*interfaceCount += 1; // uses 1
 	HIDDescriptor hidInterface = {
 		D_INTERFACE(pluggedInterface, ENDPOINT_COUNT, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
 		D_HIDREPORT(sizeof(_hidReportDescriptorRawHID)),
-		D_ENDPOINT(USB_ENDPOINT_IN(HID_ENDPOINT_IN), USB_ENDPOINT_TYPE_INTERRUPT, RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)
+		D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT, RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)
 	};
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
 	
 }
 
-int RawHID_::getDescriptor(USBSetup& setup)
+int CLP::RawHID_::getDescriptor(USBSetup& setup)
 {
 	// Check if this is a HID Class Descriptor request
 	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
@@ -96,7 +96,7 @@ int RawHID_::getDescriptor(USBSetup& setup)
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
 }
 
-bool RawHID_::setup(USBSetup& setup)
+bool CLP::RawHID_::setup(USBSetup& setup)
 {
 	if (pluggedInterface != setup.wIndex) {
 		return false;
@@ -161,12 +161,13 @@ bool RawHID_::setup(USBSetup& setup)
 	return false;
 }
 
-uint8_t RawHID_::getShortName(char *name)
+uint8_t CLP::RawHID_::getShortName(char *name)
 {
 	name[0] = '\0';
 	strncat_P(name, serialNumber, ISERIAL_MAX_LEN - 1);
 	return strlen(name);
 }
-
+namespace CLP {
 RawHID_ RawHID;
+}
 #endif
