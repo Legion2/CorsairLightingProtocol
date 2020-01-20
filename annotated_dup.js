@@ -1,6 +1,7 @@
 var annotated_dup =
 [
     [ "CLP", null, [
+      [ "RawHID_", "classCLP_1_1RawHID__.html", "classCLP_1_1RawHID__" ],
       [ "SegmentScaling", "structCLP_1_1SegmentScaling.html", "structCLP_1_1SegmentScaling" ]
     ] ],
     [ "CLPUSBSerialBridge", "classCLPUSBSerialBridge.html", "classCLPUSBSerialBridge" ],
@@ -22,7 +23,6 @@ var annotated_dup =
     [ "LEDController", "classLEDController.html", "classLEDController" ],
     [ "LEDGroup", "structLEDGroup.html", "structLEDGroup" ],
     [ "PWMFan", "classPWMFan.html", "classPWMFan" ],
-    [ "RawHID_", "classRawHID__.html", "classRawHID__" ],
     [ "SimpleFanController", "classSimpleFanController.html", "classSimpleFanController" ],
     [ "TemperatureController", "classTemperatureController.html", "classTemperatureController" ],
     [ "ThermistorTemperatureController", "classThermistorTemperatureController.html", "classThermistorTemperatureController" ]
