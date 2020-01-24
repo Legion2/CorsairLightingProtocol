@@ -22,8 +22,7 @@ uint16_t CLP::fromBigEndian(const byte& byte1, const byte& byte2) {
 	return t;
 }
 
-void CLP::disableBuildInLEDs()
-{
+void CLP::disableBuildInLEDs() {
 #ifndef DEBUG
 #ifdef LED_BUILTIN_RX
 	pinMode(LED_BUILTIN_RX, INPUT);
@@ -34,9 +33,7 @@ void CLP::disableBuildInLEDs()
 #endif
 }
 
-bool CLP::isNullID(const uint8_t* deviceId) {
-	return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]);
-}
+bool CLP::isNullID(const uint8_t* deviceId) { return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]); }
 
 bool CLP::isResetID(const uint8_t* deviceId) {
 	return deviceId[0] == 0xFF && deviceId[1] == 0xFF && deviceId[2] == 0xFF && deviceId[3] == 0xFF;

@@ -14,72 +14,63 @@
    limitations under the License.
 */
 #include "TemperatureController.h"
+
 #include "CLPUtils.h"
 
-void TemperatureController::handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response)
-{
-	switch (command.command)
-	{
-	case READ_TEMPERATURE_MASK:
-	{
-		uint8_t mask[TEMPERATURE_NUM];
-		for (uint8_t i = 0; i < TEMPERATURE_NUM; i++) {
-			mask[i] = isTemperatureSensorConnected(i) ? TEMPERATURE_MASK_CONNECTED : TEMPERATURE_MASK_NOT_CONNECTED;
-		}
-		response->send(mask, sizeof(mask));
-		break;
-	}
-	case READ_TEMPERATURE_VALUE:
-	{
-		const uint8_t& tempSensor = command.data[0];
-		if (tempSensor >= TEMPERATURE_NUM) {
-			response->sendError();
-			return;
-		}
-		uint16_t temp = getTemperatureValue(tempSensor);
-		uint8_t tempData[] = { toBigEndian(temp) };
-		response->send(tempData, sizeof(tempData));
-		break;
-	}
-	case READ_VOLTAGE_VALUE:
-	{
-		const uint8_t& rail = command.data[0];
-		uint16_t voltage;
-		switch (rail)
-		{
-		case VOLTAGE_RAIL_12V:
-		{
-			voltage = getVoltageRail12V();
+void TemperatureController::handleTemperatureControl(const Command& command,
+													 const CorsairLightingProtocolResponse* response) {
+	switch (command.command) {
+		case READ_TEMPERATURE_MASK: {
+			uint8_t mask[TEMPERATURE_NUM];
+			for (uint8_t i = 0; i < TEMPERATURE_NUM; i++) {
+				mask[i] = isTemperatureSensorConnected(i) ? TEMPERATURE_MASK_CONNECTED : TEMPERATURE_MASK_NOT_CONNECTED;
+			}
+			response->send(mask, sizeof(mask));
 			break;
 		}
-		case VOLTAGE_RAIL_5V:
-		{
-			voltage = getVoltageRail5V();
+		case READ_TEMPERATURE_VALUE: {
+			const uint8_t& tempSensor = command.data[0];
+			if (tempSensor >= TEMPERATURE_NUM) {
+				response->sendError();
+				return;
+			}
+			uint16_t temp = getTemperatureValue(tempSensor);
+			uint8_t tempData[] = {toBigEndian(temp)};
+			response->send(tempData, sizeof(tempData));
 			break;
 		}
-		case VOLTAGE_RAIL_3V3:
-		{
-			voltage = getVoltageRail3V3();
+		case READ_VOLTAGE_VALUE: {
+			const uint8_t& rail = command.data[0];
+			uint16_t voltage;
+			switch (rail) {
+				case VOLTAGE_RAIL_12V: {
+					voltage = getVoltageRail12V();
+					break;
+				}
+				case VOLTAGE_RAIL_5V: {
+					voltage = getVoltageRail5V();
+					break;
+				}
+				case VOLTAGE_RAIL_3V3: {
+					voltage = getVoltageRail3V3();
+					break;
+				}
+				default: {
+					response->sendError();
+					return;
+				}
+			}
+
+			uint8_t voltageData[] = {toBigEndian(voltage)};
+			response->send(voltageData, sizeof(voltageData));
 			break;
 		}
 		default:
-		{
 			response->sendError();
-			return;
-		}
-		}
-
-		uint8_t voltageData[] = { toBigEndian(voltage) };
-		response->send(voltageData, sizeof(voltageData));
-		break;
-	}
-	default:
-		response->sendError();
 	}
 }
 
-uint16_t TemperatureController::getTemperature(uint8_t temperatureSensor)
-{
+uint16_t TemperatureController::getTemperature(uint8_t temperatureSensor) {
 	if (temperatureSensor >= TEMPERATURE_NUM) {
 		return 0;
 	}

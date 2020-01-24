@@ -15,12 +15,13 @@
 */
 #pragma once
 
+#include <FastLED.h>
+
 #include "Arduino.h"
-#include "CorsairLightingFirmware.h" 
-#include "FastLEDController.h"
+#include "CorsairLightingFirmware.h"
 #include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolHID.h"
-#include <FastLED.h>
+#include "FastLEDController.h"
 
 #if defined(SUPPORT_RAW_HID)
 
@@ -31,6 +32,7 @@ public:
 	CorsairLightingNodePRO();
 	void update();
 	FastLEDController* getFastLEDController();
+
 protected:
 	CRGB ledsChannel1[CHANNEL_LED_COUNT_DEFAULT];
 	CRGB ledsChannel2[CHANNEL_LED_COUNT_DEFAULT];

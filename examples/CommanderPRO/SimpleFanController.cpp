@@ -14,32 +14,31 @@
    limitations under the License.
 */
 #include "SimpleFanController.h"
+
 #include <EEPROM.h>
 
-SimpleFanController::SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate, uint16_t eEPROMAdress) : temperatureController(temperatureController), updateRate(updateRate), eEPROMAdress(eEPROMAdress)
-{
+SimpleFanController::SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate,
+										 uint16_t eEPROMAdress)
+	: temperatureController(temperatureController), updateRate(updateRate), eEPROMAdress(eEPROMAdress) {
 	load();
 }
 
-void SimpleFanController::addFan(uint8_t index, PWMFan* fan)
-{
+void SimpleFanController::addFan(uint8_t index, PWMFan* fan) {
 	if (index >= FAN_NUM) {
 		return;
 	}
 	fans[index] = fan;
-	switch (fanData[index].mode)
-	{
-	case FAN_CONTROL_MODE_FIXED_POWER:
-		fanData[index].speed = fan->calculateSpeedFromPower(fanData[index].power);
-		break;
-	case FAN_CONTROL_MODE_FIXED_RPM:
-		fanData[index].power = fan->calculatePowerFromSpeed(fanData[index].speed);
-		break;
+	switch (fanData[index].mode) {
+		case FAN_CONTROL_MODE_FIXED_POWER:
+			fanData[index].speed = fan->calculateSpeedFromPower(fanData[index].power);
+			break;
+		case FAN_CONTROL_MODE_FIXED_RPM:
+			fanData[index].power = fan->calculatePowerFromSpeed(fanData[index].speed);
+			break;
 	}
 }
 
-bool SimpleFanController::updateFans()
-{
+bool SimpleFanController::updateFans() {
 	long currentUpdate = millis();
 	long lastUpdateNumber = lastUpdate / updateRate;
 	long currentUpdateNumber = currentUpdate / updateRate;
@@ -63,8 +62,7 @@ bool SimpleFanController::updateFans()
 			const uint8_t& group = fanData[i].tempGroup;
 			if (group == FAN_CURVE_TEMP_GROUP_EXTERNAL) {
 				temp = externalTemp[i];
-			}
-			else if (group < TEMPERATURE_NUM) {
+			} else if (group < TEMPERATURE_NUM) {
 				temp = temperatureController->getTemperature(group);
 			}
 
@@ -73,16 +71,15 @@ bool SimpleFanController::updateFans()
 
 			if (temp <= fanCurve.temperatures[0]) {
 				speed = fanCurve.rpms[0];
-			}
-			else if (temp > fanCurve.temperatures[FAN_CURVE_POINTS_NUM - 1]) {
+			} else if (temp > fanCurve.temperatures[FAN_CURVE_POINTS_NUM - 1]) {
 				speed = fanCurve.rpms[FAN_CURVE_POINTS_NUM - 1];
-			}
-			else {
+			} else {
 				for (uint8_t p = 0; p < FAN_CURVE_POINTS_NUM - 1; p++) {
 					if (temp > fanCurve.temperatures[p + 1]) {
 						continue;
 					}
-					speed = map(temp, fanCurve.temperatures[p], fanCurve.temperatures[p + 1], fanCurve.rpms[p], fanCurve.rpms[p + 1]);
+					speed = map(temp, fanCurve.temperatures[p], fanCurve.temperatures[p + 1], fanCurve.rpms[p],
+								fanCurve.rpms[p + 1]);
 					break;
 				}
 			}
@@ -96,71 +93,60 @@ bool SimpleFanController::updateFans()
 	return false;
 }
 
-uint16_t SimpleFanController::getFanSpeed(uint8_t fan)
-{
+uint16_t SimpleFanController::getFanSpeed(uint8_t fan) {
 	return fanData[fan].speed;
 }
 
-void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed)
-{
+void SimpleFanController::setFanSpeed(uint8_t fan, uint16_t speed) {
 	fanData[fan].speed = speed;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_RPM;
 	fanData[fan].power = fans[fan] != nullptr ? fans[fan]->calculatePowerFromSpeed(speed) : 0;
 	triggerSave = true;
 }
 
-uint8_t SimpleFanController::getFanPower(uint8_t fan)
-{
+uint8_t SimpleFanController::getFanPower(uint8_t fan) {
 	return fanData[fan].power;
 }
 
-void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage)
-{
+void SimpleFanController::setFanPower(uint8_t fan, uint8_t percentage) {
 	fanData[fan].power = percentage;
 	fanData[fan].mode = FAN_CONTROL_MODE_FIXED_POWER;
 	fanData[fan].speed = fans[fan] != nullptr ? fans[fan]->calculateSpeedFromPower(percentage) : 0;
 	triggerSave = true;
 }
 
-void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve)
-{
+void SimpleFanController::setFanCurve(uint8_t fan, uint8_t group, FanCurve& fanCurve) {
 	fanData[fan].fanCurve = fanCurve;
 	fanData[fan].tempGroup = group;
 	fanData[fan].mode = FAN_CONTROL_MODE_CURVE;
 	triggerSave = true;
 }
 
-void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp)
-{
+void SimpleFanController::setFanExternalTemperature(uint8_t fan, uint16_t temp) {
 	externalTemp[fan] = temp;
 }
 
-void SimpleFanController::setFanForce3PinMode(bool flag)
-{
+void SimpleFanController::setFanForce3PinMode(bool flag) {
 	force3PinMode = flag;
 }
 
-FanDetectionType SimpleFanController::getFanDetectionType(uint8_t fan)
-{
+FanDetectionType SimpleFanController::getFanDetectionType(uint8_t fan) {
 	return fanData[fan].detectionType;
 }
 
-void SimpleFanController::setFanDetectionType(uint8_t fan, FanDetectionType type)
-{
+void SimpleFanController::setFanDetectionType(uint8_t fan, FanDetectionType type) {
 	if (fanData[fan].detectionType != type) {
 		fanData[fan].detectionType = type;
 		triggerSave = true;
 	}
 }
 
-bool SimpleFanController::load()
-{
+bool SimpleFanController::load() {
 	EEPROM.get(eEPROMAdress, fanData);
 	return true;
 }
 
-bool SimpleFanController::save()
-{
+bool SimpleFanController::save() {
 #ifdef DEBUG
 	Serial.println(F("Save fan data to EEPROM."));
 #endif

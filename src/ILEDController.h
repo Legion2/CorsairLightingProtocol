@@ -16,8 +16,8 @@
 #pragma once
 
 #include "Arduino.h"
-#include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolResponse.h"
 
 /**
  * The interface of a LEDController.

@@ -15,11 +15,12 @@
 */
 #pragma once
 
-#include "Arduino.h"
 #include <CorsairLightingProtocolConstants.h>
 
+#include "Arduino.h"
+
 #if (COMMAND_SIZE == RESPONSE_SIZE)
-	#define RAWHID_AND_SERIAL_BUFFER_SIZE COMMAND_SIZE
+#define RAWHID_AND_SERIAL_BUFFER_SIZE COMMAND_SIZE
 #endif
 
 #define SERIAL_SYNCHRONIZATION_TIMEOUT 20
@@ -33,7 +34,7 @@ public:
 	/**
 	 * Create a new CLPUSBSerialBridge with the default Serial Number.
 	 */
-	CLPUSBSerialBridge() {};
+	CLPUSBSerialBridge(){};
 	/**
 	 * Create a new CLPUSBSerialBridge and set a Serial Number.
 	 *
@@ -41,15 +42,15 @@ public:
 	 */
 	CLPUSBSerialBridge(const char* serialNumber);
 	/**
-	 * Setup the bridge connections. 
-	 * Must be called in the Arduino setup function.
+	 * Setup the bridge connections. Must be called in the Arduino setup function.
 	 */
 	virtual void begin();
 	/**
-	 * Reads data from USB and sents it via Serial to the main MCU. Wait for the response and set it back to the USB host.
-	 * MUST be called in the Arduino loop function.
+	 * Reads data from USB and sents it via Serial to the main MCU. Wait for the response and set it back to the USB
+	 * host. MUST be called in the Arduino loop function.
 	 */
 	virtual void handleHID();
+
 private:
 	byte rawHIDAndSerialBuffer[RAWHID_AND_SERIAL_BUFFER_SIZE];
 

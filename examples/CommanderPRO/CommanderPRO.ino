@@ -13,10 +13,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "SimpleFanController.h"
-#include "ThermistorTemperatureController.h"
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+
+#include "SimpleFanController.h"
+#include "ThermistorTemperatureController.h"
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
@@ -35,7 +36,8 @@
 CorsairLightingFirmware firmware = corsairCommanderPROFirmware();
 ThermistorTemperatureController temperatureController;
 FastLEDController ledController(&temperatureController, true);
-SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + ledController.getEEPROMSize());
+SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE,
+								  EEPROM_ADDRESS + ledController.getEEPROMSize());
 CorsairLightingProtocolController cLP(&ledController, &temperatureController, &fanController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 

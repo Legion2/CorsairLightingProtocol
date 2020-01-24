@@ -14,6 +14,7 @@
    limitations under the License.
 */
 #include "CLPAdditionalFeatures.h"
+
 #include "CLPUtils.h"
 
 bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
@@ -23,6 +24,6 @@ bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
 }
 
 void CLP::reset(CorsairLightingFirmware* firmware) {
-	byte deviceId[4] = { 0x00 };
+	byte deviceId[4] = {0x00};
 	firmware->setDeviceID(deviceId);
 }

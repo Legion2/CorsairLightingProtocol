@@ -17,7 +17,7 @@
 #include <FastLED.h>
 
 // Hint: The channels are swapped in iCUE, so the first channel in iCUE is here channel 2
-#define DATA_PIN_CHANNEL_1 2 // For the monitor backlight
+#define DATA_PIN_CHANNEL_1 2  // For the monitor backlight
 #define DATA_PIN_CHANNEL_2 3
 
 CRGB ledsChannel1[84];
@@ -36,7 +36,7 @@ void setup() {
 	ledController.onUpdateHook(0, []() {
 		// gamma correction with gamma value 2.0. Use napplyGamma_video for other gamma values.
 		CLP::gammaCorrection(&ledController, 0);
-		//napplyGamma_video(ledsChannel1, 84, 2.2);
+		// napplyGamma_video(ledsChannel1, 84, 2.2);
 	});
 }
 

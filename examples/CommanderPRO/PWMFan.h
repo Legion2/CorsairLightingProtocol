@@ -20,9 +20,9 @@
 class PWMFan {
 public:
 	/**
-	 * PWM fan which maps speed to power using linear interpolation.
-	 * This fan does not read the real RPM values. The Arduino timer for the given pin will be set to higher speed.
-	 * 
+	 * PWM fan which maps speed to power using linear interpolation. This fan does not read the real RPM values. The
+	 * Arduino timer for the given pin will be set to higher speed.
+	 *
 	 * @param pwmPin the Arduino pwm pin for this fan. Not all PWM pins are supported.
 	 * @param minRPM the speed in RPM at 0% power
 	 * @param maxRPM the speed in RPM at 100% power
@@ -31,6 +31,7 @@ public:
 	virtual void setPower(uint8_t percentage);
 	virtual uint8_t calculatePowerFromSpeed(uint16_t rpm);
 	virtual uint16_t calculateSpeedFromPower(uint8_t power);
+
 protected:
 	const uint8_t pwmPin;
 	const uint16_t minRPM;
