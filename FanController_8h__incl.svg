@@ -5,10 +5,10 @@
  -->
 <!-- Title: src/FanController.h Pages: 1 -->
 <svg width="449pt" height="196pt"
- viewBox="0.00 0.00 448.50 196.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ viewBox="0.00 0.00 449.00 196.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 192)">
 <title>src/FanController.h</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-192 444.5,-192 444.5,4 -4,4"/>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-192 445,-192 445,4 -4,4"/>
 <!-- Node0 -->
 <g id="node1" class="node">
 <title>Node0</title>
@@ -18,14 +18,14 @@
 <!-- Node1 -->
 <g id="node2" class="node">
 <title>Node1</title>
-<polygon fill="#ffffff" stroke="#bfbfbf" points="80,-.5 80,-19.5 138,-19.5 138,-.5 80,-.5"/>
-<text text-anchor="middle" x="109" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Arduino.h</text>
+<polygon fill="#ffffff" stroke="#bfbfbf" points="81,-.5 81,-19.5 139,-19.5 139,-.5 81,-.5"/>
+<text text-anchor="middle" x="110" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Arduino.h</text>
 </g>
 <!-- Node0&#45;&gt;Node1 -->
 <g id="edge1" class="edge">
 <title>Node0&#45;&gt;Node1</title>
-<path fill="none" stroke="#191970" d="M49.3274,-168.266C48.2506,-146.8389 47.8527,-94.4421 66,-56 71.3595,-44.6467 80.5641,-34.2223 89.0853,-26.1783"/>
-<polygon fill="#191970" stroke="#191970" points="91.4447,-28.7638 96.5889,-19.5016 86.7915,-23.5343 91.4447,-28.7638"/>
+<path fill="none" stroke="#191970" d="M49.2946,-168.2504C48.1525,-146.7922 47.6324,-94.3374 66,-56 71.4106,-44.7068 80.6519,-34.3986 89.2727,-26.4161"/>
+<polygon fill="#191970" stroke="#191970" points="91.6498,-28.9871 96.8876,-19.7775 87.0498,-23.7107 91.6498,-28.9871"/>
 </g>
 <!-- Node2 -->
 <g id="node3" class="node">
@@ -45,50 +45,50 @@
 <!-- Node2&#45;&gt;Node1 -->
 <g id="edge3" class="edge">
 <title>Node2&#45;&gt;Node1</title>
-<path fill="none" stroke="#191970" d="M108.0401,-112.3701C95.3676,-104.4681 79.3833,-91.9885 72,-76 63.9896,-58.6534 77.0263,-39.7123 89.7792,-26.5884"/>
-<polygon fill="#191970" stroke="#191970" points="92.2882,-29.0319 97.0938,-19.5896 87.4488,-23.9741 92.2882,-29.0319"/>
+<path fill="none" stroke="#191970" d="M108.0401,-112.3701C95.3676,-104.4681 79.3833,-91.9885 72,-76 63.9373,-58.5402 77.304,-39.6145 90.3515,-26.5251"/>
+<polygon fill="#191970" stroke="#191970" points="92.9067,-28.928 97.8325,-19.5479 88.1323,-23.8089 92.9067,-28.928"/>
 </g>
 <!-- Node3 -->
 <g id="node4" class="node">
 <title>Node3</title>
-<g id="a_node4"><a xlink:href="CorsairLightingProtocolResponse_8h_source.html" target="_top" xlink:title="CorsairLightingProtocolResponse.h">
-<polygon fill="#ffffff" stroke="#000000" points="81,-56.5 81,-75.5 251,-75.5 251,-56.5 81,-56.5"/>
-<text text-anchor="middle" x="166" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CorsairLightingProtocolResponse.h</text>
+<g id="a_node4"><a xlink:href="CorsairLightingProtocolConstants_8h_source.html" target="_top" xlink:title="CorsairLightingProtocolConstants.h">
+<polygon fill="#ffffff" stroke="#000000" points="81.5,-56.5 81.5,-75.5 252.5,-75.5 252.5,-56.5 81.5,-56.5"/>
+<text text-anchor="middle" x="167" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CorsairLightingProtocolConstants.h</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge4" class="edge">
 <title>Node2&#45;&gt;Node3</title>
-<path fill="none" stroke="#191970" d="M132.9675,-112.2455C138.5311,-104.4564 146.478,-93.3308 153.1829,-83.9439"/>
-<polygon fill="#191970" stroke="#191970" points="156.148,-85.8144 159.1124,-75.6427 150.4519,-81.7457 156.148,-85.8144"/>
+<path fill="none" stroke="#191970" d="M133.1417,-112.2455C138.8444,-104.4564 146.99,-93.3308 153.8625,-83.9439"/>
+<polygon fill="#191970" stroke="#191970" points="156.8568,-85.7789 159.9402,-75.6427 151.2087,-81.6437 156.8568,-85.7789"/>
 </g>
 <!-- Node4 -->
 <g id="node5" class="node">
 <title>Node4</title>
-<g id="a_node5"><a xlink:href="CorsairLightingProtocolConstants_8h_source.html" target="_top" xlink:title="CorsairLightingProtocolConstants.h">
-<polygon fill="#ffffff" stroke="#000000" points="269.5,-56.5 269.5,-75.5 440.5,-75.5 440.5,-56.5 269.5,-56.5"/>
-<text text-anchor="middle" x="355" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CorsairLightingProtocolConstants.h</text>
+<g id="a_node5"><a xlink:href="CorsairLightingProtocolResponse_8h_source.html" target="_top" xlink:title="CorsairLightingProtocolResponse.h">
+<polygon fill="#ffffff" stroke="#000000" points="271,-56.5 271,-75.5 441,-75.5 441,-56.5 271,-56.5"/>
+<text text-anchor="middle" x="356" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CorsairLightingProtocolResponse.h</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node4 -->
 <g id="edge6" class="edge">
 <title>Node2&#45;&gt;Node4</title>
-<path fill="none" stroke="#191970" d="M165.1063,-112.4369C204.1332,-102.8932 264.1965,-88.2052 306.2962,-77.9101"/>
-<polygon fill="#191970" stroke="#191970" points="307.1726,-81.299 316.055,-75.5237 305.5098,-74.4993 307.1726,-81.299"/>
+<path fill="none" stroke="#191970" d="M165.2771,-112.4369C204.4744,-102.8932 264.8,-88.2052 307.0835,-77.9101"/>
+<polygon fill="#191970" stroke="#191970" points="307.9968,-81.2901 316.8849,-75.5237 306.3408,-74.4888 307.9968,-81.2901"/>
 </g>
 <!-- Node3&#45;&gt;Node1 -->
 <g id="edge5" class="edge">
 <title>Node3&#45;&gt;Node1</title>
-<path fill="none" stroke="#191970" d="M156.0714,-56.2455C147.8162,-48.1352 135.8791,-36.4075 126.0918,-26.7919"/>
-<polygon fill="#191970" stroke="#191970" points="128.4011,-24.1542 118.8149,-19.6427 123.4954,-29.1476 128.4011,-24.1542"/>
+<path fill="none" stroke="#191970" d="M157.0714,-56.2455C148.8162,-48.1352 136.8791,-36.4075 127.0918,-26.7919"/>
+<polygon fill="#191970" stroke="#191970" points="129.4011,-24.1542 119.8149,-19.6427 124.4954,-29.1476 129.4011,-24.1542"/>
 </g>
 <!-- Node4&#45;&gt;Node1 -->
 <g id="edge7" class="edge">
 <title>Node4&#45;&gt;Node1</title>
-<path fill="none" stroke="#191970" d="M312.9906,-56.4369C266.7768,-45.9167 193.1039,-29.1456 148.088,-18.8981"/>
-<polygon fill="#191970" stroke="#191970" points="148.6441,-15.4352 138.1166,-16.6282 147.0903,-22.2606 148.6441,-15.4352"/>
+<path fill="none" stroke="#191970" d="M313.9906,-56.4369C267.7768,-45.9167 194.1039,-29.1456 149.088,-18.8981"/>
+<polygon fill="#191970" stroke="#191970" points="149.6441,-15.4352 139.1166,-16.6282 148.0903,-22.2606 149.6441,-15.4352"/>
 </g>
 </g>
 </svg>
