@@ -23,7 +23,7 @@ jobs:
         arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
         arduino-cli core install SparkFun:avr@1.1.5 --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --warnings more
+      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
   testUnoMega:
     name: Test UnoMega ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
         arduino-cli core update-index
         arduino-cli core install arduino:avr@1.8.2
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --warnings more
+      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
   test16u2:
     name: Test 16u2 ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
@@ -63,4 +63,4 @@ jobs:
         arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
         arduino-cli core install HoodLoader2:avr@2.0.5 --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
     - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --warnings more
+      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
