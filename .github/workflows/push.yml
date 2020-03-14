@@ -6,24 +6,45 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool, RepeatAndScale, TransformLLFansFormatToStrip, LS100, LightingNodeCORE, NonAddressable, AmbientBacklight]
-        board: ["arduino:avr:leonardo", "arduino:avr:micro", "SparkFun:avr:promicro:cpu=16MHzatmega32U4"]
+        sketch:
+          [
+            LightingNodePRO,
+            SingleStripLightingNodePRO,
+            CommanderPRO,
+            DeviceIDTool,
+            RepeatAndScale,
+            TransformLLFansFormatToStrip,
+            LS100,
+            LightingNodeCORE,
+            NonAddressable,
+            AmbientBacklight,
+          ]
+        board:
+          [
+            "Legion2:avr:leonardoclp",
+            "Legion2:avr:promicro5vclp",
+            "Legion2:avr:promicro3vclp",
+          ]
     steps:
-    - uses: actions/checkout@master
-    - uses: arduino/setup-arduino-cli@v1.0.0
-    - name: Install FastLED
-      run: arduino-cli lib install FastLED@3.2.0
-    - name: Install Arduino core
-      run: |
-        arduino-cli core update-index
-        arduino-cli core install arduino:avr@1.8.2
-    - name: Install SparkFun boards
-      if: contains(matrix.board, 'SparkFun')
-      run: |
-        arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
-        arduino-cli core install SparkFun:avr@1.1.5 --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
-    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
+      - uses: actions/checkout@master
+      - uses: arduino/setup-arduino-cli@v1.0.0
+      - name: Install FastLED
+        run: arduino-cli lib install FastLED@3.2.0
+      - name: Install Arduino core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr@1.8.2
+      - name: Install SparkFun boards
+        if: contains(matrix.board, 'promicro')
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
+          arduino-cli core install SparkFun:avr@1.1.5 --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
+      - name: Install CLP Boards
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-cli core install Legion2:avr@0.1.3 --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+        run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
   testUnoMega:
     name: Test UnoMega ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
@@ -32,35 +53,39 @@ jobs:
         sketch: [HoodLoader2UnoMegaController]
         board: ["arduino:avr:uno", "arduino:avr:mega:cpu=atmega2560"]
     steps:
-    - uses: actions/checkout@master
-    - uses: arduino/setup-arduino-cli@v1.0.0
-    - name: Install FastLED
-      run: arduino-cli lib install FastLED@3.2.0
-    - name: Install Arduino core
-      run: |
-        arduino-cli core update-index
-        arduino-cli core install arduino:avr@1.8.2
-    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
+      - uses: actions/checkout@master
+      - uses: arduino/setup-arduino-cli@v1.0.0
+      - name: Install FastLED
+        run: arduino-cli lib install FastLED@3.2.0
+      - name: Install Arduino core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr@1.8.2
+      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+        run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
   test16u2:
     name: Test 16u2 ${{ matrix.sketch }} for ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         sketch: [HoodLoader2CLPBridge]
-        board: ["HoodLoader2:avr:HoodLoader2atmega16u2:board=uno", "HoodLoader2:avr:HoodLoader2atmega16u2:board=mega2560"]
+        board: ["Legion2:avr:HoodLoader2atmega16u2clp"]
     steps:
-    - uses: actions/checkout@master
-    - uses: arduino/setup-arduino-cli@v1.0.0
-    - name: Install FastLED
-      run: arduino-cli lib install FastLED@3.2.0
-    - name: Install Arduino core
-      run: |
-        arduino-cli core update-index
-        arduino-cli core install arduino:avr@1.8.2
-    - name: Install HoodLoader2
-      run: |
-        arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
-        arduino-cli core install HoodLoader2:avr@2.0.5 --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
-    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
+      - uses: actions/checkout@master
+      - uses: arduino/setup-arduino-cli@v1.0.0
+      - name: Install FastLED
+        run: arduino-cli lib install FastLED@3.2.0
+      - name: Install Arduino core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr@1.8.2
+      - name: Install HoodLoader2
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
+          arduino-cli core install HoodLoader2:avr@2.0.5 --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
+      - name: Install CLP Boards
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-cli core install Legion2:avr@0.1.3 --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+        run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
