@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@master
+        uses: ArminJo/arduino-test-compile@v2.0.0
         with:
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@master
+        uses: ArminJo/arduino-test-compile@v2.0.0
         with:
           arduino-board-fqbn: ${{ matrix.board }}
           arduino-platform: arduino:avr@1.8.2
@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@master
+        uses: ArminJo/arduino-test-compile@v2.0.0
         with:
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
