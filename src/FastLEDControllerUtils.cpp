@@ -54,16 +54,33 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 	auto leds = controller->getLEDs(channelIndex);
 	int ledStripIndexAfterScaling = 0;
 	int ledStripIndexBeforeScaling = 0;
+	int totalLengthAfterScaling = 0;
+	SegmentScaling downScaledSegments[segmentsCount];
+	// scale down segments and move all segments together so there is space for upscaling
 	for (int i = 0; i < segmentsCount; i++) {
-		ledStripIndexAfterScaling += segments[i].scaleToSize;
-		ledStripIndexBeforeScaling += segments[i].segmentLength;
+		const int segmentLength = segments[i].segmentLength;
+		const int scaleToSize = segments[i].scaleToSize < segmentLength ? segments[i].scaleToSize : segmentLength;
+		const float scaleFactor = (float)segmentLength / scaleToSize;
+
+		for (int ledIndex = 0; ledIndex < scaleToSize; ledIndex++) {
+			leds[ledStripIndexAfterScaling + ledIndex] =
+				leds[ledStripIndexBeforeScaling + lround(ledIndex * scaleFactor)];
+		}
+		ledStripIndexAfterScaling += scaleToSize;
+		ledStripIndexBeforeScaling += segmentLength;
+		downScaledSegments[i].segmentLength = scaleToSize;
+		downScaledSegments[i].scaleToSize = segments[i].scaleToSize;
+		totalLengthAfterScaling += segments[i].scaleToSize;
 	}
 
+	ledStripIndexBeforeScaling = ledStripIndexAfterScaling;
+	ledStripIndexAfterScaling = totalLengthAfterScaling;
+	// scale up segments beginning with the last segment to not override other segments
 	for (int i = segmentsCount - 1; i >= 0; i--) {
-		const float scaleFactor = (float)segments[i].segmentLength / segments[i].scaleToSize;
-		ledStripIndexAfterScaling -= segments[i].scaleToSize;
-		ledStripIndexBeforeScaling -= segments[i].segmentLength;
-		for (int ledIndex = segments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
+		const float scaleFactor = (float)downScaledSegments[i].segmentLength / downScaledSegments[i].scaleToSize;
+		ledStripIndexAfterScaling -= downScaledSegments[i].scaleToSize;
+		ledStripIndexBeforeScaling -= downScaledSegments[i].segmentLength;
+		for (int ledIndex = downScaledSegments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
 			leds[ledStripIndexAfterScaling + ledIndex] =
 				leds[ledStripIndexBeforeScaling + lround(ledIndex * scaleFactor)];
 		}
