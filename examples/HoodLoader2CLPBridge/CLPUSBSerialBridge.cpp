@@ -15,27 +15,26 @@
 */
 
 #include "CLPUSBSerialBridge.h"
-#include <RawHID.h>
+
 #include <CorsairLightingProtocolConstants.h>
+#include <RawHID.h>
 
 void resetIOMCU() {
 	digitalWrite(RESET_PIN, LOW);
 	delay(10);
 	digitalWrite(RESET_PIN, HIGH);
 #ifdef DEBUG
-		Serial.println(F("R"));
-#endif // DEBUG
+	Serial.println(F("R"));
+#endif  // DEBUG
 }
 
-CLPUSBSerialBridge::CLPUSBSerialBridge(const char* serialNumber)
-{
-	RawHID.setSerialNumber(serialNumber);
+CLPUSBSerialBridge::CLPUSBSerialBridge(const char* serialNumber) {
+	CLP::RawHID.setSerialNumber(serialNumber);
 }
 
-void CLPUSBSerialBridge::begin()
-{
+void CLPUSBSerialBridge::begin() {
 	Serial1.begin(SERIAL_BAUD);
-	RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+	CLP::RawHID.begin(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 }
 
 bool waitForSynchronization() {
@@ -58,23 +57,22 @@ void CLPUSBSerialBridge::sendResponse() {
 #ifdef DEBUG
 	Serial.print(F("R"));
 	Serial.println(rawHIDAndSerialBuffer[0], HEX);
-#endif // DEBUG
-	RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+#endif  // DEBUG
+	CLP::RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
 	// free the shared buffer to receive new data
-	RawHID.enable();
+	CLP::RawHID.enable();
 }
 
-void CLPUSBSerialBridge::handleHID()
-{
-	if (RawHID.available()) {
+void CLPUSBSerialBridge::handleHID() {
+	if (CLP::RawHID.available()) {
 #ifdef DEBUG
 		Serial.print(F("C"));
 		Serial.println(rawHIDAndSerialBuffer[0], HEX);
-#endif // DEBUG
+#endif  // DEBUG
 		if (!waitForSynchronization()) {
 #ifdef DEBUG
 			Serial.println(F("S"));
-#endif // DEBUG
+#endif  // DEBUG
 			sendError();
 			return;
 		}
@@ -87,7 +85,7 @@ void CLPUSBSerialBridge::handleHID()
 			Serial.print(F("T"));
 			Serial.println(read);
 			Serial.println(rawHIDAndSerialBuffer[0], HEX);
-#endif // DEBUG
+#endif  // DEBUG
 			sendError();
 			return;
 		}

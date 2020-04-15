@@ -17,8 +17,8 @@
 
 #if defined(SUPPORT_RAW_HID)
 
-CorsairLightingNodePRO::CorsairLightingNodePRO() : ledController(true), cLP(&ledController, &firmware), connectionAdapter(&cLP)
-{
+CorsairLightingNodePRO::CorsairLightingNodePRO()
+	: ledController(true), cLP(&ledController, &firmware), connectionAdapter(&cLP) {
 	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT_DEFAULT);
 	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT_DEFAULT);
 }
@@ -31,9 +31,6 @@ void CorsairLightingNodePRO::update() {
 	}
 }
 
-FastLEDController* CorsairLightingNodePRO::getFastLEDController()
-{
-	return &ledController;
-}
+FastLEDController* CorsairLightingNodePRO::getFastLEDController() { return &ledController; }
 
 #endif

@@ -20,7 +20,6 @@
  */
 
 #include "Arduino.h"
-
 #include "ITemperatureController.h"
 
 #define TEMPERATURE_NUM 4
@@ -32,12 +31,14 @@
 #define VOLTAGE_RAIL_5V 1
 #define VOLTAGE_RAIL_3V3 2
 
- /**
-  * The abstract implementation of the ITemperatureController. This implementation handles the commands parsing and processing. 
-  */
+/**
+ * The abstract implementation of the ITemperatureController. This implementation handles the commands parsing and
+ * processing.
+ */
 class TemperatureController : public ITemperatureController {
 public:
-	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+	virtual void handleTemperatureControl(const Command& command,
+										  const CorsairLightingProtocolResponse* response) override;
 	/**
 	 * Get the temperature of a sensor.
 	 *
@@ -45,6 +46,7 @@ public:
 	 * @return the temperature in hundredths of a degree Celsius.
 	 */
 	virtual uint16_t getTemperature(uint8_t temperatureSensor);
+
 protected:
 	/**
 	 * Get the temperature of a sensor.

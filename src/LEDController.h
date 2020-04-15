@@ -20,35 +20,39 @@
  * Defines types and constants of the LED part of the protocol
  */
 
-#include "Arduino.h"
 #include <FastLED.h>
-#include "ILEDController.h"
+
+#include "Arduino.h"
 #include "CLPUtils.h"
+#include "ILEDController.h"
 
 #define CHANNEL_NUM 2
 #define GROUPS_NUM 6
 
- /**
-  * The mode of an LEDChannel. The mode describes how the LED lighting is done.
-  *
-  * @see LEDController#setLEDMode()
-  */
+/**
+ * The mode of an LEDChannel. The mode describes how the LED lighting is done.
+ *
+ * @see LEDController#setLEDMode()
+ */
 enum class ChannelMode : byte {
 	/** No lighting is active for the channel. The LEDs will not be updated. */
 	Disabled = 0x00,
-	/** The Hardware Playback uses lighting effects defined by LEDGroups and LEDController renders the effects themself. This mode works even without an USB connection.  */
+	/** The Hardware Playback uses lighting effects defined by LEDGroups and LEDController renders the effects themself.
+	   This mode works even without an USB connection.  */
 	HardwarePlayback = 0x01,
-	/** All lighting effects are rendered by iCUE and only the RGB values are transferred via USB to the device. This requires an USB connection. */
+	/** All lighting effects are rendered by iCUE and only the RGB values are transferred via USB to the device. This
+	   requires an USB connection. */
 	SoftwarePlayback = 0x02
 };
 
 bool inline isValidChannelMode(const ChannelMode channelMode) {
-	return channelMode == ChannelMode::Disabled || channelMode == ChannelMode::HardwarePlayback || channelMode == ChannelMode::SoftwarePlayback;
+	return channelMode == ChannelMode::Disabled || channelMode == ChannelMode::HardwarePlayback ||
+		   channelMode == ChannelMode::SoftwarePlayback;
 }
 
 /**
- * The type of LED Chipset connected to a channel. These are the types implicitly defined by iCUE when doing the lighting setup in iCUE.
- * These type is ignored by the LEDController.
+ * The type of LED Chipset connected to a channel. These are the types implicitly defined by iCUE when doing the
+ * lighting setup in iCUE. These type is ignored by the LEDController.
  */
 enum class PortType : byte {
 	/** WS2812B used by all new Corsair devices */
@@ -61,7 +65,7 @@ bool inline isValidPortType(const PortType portType) {
 	return portType == PortType::WS2812B || portType == PortType::UCS1903;
 }
 
-//LED group mode
+// LED group mode
 #define GROUP_MODE_Rainbow_Wave 0x00
 #define GROUP_MODE_Color_Shift 0x01
 #define GROUP_MODE_Color_Pulse 0x02
@@ -77,11 +81,7 @@ bool inline isValidPortType(const PortType portType) {
 /**
  * The animation speed of a LEDGroup.
  */
-enum class GroupSpeed : byte {
-	High = 0x00,
-	Medium = 0x01,
-	Low = 0x02
-};
+enum class GroupSpeed : byte { High = 0x00, Medium = 0x01, Low = 0x02 };
 
 bool inline isValidGroupSpeed(const GroupSpeed groupSpeed) {
 	return groupSpeed == GroupSpeed::High || groupSpeed == GroupSpeed::Medium || groupSpeed == GroupSpeed::Low;
@@ -90,10 +90,7 @@ bool inline isValidGroupSpeed(const GroupSpeed groupSpeed) {
 /**
  * The animation direction of a LEDGroup.
  */
-enum class GroupDirection : byte {
-	Backward = 0x00,
-	Forward = 0x01
-};
+enum class GroupDirection : byte { Backward = 0x00, Forward = 0x01 };
 
 bool inline isValidGroupDirection(const GroupDirection groupDirection) {
 	return groupDirection == GroupDirection::Backward || groupDirection == GroupDirection::Forward;
@@ -102,10 +99,7 @@ bool inline isValidGroupDirection(const GroupDirection groupDirection) {
 /**
  * Extra information for animations of a LEDGroup.
  */
-enum class GroupExtra : byte {
-	Alternating = 0x00,
-	Random = 0x01
-};
+enum class GroupExtra : byte { Alternating = 0x00, Random = 0x01 };
 
 bool inline isValidGroupExtra(const GroupExtra groupExtra) {
 	return groupExtra == GroupExtra::Alternating || groupExtra == GroupExtra::Random;
@@ -114,7 +108,8 @@ bool inline isValidGroupExtra(const GroupExtra groupExtra) {
 #define GROUP_TEMP_GROUP_EXTERNAL 255
 
 /**
- * A LEDGroup is a contiguous range of LEDs on a strip. The LEDGroup defines the size, position and lighting effects of the LED range.
+ * A LEDGroup is a contiguous range of LEDs on a strip. The LEDGroup defines the size, position and lighting effects of
+ * the LED range.
  */
 struct LEDGroup {
 	/**
@@ -160,21 +155,23 @@ struct LEDChannel {
 };
 
 /**
- * The abstract implemenation of an LEDController. This implementation handles the parsing and interpretation of incoming commands.
- * It also defines the data model to store the all required data from the commands.
+ * The abstract implemenation of an LEDController. This implementation handles the parsing and interpretation of
+ * incoming commands. It also defines the data model to store the all required data from the commands.
  */
 class LEDController : public ILEDController {
 public:
 	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
 	/**
-	 * Validates a LEDChannel by checking all constrains on the values. This function should be used after non type-safe operations on a LEDChannel.
+	 * Validates a LEDChannel by checking all constrains on the values. This function should be used after non type-safe
+	 * operations on a LEDChannel.
 	 *
 	 * @param ledChannel the LEDChannel to validate
 	 * @return true if the LEDChannel is valid, false otherwise
 	 */
 	virtual bool isValidLEDChannel(const LEDChannel& ledChannel);
 	/**
-	 * Validates a LEDGroup by checking all constrains on the values. This function should be used after non type-safe operations on a LEDGroup.
+	 * Validates a LEDGroup by checking all constrains on the values. This function should be used after non type-safe
+	 * operations on a LEDGroup.
 	 *
 	 * @param ledGroup the LEDGroup to validate
 	 * @return true if the LEDGroup is valid, false otherwise
@@ -191,12 +188,17 @@ public:
 	 * Reset all persistent data to default values of the LEDController.
 	 */
 	virtual void reset();
+
 protected:
 	LEDChannel channels[CHANNEL_NUM];
 	/**
 	 * Indicates that the configuration of the channels has been changed and should be saved.
 	 */
 	bool triggerSave = false;
+	/**
+	 * Stores the time at which the last command was received by the LEDController.
+	 */
+	long lastCommand = 0;
 
 	/**
 	 * Trigger update of the LEDs
@@ -218,7 +220,8 @@ protected:
 	 */
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
 	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
-	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values, size_t len) = 0;
+	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values,
+								   size_t len) = 0;
 	/**
 	 * Set the Channel mode.
 	 *
@@ -247,4 +250,8 @@ protected:
 	virtual bool clearLEDGroups(uint8_t channel);
 	virtual bool save() = 0;
 	virtual bool load() = 0;
+	/**
+	 * Save if triggerSave is true and then reset triggerSave.
+	 */
+	bool saveIfNeeded();
 };

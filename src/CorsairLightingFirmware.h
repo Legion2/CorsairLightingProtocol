@@ -16,9 +16,8 @@
 #pragma once
 
 #include "Arduino.h"
-
-#include "CorsairLightingProtocolResponse.h"
 #include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolResponse.h"
 
 #ifndef EEPROM_ADDRESS_DEVICE_ID
 #define EEPROM_ADDRESS_DEVICE_ID 0
@@ -37,9 +36,11 @@ public:
 	void setDeviceID(const uint8_t* deviceID);
 	uint8_t getStatus();
 	void setStatus(uint8_t status);
+
 protected:
 	const uint8_t* firmwareVersion;
 	uint8_t deviceId[4];
+
 private:
 	uint8_t status = PROTOCOL_STATUS_OK;
 };

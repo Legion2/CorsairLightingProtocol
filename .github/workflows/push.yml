@@ -2,85 +2,65 @@ on: [push, pull_request]
 name: Test
 jobs:
   test:
-    name: Test ${{ matrix.sketch }} for ${{ matrix.board }}
+    name: Test for ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sketch: [LightingNodePRO, SingleStripLightingNodePRO, CommanderPRO, DeviceIDTool, RepeatAndScale, TransformLLFansFormatToStrip, LS100, LightingNodeCORE, NonAddressable, AmbientBacklight]
-        board: ["arduino:avr:leonardo", "arduino:avr:micro", "SparkFun:avr:promicro:cpu=16MHzatmega32U4"]
+        board:
+          [
+            "Legion2:avr:leonardoclp",
+            "Legion2:avr:promicro5vclp",
+            "Legion2:avr:promicro3vclp",
+          ]
     steps:
-    - uses: actions/checkout@master
-    - name: Install FastLED
-      uses: Legion2/download-release-action@master
-      with:
-        repository: FastLED/FastLED
-        tag: '3.2.0'
-        path: libraries
-    - name: Install SparkFun boards
-      if: contains(matrix.board, 'SparkFun')
-      run: |
-        mkdir -p hardware/SparkFun
-        cd hardware/SparkFun
-        wget https://github.com/sparkfun/Arduino_Boards/raw/master/IDE_Board_Manager/sparkfunboards.1.1.5.tar.bz2
-        tar -xvjf sparkfunboards.1.1.5.tar.bz2
-        rm sparkfunboards.1.1.5.tar.bz2
-        mv avr-1.1.5 avr
-    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@v2.0.0
-      with:
-        board: ${{ matrix.board }}
-        sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+      - uses: actions/checkout@master
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v2.0.0
+        with:
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-platform: arduino:avr@1.8.2,SparkFun:avr@1.1.5,Legion2:avr@0.1.3
+          required-libraries: FastLED@3.2.0
+          sketch-names: LightingNodePRO.ino,
+            SingleStripLightingNodePRO.ino,
+            CommanderPRO.ino,
+            DeviceIDTool.ino,
+            RepeatAndScale.ino,
+            TransformLLFansFormatToStrip.ino,
+            LS100.ino,
+            LightingNodeCORE.ino,
+            NonAddressable.ino,
+            AmbientBacklight.ino,
+            DebugSketch.ino
+          examples-build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
   testUnoMega:
-    name: Test UnoMega ${{ matrix.sketch }} for ${{ matrix.board }}
+    name: Test UnoMega sketches for ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sketch: [HoodLoader2UnoMegaController]
         board: ["arduino:avr:uno", "arduino:avr:mega:cpu=atmega2560"]
     steps:
-    - uses: actions/checkout@master
-    - name: Install FastLED
-      uses: Legion2/download-release-action@master
-      with:
-        repository: FastLED/FastLED
-        tag: '3.2.0'
-        path: libraries
-    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@v2.0.0
-      with:
-        board: ${{ matrix.board }}
-        sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+      - uses: actions/checkout@master
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v2.0.0
+        with:
+          arduino-board-fqbn: ${{ matrix.board }}
+          arduino-platform: arduino:avr@1.8.2
+          required-libraries: FastLED@3.2.0
+          sketch-names: HoodLoader2UnoMegaController.ino
   test16u2:
-    name: Test 16u2 ${{ matrix.sketch }} for ${{ matrix.board }}
+    name: Test 16u2 sketch for ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sketch: [HoodLoader2CLPBridge]
-        board: ["HoodLoader2:avr:HoodLoader2atmega16u2:board=uno", "HoodLoader2:avr:HoodLoader2atmega16u2:board=mega2560"]
+        board: ["Legion2:avr:HoodLoader2atmega16u2clp"]
     steps:
-    - uses: actions/checkout@master
-    - name: Install FastLED
-      uses: Legion2/download-release-action@master
-      with:
-        repository: FastLED/FastLED
-        tag: '3.2.0'
-        path: libraries
-    - name: Download HoodLoader2
-      uses: Legion2/download-release-action@master
-      with:
-        repository: NicoHood/HoodLoader2
-        tag: '2.0.5'
-        path: hardware/HoodLoader2
-        file: '2.0.5-boards_manager.zip'
-    - name: Install HoodLoader2
-      run: |
-        cd hardware/HoodLoader2
-        sudo mv 2.0.5-boards_manager.zip some.zip
-        sudo unzip some.zip
-        sudo rm some.zip
-        sudo mv * avr
-    - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-      uses: Legion2/arduino-builder-action@v2.0.0
-      with:
-        board: ${{ matrix.board }}
-        sketch: ./examples/${{ matrix.sketch }}/${{ matrix.sketch }}.ino
+      - uses: actions/checkout@master
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v2.0.0
+        with:
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-platform: arduino:avr@1.8.2,HoodLoader2:avr@2.0.5,Legion2:avr@0.1.3
+          required-libraries: FastLED@3.2.0
+          sketch-names: HoodLoader2CLPBridge.ino

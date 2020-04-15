@@ -18,20 +18,19 @@
 #include "Arduino.h"
 #include "CorsairLightingFirmware.h"
 
-namespace CLP
-{
-	/**
-	 * Check if the device should be reseted. The check is based on the DeviceID from the firmware.
-	 *
-	 * @param firmware the firmware used by this device
-	 * @return if the device should be reset
-	 */
-	bool shouldReset(const CorsairLightingFirmware* firmware);
+namespace CLP {
+/**
+ * Check if the device should be reseted. The check is based on the DeviceID from the firmware.
+ *
+ * @param firmware the firmware used by this device
+ * @return if the device should be reset
+ */
+bool shouldReset(const CorsairLightingFirmware* firmware);
 
-	/**
-	 * Reset the DeviceID of the firmware.
-	 *
-	 * @param firmware reset this firmware
-	 */
-	void reset(CorsairLightingFirmware* firmware);
-}
+/**
+ * Reset the DeviceID of the firmware.
+ *
+ * @param firmware reset this firmware
+ */
+void reset(CorsairLightingFirmware* firmware);
+}  // namespace CLP

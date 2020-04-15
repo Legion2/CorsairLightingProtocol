@@ -17,8 +17,8 @@
 
 #include "Arduino.h"
 #include "FanController.h"
-#include "TemperatureController.h"
 #include "PWMFan.h"
+#include "TemperatureController.h"
 
 #define FAN_CONTROL_MODE_FIXED_POWER 0
 #define FAN_CONTROL_MODE_FIXED_RPM 1
@@ -41,7 +41,7 @@ class SimpleFanController : public FanController {
 public:
 	/**
 	 * Fan Controller must use the EEPROM else on startup the fans can't be controlled
-	 * 
+	 *
 	 * @param temperatureController the TemperatureController used to get the temperature to control the fans
 	 * @param updateRate is the time between fan speed updates in ms
 	 * @param eEPROMAdress the address where the data is stored in EEPROM
@@ -49,7 +49,7 @@ public:
 	SimpleFanController(TemperatureController* temperatureController, uint16_t updateRate, uint16_t eEPROMAdress);
 	/**
 	 * Add a fan to the Controller.
-	 * 
+	 *
 	 * @param index the index of the fan
 	 * @param fan the fan object
 	 */
@@ -58,6 +58,7 @@ public:
 	 * Update the fan speeds based on the temperature and commands.
 	 */
 	virtual bool updateFans();
+
 protected:
 	virtual uint16_t getFanSpeed(uint8_t fan) override;
 	virtual void setFanSpeed(uint8_t fan, uint16_t speed) override;
@@ -72,7 +73,7 @@ protected:
 	bool save();
 
 	TemperatureController* const temperatureController;
-	PWMFan* fans[FAN_NUM] = { nullptr };
+	PWMFan* fans[FAN_NUM] = {nullptr};
 	bool force3PinMode = false;
 	FanData fanData[FAN_NUM];
 	uint16_t externalTemp[FAN_NUM];

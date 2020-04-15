@@ -26,37 +26,31 @@ bool printCommand = PRINT_COMMAND;
 bool printResponse = PRINT_RESPONSE;
 #endif
 
-CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller) : controller(controller)
-{
-	RawHID.begin(rawhidData, sizeof(rawhidData));
+CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller)
+	: controller(controller) {
+	CLP::RawHID.begin(rawhidData, sizeof(rawhidData));
 }
 
-CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller, const char* serialNumber) : CorsairLightingProtocolHID(controller)
-{
-	RawHID.setSerialNumber(serialNumber);
+CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller,
+													   const char* serialNumber)
+	: CorsairLightingProtocolHID(controller) {
+	CLP::RawHID.setSerialNumber(serialNumber);
 }
 
-void CorsairLightingProtocolHID::update()
-{
-	if (available())
-	{
+void CorsairLightingProtocolHID::update() {
+	if (available()) {
 		Command command;
 		getCommand(command);
 		controller->handleCommand(command, this);
 	}
 }
 
-bool CorsairLightingProtocolHID::available() const
-{
-	return RawHID.available() > 0;
-}
+bool CorsairLightingProtocolHID::available() const { return CLP::RawHID.available() > 0; }
 
-void CorsairLightingProtocolHID::getCommand(Command& command)
-{
-	auto bytesAvailable = RawHID.available();
-	if (bytesAvailable)
-	{
-		RawHID.readBytes(command.raw, sizeof(command.raw));
+void CorsairLightingProtocolHID::getCommand(Command& command) {
+	auto bytesAvailable = CLP::RawHID.available();
+	if (bytesAvailable) {
+		CLP::RawHID.readBytes(command.raw, sizeof(command.raw));
 #if defined(DEBUG) && defined(VERBOSE)
 		if (printCommand) {
 			Serial.print(F("Received Command: "));
@@ -68,15 +62,14 @@ void CorsairLightingProtocolHID::getCommand(Command& command)
 	}
 }
 
-void CorsairLightingProtocolHID::sendX(const uint8_t* data, const size_t x) const
-{
+void CorsairLightingProtocolHID::sendX(const uint8_t* data, const size_t x) const {
 #if defined(DEBUG) && defined(VERBOSE)
 	if (printResponse) {
 		Serial.print(F("Send Response: "));
 		Serial.println(data[0], HEX);
 	}
 #endif
-	RawHID.write(data, x);
+	CLP::RawHID.write(data, x);
 }
 
 #endif

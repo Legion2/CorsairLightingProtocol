@@ -16,11 +16,9 @@
 #pragma once
 
 #include "Arduino.h"
-
+#include "CorsairLightingProtocolConstants.h"
 #include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolResponse.h"
-#include "CorsairLightingProtocolConstants.h"
-
 #include "RawHID.h"
 
 #if defined(SUPPORT_RAW_HID)
@@ -31,9 +29,8 @@ extern bool printResponse;
 #endif
 
 /**
- * The HID Adapter for CorsairLightingProtocolController. This adapter uses the USB HID interface
- * directly to mimic a corsair device. This adapter can only be used when the USB interface is
- * accessable by the sketch.
+ * The HID Adapter for CorsairLightingProtocolController. This adapter uses the USB HID interface directly to mimic a
+ * corsair device. This adapter can only be used when the USB interface is accessable by the sketch.
  */
 class CorsairLightingProtocolHID : CorsairLightingProtocolResponse {
 public:
@@ -51,10 +48,10 @@ public:
 	 */
 	CorsairLightingProtocolHID(CorsairLightingProtocolController* controller, const char* serialNumber);
 	/**
-	* Read commands form HID interface and pass them to the contoller.
-	* This function must be called in loop.
-	*/
+	 * Read commands form HID interface and pass them to the contoller. This function must be called in loop.
+	 */
 	void update();
+
 protected:
 	uint8_t rawhidData[COMMAND_SIZE];
 	CorsairLightingProtocolController* const controller;

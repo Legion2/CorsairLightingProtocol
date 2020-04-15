@@ -28,7 +28,7 @@ THE SOFTWARE.
 #ifndef HID_ENDPOINT_INTERVAL_RAWHID
 #define HID_ENDPOINT_INTERVAL_RAWHID 0x01
 #endif
-
+/* clang-format off */
 static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 	/*    RAW HID */
     0x06, lowByte(RAWHID_USAGE_PAGE), highByte(RAWHID_USAGE_PAGE),      /* 30 */
@@ -48,46 +48,54 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
     0x91, 0x02,                  /* Output (array) */
     0xC0                         /* end collection */
 };
-
+/* clang-format on */
 #ifndef SERIAL_NUMBER
 #define SERIAL_NUMBER "FB66DF55421900F5"
 #endif
 
 const char defaultSerialNumber[] PROGMEM = SERIAL_NUMBER;
 
-RawHID_::RawHID_(void) : PluggableUSBModule(ENDPOINT_COUNT, 1, epType), protocol(HID_REPORT_PROTOCOL), idle(1), dataLength(0), dataAvailable(0), data(nullptr), serialNumber(defaultSerialNumber), featureReport(nullptr), featureLength(0)
-{
+CLP::RawHID_::RawHID_(void)
+	: PluggableUSBModule(ENDPOINT_COUNT, 1, epType),
+	  protocol(HID_REPORT_PROTOCOL),
+	  idle(1),
+	  dataLength(0),
+	  dataAvailable(0),
+	  data(nullptr),
+	  serialNumber(defaultSerialNumber),
+	  featureReport(nullptr),
+	  featureLength(0) {
 	setTimeout(10);
 	epType[0] = EP_TYPE_INTERRUPT_IN;
 	PluggableUSB().plug(this);
 }
 
-void RawHID_::setSerialNumber(const char* argSerialNumber)
-{
-	serialNumber = argSerialNumber;
-}
+void CLP::RawHID_::setSerialNumber(const char* argSerialNumber) { serialNumber = argSerialNumber; }
 
-int RawHID_::getInterface(uint8_t* interfaceCount)
-{
+int CLP::RawHID_::getInterface(uint8_t* interfaceCount) {
 	// Maybe as optional device FastRawHID with different USAGE PAGE
-	*interfaceCount += 1; // uses 1
-	HIDDescriptor hidInterface = {
-		D_INTERFACE(pluggedInterface, ENDPOINT_COUNT, USB_DEVICE_CLASS_HUMAN_INTERFACE, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
-		D_HIDREPORT(sizeof(_hidReportDescriptorRawHID)),
-		D_ENDPOINT(USB_ENDPOINT_IN(HID_ENDPOINT_IN), USB_ENDPOINT_TYPE_INTERRUPT, RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)
-	};
+	*interfaceCount += 1;  // uses 1
+	HIDDescriptor hidInterface = {D_INTERFACE(pluggedInterface, ENDPOINT_COUNT, USB_DEVICE_CLASS_HUMAN_INTERFACE,
+											  HID_SUBCLASS_NONE, HID_PROTOCOL_NONE),
+								  D_HIDREPORT(sizeof(_hidReportDescriptorRawHID)),
+								  D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT,
+											 RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)};
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
-	
 }
 
-int RawHID_::getDescriptor(USBSetup& setup)
-{
+int CLP::RawHID_::getDescriptor(USBSetup& setup) {
 	// Check if this is a HID Class Descriptor request
-	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) { return 0; }
-	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) { return 0; }
+	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) {
+		return 0;
+	}
+	if (setup.wValueH != HID_REPORT_DESCRIPTOR_TYPE) {
+		return 0;
+	}
 
 	// In a HID Class Descriptor wIndex cointains the interface number
-	if (setup.wIndex != pluggedInterface) { return 0; }
+	if (setup.wIndex != pluggedInterface) {
+		return 0;
+	}
 
 	// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
 	// due to the USB specs, but Windows and Linux just assumes its in report mode.
@@ -96,8 +104,7 @@ int RawHID_::getDescriptor(USBSetup& setup)
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
 }
 
-bool RawHID_::setup(USBSetup& setup)
-{
+bool CLP::RawHID_::setup(USBSetup& setup) {
 	if (pluggedInterface != setup.wIndex) {
 		return false;
 	}
@@ -105,8 +112,7 @@ bool RawHID_::setup(USBSetup& setup)
 	uint8_t request = setup.bRequest;
 	uint8_t requestType = setup.bmRequestType;
 
-	if (requestType == REQUEST_DEVICETOHOST_CLASS_INTERFACE)
-	{
+	if (requestType == REQUEST_DEVICETOHOST_CLASS_INTERFACE) {
 		if (request == HID_GET_REPORT) {
 			// TODO: HID_GetReport();
 			return true;
@@ -117,8 +123,7 @@ bool RawHID_::setup(USBSetup& setup)
 		}
 	}
 
-	if (requestType == REQUEST_HOSTTODEVICE_CLASS_INTERFACE)
-	{
+	if (requestType == REQUEST_HOSTTODEVICE_CLASS_INTERFACE) {
 		if (request == HID_SET_PROTOCOL) {
 			protocol = setup.wValueL;
 			return true;
@@ -127,13 +132,12 @@ bool RawHID_::setup(USBSetup& setup)
 			idle = setup.wValueL;
 			return true;
 		}
-		if (request == HID_SET_REPORT)
-		{
+		if (request == HID_SET_REPORT) {
 			// Check if data has the correct length afterwards
 			int length = setup.wLength;
 
 			// Feature (set feature report)
-			if(setup.wValueH == HID_REPORT_TYPE_FEATURE){
+			if (setup.wValueH == HID_REPORT_TYPE_FEATURE) {
 				// No need to check for negative featureLength values,
 				// except the host tries to send more then 32k bytes.
 				// We dont have that much ram anyways.
@@ -147,8 +151,8 @@ bool RawHID_::setup(USBSetup& setup)
 			}
 
 			// Output (set out report)
-			else if(setup.wValueH == HID_REPORT_TYPE_OUTPUT){
-				if(!dataAvailable && length <= dataLength){
+			else if (setup.wValueH == HID_REPORT_TYPE_OUTPUT) {
+				if (!dataAvailable && length <= dataLength) {
 					// Write data to fit to the end (not the beginning) of the array
 					USB_RecvControl(data + dataLength - length, length);
 					dataAvailable = length;
@@ -161,12 +165,12 @@ bool RawHID_::setup(USBSetup& setup)
 	return false;
 }
 
-uint8_t RawHID_::getShortName(char *name)
-{
+uint8_t CLP::RawHID_::getShortName(char* name) {
 	name[0] = '\0';
 	strncat_P(name, serialNumber, ISERIAL_MAX_LEN - 1);
 	return strlen(name);
 }
-
+namespace CLP {
 RawHID_ RawHID;
+}
 #endif

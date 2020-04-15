@@ -272,3 +272,7 @@ __vm/
 
 # VS Code settings
 .vscode/
+
+# Arduino CLI
+*.elf
+*.hex

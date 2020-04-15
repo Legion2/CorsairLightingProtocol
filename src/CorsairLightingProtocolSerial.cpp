@@ -15,27 +15,24 @@
 */
 #include "CorsairLightingProtocolSerial.h"
 
-CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocolController* controller) : controller(controller) {}
+CorsairLightingProtocolSerial::CorsairLightingProtocolSerial(CorsairLightingProtocolController* controller)
+	: controller(controller) {}
 
-void CorsairLightingProtocolSerial::setup()
-{
+void CorsairLightingProtocolSerial::setup() {
 	Serial.begin(SERIAL_BAUD);
 	Serial.setTimeout(SERIAL_TIMEOUT);
 }
 
-void CorsairLightingProtocolSerial::update()
-{
+void CorsairLightingProtocolSerial::update() {
 	bool available = handleSerial();
-	if (available)
-	{
+	if (available) {
 		Command command;
 		memcpy(command.raw, rawCommand, sizeof(command.raw));
 		controller->handleCommand(command, this);
 	}
 }
 
-bool CorsairLightingProtocolSerial::handleSerial()
-{
+bool CorsairLightingProtocolSerial::handleSerial() {
 	if (Serial.available()) {
 		delay(SERIAL_TIMEOUT);
 		while (Serial.available()) {
@@ -51,16 +48,12 @@ bool CorsairLightingProtocolSerial::handleSerial()
 		size_t read = Serial.readBytes(rawCommand, sizeof(rawCommand));
 		if (read == sizeof(rawCommand)) {
 			return true;
-		}
-		else {
-			byte data[] = { PROTOCOL_RESPONSE_ERROR, (byte)read };
+		} else {
+			byte data[] = {PROTOCOL_RESPONSE_ERROR, (byte)read};
 			sendX(data, sizeof(data));
 		}
 	}
 	return false;
 }
 
-void CorsairLightingProtocolSerial::sendX(const uint8_t* data, const size_t x) const
-{
-	Serial.write(data, x);
-}
+void CorsairLightingProtocolSerial::sendX(const uint8_t* data, const size_t x) const { Serial.write(data, x); }

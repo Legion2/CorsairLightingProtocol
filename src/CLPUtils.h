@@ -19,53 +19,46 @@
 
 #define toBigEndian(a) highByte(a), lowByte(a)
 
-namespace CLP
-{
-	uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
+namespace CLP {
+uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
 
-	/**
-	 * Convert value from range 0-100 to 0-255
-	 *
-	 * @param value the value which should be converted
-	 */
-	inline uint8_t convert100To255(uint8_t value)
-	{
-		return value * 2.5546875f;
-	}
+/**
+ * Convert value from range 0-100 to 0-255
+ *
+ * @param value the value which should be converted
+ */
+inline uint8_t convert100To255(uint8_t value) { return value * 2.5546875f; }
 
-	/**
-	 * Convert value from range 0-255 to 0-100.
-	 *
-	 * @param value the value which should be converted
-	 */
-	inline uint8_t convert255To100(uint8_t value)
-	{
-		return value / 2.5546875f;
-	}
+/**
+ * Convert value from range 0-255 to 0-100.
+ *
+ * @param value the value which should be converted
+ */
+inline uint8_t convert255To100(uint8_t value) { return value / 2.5546875f; }
 
-	/**
-	 * Check if a device id is the special null id (00 00 00 00).
-	 *
-	 * @param deviceId the device id to check
-	 */
-	bool isNullID(const uint8_t* deviceId);
+/**
+ * Check if a device id is the special null id (00 00 00 00).
+ *
+ * @param deviceId the device id to check
+ */
+bool isNullID(const uint8_t* deviceId);
 
-	/**
-	 * Check if a device id is the special reset id (FF FF FF FF).
-	 *
-	 * @param deviceId the device id to check
-	 */
-	bool isResetID(const uint8_t* deviceId);
+/**
+ * Check if a device id is the special reset id (FF FF FF FF).
+ *
+ * @param deviceId the device id to check
+ */
+bool isResetID(const uint8_t* deviceId);
 
-	/**
-	 * This will disable the RX and TX built in LEDs on Arduino Leonardo, Micro and Pro Micro.
-	 */
-	void disableBuildInLEDs();
+/**
+ * This will disable the RX and TX built in LEDs on Arduino Leonardo, Micro and Pro Micro.
+ */
+void disableBuildInLEDs();
 
-	/**
-	 * Print the given DeviceID to Serial
-	 *
-	 * @param deviceId the device id to print
-	 */
-	void printDeviceID(const uint8_t* deviceId);
-}
+/**
+ * Print the given DeviceID to Serial
+ *
+ * @param deviceId the device id to print
+ */
+void printDeviceID(const uint8_t* deviceId);
+}  // namespace CLP

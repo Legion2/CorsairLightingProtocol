@@ -16,8 +16,8 @@
 //
 // UPLOAD THIS TO THE ARDUINO AND OPEN SERIAL MONITOR WITH BOUDRATE 115200
 //
-#include <EEPROM.h>
 #include <CLPUtils.h>
+#include <EEPROM.h>
 
 #define EEPROM_ADDRESS_DEVICE_ID 0
 
@@ -28,14 +28,15 @@ void setup() {
 	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, deviceID);
 
 	while (!Serial) {
-		; // wait for serial port to connect. Needed for native USB
+		;  // wait for serial port to connect. Needed for native USB
 	}
 	Serial.print(F("Current DeviceID: "));
 	CLP::printDeviceID(deviceID);
 	Serial.println();
-	Serial.println(F("Set a new DeviceID by typing it in the Serial Monitor. The new DeviceID must be in same format as above. 4 Blocks with 2 digits separated by white space."));
+	Serial.println(
+		F("Set a new DeviceID by typing it in the Serial Monitor. The new DeviceID must be in same format as above. 4 "
+		  "Blocks with 2 digits separated by white space."));
 	Serial.println();
-
 }
 
 void loop() {
@@ -45,8 +46,7 @@ void loop() {
 			Serial.println(F("Input is too short!"));
 			Serial.println(F("Do not forget the leading zeroes!"));
 			Serial.println();
-		}
-		else {
+		} else {
 			uint8_t newDeviceID[4];
 
 			newDeviceID[0] = strtol(&inputString[0], nullptr, 16);
@@ -57,10 +57,13 @@ void loop() {
 			CLP::printDeviceID(newDeviceID);
 			Serial.println();
 			if (CLP::isNullID(newDeviceID)) {
-				Serial.println(F("This is a special DeviceID, it will generate a new random DeviceID next time iCUE controls the device!"));
+				Serial.println(
+					F("This is a special DeviceID, it will generate a new random DeviceID next time iCUE controls the "
+					  "device!"));
 			}
 			if (CLP::isResetID(newDeviceID)) {
-				Serial.println(F("This is a special DeviceID, it will reset the device and then generate a new DeviceID!"));
+				Serial.println(
+					F("This is a special DeviceID, it will reset the device and then generate a new DeviceID!"));
 			}
 			Serial.println();
 			EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, newDeviceID);
