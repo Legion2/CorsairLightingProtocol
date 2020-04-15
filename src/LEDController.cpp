@@ -18,13 +18,11 @@
 #include "TemperatureController.h"
 
 void LEDController::handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) {
+	lastCommand = millis();
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {
 		triggerLEDUpdate();
-		if (triggerSave) {
-			triggerSave = false;
-			save();
-		}
+		saveIfNeeded();
 	} else {
 		if (data[0] >= CHANNEL_NUM) {
 			response->sendError();
@@ -232,4 +230,11 @@ bool LEDController::setLEDPortType(uint8_t channel, PortType ledPortType) {
 		return true;
 	}
 	return false;
+}
+
+bool LEDController::saveIfNeeded() {
+	if (triggerSave) {
+		triggerSave = false;
+		save();
+	}
 }

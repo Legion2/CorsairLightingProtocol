@@ -195,6 +195,10 @@ protected:
 	 * Indicates that the configuration of the channels has been changed and should be saved.
 	 */
 	bool triggerSave = false;
+	/**
+	 * Stores the time at which the last command was received by the LEDController.
+	 */
+	long lastCommand = 0;
 
 	/**
 	 * Trigger update of the LEDs
@@ -246,4 +250,8 @@ protected:
 	virtual bool clearLEDGroups(uint8_t channel);
 	virtual bool save() = 0;
 	virtual bool load() = 0;
+	/**
+	 * Save if triggerSave is true and then reset triggerSave.
+	 */
+	bool saveIfNeeded();
 };

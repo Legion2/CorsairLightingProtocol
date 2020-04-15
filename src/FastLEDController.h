@@ -25,6 +25,10 @@
 #define EEPROM_ADDRESS 4
 #endif
 
+#ifndef LED_CONTROLLER_TIMEOUT
+#define LED_CONTROLLER_TIMEOUT 30000
+#endif
+
 /**
  * The default LEDController. This controller uses the FastLED library to implement the Hardware Lighting effects. Also
  * all RGB values of the LEDs are stored into CRGB arrays which can be used by the FastLED library to show them on the
@@ -154,4 +158,8 @@ protected:
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values,
 								   size_t len) override;
 	virtual void clearLEDColorValues(uint8_t channel) override;
+	/**
+	 * This function is called when a timeout occurs.
+	 */
+	virtual void timeoutAction();
 };
