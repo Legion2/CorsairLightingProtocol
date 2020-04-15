@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['saveifneeded',['saveIfNeeded',['../classLEDController.html#a462ccabe0f1cb7af75a6df1ae36d13c6',1,'LEDController']]],
   ['send',['send',['../classCorsairLightingProtocolResponse.html#a90f912e08ca3aface383ea56c2a8f786',1,'CorsairLightingProtocolResponse']]],
   ['send_5fp',['send_P',['../classCorsairLightingProtocolResponse.html#a478295b85e9b22cdd92a6c78f542fec0',1,'CorsairLightingProtocolResponse']]],
   ['senderror',['sendError',['../classCorsairLightingProtocolResponse.html#a9d6b96c9c47124c346147bbf3d84eabb',1,'CorsairLightingProtocolResponse']]],

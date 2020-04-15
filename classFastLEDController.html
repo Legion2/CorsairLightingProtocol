@@ -165,6 +165,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDColorVa
 <tr class="memitem:ae0f39353c452e1fee048ea332578ee08"><td class="memItemLeft" align="right" valign="top"><a id="ae0f39353c452e1fee048ea332578ee08"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDColorValues</b> (uint8_t channel) override</td></tr>
 <tr class="separator:ae0f39353c452e1fee048ea332578ee08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53558fd42150a058d630dd83c8404ad6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a53558fd42150a058d630dd83c8404ad6">timeoutAction</a> ()</td></tr>
+<tr class="separator:a53558fd42150a058d630dd83c8404ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classLEDController"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classLEDController')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classLEDController.html">LEDController</a></td></tr>
 <tr class="memitem:a5a7166a7a923da180a8152e6e5c3c8e4 inherit pro_methods_classLEDController"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a5a7166a7a923da180a8152e6e5c3c8e4">getLEDStripMask</a> (uint8_t channel, uint8_t group)</td></tr>
 <tr class="separator:a5a7166a7a923da180a8152e6e5c3c8e4 inherit pro_methods_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,6 +182,8 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDGroup</
 <tr class="memitem:ac68f3b572fb9f8177d6d3638e406a59b inherit pro_methods_classLEDController"><td class="memItemLeft" align="right" valign="top"><a id="ac68f3b572fb9f8177d6d3638e406a59b"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDGroups</b> (uint8_t channel)</td></tr>
 <tr class="separator:ac68f3b572fb9f8177d6d3638e406a59b inherit pro_methods_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a462ccabe0f1cb7af75a6df1ae36d13c6 inherit pro_methods_classLEDController"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a462ccabe0f1cb7af75a6df1ae36d13c6">saveIfNeeded</a> ()</td></tr>
+<tr class="separator:a462ccabe0f1cb7af75a6df1ae36d13c6 inherit pro_methods_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -207,6 +211,8 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 <tr class="separator:a76c71ffec20065d9258fe8787413ae00 inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a461f02f241558c8292aa00ad21ff25ed inherit pro_attribs_classLEDController"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a461f02f241558c8292aa00ad21ff25ed">triggerSave</a> = false</td></tr>
 <tr class="separator:a461f02f241558c8292aa00ad21ff25ed inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4be48d4b33fb52c1a5c0ec4bfdb10936 inherit pro_attribs_classLEDController"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a4be48d4b33fb52c1a5c0ec4bfdb10936">lastCommand</a> = 0</td></tr>
+<tr class="separator:a4be48d4b33fb52c1a5c0ec4bfdb10936 inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The default <a class="el" href="classLEDController.html">LEDController</a>. This controller uses the FastLED library to implement the Hardware Lighting effects. Also all RGB values of the LEDs are stored into CRGB arrays which can be used by the FastLED library to show them on the real LED strips. This controller can stores the internal state to EEPROM and support HW playback without USB connection.</p>
@@ -575,6 +581,32 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 </dl>
 
 <p>Implements <a class="el" href="classLEDController.html#a0cd9f8d59afdb99860df3ae951935c25">LEDController</a>.</p>
+
+</div>
+</div>
+<a id="a53558fd42150a058d630dd83c8404ad6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53558fd42150a058d630dd83c8404ad6">&#9670;&nbsp;</a></span>timeoutAction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FastLEDController::timeoutAction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function is called when a timeout occurs. </p>
 
 </div>
 </div>

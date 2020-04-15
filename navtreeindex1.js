@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"classSimpleFanController.html#aa5fcc500e5c375c7faaddd72d66fd19d":[1,0,20,9],
+"classSimpleFanController.html#aa6952e52891a1318135b298ece099169":[1,0,20,4],
+"classSimpleFanController.html#abbe6454d2c3559bb0fbf92ce31853c35":[1,0,20,20],
 "classSimpleFanController.html#abdbc80a4f1f8162d74fc870fc597128a":[1,0,20,18],
 "classSimpleFanController.html#ae230c2fbce549c994ea9a9eb9a8f84cb":[1,0,20,1],
 "classSimpleFanController.html#ae8b2825eddaa771ae748f872e928bc16":[1,0,20,11],
@@ -35,8 +38,8 @@ var NAVTREEINDEX1 =
 "globals.html":[2,1,0],
 "globals_enum.html":[2,1,1],
 "hierarchy.html":[1,2],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "pages.html":[],
 "structCLP_1_1SegmentScaling.html":[1,0,0,1],
 "structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d":[1,0,0,1,0],

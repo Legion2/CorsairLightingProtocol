@@ -154,6 +154,8 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> ()=0
 <tr class="memitem:aad503e18010e834fe2d39af024e09690"><td class="memItemLeft" align="right" valign="top"><a id="aad503e18010e834fe2d39af024e09690"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> ()=0</td></tr>
 <tr class="separator:aad503e18010e834fe2d39af024e09690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a462ccabe0f1cb7af75a6df1ae36d13c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a462ccabe0f1cb7af75a6df1ae36d13c6">saveIfNeeded</a> ()</td></tr>
+<tr class="separator:a462ccabe0f1cb7af75a6df1ae36d13c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -162,6 +164,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a76c71ffec20065d9258fe8787413ae00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a461f02f241558c8292aa00ad21ff25ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a461f02f241558c8292aa00ad21ff25ed">triggerSave</a> = false</td></tr>
 <tr class="separator:a461f02f241558c8292aa00ad21ff25ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4be48d4b33fb52c1a5c0ec4bfdb10936"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a4be48d4b33fb52c1a5c0ec4bfdb10936">lastCommand</a> = 0</td></tr>
+<tr class="separator:a4be48d4b33fb52c1a5c0ec4bfdb10936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstract implemenation of an <a class="el" href="classLEDController.html">LEDController</a>. This implementation handles the parsing and interpretation of incoming commands. It also defines the data model to store the all required data from the commands. </p>
@@ -377,6 +381,32 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a462ccabe0f1cb7af75a6df1ae36d13c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a462ccabe0f1cb7af75a6df1ae36d13c6">&#9670;&nbsp;</a></span>saveIfNeeded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LEDController::saveIfNeeded </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Save if triggerSave is true and then reset triggerSave. </p>
+
+</div>
+</div>
 <a id="aaf9030aa97cede5d578f44bdd679a4d0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaf9030aa97cede5d578f44bdd679a4d0">&#9670;&nbsp;</a></span>setLEDBrightness()</h2>
 
@@ -587,6 +617,29 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4be48d4b33fb52c1a5c0ec4bfdb10936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4be48d4b33fb52c1a5c0ec4bfdb10936">&#9670;&nbsp;</a></span>lastCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">long LEDController::lastCommand = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Stores the time at which the last command was received by the <a class="el" href="classLEDController.html">LEDController</a>. </p>
+
+</div>
+</div>
 <a id="a461f02f241558c8292aa00ad21ff25ed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a461f02f241558c8292aa00ad21ff25ed">&#9670;&nbsp;</a></span>triggerSave</h2>
 

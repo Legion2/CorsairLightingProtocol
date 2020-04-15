@@ -16,6 +16,7 @@ var classFastLEDController =
     [ "save", "classFastLEDController.html#a2ce2ba878427f50acdc23d5027674f30", null ],
     [ "setLEDColorValues", "classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc", null ],
     [ "setLEDExternalTemperature", "classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba", null ],
+    [ "timeoutAction", "classFastLEDController.html#a53558fd42150a058d630dd83c8404ad6", null ],
     [ "triggerLEDUpdate", "classFastLEDController.html#ac301c35a440fac6a36d3fe7abf2c9609", null ],
     [ "updateLEDs", "classFastLEDController.html#a6525215f48c7aa2584422dd487e1f924", null ],
     [ "channelData", "classFastLEDController.html#aadbef33bc86c4ec97128f704127acef7", null ],
