@@ -3,10 +3,11 @@
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
 
 ## Features
-* Add support of the Lighting Node PRO protocol to Arduino.
-* Control LEDs with the Corsair Link or the iCUE software.
+* Add support of Corsair DIY device protocol to Arduino.
+* Control LEDs with the [Corsair iCUE software](https://www.corsair.com/icue).
 * Easy to use with [FastLED](http://fastled.io/).
-* [Supported LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets).
+* [Supported LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets). (e.g. WS2812B, WS2801)
+* Supported platform: Arduino AVR
 * Persistent settings for use without a USB connection.
 * Use multiple devices at the same time.
 * Repeat or scale LED channels to arbitrary size.
