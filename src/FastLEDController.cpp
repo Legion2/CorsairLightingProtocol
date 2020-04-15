@@ -87,6 +87,9 @@ int FastLEDController::animation_step_count(int duration, int steps) {
 bool FastLEDController::updateLEDs() {
 	lastUpdate = currentUpdate;
 	currentUpdate = millis();
+	if (currentUpdate - lastCommand > LED_CONTROLLER_TIMEOUT) {
+		timeoutAction();
+	}
 
 	bool anyUpdate = false;
 
@@ -435,4 +438,11 @@ void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_
 
 void FastLEDController::clearLEDColorValues(uint8_t channel) {
 	memset(channelData[channel].valuesBuffer[0], 0, channelData[channel].ledCount);
+}
+
+void FastLEDController::timeoutAction() {
+	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
+		triggerSave |= setLEDMode(channelId, ChannelMode::HardwarePlayback);
+	}
+	saveIfNeeded();
 }
