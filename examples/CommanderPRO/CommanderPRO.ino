@@ -49,6 +49,21 @@ PWMFan fan2(PWM_FAN_PIN_2, 0, 2000);
 PWMFan fan3(PWM_FAN_PIN_3, 0, 2000);
 PWMFan fan4(PWM_FAN_PIN_4, 0, 2000);
 
+void analogWrite25k(int pin, int value)
+{
+    switch (pin) {
+        case 9:
+            OCR1A = value;
+            break;
+        case 10:
+            OCR1B = value;
+            break;
+        default:
+            // no other pin will work
+            break;
+    }
+}
+
 void setup() {
 	CLP::disableBuildInLEDs();
 	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
@@ -61,6 +76,20 @@ void setup() {
 	fanController.addFan(1, &fan2);
 	fanController.addFan(2, &fan3);
 	fanController.addFan(3, &fan4);
+	// Configure Timer 1 for PWM @ 25 kHz.
+    TCCR1A = 0;           // undo the configuration done by...
+    TCCR1B = 0;           // ...the Arduino core library
+    TCNT1  = 0;           // reset timer
+    TCCR1A = _BV(COM1A1)  // non-inverted PWM on ch. A
+           | _BV(COM1B1)  // same on ch; B
+           | _BV(WGM11);  // mode 10: ph. correct PWM, TOP = ICR1
+    TCCR1B = _BV(WGM13)   // ditto
+           | _BV(CS10);   // prescaler = 1
+    ICR1   = 320;         // TOP = 320
+
+    // Set the PWM pins as output.
+    pinMode( 9, OUTPUT);
+    pinMode(10, OUTPUT);
 }
 
 void loop() {
@@ -70,4 +99,6 @@ void loop() {
 		FastLED.show();
 	}
 	fanController.updateFans();
+ 	analogWrite25k( 9, 110);
+ 	analogWrite25k(10, 210);
 }
