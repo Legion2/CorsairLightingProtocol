@@ -37,8 +37,8 @@ void setup() {
 	Serial is used by CorsairLightingProtocolSerial!
 	*/
 	cLPS.setup();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, CHANNEL_LED_COUNT);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);
 	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT);
 }

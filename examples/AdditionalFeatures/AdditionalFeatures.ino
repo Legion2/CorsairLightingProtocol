@@ -35,8 +35,8 @@ void setup() {
 		CLP::reset(&firmware);
 		ledController.reset();
 	}
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 60);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, 60);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 60);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 60);
 	ledController.addLEDs(0, ledsChannel1, 60);
 	ledController.addLEDs(1, ledsChannel2, 60);
 }
