@@ -35,7 +35,8 @@ CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 void setup() {
-	//                          FAN_PIN            DATA_ARRAY            offset             number of leds pre fan
+	// 6 fans on channel 1
+	//                          FAN_PIN           CRGB array            offset             number of leds per fan
 	FastLED.addLeds<WS2812B, DATA_PIN_FAN_1, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 0, NUMBER_OF_LEDS_PER_FAN);
 	FastLED.addLeds<WS2812B, DATA_PIN_FAN_2, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 1, NUMBER_OF_LEDS_PER_FAN);
 	FastLED.addLeds<WS2812B, DATA_PIN_FAN_3, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 2, NUMBER_OF_LEDS_PER_FAN);
@@ -43,6 +44,7 @@ void setup() {
 	FastLED.addLeds<WS2812B, DATA_PIN_FAN_5, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 4, NUMBER_OF_LEDS_PER_FAN);
 	FastLED.addLeds<WS2812B, DATA_PIN_FAN_6, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 5, NUMBER_OF_LEDS_PER_FAN);
 
+	// normal strip on channel 2
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 96);
 	ledController.addLEDs(0, ledsChannel1, 96);
 	ledController.addLEDs(1, ledsChannel2, 96);
