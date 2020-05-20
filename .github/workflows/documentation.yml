@@ -1,26 +1,25 @@
-name: Create Documentation
+name: Deploy Documentation
 
-on: 
+on:
   push:
     branches:
-    - dev
+      - dev
 
 jobs:
   doxygen:
-
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Install doxygen
-      run: sudo apt install doxygen graphviz
-    - name: Fix Readme title
-      run: sed -i '1s/ \[/\n\[/' README.md
-    - name: Run doxygen
-      run: doxygen extra/doxygen.conf
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v2.5.1
-      env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: doxygen/html
+      - uses: actions/checkout@v1
+      - name: Install doxygen
+        run: sudo apt install doxygen graphviz
+      - name: Fix Readme title
+        run: sed -i '1s/ \[/\n\[/' README.md
+      - name: Run doxygen
+        run: doxygen extra/doxygen.conf
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: doxygen/html
