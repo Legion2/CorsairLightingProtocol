@@ -6,7 +6,6 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-CorsairLightingNodePRO	KEYWORD1
 ILEDController	KEYWORD1
 LEDController	KEYWORD1
 FastLEDController	KEYWORD1

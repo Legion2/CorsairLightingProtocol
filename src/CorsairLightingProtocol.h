@@ -22,7 +22,6 @@
 #include "CLPAdditionalFeatures.h"
 #include "CLPUtils.h"
 #include "CorsairLightingFirmware.h"
-#include "CorsairLightingNodePRO.h"
 #include "CorsairLightingProtocolConstants.h"
 #include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolHID.h"
