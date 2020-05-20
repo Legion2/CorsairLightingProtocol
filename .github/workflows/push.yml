@@ -20,7 +20,7 @@ jobs:
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
           arduino-platform: arduino:avr@1.8.2,SparkFun:avr@1.1.5,Legion2:avr@0.1.3
-          required-libraries: FastLED@3.2.0
+          required-libraries: FastLED@3.3.3
           sketch-names: LightingNodePRO.ino,
             SingleStripLightingNodePRO.ino,
             CommanderPRO.ino,
@@ -46,7 +46,7 @@ jobs:
         with:
           arduino-board-fqbn: ${{ matrix.board }}
           arduino-platform: arduino:avr@1.8.2
-          required-libraries: FastLED@3.2.0
+          required-libraries: FastLED@3.3.3
           sketch-names: HoodLoader2UnoMegaController.ino
   test16u2:
     name: Test 16u2 sketch for ${{ matrix.board }}
@@ -62,5 +62,5 @@ jobs:
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
           arduino-platform: arduino:avr@1.8.2,HoodLoader2:avr@2.0.5,Legion2:avr@0.1.3
-          required-libraries: FastLED@3.2.0
+          required-libraries: FastLED@3.3.3
           sketch-names: HoodLoader2CLPBridge.ino
