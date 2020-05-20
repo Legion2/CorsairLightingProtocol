@@ -31,6 +31,7 @@ jobs:
             LightingNodeCORE.ino,
             NonAddressable.ino,
             AmbientBacklight.ino,
+            MultipleFans.ino,
             DebugSketch.ino
           examples-build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
   testUnoMega:
