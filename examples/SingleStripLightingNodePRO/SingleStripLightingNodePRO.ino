@@ -40,7 +40,7 @@ void setup() {
 	Serial.begin(115200);
 #endif
 	CLP::disableBuildInLEDs();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+	FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
 	ledController.addLEDs(0, leds, CHANNEL_LED_COUNT);
 	ledController.addLEDs(1, &(leds[CHANNEL_LED_COUNT]), CHANNEL_LED_COUNT);
 }

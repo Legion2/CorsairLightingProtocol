@@ -51,8 +51,8 @@ PWMFan fan4(PWM_FAN_PIN_4, 0, 2000);
 
 void setup() {
 	CLP::disableBuildInLEDs();
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, CHANNEL_LED_COUNT);
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_2>(ledsChannel2, CHANNEL_LED_COUNT);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, CHANNEL_LED_COUNT);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);
 	ledController.addLEDs(1, ledsChannel2, CHANNEL_LED_COUNT);
 	temperatureController.addSensor(0, TEMP_SENSOR_PIN_1);

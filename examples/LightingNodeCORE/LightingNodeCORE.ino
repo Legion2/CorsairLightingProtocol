@@ -26,7 +26,7 @@ CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 void setup() {
-	FastLED.addLeds<NEOPIXEL, DATA_PIN_CHANNEL_1>(ledsChannel1, 204);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 204);
 	ledController.addLEDs(0, ledsChannel1, 204);
 }
 
