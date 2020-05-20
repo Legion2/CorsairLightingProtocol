@@ -3,7 +3,6 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "CLPAdditionalFeatures.h", "CLPAdditionalFeatures_8h_source.html", null ],
     [ "CLPUtils.h", "CLPUtils_8h_source.html", null ],
     [ "CorsairLightingFirmware.h", "CorsairLightingFirmware_8h_source.html", null ],
-    [ "CorsairLightingNodePRO.h", "CorsairLightingNodePRO_8h_source.html", null ],
     [ "CorsairLightingProtocol.h", "CorsairLightingProtocol_8h.html", null ],
     [ "CorsairLightingProtocolConstants.h", "CorsairLightingProtocolConstants_8h_source.html", null ],
     [ "CorsairLightingProtocolController.h", "CorsairLightingProtocolController_8h_source.html", null ],

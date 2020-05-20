@@ -1,8 +1,7 @@
 <map id="src/TemperatureController.h" name="src/TemperatureController.h">
-<area shape="rect" id="node2" href="$FastLEDController_8h_source.html" title="src/FastLEDController.h" alt="" coords="231,87,393,114"/>
-<area shape="rect" id="node4" href="$CorsairLightingProtocol_8h.html" title="src/CorsairLightingProtocol.h" alt="" coords="217,244,407,271"/>
-<area shape="rect" id="node6" href="$SimpleFanController_8h_source.html" title="examples/CommanderPRO\l/SimpleFanController.h" alt="" coords="550,80,733,121"/>
-<area shape="rect" id="node7" href="$ThermistorTemperatureController_8h_source.html" title="examples/CommanderPRO\l/ThermistorTemperatureController.h" alt="" coords="757,80,985,121"/>
-<area shape="rect" id="node3" href="$CorsairLightingNodePRO_8h_source.html" title="src/CorsairLightingNodePRO.h" alt="" coords="5,169,208,196"/>
-<area shape="rect" id="node5" href="$FastLEDControllerUtils_8h_source.html" title="src/FastLEDControllerUtils.h" alt="" coords="283,169,474,196"/>
+<area shape="rect" id="node2" href="$FastLEDController_8h_source.html" title="src/FastLEDController.h" alt="" coords="126,87,289,114"/>
+<area shape="rect" id="node5" href="$SimpleFanController_8h_source.html" title="examples/CommanderPRO\l/SimpleFanController.h" alt="" coords="313,80,496,121"/>
+<area shape="rect" id="node6" href="$ThermistorTemperatureController_8h_source.html" title="examples/CommanderPRO\l/ThermistorTemperatureController.h" alt="" coords="520,80,748,121"/>
+<area shape="rect" id="node3" href="$CorsairLightingProtocol_8h.html" title="src/CorsairLightingProtocol.h" alt="" coords="5,169,196,196"/>
+<area shape="rect" id="node4" href="$FastLEDControllerUtils_8h_source.html" title="src/FastLEDControllerUtils.h" alt="" coords="220,169,411,196"/>
 </map>

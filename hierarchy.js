@@ -3,7 +3,6 @@ var hierarchy =
     [ "CLPUSBSerialBridge", "classCLPUSBSerialBridge.html", null ],
     [ "Command", "structCommand.html", null ],
     [ "CorsairLightingFirmware", "classCorsairLightingFirmware.html", null ],
-    [ "CorsairLightingNodePRO", "classCorsairLightingNodePRO.html", null ],
     [ "CorsairLightingProtocolController", "classCorsairLightingProtocolController.html", null ],
     [ "CorsairLightingProtocolResponse", "classCorsairLightingProtocolResponse.html", [
       [ "CorsairLightingProtocolHID", "classCorsairLightingProtocolHID.html", null ],

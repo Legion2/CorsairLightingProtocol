@@ -7,7 +7,6 @@ var annotated_dup =
     [ "CLPUSBSerialBridge", "classCLPUSBSerialBridge.html", "classCLPUSBSerialBridge" ],
     [ "Command", "structCommand.html", "structCommand" ],
     [ "CorsairLightingFirmware", "classCorsairLightingFirmware.html", "classCorsairLightingFirmware" ],
-    [ "CorsairLightingNodePRO", "classCorsairLightingNodePRO.html", "classCorsairLightingNodePRO" ],
     [ "CorsairLightingProtocolController", "classCorsairLightingProtocolController.html", "classCorsairLightingProtocolController" ],
     [ "CorsairLightingProtocolHID", "classCorsairLightingProtocolHID.html", "classCorsairLightingProtocolHID" ],
     [ "CorsairLightingProtocolResponse", "classCorsairLightingProtocolResponse.html", "classCorsairLightingProtocolResponse" ],
