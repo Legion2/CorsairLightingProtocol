@@ -84,6 +84,8 @@ int FastLEDController::animation_step_count(int duration, int steps) {
 	return currentStep - lastStep + (currentAnimationNumber - lastAnimationNumber) * steps;
 }
 
+CRGB FastLEDController::randomColor() { return ColorFromPalette(RainbowColors_p, random8(), 255, NOBLEND); }
+
 bool FastLEDController::renderRainbowWave(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
 	int duration = applySpeed(3300, group.speed);
 	int count = animation_step_count(duration, 256);
@@ -106,7 +108,7 @@ bool FastLEDController::renderColorShift(ChannelData& channelData, LEDGroup& gro
 		if (count > step) {
 			if (group.extra == GroupExtra::Random) {
 				group.color1 = group.color2;
-				group.color2 = CHSV(random8(), 255, 255);
+				group.color2 = randomColor();
 			} else if (group.extra == GroupExtra::Alternating) {
 				group.color3 = group.color1;
 				group.color1 = group.color2;
@@ -135,7 +137,7 @@ bool FastLEDController::renderColorPulse(ChannelData& channelData, LEDGroup& gro
 		int step = animation_step(duration, 512);
 		if (count > step) {
 			if (group.extra == GroupExtra::Random) {
-				group.color1 = CHSV(random8(), 255, 255);
+				group.color1 = randomColor();
 			} else if (group.extra == GroupExtra::Alternating) {
 				group.color3 = group.color1;
 				group.color1 = group.color2;
@@ -161,7 +163,7 @@ bool FastLEDController::renderColorWave(ChannelData& channelData, LEDGroup& grou
 		if (count > step) {
 			if (group.extra == GroupExtra::Random) {
 				group.color1 = group.color2;
-				group.color2 = CHSV(random8(), 255, 255);
+				group.color2 = randomColor();
 			} else if (group.extra == GroupExtra::Alternating) {
 				group.color3 = group.color1;
 				group.color1 = group.color2;
@@ -237,7 +239,7 @@ bool FastLEDController::renderVisor(ChannelData& channelData, LEDGroup& group, i
 		int step = animation_step(duration, steps);
 		if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
 			if (group.extra == GroupExtra::Random) {
-				group.color1 = CHSV(random8(), 255, 255);
+				group.color1 = randomColor();
 			} else if (group.extra == GroupExtra::Alternating) {
 				group.color3 = group.color1;
 				group.color1 = group.color2;
@@ -269,6 +271,7 @@ bool FastLEDController::renderMarquee(ChannelData& channelData, LEDGroup& group,
 	}
 	return false;
 }
+
 bool FastLEDController::renderBlink(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
 	int duration = applySpeed(3000, group.speed);
 	int count = animation_step_count(duration, 2);
@@ -276,7 +279,7 @@ bool FastLEDController::renderBlink(ChannelData& channelData, LEDGroup& group, i
 		int step = animation_step(duration, 2);
 		if (count > step) {
 			if (group.extra == GroupExtra::Random) {
-				group.color1 = CHSV(random8(), 255, 255);
+				group.color1 = randomColor();
 			} else if (group.extra == GroupExtra::Alternating) {
 				group.color3 = group.color1;
 				group.color1 = group.color2;
@@ -289,6 +292,7 @@ bool FastLEDController::renderBlink(ChannelData& channelData, LEDGroup& group, i
 	}
 	return false;
 }
+
 bool FastLEDController::renderSequential(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
 	int steps = groupLedCount;
 	int duration = applySpeed(60 * steps, group.speed);
@@ -298,7 +302,7 @@ bool FastLEDController::renderSequential(ChannelData& channelData, LEDGroup& gro
 		if (count > step) {
 			if (group.extra == GroupExtra::Random) {
 				group.color2 = group.color1;
-				group.color1 = CHSV(random8(), 255, 255);
+				group.color1 = randomColor();
 			}
 		}
 
@@ -313,6 +317,7 @@ bool FastLEDController::renderSequential(ChannelData& channelData, LEDGroup& gro
 	}
 	return false;
 }
+
 bool FastLEDController::renderRainbow(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
 	int duration = applySpeed(3000, group.speed);
 	int count = animation_step_count(duration, 256);

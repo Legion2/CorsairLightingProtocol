@@ -149,6 +149,13 @@ protected:
 	 */
 	int animation_step_count(int duration, int steps);
 
+	/**
+	 * Generate a rainbow random color from predefined color palette.
+	 *
+	 * @return a random color
+	 */
+	CRGB randomColor();
+
 	bool renderRainbowWave(ChannelData& channelData, LEDGroup& group, int groupLedCount);
 	bool renderColorShift(ChannelData& channelData, LEDGroup& group, int groupLedCount);
 	bool renderColorPulse(ChannelData& channelData, LEDGroup& group, int groupLedCount);
