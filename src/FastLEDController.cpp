@@ -352,49 +352,51 @@ bool FastLEDController::updateLEDs() {
 						continue;
 					}
 
+					bool groupUpdated = false;
+
 					switch (group.mode) {
 						case GROUP_MODE_Rainbow_Wave: {
-							updated |= renderRainbowWave(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderRainbowWave(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Color_Shift: {
-							updated |= renderColorShift(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderColorShift(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Color_Pulse: {
-							updated |= renderColorPulse(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderColorPulse(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Color_Wave: {
-							updated |= renderColorWave(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderColorWave(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Static: {
-							updated |= renderStatic(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderStatic(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Temperature: {
-							updated |= renderTemperature(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderTemperature(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Visor: {
-							updated |= renderVisor(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderVisor(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Marquee: {
-							updated |= renderMarquee(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderMarquee(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Blink: {
-							updated |= renderBlink(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderBlink(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Sequential: {
-							updated |= renderSequential(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderSequential(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Rainbow: {
-							updated |= renderRainbow(channelData[channelId], group, groupLedCount);
+							groupUpdated = renderRainbow(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						default: {
@@ -405,8 +407,10 @@ bool FastLEDController::updateLEDs() {
 #endif
 							break;
 						}
-							nscale8_video(&channelData[channelId].leds[group.ledIndex], groupLedCount,
-										  channel.brightness);
+					}
+					if (groupUpdated) {
+						nscale8_video(&channelData[channelId].leds[group.ledIndex], groupLedCount, channel.brightness);
+						updated = true;
 					}
 				}
 				break;
