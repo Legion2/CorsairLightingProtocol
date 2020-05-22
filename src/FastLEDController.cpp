@@ -240,20 +240,20 @@ bool FastLEDController::renderVisor(ChannelData& channelData, LEDGroup& group, i
 		if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
 			if (group.extra == GroupExtra::Random) {
 				group.color1 = randomColor();
+				group.color2 = randomColor();
 			} else if (group.extra == GroupExtra::Alternating) {
-				group.color3 = group.color1;
+				auto temp = group.color1;
 				group.color1 = group.color2;
-				group.color2 = group.color3;
+				group.color2 = temp;
 			}
 		}
 		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, CRGB::Black);
-		for (int i = 0; i < 4; i++) {
-			int led = (((step - i) % steps) + steps) % steps;
-			if (led >= groupLedCount) {
-				led = steps - led - 1;
-			}
-			channelData.leds[group.ledIndex + led] = group.color1;
-		}
+		int gradientLength = 4;
+		int gradientMiddlePosition = (step >= groupLedCount) ? steps - step - 1 : step;
+		int gradientStartPosition = gradientMiddlePosition - ((gradientLength - 1) / 2);
+		fill_gradient_RGB(&channelData.leds[group.ledIndex], constrain(gradientStartPosition, 0, groupLedCount - 1),
+						  group.color1, constrain(gradientStartPosition + (gradientLength - 1), 0, groupLedCount - 1),
+						  group.color2);
 		return true;
 	}
 	return false;
