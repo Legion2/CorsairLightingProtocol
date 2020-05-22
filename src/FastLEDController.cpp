@@ -307,11 +307,11 @@ bool FastLEDController::renderSequential(ChannelData& channelData, LEDGroup& gro
 		}
 
 		if (group.direction == GroupDirection::Forward) {
-			fill_solid(&channelData.leds[group.ledIndex], step + 1, group.color1);
-			fill_solid(&channelData.leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2);
-		} else {
 			fill_solid(&channelData.leds[group.ledIndex + groupLedCount - (step + 1)], step + 1, group.color1);
 			fill_solid(&channelData.leds[group.ledIndex], groupLedCount - (step + 1), group.color2);
+		} else {
+			fill_solid(&channelData.leds[group.ledIndex], step + 1, group.color1);
+			fill_solid(&channelData.leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2);
 		}
 		return true;
 	}
