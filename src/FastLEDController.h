@@ -149,6 +149,18 @@ protected:
 	 */
 	int animation_step_count(int duration, int steps);
 
+	bool renderRainbowWave(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderColorShift(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderColorPulse(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderColorWave(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderStatic(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderTemperature(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderVisor(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderMarquee(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderBlink(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderSequential(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+	bool renderRainbow(ChannelData& channelData, LEDGroup& group, int groupLedCount);
+
 	const bool useEEPROM;
 	bool load() override;
 	bool save() override;

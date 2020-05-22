@@ -84,6 +84,246 @@ int FastLEDController::animation_step_count(int duration, int steps) {
 	return currentStep - lastStep + (currentAnimationNumber - lastAnimationNumber) * steps;
 }
 
+bool FastLEDController::renderRainbowWave(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(3300, group.speed);
+	int count = animation_step_count(duration, 256);
+	if (count > 0) {
+		int step = animation_step(duration, 256);
+		int move = group.direction == GroupDirection::Forward ? -3 : 3;
+		for (int i = 0; i < groupLedCount; i++) {
+			channelData.leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool FastLEDController::renderColorShift(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(3000, group.speed);
+	int count = animation_step_count(duration, 512);
+	if (count > 0) {
+		int step = animation_step(duration, 512);
+		if (count > step) {
+			if (group.extra == GroupExtra::Random) {
+				group.color1 = group.color2;
+				group.color2 = CHSV(random8(), 255, 255);
+			} else if (group.extra == GroupExtra::Alternating) {
+				group.color3 = group.color1;
+				group.color1 = group.color2;
+				group.color2 = group.color3;
+			}
+		}
+		uint8_t scale;
+		if (step < 128) {
+			scale = 0;
+		} else if (step < 384) {
+			scale = ease8InOutApprox(step - 128);
+		} else {
+			scale = 255;
+		}
+
+		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, group.color1.lerp8(group.color2, scale));
+		return true;
+	}
+	return false;
+}
+
+bool FastLEDController::renderColorPulse(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(3000, group.speed);
+	int count = animation_step_count(duration, 512);
+	if (count > 0) {
+		int step = animation_step(duration, 512);
+		if (count > step) {
+			if (group.extra == GroupExtra::Random) {
+				group.color1 = CHSV(random8(), 255, 255);
+			} else if (group.extra == GroupExtra::Alternating) {
+				group.color3 = group.color1;
+				group.color1 = group.color2;
+				group.color2 = group.color3;
+			}
+		}
+		uint8_t scale = ease8InOutApprox((uint8_t)step);
+		if (step >= 256) {
+			scale = 255 - scale;
+		}
+
+		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, group.color1 % scale);
+		return true;
+	}
+	return false;
+}
+
+bool FastLEDController::renderColorWave(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(3000, group.speed);
+	int count = animation_step_count(duration, 10000);
+	if (count > 0) {
+		int step = animation_step(duration, 10000);
+		if (count > step) {
+			if (group.extra == GroupExtra::Random) {
+				group.color1 = group.color2;
+				group.color2 = CHSV(random8(), 255, 255);
+			} else if (group.extra == GroupExtra::Alternating) {
+				group.color3 = group.color1;
+				group.color1 = group.color2;
+				group.color2 = group.color3;
+			}
+		}
+		float valley = step / 10000.0;
+		for (int i = 0; i < groupLedCount; i++) {
+			float pos = (i % 17) / 17.0;
+
+			float distanceWave;
+			CRGB color;
+			const bool flag = (i % 34) < 17;
+			if (pos < valley) {
+				color = flag ? group.color1 : group.color2;
+				distanceWave = abs(valley - 0.5 - pos);
+			} else {
+				color = flag ? group.color2 : group.color1;
+				distanceWave = abs(valley + 0.5 - pos);
+			}
+
+			uint8_t scale;
+			if (distanceWave > 0.25) {
+				scale = 0;
+			} else {
+				scale = 255 - ease8InOutApprox((distanceWave * 4) * 256);
+			}
+			channelData.leds[group.ledIndex + i] = (color % scale);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool FastLEDController::renderStatic(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	fill_solid(&channelData.leds[group.ledIndex], groupLedCount, group.color1);
+	return true;
+}
+
+bool FastLEDController::renderTemperature(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	uint16_t currentTemperature;
+	const uint8_t& tempGroup = group.tempGroup;
+	if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
+		currentTemperature = channelData.temp;
+	} else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
+		currentTemperature = temperatureController->getTemperature(tempGroup);
+	} else {
+		return false;
+	}
+
+	CRGB color;
+	if (currentTemperature < group.temp1) {
+		color = group.color1;
+	} else if (currentTemperature < group.temp2) {
+		color = group.color1.lerp16(
+			group.color2, ((currentTemperature - group.temp1) / ((float)(group.temp2 - group.temp1))) * 65535);
+	} else if (currentTemperature < group.temp3) {
+		color = group.color2.lerp16(
+			group.color3, ((currentTemperature - group.temp2) / ((float)(group.temp3 - group.temp2))) * 65535);
+	} else {
+		color = group.color3;
+	}
+
+	fill_solid(&channelData.leds[group.ledIndex], groupLedCount, color);
+	return true;
+}
+
+bool FastLEDController::renderVisor(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(150 * groupLedCount, group.speed);
+	int steps = groupLedCount * 2;
+	int count = animation_step_count(duration, steps);
+	if (count > 0) {
+		int step = animation_step(duration, steps);
+		if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
+			if (group.extra == GroupExtra::Random) {
+				group.color1 = CHSV(random8(), 255, 255);
+			} else if (group.extra == GroupExtra::Alternating) {
+				group.color3 = group.color1;
+				group.color1 = group.color2;
+				group.color2 = group.color3;
+			}
+		}
+		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, CRGB::Black);
+		for (int i = 0; i < 4; i++) {
+			int led = (((step - i) % steps) + steps) % steps;
+			if (led >= groupLedCount) {
+				led = steps - led - 1;
+			}
+			channelData.leds[group.ledIndex + led] = group.color1;
+		}
+		return true;
+	}
+	return false;
+}
+
+bool FastLEDController::renderMarquee(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(700, group.speed);
+	int count = animation_step_count(duration, 3);
+	if (count > 0) {
+		int step = animation_step(duration, 3);
+		for (int i = 0; i < groupLedCount; i++) {
+			channelData.leds[group.ledIndex + i] = (i + step) % 3 > 0 ? group.color1 : CRGB::Black;
+		}
+		return true;
+	}
+	return false;
+}
+bool FastLEDController::renderBlink(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(3000, group.speed);
+	int count = animation_step_count(duration, 2);
+	if (count > 0) {
+		int step = animation_step(duration, 2);
+		if (count > step) {
+			if (group.extra == GroupExtra::Random) {
+				group.color1 = CHSV(random8(), 255, 255);
+			} else if (group.extra == GroupExtra::Alternating) {
+				group.color3 = group.color1;
+				group.color1 = group.color2;
+				group.color2 = group.color3;
+			}
+		}
+
+		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, step == 0 ? group.color1 : CRGB::Black);
+		return true;
+	}
+	return false;
+}
+bool FastLEDController::renderSequential(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int steps = groupLedCount;
+	int duration = applySpeed(60 * steps, group.speed);
+	int count = animation_step_count(duration, steps);
+	if (count > 0) {
+		int step = animation_step(duration, steps);
+		if (count > step) {
+			if (group.extra == GroupExtra::Random) {
+				group.color2 = group.color1;
+				group.color1 = CHSV(random8(), 255, 255);
+			}
+		}
+
+		if (group.direction == GroupDirection::Forward) {
+			fill_solid(&channelData.leds[group.ledIndex], step + 1, group.color1);
+			fill_solid(&channelData.leds[group.ledIndex + step + 1], groupLedCount - (step + 1), group.color2);
+		} else {
+			fill_solid(&channelData.leds[group.ledIndex + groupLedCount - (step + 1)], step + 1, group.color1);
+			fill_solid(&channelData.leds[group.ledIndex], groupLedCount - (step + 1), group.color2);
+		}
+		return true;
+	}
+	return false;
+}
+bool FastLEDController::renderRainbow(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
+	int duration = applySpeed(3000, group.speed);
+	int count = animation_step_count(duration, 256);
+	if (count > 0) {
+		int step = animation_step(duration, 256);
+		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, CHSV(step, 255, 255));
+		return true;
+	}
+	return false;
+}
+
 bool FastLEDController::updateLEDs() {
 	lastUpdate = currentUpdate;
 	currentUpdate = millis();
@@ -114,248 +354,47 @@ bool FastLEDController::updateLEDs() {
 
 					switch (group.mode) {
 						case GROUP_MODE_Rainbow_Wave: {
-							int duration = applySpeed(3300, group.speed);
-							int count = animation_step_count(duration, 256);
-							if (count > 0) {
-								int step = animation_step(duration, 256);
-								int move = group.direction == GroupDirection::Forward ? -3 : 3;
-								for (int i = 0; i < groupLedCount; i++) {
-									channelData[channelId].leds[group.ledIndex + i] = CHSV(step + (i * move), 255, 255);
-								}
-								updated = true;
-							}
+							updated |= renderRainbowWave(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Color_Shift: {
-							int duration = applySpeed(3000, group.speed);
-							int count = animation_step_count(duration, 512);
-							if (count > 0) {
-								int step = animation_step(duration, 512);
-								if (count > step) {
-									if (group.extra == GroupExtra::Random) {
-										group.color1 = group.color2;
-										group.color2 = CHSV(random8(), 255, 255);
-									} else if (group.extra == GroupExtra::Alternating) {
-										group.color3 = group.color1;
-										group.color1 = group.color2;
-										group.color2 = group.color3;
-									}
-								}
-								uint8_t scale;
-								if (step < 128) {
-									scale = 0;
-								} else if (step < 384) {
-									scale = ease8InOutApprox(step - 128);
-								} else {
-									scale = 255;
-								}
-
-								fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount,
-										   group.color1.lerp8(group.color2, scale));
-								updated = true;
-							}
+							updated |= renderColorShift(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Color_Pulse: {
-							int duration = applySpeed(3000, group.speed);
-							int count = animation_step_count(duration, 512);
-							if (count > 0) {
-								int step = animation_step(duration, 512);
-								if (count > step) {
-									if (group.extra == GroupExtra::Random) {
-										group.color1 = CHSV(random8(), 255, 255);
-									} else if (group.extra == GroupExtra::Alternating) {
-										group.color3 = group.color1;
-										group.color1 = group.color2;
-										group.color2 = group.color3;
-									}
-								}
-								uint8_t scale = ease8InOutApprox((uint8_t)step);
-								if (step >= 256) {
-									scale = 255 - scale;
-								}
-
-								fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount,
-										   group.color1 % scale);
-								updated = true;
-							}
+							updated |= renderColorPulse(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Color_Wave: {
-							int duration = applySpeed(3000, group.speed);
-							int count = animation_step_count(duration, 10000);
-							if (count > 0) {
-								int step = animation_step(duration, 10000);
-								if (count > step) {
-									if (group.extra == GroupExtra::Random) {
-										group.color1 = group.color2;
-										group.color2 = CHSV(random8(), 255, 255);
-									} else if (group.extra == GroupExtra::Alternating) {
-										group.color3 = group.color1;
-										group.color1 = group.color2;
-										group.color2 = group.color3;
-									}
-								}
-								float valley = step / 10000.0;
-								for (int i = 0; i < groupLedCount; i++) {
-									float pos = (i % 17) / 17.0;
-
-									float distanceWave;
-									CRGB color;
-									const bool flag = (i % 34) < 17;
-									if (pos < valley) {
-										color = flag ? group.color1 : group.color2;
-										distanceWave = abs(valley - 0.5 - pos);
-									} else {
-										color = flag ? group.color2 : group.color1;
-										distanceWave = abs(valley + 0.5 - pos);
-									}
-
-									uint8_t scale;
-									if (distanceWave > 0.25) {
-										scale = 0;
-									} else {
-										scale = 255 - ease8InOutApprox((distanceWave * 4) * 256);
-									}
-									channelData[channelId].leds[group.ledIndex + i] = (color % scale);
-								}
-								updated = true;
-							}
+							updated |= renderColorWave(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Static: {
-							fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, group.color1);
-							updated = true;
+							updated |= renderStatic(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Temperature: {
-							uint16_t currentTemperature;
-							const uint8_t& tempGroup = group.tempGroup;
-							if (tempGroup == GROUP_TEMP_GROUP_EXTERNAL) {
-								currentTemperature = channelData[channelId].temp;
-							} else if (tempGroup < TEMPERATURE_NUM && temperatureController != nullptr) {
-								currentTemperature = temperatureController->getTemperature(tempGroup);
-							} else {
-								break;
-							}
-
-							CRGB color;
-							if (currentTemperature < group.temp1) {
-								color = group.color1;
-							} else if (currentTemperature < group.temp2) {
-								color = group.color1.lerp16(group.color2, ((currentTemperature - group.temp1) /
-																		   ((float)(group.temp2 - group.temp1))) *
-																			  65535);
-							} else if (currentTemperature < group.temp3) {
-								color = group.color2.lerp16(group.color3, ((currentTemperature - group.temp2) /
-																		   ((float)(group.temp3 - group.temp2))) *
-																			  65535);
-							} else {
-								color = group.color3;
-							}
-
-							fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, color);
-							updated = true;
+							updated |= renderTemperature(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Visor: {
-							int duration = applySpeed(150 * groupLedCount, group.speed);
-							int steps = groupLedCount * 2;
-							int count = animation_step_count(duration, steps);
-							if (count > 0) {
-								int step = animation_step(duration, steps);
-								if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
-									if (group.extra == GroupExtra::Random) {
-										group.color1 = CHSV(random8(), 255, 255);
-									} else if (group.extra == GroupExtra::Alternating) {
-										group.color3 = group.color1;
-										group.color1 = group.color2;
-										group.color2 = group.color3;
-									}
-								}
-								fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount, CRGB::Black);
-								for (int i = 0; i < 4; i++) {
-									int led = (((step - i) % steps) + steps) % steps;
-									if (led >= groupLedCount) {
-										led = steps - led - 1;
-									}
-									channelData[channelId].leds[group.ledIndex + led] = group.color1;
-								}
-								updated = true;
-							}
+							updated |= renderVisor(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Marquee: {
-							int duration = applySpeed(700, group.speed);
-							int count = animation_step_count(duration, 3);
-							if (count > 0) {
-								int step = animation_step(duration, 3);
-								for (int i = 0; i < groupLedCount; i++) {
-									channelData[channelId].leds[group.ledIndex + i] =
-										(i + step) % 3 > 0 ? group.color1 : CRGB::Black;
-								}
-								updated = true;
-							}
+							updated |= renderMarquee(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Blink: {
-							int duration = applySpeed(3000, group.speed);
-							int count = animation_step_count(duration, 2);
-							if (count > 0) {
-								int step = animation_step(duration, 2);
-								if (count > step) {
-									if (group.extra == GroupExtra::Random) {
-										group.color1 = CHSV(random8(), 255, 255);
-									} else if (group.extra == GroupExtra::Alternating) {
-										group.color3 = group.color1;
-										group.color1 = group.color2;
-										group.color2 = group.color3;
-									}
-								}
-
-								fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount,
-										   step == 0 ? group.color1 : CRGB::Black);
-								updated = true;
-							}
+							updated |= renderBlink(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Sequential: {
-							int steps = groupLedCount;
-							int duration = applySpeed(60 * steps, group.speed);
-							int count = animation_step_count(duration, steps);
-							if (count > 0) {
-								int step = animation_step(duration, steps);
-								if (count > step) {
-									if (group.extra == GroupExtra::Random) {
-										group.color2 = group.color1;
-										group.color1 = CHSV(random8(), 255, 255);
-									}
-								}
-
-								if (group.direction == GroupDirection::Forward) {
-									fill_solid(&channelData[channelId].leds[group.ledIndex], step + 1, group.color1);
-									fill_solid(&channelData[channelId].leds[group.ledIndex + step + 1],
-											   groupLedCount - (step + 1), group.color2);
-								} else {
-									fill_solid(
-										&channelData[channelId].leds[group.ledIndex + groupLedCount - (step + 1)],
-										step + 1, group.color1);
-									fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount - (step + 1),
-											   group.color2);
-								}
-								updated = true;
-							}
+							updated |= renderSequential(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						case GROUP_MODE_Rainbow: {
-							int duration = applySpeed(3000, group.speed);
-							int count = animation_step_count(duration, 256);
-							if (count > 0) {
-								int step = animation_step(duration, 256);
-								fill_solid(&channelData[channelId].leds[group.ledIndex], groupLedCount,
-										   CHSV(step, 255, 255));
-								updated = true;
-							}
+							updated |= renderRainbow(channelData[channelId], group, groupLedCount);
 							break;
 						}
 						default: {
