@@ -1,5 +1,17 @@
 var NAVTREEINDEX1 =
 {
+"classSimpleFanController.html#aa5ba03464405503a95374a389fb7ef4e":[0,0,19,16],
+"classSimpleFanController.html#aa5fcc500e5c375c7faaddd72d66fd19d":[0,0,19,9],
+"classSimpleFanController.html#aa6952e52891a1318135b298ece099169":[0,0,19,4],
+"classSimpleFanController.html#abbe6454d2c3559bb0fbf92ce31853c35":[0,0,19,20],
+"classSimpleFanController.html#abdbc80a4f1f8162d74fc870fc597128a":[0,0,19,18],
+"classSimpleFanController.html#ae230c2fbce549c994ea9a9eb9a8f84cb":[0,0,19,1],
+"classSimpleFanController.html#ae8b2825eddaa771ae748f872e928bc16":[0,0,19,11],
+"classSimpleFanController.html#aea925840d062154cc848689ff9363ad3":[0,0,19,3],
+"classSimpleFanController.html#af0a4e30ebe2898b346a8d9043bd2752a":[0,0,19,15],
+"classSimpleFanController.html#af11433f2c644363353f4b9dc8f4d8207":[0,0,19,8],
+"classSimpleFanController.html#afbfd22387b248ac54714536c903426d9":[0,0,19,7],
+"classTemperatureController.html":[0,0,20],
 "classTemperatureController.html#a4054ec6caf8fbb651322dbdf001abcb0":[0,0,20,2],
 "classTemperatureController.html#a86e1c68109d631902b55051b54c6c9c3":[0,0,20,0],
 "classTemperatureController.html#aa5a7ba154a7fa89dcdf1de241fc4d061":[0,0,20,5],
