@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Leon Kiefer
+   Copyright 2020 Leon Kiefer
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,8 +16,15 @@
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
 
-#define DATA_PIN_CHANNEL_1 2
-#define DATA_PIN_CHANNEL_2 3
+#define NUMBER_OF_LEDS_PER_FAN 8
+
+#define DATA_PIN_FAN_1 2
+#define DATA_PIN_FAN_2 3
+#define DATA_PIN_FAN_3 4
+#define DATA_PIN_FAN_4 5
+#define DATA_PIN_FAN_5 6
+#define DATA_PIN_FAN_6 7
+#define DATA_PIN_CHANNEL_2 8
 
 CRGB ledsChannel1[96];
 CRGB ledsChannel2[96];
@@ -28,7 +35,16 @@ CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 void setup() {
-	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 96);
+	// 6 fans on channel 1
+	//                          FAN_PIN           CRGB array            offset             number of leds per fan
+	FastLED.addLeds<WS2812B, DATA_PIN_FAN_1, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 0, NUMBER_OF_LEDS_PER_FAN);
+	FastLED.addLeds<WS2812B, DATA_PIN_FAN_2, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 1, NUMBER_OF_LEDS_PER_FAN);
+	FastLED.addLeds<WS2812B, DATA_PIN_FAN_3, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 2, NUMBER_OF_LEDS_PER_FAN);
+	FastLED.addLeds<WS2812B, DATA_PIN_FAN_4, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 3, NUMBER_OF_LEDS_PER_FAN);
+	FastLED.addLeds<WS2812B, DATA_PIN_FAN_5, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 4, NUMBER_OF_LEDS_PER_FAN);
+	FastLED.addLeds<WS2812B, DATA_PIN_FAN_6, GRB>(ledsChannel1, NUMBER_OF_LEDS_PER_FAN * 5, NUMBER_OF_LEDS_PER_FAN);
+
+	// normal strip on channel 2
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 96);
 	ledController.addLEDs(0, ledsChannel1, 96);
 	ledController.addLEDs(1, ledsChannel2, 96);
