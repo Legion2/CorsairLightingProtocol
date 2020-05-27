@@ -232,12 +232,13 @@ bool FastLEDController::renderTemperature(ChannelData& channelData, LEDGroup& gr
 }
 
 bool FastLEDController::renderVisor(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
-	int duration = applySpeed(150 * groupLedCount, group.speed);
-	int steps = groupLedCount * 2;
+	int duration = applySpeed(120 * groupLedCount, group.speed);
+	const int resolution = 64;
+	int steps = groupLedCount * 2 * resolution;
 	int count = animation_step_count(duration, steps);
 	if (count > 0) {
 		int step = animation_step(duration, steps);
-		if (step >= groupLedCount ? count > step - groupLedCount : count > step) {
+		if (step >= steps / 2 ? count > step - steps / 2 : count > step) {
 			if (group.extra == GroupExtra::Random) {
 				group.color1 = randomColor();
 				group.color2 = randomColor();
@@ -247,13 +248,25 @@ bool FastLEDController::renderVisor(ChannelData& channelData, LEDGroup& group, i
 				group.color2 = temp;
 			}
 		}
-		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, CRGB::Black);
-		int gradientLength = 4;
-		int gradientMiddlePosition = (step >= groupLedCount) ? steps - step - 1 : step;
-		int gradientStartPosition = gradientMiddlePosition - ((gradientLength - 1) / 2);
-		fill_gradient_RGB(&channelData.leds[group.ledIndex], constrain(gradientStartPosition, 0, groupLedCount - 1),
-						  group.color1, constrain(gradientStartPosition + (gradientLength - 1), 0, groupLedCount - 1),
-						  group.color2);
+		const float gradientLength = 3.0f;
+		float pos = step / (float)resolution;
+		float gradientMiddlePosition = (pos >= groupLedCount) ? (groupLedCount * 2) - pos : pos;
+		gradientMiddlePosition -= 0.5f;
+		const float gradientStartPosition = gradientMiddlePosition - (gradientLength / 2);
+		const float gradientEndPosition = gradientMiddlePosition + (gradientLength / 2);
+		for (int i = 0; i < groupLedCount; i++) {
+			CRGB color = CRGB::Black;
+			if (i >= gradientStartPosition - 1 && i < gradientStartPosition) {
+				color = group.color1;
+				color.nscale8((i - (gradientStartPosition - 1)) * 256.0);
+			} else if (i >= gradientStartPosition && i < gradientEndPosition) {
+				color = blend(group.color1, group.color2, ((i - gradientStartPosition) / gradientLength) * 256);
+			} else if (i >= gradientEndPosition && i < gradientEndPosition + 1) {
+				color = group.color2;
+				color.nscale8((1 - (i - gradientEndPosition)) * 256.0);
+			}
+			channelData.leds[group.ledIndex + i] = color;
+		}
 		return true;
 	}
 	return false;
