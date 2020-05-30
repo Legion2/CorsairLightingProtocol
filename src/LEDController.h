@@ -220,6 +220,16 @@ protected:
 	 */
 	virtual void setLEDExternalTemperature(uint8_t channel, uint16_t temp) = 0;
 	virtual bool setLEDGroup(uint8_t channel, uint8_t groupIndex, LEDGroup& group);
+	/**
+	 * Set the LED color values for one color-channel (red, green or blue) of the given channel.
+	 *
+	 * @param channel the channel index
+	 * @param color the color index to set the values for red(0), green(1), blue(2)
+	 * @param offset the offset in the LED colors buffer to write to
+	 * @param values the array of values to write
+	 * @param len the length of the array of values to write
+	 * @see clearLEDColorValues()
+	 */
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values,
 								   size_t len) = 0;
 	/**
@@ -246,6 +256,12 @@ protected:
 	 * @return true if the port type was changed
 	 */
 	virtual bool setLEDPortType(uint8_t channel, PortType ledPortType);
+	/**
+	 * Clear the LED color buffer for the given channel.
+	 *
+	 * @param channel the channel index
+	 * @see setLEDColorValues()
+	 */
 	virtual void clearLEDColorValues(uint8_t channel) = 0;
 	virtual bool clearLEDGroups(uint8_t channel);
 	virtual bool save() = 0;

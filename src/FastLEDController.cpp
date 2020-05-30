@@ -498,7 +498,9 @@ void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_
 }
 
 void FastLEDController::clearLEDColorValues(uint8_t channel) {
-	memset(channelData[channel].valuesBuffer[0], 0, channelData[channel].ledCount);
+	for (uint8_t*& buffer : channelData[channel].valuesBuffer) {
+		memset(buffer, 0, channelData[channel].ledCount);
+	}
 }
 
 void FastLEDController::timeoutAction() {
