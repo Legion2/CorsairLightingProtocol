@@ -194,11 +194,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> () override<
 <tr class="separator:ac301c35a440fac6a36d3fe7abf2c9609"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a853f628da3ba9ef12b667d48a277e9ba"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba">setLEDExternalTemperature</a> (uint8_t channel, uint16_t temp) override</td></tr>
 <tr class="separator:a853f628da3ba9ef12b667d48a277e9ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7869f274c4d3c7005205d1d9268836bc"><td class="memItemLeft" align="right" valign="top"><a id="a7869f274c4d3c7005205d1d9268836bc"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDColorValues</b> (uint8_t channel, uint8_t color, uint8_t offset, const uint8_t *values, size_t len) override</td></tr>
+<tr class="memitem:a7869f274c4d3c7005205d1d9268836bc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc">setLEDColorValues</a> (uint8_t channel, uint8_t color, uint8_t offset, const uint8_t *values, size_t len) override</td></tr>
 <tr class="separator:a7869f274c4d3c7005205d1d9268836bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0f39353c452e1fee048ea332578ee08"><td class="memItemLeft" align="right" valign="top"><a id="ae0f39353c452e1fee048ea332578ee08"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDColorValues</b> (uint8_t channel) override</td></tr>
+<tr class="memitem:ae0f39353c452e1fee048ea332578ee08"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08">clearLEDColorValues</a> (uint8_t channel) override</td></tr>
 <tr class="separator:ae0f39353c452e1fee048ea332578ee08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53558fd42150a058d630dd83c8404ad6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a53558fd42150a058d630dd83c8404ad6">timeoutAction</a> ()</td></tr>
 <tr class="separator:a53558fd42150a058d630dd83c8404ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -456,6 +454,42 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 
 </div>
 </div>
+<a id="ae0f39353c452e1fee048ea332578ee08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0f39353c452e1fee048ea332578ee08">&#9670;&nbsp;</a></span>clearLEDColorValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FastLEDController::clearLEDColorValues </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Clear the LED color buffer for the given channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc">setLEDColorValues()</a> </dd></dl>
+
+<p>Implements <a class="el" href="classLEDController.html#a1b196384633dcf4a1a3b16ad36afc8db">LEDController</a>.</p>
+
+</div>
+</div>
 <a id="ac7dafabd0ec9eac0e5f954397fa8c876"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7dafabd0ec9eac0e5f954397fa8c876">&#9670;&nbsp;</a></span>getEEPROMSize()</h2>
 
@@ -597,6 +631,74 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 </div><div class="memdoc">
 <p>Generate a rainbow random color from predefined color palette.</p>
 <dl class="section return"><dt>Returns</dt><dd>a random color </dd></dl>
+
+</div>
+</div>
+<a id="a7869f274c4d3c7005205d1d9268836bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7869f274c4d3c7005205d1d9268836bc">&#9670;&nbsp;</a></span>setLEDColorValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FastLEDController::setLEDColorValues </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the LED color values for one color-channel (red, green or blue) of the given channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+    <tr><td class="paramname">color</td><td>the color index to set the values for red(0), green(1), blue(2) </td></tr>
+    <tr><td class="paramname">offset</td><td>the offset in the LED colors buffer to write to </td></tr>
+    <tr><td class="paramname">values</td><td>the array of values to write </td></tr>
+    <tr><td class="paramname">len</td><td>the length of the array of values to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08">clearLEDColorValues()</a> </dd></dl>
+
+<p>Implements <a class="el" href="classLEDController.html#a66c68b7fe68ea04b750e7ce1619be987">LEDController</a>.</p>
 
 </div>
 </div>

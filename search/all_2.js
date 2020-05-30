@@ -1,6 +1,7 @@
 var searchData=
 [
   ['channelmode',['ChannelMode',['../LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bc',1,'LEDController.h']]],
+  ['clearledcolorvalues',['clearLEDColorValues',['../classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08',1,'FastLEDController::clearLEDColorValues()'],['../classLEDController.html#a1b196384633dcf4a1a3b16ad36afc8db',1,'LEDController::clearLEDColorValues()']]],
   ['clpusbserialbridge',['CLPUSBSerialBridge',['../classCLPUSBSerialBridge.html',1,'CLPUSBSerialBridge'],['../classCLPUSBSerialBridge.html#a955fbdd48589591ecf224806e4f2f0f4',1,'CLPUSBSerialBridge::CLPUSBSerialBridge()'],['../classCLPUSBSerialBridge.html#a0a3a530a8147d533a4554cad84e05dca',1,'CLPUSBSerialBridge::CLPUSBSerialBridge(const char *serialNumber)']]],
   ['command',['Command',['../structCommand.html',1,'']]],
   ['corsairlightingfirmware',['CorsairLightingFirmware',['../classCorsairLightingFirmware.html',1,'']]],

@@ -133,8 +133,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ace62f072476e37f46a17419d161e4804"><td class="memItemLeft" align="right" valign="top"><a id="ace62f072476e37f46a17419d161e4804"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDGroup</b> (uint8_t channel, uint8_t groupIndex, <a class="el" href="structLEDGroup.html">LEDGroup</a> &amp;group)</td></tr>
 <tr class="separator:ace62f072476e37f46a17419d161e4804"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66c68b7fe68ea04b750e7ce1619be987"><td class="memItemLeft" align="right" valign="top"><a id="a66c68b7fe68ea04b750e7ce1619be987"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDColorValues</b> (uint8_t channel, uint8_t color, uint8_t offset, const uint8_t *values, size_t len)=0</td></tr>
+<tr class="memitem:a66c68b7fe68ea04b750e7ce1619be987"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a66c68b7fe68ea04b750e7ce1619be987">setLEDColorValues</a> (uint8_t channel, uint8_t color, uint8_t offset, const uint8_t *values, size_t len)=0</td></tr>
 <tr class="separator:a66c68b7fe68ea04b750e7ce1619be987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad86b10620d6a42b262a9ae9a27a57769"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#ad86b10620d6a42b262a9ae9a27a57769">setLEDMode</a> (uint8_t channel, <a class="el" href="LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bc">ChannelMode</a> mode)</td></tr>
 <tr class="separator:ad86b10620d6a42b262a9ae9a27a57769"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,8 +141,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDColorVa
 <tr class="separator:aaf9030aa97cede5d578f44bdd679a4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af894e3de293907ba4600c8c4b75fb96e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#af894e3de293907ba4600c8c4b75fb96e">setLEDPortType</a> (uint8_t channel, <a class="el" href="LEDController_8h.html#ad0d4a02109cc26b7f5a6113eb6ee1211">PortType</a> ledPortType)</td></tr>
 <tr class="separator:af894e3de293907ba4600c8c4b75fb96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b196384633dcf4a1a3b16ad36afc8db"><td class="memItemLeft" align="right" valign="top"><a id="a1b196384633dcf4a1a3b16ad36afc8db"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDColorValues</b> (uint8_t channel)=0</td></tr>
+<tr class="memitem:a1b196384633dcf4a1a3b16ad36afc8db"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a1b196384633dcf4a1a3b16ad36afc8db">clearLEDColorValues</a> (uint8_t channel)=0</td></tr>
 <tr class="separator:a1b196384633dcf4a1a3b16ad36afc8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac68f3b572fb9f8177d6d3638e406a59b"><td class="memItemLeft" align="right" valign="top"><a id="ac68f3b572fb9f8177d6d3638e406a59b"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDGroups</b> (uint8_t channel)</td></tr>
@@ -170,6 +168,42 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstract implemenation of an <a class="el" href="classLEDController.html">LEDController</a>. This implementation handles the parsing and interpretation of incoming commands. It also defines the data model to store the all required data from the commands. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1b196384633dcf4a1a3b16ad36afc8db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b196384633dcf4a1a3b16ad36afc8db">&#9670;&nbsp;</a></span>clearLEDColorValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void LEDController::clearLEDColorValues </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Clear the LED color buffer for the given channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classLEDController.html#a66c68b7fe68ea04b750e7ce1619be987">setLEDColorValues()</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08">FastLEDController</a>.</p>
+
+</div>
+</div>
 <a id="a7f5f3d1ff38e3145ffceff245d8d192e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7f5f3d1ff38e3145ffceff245d8d192e">&#9670;&nbsp;</a></span>getChannel()</h2>
 
@@ -449,6 +483,74 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the brightness was changed </dd></dl>
+
+</div>
+</div>
+<a id="a66c68b7fe68ea04b750e7ce1619be987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66c68b7fe68ea04b750e7ce1619be987">&#9670;&nbsp;</a></span>setLEDColorValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void LEDController::setLEDColorValues </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the LED color values for one color-channel (red, green or blue) of the given channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+    <tr><td class="paramname">color</td><td>the color index to set the values for red(0), green(1), blue(2) </td></tr>
+    <tr><td class="paramname">offset</td><td>the offset in the LED colors buffer to write to </td></tr>
+    <tr><td class="paramname">values</td><td>the array of values to write </td></tr>
+    <tr><td class="paramname">len</td><td>the length of the array of values to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classLEDController.html#a1b196384633dcf4a1a3b16ad36afc8db">clearLEDColorValues()</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc">FastLEDController</a>.</p>
 
 </div>
 </div>
