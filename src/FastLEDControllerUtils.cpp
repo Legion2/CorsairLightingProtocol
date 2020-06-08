@@ -22,7 +22,8 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 	auto& channel = controller->getChannel(channelIndex);
 	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);
-		for (uint8_t fanIndex = 0; fanIndex < controller->getLEDCount(channelIndex) / 16; fanIndex++) {
+		auto count = controller->getLEDCount(channelIndex);
+		for (uint8_t fanIndex = 0; fanIndex < count / 16; fanIndex++) {
 			for (uint8_t ledIndex = 0; ledIndex < 8; ledIndex++) {
 				CRGB temp = leds[fanIndex * 16 + ledIndex];
 				leds[fanIndex * 16 + ledIndex] = leds[fanIndex * 16 + 15 - ledIndex];
@@ -104,5 +105,18 @@ void CLP::gammaCorrection(FastLEDController* controller, uint8_t channelIndex) {
 		leds[ledIndex].r = dim8_video(leds[ledIndex].r);
 		leds[ledIndex].g = dim8_video(leds[ledIndex].g);
 		leds[ledIndex].b = dim8_video(leds[ledIndex].b);
+	}
+}
+
+void CLP::fixIcueBrightness(FastLEDController* controller, uint8_t channelIndex) {
+	auto& channel = controller->getChannel(channelIndex);
+	if (channel.mode == ChannelMode::SoftwarePlayback) {
+		auto leds = controller->getLEDs(channelIndex);
+		auto count = controller->getLEDCount(channelIndex);
+		for (int ledIndex = 0; ledIndex < count; ledIndex++) {
+			leds[ledIndex].r = leds[ledIndex].r * 2;
+			leds[ledIndex].g = leds[ledIndex].g * 2;
+			leds[ledIndex].b = leds[ledIndex].b * 2;
+		}
 	}
 }

@@ -22,23 +22,35 @@
 CRGB ledsChannel1[60];
 CRGB ledsChannel2[60];
 
+// Define a custom SerialNumber for the device
 const char mySerialNumber[] PROGMEM = "202B6949A967";
 
 CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
 FastLEDController ledController(true);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
+// Set the SerialNumber here
 CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);
 
 void setup() {
+	// Disable the build in RX and TX LEDs of the Arduino
 	CLP::disableBuildInLEDs();
+	// enable reset on DeviceId (FF FF FF FF)
 	if (CLP::shouldReset(&firmware)) {
+		// reset DeviceId and generate new one
 		CLP::reset(&firmware);
+		// reset the LEDController Settings
 		ledController.reset();
 	}
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 60);
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 60);
 	ledController.addLEDs(0, ledsChannel1, 60);
 	ledController.addLEDs(1, ledsChannel2, 60);
+
+	// modify the RGB values before they are shown on the LED strip
+	ledController.onUpdateHook(0, []() {
+		// increase the brightness of channel 1 when using iCUE, because iCUE only set brightness to max 50%
+		CLP::fixIcueBrightness(&ledController, 0);
+	});
 }
 
 void loop() {
