@@ -36,8 +36,14 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize) {
 	auto leds = controller->getLEDs(channelIndex);
 	const float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
-	for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
-		leds[ledIndex] = leds[lround(ledIndex * scaleFactor)];
+	if (scaleFactor < 1.0f) {
+		for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
+			leds[ledIndex] = leds[lround(ledIndex * scaleFactor)];
+		}
+	} else {
+		for (int ledIndex = 0; ledIndex < scaleToSize; ledIndex++) {
+			leds[ledIndex] = leds[lround(ledIndex * scaleFactor)];
+		}
 	}
 }
 
