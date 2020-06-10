@@ -89,4 +89,13 @@ void reverse(FastLEDController* controller, uint8_t channelIndex);
  * @param channelIndex the index of the channel
  */
 void gammaCorrection(FastLEDController* controller, uint8_t channelIndex);
+
+/**
+ * Increase the brightness of a LED channel when using iCUE Software lighting, because iCUE only send the RGB value in
+ * the range (0 - 127) which is only 50% of max possible brightness. This function doubles the received RGB value.
+ *
+ * @param controller the FastLEDController controlling the LEDs
+ * @param channelIndex the index of the channel
+ */
+void fixIcueBrightness(FastLEDController* controller, uint8_t channelIndex);
 }  // namespace CLP
