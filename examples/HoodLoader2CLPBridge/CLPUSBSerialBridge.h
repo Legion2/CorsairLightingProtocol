@@ -19,7 +19,7 @@
 
 #include "Arduino.h"
 
-#if (COMMAND_SIZE == RESPONSE_SIZE)
+#if (COMMAND_SIZE >= RESPONSE_SIZE)
 #define RAWHID_AND_SERIAL_BUFFER_SIZE COMMAND_SIZE
 #endif
 

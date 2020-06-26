@@ -48,7 +48,7 @@ bool waitForSynchronization() {
 }
 
 void CLPUSBSerialBridge::sendError() {
-	memset(rawHIDAndSerialBuffer, 0, sizeof(rawHIDAndSerialBuffer));
+	memset(rawHIDAndSerialBuffer, 0, RESPONSE_SIZE);
 	rawHIDAndSerialBuffer[0] = PROTOCOL_RESPONSE_ERROR;
 	sendResponse();
 }
@@ -58,7 +58,7 @@ void CLPUSBSerialBridge::sendResponse() {
 	Serial.print(F("R"));
 	Serial.println(rawHIDAndSerialBuffer[0], HEX);
 #endif  // DEBUG
-	CLP::RawHID.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+	CLP::RawHID.write(rawHIDAndSerialBuffer, RESPONSE_SIZE);
 	// free the shared buffer to receive new data
 	CLP::RawHID.enable();
 }
@@ -77,10 +77,10 @@ void CLPUSBSerialBridge::handleHID() {
 			return;
 		}
 
-		Serial1.write(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
+		Serial1.write(rawHIDAndSerialBuffer, COMMAND_SIZE);
 		Serial1.setTimeout(SERIAL_RESPONSE_TIMEOUT);
-		size_t read = Serial1.readBytes(rawHIDAndSerialBuffer, sizeof(rawHIDAndSerialBuffer));
-		if (read != sizeof(rawHIDAndSerialBuffer)) {
+		size_t read = Serial1.readBytes(rawHIDAndSerialBuffer, RESPONSE_SIZE);
+		if (read != RESPONSE_SIZE) {
 #ifdef DEBUG
 			Serial.print(F("T"));
 			Serial.println(read);
