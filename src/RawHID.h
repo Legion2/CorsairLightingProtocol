@@ -42,7 +42,7 @@ THE SOFTWARE.
 #undef RAWHID_USAGE
 #define RAWHID_USAGE 0x0C00  // recommended: 0x0100 to 0xFFFF
 
-#define RAWHID_TX_SIZE 64
+#define RAWHID_TX_SIZE 16
 #define RAWHID_RX_SIZE 64
 
 #endif
