@@ -1,6 +1,11 @@
-# Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Legion2/CorsairLightingProtocol.svg)](http://isitmaintained.com/project/Legion2/CorsairLightingProtocol "Average time to resolve an issue")
+# Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush) [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/Legion2/CorsairLightingProtocol.svg)](https://isitmaintained.com/project/Legion2/CorsairLightingProtocol "Average time to resolve an issue")
+
+<a href="https://www.corsair.com/icue"><img src="extra/images/iCUEDarkBadge.png" alt="iCUE" height="80" /></a>
+<a href="https://rgbsync.com/"><img src="extra/images/RGBSyncDarkBadge.png" alt="RGBSync" height="80" /></a>
+<a href="https://gitlab.com/CalcProgrammer1/OpenRGB"><img src="extra/images/OpenRGBBadge.png" alt="OpenRGB" height="80" /></a>
 
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
+_This is not an official corsair project._
 
 ## Features
 * Add support of Corsair DIY device protocol to Arduino.
