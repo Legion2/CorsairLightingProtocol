@@ -42,7 +42,11 @@ THE SOFTWARE.
 #undef RAWHID_USAGE
 #define RAWHID_USAGE 0x0C00  // recommended: 0x0100 to 0xFFFF
 
+#if defined(__AVR_ATmega16U2__)
+#define RAWHID_TX_SIZE 64
+#else
 #define RAWHID_TX_SIZE 16
+#endif
 #define RAWHID_RX_SIZE 64
 
 #endif
@@ -51,7 +55,7 @@ THE SOFTWARE.
 
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
-// Interrupt Out Endpoint is optional, contoll endpoint is used by default
+// Interrupt Out Endpoint is optional, control endpoint is used by default
 #define ENDPOINT_COUNT 1
 namespace CLP {
 class RawHID_ : public PluggableUSBModule, public Stream {
