@@ -18,7 +18,7 @@
 #include "Arduino.h"
 
 #define COMMAND_SIZE 64
-#define RESPONSE_SIZE 64
+#define RESPONSE_SIZE 16
 
 #define READ_STATUS 0x01
 #define READ_FIRMWARE_VERSION 0x02

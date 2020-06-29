@@ -17,10 +17,6 @@
 
 #if defined(SUPPORT_RAW_HID)
 
-#if (RAWHID_TX_SIZE != RESPONSE_SIZE)
-#error "USB endpoint must be the same size as the protocol response"
-#endif
-
 #if defined(DEBUG) && defined(VERBOSE)
 bool printCommand = PRINT_COMMAND;
 bool printResponse = PRINT_RESPONSE;
