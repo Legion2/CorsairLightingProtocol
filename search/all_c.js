@@ -22,5 +22,6 @@ var searchData=
   ['setserialnumber',['setSerialNumber',['../classCLP_1_1RawHID__.html#ab8c858ed215f15e97a98ed23e6e536e0',1,'CLP::RawHID_']]],
   ['setup',['setup',['../classCorsairLightingProtocolSerial.html#aa5b6968262e6e91b19e68fa42a7c6042',1,'CorsairLightingProtocolSerial']]],
   ['simplefancontroller',['SimpleFanController',['../classSimpleFanController.html',1,'SimpleFanController'],['../classSimpleFanController.html#a22ddb9ff04ad0d946eab0772d0fa9005',1,'SimpleFanController::SimpleFanController()']]],
-  ['softwareplayback',['SoftwarePlayback',['../LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bca73127e302563970d7ccd871c3f14671e',1,'LEDController.h']]]
+  ['softwareplayback',['SoftwarePlayback',['../LEDController_8h.html#a00f0b242f777245ee33e575df3cfc4bca73127e302563970d7ccd871c3f14671e',1,'LEDController.h']]],
+  ['startledautodetection',['startLEDAutodetection',['../classLEDController.html#a769041ff2b9951adf9897ed38101ebe6',1,'LEDController']]]
 ];

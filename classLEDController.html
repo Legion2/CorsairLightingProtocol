@@ -146,6 +146,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDGroup</
 <tr class="memitem:ac68f3b572fb9f8177d6d3638e406a59b"><td class="memItemLeft" align="right" valign="top"><a id="ac68f3b572fb9f8177d6d3638e406a59b"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDGroups</b> (uint8_t channel)</td></tr>
 <tr class="separator:ac68f3b572fb9f8177d6d3638e406a59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a769041ff2b9951adf9897ed38101ebe6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a769041ff2b9951adf9897ed38101ebe6">startLEDAutodetection</a> (uint8_t channel)</td></tr>
+<tr class="separator:a769041ff2b9951adf9897ed38101ebe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a93a6caec44f879abc1b6a4922b285"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a40a93a6caec44f879abc1b6a4922b285">getLEDAutodetectionResult</a> (uint8_t channel)=0</td></tr>
+<tr class="separator:a40a93a6caec44f879abc1b6a4922b285"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af37cc5a6c0ff88bd904e7cd1ffa7b9da"><td class="memItemLeft" align="right" valign="top"><a id="af37cc5a6c0ff88bd904e7cd1ffa7b9da"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> ()=0</td></tr>
 <tr class="separator:af37cc5a6c0ff88bd904e7cd1ffa7b9da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,6 +231,43 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the <a class="el" href="structLEDChannel.html">LEDChannel</a> </dd></dl>
+
+</div>
+</div>
+<a id="a40a93a6caec44f879abc1b6a4922b285"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40a93a6caec44f879abc1b6a4922b285">&#9670;&nbsp;</a></span>getLEDAutodetectionResult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint8_t LEDController::getLEDAutodetectionResult </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the result of the LED number autodetection on the given channel. Potential values for LT100: 27, 54, 81, 108</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of LEDs currently connected to the channel </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classLEDController.html#a769041ff2b9951adf9897ed38101ebe6">startLEDAutodetection()</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="classFastLEDController.html#a0538597b3ee312ebef15e97018e4bb0b">FastLEDController</a>.</p>
 
 </div>
 </div>
@@ -687,6 +728,40 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the port type was changed </dd></dl>
+
+</div>
+</div>
+<a id="a769041ff2b9951adf9897ed38101ebe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a769041ff2b9951adf9897ed38101ebe6">&#9670;&nbsp;</a></span>startLEDAutodetection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LEDController::startLEDAutodetection </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Start the potentially long running process to detect the current number of LEDs connected to given channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classLEDController.html#a40a93a6caec44f879abc1b6a4922b285">getLEDAutodetectionResult()</a> </dd></dl>
 
 </div>
 </div>

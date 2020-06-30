@@ -9,6 +9,7 @@ var classFastLEDController =
     [ "applySpeed", "classFastLEDController.html#a47bdbab07da284bcb426e82860b3b4a4", null ],
     [ "clearLEDColorValues", "classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08", null ],
     [ "getEEPROMSize", "classFastLEDController.html#ac7dafabd0ec9eac0e5f954397fa8c876", null ],
+    [ "getLEDAutodetectionResult", "classFastLEDController.html#a0538597b3ee312ebef15e97018e4bb0b", null ],
     [ "getLEDCount", "classFastLEDController.html#a75a97bbfb670484b39d524076faebefb", null ],
     [ "getLEDs", "classFastLEDController.html#ab7673bdc98e6fd5833e114eac5ca1a52", null ],
     [ "load", "classFastLEDController.html#a56002f0ea8de239baa0cbc888b4774b2", null ],

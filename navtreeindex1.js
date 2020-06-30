@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"classSimpleFanController.html#a5ec09407b6e2418192a8aff69883eeda":[0,0,19,21],
+"classSimpleFanController.html#a7f4f2048c545a30c609ce9ef08551d98":[0,0,19,19],
+"classSimpleFanController.html#a98ad709b23d714b5d79bf18de287b7f2":[0,0,19,14],
 "classSimpleFanController.html#aa5ba03464405503a95374a389fb7ef4e":[0,0,19,16],
 "classSimpleFanController.html#aa5fcc500e5c375c7faaddd72d66fd19d":[0,0,19,9],
 "classSimpleFanController.html#aa6952e52891a1318135b298ece099169":[0,0,19,4],

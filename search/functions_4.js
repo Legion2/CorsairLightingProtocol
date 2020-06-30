@@ -5,6 +5,7 @@ var searchData=
   ['getfandetectiontype',['getFanDetectionType',['../classFanController.html#aca10ec57dd384ac00c0676b273952370',1,'FanController::getFanDetectionType()'],['../classSimpleFanController.html#a2511ab766ffcba88ce6ab7bc93c9f520',1,'SimpleFanController::getFanDetectionType()']]],
   ['getfanpower',['getFanPower',['../classFanController.html#a474411f50ae4dbfd07b966e1698cfb5d',1,'FanController::getFanPower()'],['../classSimpleFanController.html#aea925840d062154cc848689ff9363ad3',1,'SimpleFanController::getFanPower()']]],
   ['getfanspeed',['getFanSpeed',['../classFanController.html#a875a8b83b0736fbfd80753bd6ba64aca',1,'FanController::getFanSpeed()'],['../classSimpleFanController.html#aa6952e52891a1318135b298ece099169',1,'SimpleFanController::getFanSpeed()']]],
+  ['getledautodetectionresult',['getLEDAutodetectionResult',['../classFastLEDController.html#a0538597b3ee312ebef15e97018e4bb0b',1,'FastLEDController::getLEDAutodetectionResult()'],['../classLEDController.html#a40a93a6caec44f879abc1b6a4922b285',1,'LEDController::getLEDAutodetectionResult()']]],
   ['getledcount',['getLEDCount',['../classFastLEDController.html#a75a97bbfb670484b39d524076faebefb',1,'FastLEDController']]],
   ['getleds',['getLEDs',['../classFastLEDController.html#ab7673bdc98e6fd5833e114eac5ca1a52',1,'FastLEDController']]],
   ['getledstripmask',['getLEDStripMask',['../classLEDController.html#a5a7166a7a923da180a8152e6e5c3c8e4',1,'LEDController']]],

@@ -198,6 +198,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> () override<
 <tr class="separator:a7869f274c4d3c7005205d1d9268836bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0f39353c452e1fee048ea332578ee08"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#ae0f39353c452e1fee048ea332578ee08">clearLEDColorValues</a> (uint8_t channel) override</td></tr>
 <tr class="separator:ae0f39353c452e1fee048ea332578ee08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0538597b3ee312ebef15e97018e4bb0b"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a0538597b3ee312ebef15e97018e4bb0b">getLEDAutodetectionResult</a> (uint8_t channel) override</td></tr>
+<tr class="separator:a0538597b3ee312ebef15e97018e4bb0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53558fd42150a058d630dd83c8404ad6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a53558fd42150a058d630dd83c8404ad6">timeoutAction</a> ()</td></tr>
 <tr class="separator:a53558fd42150a058d630dd83c8404ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classLEDController"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classLEDController')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classLEDController.html">LEDController</a></td></tr>
@@ -215,6 +217,8 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setLEDGroup</
 <tr class="memitem:ac68f3b572fb9f8177d6d3638e406a59b inherit pro_methods_classLEDController"><td class="memItemLeft" align="right" valign="top"><a id="ac68f3b572fb9f8177d6d3638e406a59b"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>clearLEDGroups</b> (uint8_t channel)</td></tr>
 <tr class="separator:ac68f3b572fb9f8177d6d3638e406a59b inherit pro_methods_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a769041ff2b9951adf9897ed38101ebe6 inherit pro_methods_classLEDController"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a769041ff2b9951adf9897ed38101ebe6">startLEDAutodetection</a> (uint8_t channel)</td></tr>
+<tr class="separator:a769041ff2b9951adf9897ed38101ebe6 inherit pro_methods_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a462ccabe0f1cb7af75a6df1ae36d13c6 inherit pro_methods_classLEDController"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a462ccabe0f1cb7af75a6df1ae36d13c6">saveIfNeeded</a> ()</td></tr>
 <tr class="separator:a462ccabe0f1cb7af75a6df1ae36d13c6 inherit pro_methods_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -514,6 +518,43 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 </div><div class="memdoc">
 <p>Get the total size of all data stored in EEPROM by this <a class="el" href="classLEDController.html">LEDController</a>.</p>
 <dl class="section return"><dt>Returns</dt><dd>the size in bytes </dd></dl>
+
+</div>
+</div>
+<a id="a0538597b3ee312ebef15e97018e4bb0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0538597b3ee312ebef15e97018e4bb0b">&#9670;&nbsp;</a></span>getLEDAutodetectionResult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t FastLEDController::getLEDAutodetectionResult </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the result of the LED number autodetection on the given channel. Potential values for LT100: 27, 54, 81, 108</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the channel index </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of LEDs currently connected to the channel </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classLEDController.html#a769041ff2b9951adf9897ed38101ebe6">startLEDAutodetection()</a> </dd></dl>
+
+<p>Implements <a class="el" href="classLEDController.html#a40a93a6caec44f879abc1b6a4922b285">LEDController</a>.</p>
 
 </div>
 </div>
