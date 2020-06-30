@@ -177,6 +177,7 @@ protected:
 	virtual void setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values,
 								   size_t len) override;
 	virtual void clearLEDColorValues(uint8_t channel) override;
+	virtual uint8_t getLEDAutodetectionResult(uint8_t channel) override;
 	/**
 	 * This function is called when a timeout occurs.
 	 */

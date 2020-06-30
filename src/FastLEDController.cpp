@@ -503,6 +503,8 @@ void FastLEDController::clearLEDColorValues(uint8_t channel) {
 	}
 }
 
+uint8_t FastLEDController::getLEDAutodetectionResult(uint8_t channel) { return channelData[channel].ledCount; }
+
 void FastLEDController::timeoutAction() {
 	for (int channelId = 0; channelId < CHANNEL_NUM; channelId++) {
 		triggerSave |= setLEDMode(channelId, ChannelMode::HardwarePlayback);

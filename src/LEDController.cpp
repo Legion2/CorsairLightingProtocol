@@ -149,6 +149,18 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				triggerSave |= setLEDPortType(channel, portType);
 				break;
 			}
+			case WRITE_LED_START_AUTODETECTION: {
+				startLEDAutodetection(channel);
+				break;
+			}
+			case READ_LED_AUTODETECTION_RESULTS: {
+				const uint8_t result = getLEDAutodetectionResult(channel);
+				uint8_t buffer[] = {result};
+				response->send(buffer, sizeof(buffer));
+				// don't send default response
+				return;
+				break;
+			}
 			default: {
 #ifdef DEBUG
 				Serial.print(F("unkown command: "));
@@ -230,6 +242,10 @@ bool LEDController::setLEDPortType(uint8_t channel, PortType ledPortType) {
 		return true;
 	}
 	return false;
+}
+
+void LEDController::startLEDAutodetection(uint8_t channel) {
+	// Nothing to do here
 }
 
 bool LEDController::saveIfNeeded() {

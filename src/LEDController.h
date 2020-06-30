@@ -264,6 +264,22 @@ protected:
 	 */
 	virtual void clearLEDColorValues(uint8_t channel) = 0;
 	virtual bool clearLEDGroups(uint8_t channel);
+	/**
+	 * Start the potentially long running process to detect the current number of LEDs connected to given channel.
+	 *
+	 * @param channel the channel index
+	 * @see getLEDAutodetectionResult()
+	 */
+	virtual void startLEDAutodetection(uint8_t channel);
+	/**
+	 * Get the result of the LED number autodetection on the given channel.
+	 * Potential values for LT100: 27, 54, 81, 108
+	 *
+	 * @param channel the channel index
+	 * @return the number of LEDs currently connected to the channel
+	 * @see startLEDAutodetection()
+	 */
+	virtual uint8_t getLEDAutodetectionResult(uint8_t channel) = 0;
 	virtual bool save() = 0;
 	virtual bool load() = 0;
 	/**
