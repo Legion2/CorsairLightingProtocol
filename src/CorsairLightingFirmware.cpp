@@ -23,6 +23,8 @@ const uint8_t corsairLightingNodePROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGM
 
 const uint8_t corsairCommanderPROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x00, 0x09, 0xD4};
 
+const uint8_t corsairLT100FirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x01, 0x01, 0x38};
+
 CorsairLightingFirmware::CorsairLightingFirmware(const uint8_t* firmwareVersion) : firmwareVersion(firmwareVersion) {
 	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, deviceId);
 }
@@ -84,3 +86,5 @@ CorsairLightingFirmware corsairLS100Firmware() {
 CorsairLightingFirmware corsairCommanderPROFirmware() {
 	return CorsairLightingFirmware(corsairCommanderPROFirmwareVersion);
 }
+
+CorsairLightingFirmware corsairLT100Firmware() { return CorsairLightingFirmware(corsairLT100FirmwareVersion); }

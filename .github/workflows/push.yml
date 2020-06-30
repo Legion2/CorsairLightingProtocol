@@ -28,8 +28,10 @@ jobs:
             RepeatAndScale.ino,
             TransformLLFansFormatToStrip.ino,
             LS100.ino,
+            LT100.ino,
             LightingNodeCORE.ino,
             NonAddressable.ino,
+            AdditionalFeatures.ino,
             AmbientBacklight.ino,
             MultipleFans.ino,
             DebugSketch.ino

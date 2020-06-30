@@ -1,6 +1,11 @@
-# Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush)
+# Corsair Lighting Protocol [![arduino-library-badge](https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?)](https://www.ardu-badge.com/Corsair%20Lighting%20Protocol) [![Test Status](https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg)](https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush) [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/Legion2/CorsairLightingProtocol.svg)](https://isitmaintained.com/project/Legion2/CorsairLightingProtocol "Average time to resolve an issue")
+
+<a href="https://www.corsair.com/icue"><img src="extra/images/iCUEDarkBadge.png" alt="iCUE" height="80" /></a>
+<a href="https://rgbsync.com/"><img src="extra/images/RGBSyncDarkBadge.png" alt="RGBSync" height="80" /></a>
+<a href="https://gitlab.com/CalcProgrammer1/OpenRGB"><img src="extra/images/OpenRGBBadge.png" alt="OpenRGB" height="80" /></a>
 
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
+_This is not an official corsair project._
 
 ## Features
 * Add support of Corsair DIY device protocol to Arduino.
@@ -34,7 +39,7 @@ This project provides example sketches for easy use with Arduino IDE.
 The library is compatible with all boards using the MCU ATmega32U4.
 This includes **Arduino Leonardo**, **SparkFun Pro Micro**, and **Arduino Micro**.
 It also supports the Arduino Uno and Arduino Mega, **but** this requires the [HoodLoader2](https://github.com/NicoHood/HoodLoader2) bootloader, see [this wiki](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega) for more details.
-It is **not** compatible with Arduino Nano.
+It is **not** compatible with ATmega328 (Arduino Nano), STM8S103F3, teensy, ESP8266 and ESP32 see [list of architecture/platform](https://github.com/Legion2/CorsairLightingProtocol/issues?q=is%3Aissue+label%3Aarchitecture%2Fplatform) for a detailed description why they are not supported.
 In the rest of the documentation "Arduino" is used as a synonym for all supported boards regardless of the manufacturer.
 
 When you have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
