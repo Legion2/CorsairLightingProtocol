@@ -52,3 +52,5 @@ CorsairLightingFirmware corsairLightingNodeCOREFirmware();
 CorsairLightingFirmware corsairLS100Firmware();
 
 CorsairLightingFirmware corsairCommanderPROFirmware();
+
+CorsairLightingFirmware corsairLT100Firmware();
