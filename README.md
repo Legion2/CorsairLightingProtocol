@@ -22,6 +22,7 @@ _This is not an official corsair project._
 * Commander PRO
 * Lighting Node CORE
 * LS100 Smart Lighting Controller
+* LT100 Smart Lighting Towers
 
 ![Overview](extra/images/overview.png)
 
