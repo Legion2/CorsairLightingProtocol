@@ -48,7 +48,7 @@ void loop() {
 	if (ledController.updateLEDs()) {
 		if (printUpdate) Serial.println(F("updateLEDs"));
 		FastLED.show();
-		CLP::printFps(5000);
+		CorsairLightingProtocol::printFps(5000);
 	}
 
 	if (Serial.available()) {
@@ -62,7 +62,7 @@ void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
 		byte deviceId[4];
 		firmware.getDeviceID(deviceId);
-		CLP::printDeviceID(deviceId);
+		CorsairLightingProtocol::printDeviceID(deviceId);
 		Serial.println();
 	}
 #ifdef VERBOSE

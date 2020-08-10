@@ -24,13 +24,13 @@ bool printResponse = PRINT_RESPONSE;
 
 CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller)
 	: controller(controller) {
-	CLP::RawHID.begin(rawhidData, sizeof(rawhidData));
+	CorsairLightingProtocol::RawHID.begin(rawhidData, sizeof(rawhidData));
 }
 
 CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolController* controller,
 													   const char* serialNumber)
 	: CorsairLightingProtocolHID(controller) {
-	CLP::RawHID.setSerialNumber(serialNumber);
+	CorsairLightingProtocol::RawHID.setSerialNumber(serialNumber);
 }
 
 void CorsairLightingProtocolHID::update() {
@@ -41,12 +41,12 @@ void CorsairLightingProtocolHID::update() {
 	}
 }
 
-bool CorsairLightingProtocolHID::available() const { return CLP::RawHID.available() > 0; }
+bool CorsairLightingProtocolHID::available() const { return CorsairLightingProtocol::RawHID.available() > 0; }
 
 void CorsairLightingProtocolHID::getCommand(Command& command) {
-	auto bytesAvailable = CLP::RawHID.available();
+	auto bytesAvailable = CorsairLightingProtocol::RawHID.available();
 	if (bytesAvailable) {
-		CLP::RawHID.readBytes(command.raw, sizeof(command.raw));
+		CorsairLightingProtocol::RawHID.readBytes(command.raw, sizeof(command.raw));
 #if defined(DEBUG) && defined(VERBOSE)
 		if (printCommand) {
 			Serial.print(F("Received Command: "));
@@ -65,7 +65,7 @@ void CorsairLightingProtocolHID::sendX(const uint8_t* data, const size_t x) cons
 		Serial.println(data[0], HEX);
 	}
 #endif
-	CLP::RawHID.write(data, x);
+	CorsairLightingProtocol::RawHID.write(data, x);
 }
 
 #endif

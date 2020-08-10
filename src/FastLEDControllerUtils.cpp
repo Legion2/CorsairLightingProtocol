@@ -18,7 +18,7 @@
 #include <FastLED.h>
 #include <math.h>
 
-void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex) {
+void CorsairLightingProtocol::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex) {
 	auto& channel = controller->getChannel(channelIndex);
 	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);
@@ -44,7 +44,7 @@ float scaleFactorOf(const int numberLEDsBefore, const int numberLEDsAfter) {
 	return (float)(numberLEDsBefore - 1) / (numberLEDsAfter - 1);
 }
 
-void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize) {
+void CorsairLightingProtocol::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize) {
 	auto leds = controller->getLEDs(channelIndex);
 	const float scaleFactor = scaleFactorOf(controller->getLEDCount(channelIndex), scaleToSize);
 	if (scaleFactor < 1.0f) {
@@ -58,7 +58,7 @@ void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleTo
 	}
 }
 
-void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times) {
+void CorsairLightingProtocol::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t times) {
 	auto leds = controller->getLEDs(channelIndex);
 	auto count = controller->getLEDCount(channelIndex);
 	// skip first iteration, because LEDs already contains the data at the first position
@@ -67,8 +67,8 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 	}
 }
 
-void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, const SegmentScaling* const segments,
-						int segmentsCount) {
+void CorsairLightingProtocol::scaleSegments(FastLEDController* controller, uint8_t channelIndex,
+											const SegmentScaling* const segments, int segmentsCount) {
 	auto leds = controller->getLEDs(channelIndex);
 	int ledStripIndexAfterScaling = 0;
 	int ledStripIndexBeforeScaling = 0;
@@ -105,7 +105,7 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 	}
 }
 
-void CLP::reverse(FastLEDController* controller, uint8_t channelIndex) {
+void CorsairLightingProtocol::reverse(FastLEDController* controller, uint8_t channelIndex) {
 	auto leds = controller->getLEDs(channelIndex);
 	auto maxIndex = controller->getLEDCount(channelIndex) - 1;
 	for (int ledIndex = 0; ledIndex < maxIndex - ledIndex; ledIndex++) {
@@ -115,7 +115,7 @@ void CLP::reverse(FastLEDController* controller, uint8_t channelIndex) {
 	}
 }
 
-void CLP::gammaCorrection(FastLEDController* controller, uint8_t channelIndex) {
+void CorsairLightingProtocol::gammaCorrection(FastLEDController* controller, uint8_t channelIndex) {
 	auto leds = controller->getLEDs(channelIndex);
 	auto count = controller->getLEDCount(channelIndex);
 	for (int ledIndex = 0; ledIndex < count; ledIndex++) {
@@ -125,7 +125,7 @@ void CLP::gammaCorrection(FastLEDController* controller, uint8_t channelIndex) {
 	}
 }
 
-void CLP::fixIcueBrightness(FastLEDController* controller, uint8_t channelIndex) {
+void CorsairLightingProtocol::fixIcueBrightness(FastLEDController* controller, uint8_t channelIndex) {
 	auto& channel = controller->getChannel(channelIndex);
 	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);

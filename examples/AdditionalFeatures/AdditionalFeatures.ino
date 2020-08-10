@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
@@ -33,11 +34,11 @@ CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);
 
 void setup() {
 	// Disable the build in RX and TX LEDs of the Arduino
-	CLP::disableBuildInLEDs();
+	disableBuildInLEDs();
 	// enable reset on DeviceId (FF FF FF FF)
-	if (CLP::shouldReset(&firmware)) {
+	if (shouldReset(&firmware)) {
 		// reset DeviceId and generate new one
-		CLP::reset(&firmware);
+		reset(&firmware);
 		// reset the LEDController Settings
 		ledController.reset();
 	}
@@ -52,6 +53,6 @@ void loop() {
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
-		CLP::printFps(5000);
+		CorsairLightingProtocol::printFps(5000);
 	}
 }

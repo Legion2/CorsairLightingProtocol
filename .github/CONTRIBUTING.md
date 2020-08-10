@@ -2,7 +2,7 @@
 
 You can contribute in many different ways, for example report a bug or come up with an idea for improvement.
 If you are good at programming you could also provide a fix for bugs or Pull Requests with improvements.
-If you want to help others using CLP you are welcome to extend the [Wiki on GitHub](https://github.com/Legion2/CorsairLightingProtocol/wiki).
+If you want to help others using CorsairLightingProtocol (CLP) you are welcome to extend the [Wiki on GitHub](https://github.com/Legion2/CorsairLightingProtocol/wiki).
 
 ## Finding information
 

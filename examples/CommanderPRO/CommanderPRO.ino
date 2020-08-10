@@ -50,7 +50,7 @@ PWMFan fan3(PWM_FAN_PIN_3, 0, 2000);
 PWMFan fan4(PWM_FAN_PIN_4, 0, 2000);
 
 void setup() {
-	CLP::disableBuildInLEDs();
+	CorsairLightingProtocol::disableBuildInLEDs();
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, CHANNEL_LED_COUNT);
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, CHANNEL_LED_COUNT);
 	ledController.addLEDs(0, ledsChannel1, CHANNEL_LED_COUNT);

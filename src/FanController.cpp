@@ -67,7 +67,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 				return;
 			}
 			uint8_t power = getFanPower(fan);
-			uint8_t powerData[] = {CLP::convert255To100(power)};
+			uint8_t powerData[] = {CorsairLightingProtocol::convert255To100(power)};
 			response->send(powerData, sizeof(powerData));
 			break;
 		}
@@ -77,7 +77,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 				response->sendError();
 				return;
 			}
-			uint8_t percentage = CLP::convert100To255(command.data[1]);
+			uint8_t percentage = CorsairLightingProtocol::convert100To255(command.data[1]);
 			setFanPower(fan, percentage);
 			response->send(nullptr, 0);
 			break;
@@ -88,7 +88,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 				response->sendError();
 				return;
 			}
-			uint16_t speed = CLP::fromBigEndian(command.data[1], command.data[2]);
+			uint16_t speed = CorsairLightingProtocol::fromBigEndian(command.data[1], command.data[2]);
 			setFanSpeed(fan, speed);
 			response->send(nullptr, 0);
 			break;
@@ -102,8 +102,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			const uint8_t& group = command.data[1];
 			FanCurve fanCurve;
 			for (uint8_t i = 0; i < FAN_CURVE_POINTS_NUM; i++) {
-				fanCurve.temperatures[i] = CLP::fromBigEndian(command.data[2 + i * 2], command.data[3 + i * 2]);
-				fanCurve.rpms[i] = CLP::fromBigEndian(command.data[14 + i * 2], command.data[15 + i * 2]);
+				fanCurve.temperatures[i] =
+					CorsairLightingProtocol::fromBigEndian(command.data[2 + i * 2], command.data[3 + i * 2]);
+				fanCurve.rpms[i] =
+					CorsairLightingProtocol::fromBigEndian(command.data[14 + i * 2], command.data[15 + i * 2]);
 			}
 			setFanCurve(fan, group, fanCurve);
 			response->send(nullptr, 0);
@@ -115,7 +117,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 				response->sendError();
 				return;
 			}
-			uint16_t temp = CLP::fromBigEndian(command.data[1], command.data[2]);
+			uint16_t temp = CorsairLightingProtocol::fromBigEndian(command.data[1], command.data[2]);
 			setFanExternalTemperature(fan, temp);
 			response->send(nullptr, 0);
 			break;
