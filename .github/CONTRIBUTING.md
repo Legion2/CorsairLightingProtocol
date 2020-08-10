@@ -32,3 +32,13 @@ Public methods must be documented with JavaDoc style comments.
 When introducing new methods you should think about if the method should be part of the public API or only used internally.
 Always use descriptive names for variables, only use acronyms if they are well known and frequently used.
 The coding style is defined using ClangFormat and automatically checked when you submit a Pull Request.
+
+### Naming
+
+Everything should be defined in the `CorsairLightingProtocol` namespace.
+Use camel case for names.
+Type names start with an upper case letter and variable, parameter and property names start with a lower case letter.
+
+Free function names should be unambiguous without the namespace.
+So, don't use names such as `reset` or `init`.
+Instead use `resetSomething` or `initSomethingElse`.
