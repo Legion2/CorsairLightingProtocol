@@ -57,7 +57,7 @@ THE SOFTWARE.
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
 // Interrupt Out Endpoint is optional, control endpoint is used by default
 #define ENDPOINT_COUNT 1
-namespace CLP {
+namespace CorsairLightingProtocol {
 class RawHID_ : public PluggableUSBModule, public Stream {
 public:
 	RawHID_(void);
@@ -164,5 +164,5 @@ protected:
 	int featureLength;
 };
 extern RawHID_ RawHID;
-}  // namespace CLP
+}  // namespace CorsairLightingProtocol
 #endif

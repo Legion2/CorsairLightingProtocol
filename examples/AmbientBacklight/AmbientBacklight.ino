@@ -35,7 +35,7 @@ void setup() {
 	ledController.addLEDs(1, ledsChannel2, 105);
 	ledController.onUpdateHook(0, []() {
 		// gamma correction with gamma value 2.0. Use napplyGamma_video for other gamma values.
-		CLP::gammaCorrection(&ledController, 0);
+		CorsairLightingProtocol::gammaCorrection(&ledController, 0);
 		// napplyGamma_video(ledsChannel1, 84, 2.2);
 	});
 }

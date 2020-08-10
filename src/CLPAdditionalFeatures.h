@@ -18,7 +18,7 @@
 #include "Arduino.h"
 #include "CorsairLightingFirmware.h"
 
-namespace CLP {
+namespace CorsairLightingProtocol {
 /**
  * Check if the device should be reseted. The check is based on the DeviceID from the firmware.
  *
@@ -33,4 +33,4 @@ bool shouldReset(const CorsairLightingFirmware* firmware);
  * @param firmware reset this firmware
  */
 void reset(CorsairLightingFirmware* firmware);
-}  // namespace CLP
+}  // namespace CorsairLightingProtocol

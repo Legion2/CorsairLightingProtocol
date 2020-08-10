@@ -61,7 +61,7 @@ void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
 		byte deviceId[4];
 		firmware.getDeviceID(deviceId);
-		CLP::printDeviceID(deviceId);
+		CorsairLightingProtocol::printDeviceID(deviceId);
 		Serial.println();
 	}
 #ifdef VERBOSE

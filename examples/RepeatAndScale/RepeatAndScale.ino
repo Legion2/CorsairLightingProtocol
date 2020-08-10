@@ -33,10 +33,10 @@ void setup() {
 	ledController.addLEDs(0, ledsChannel1, 50);
 	ledController.addLEDs(1, ledsChannel2, 60);
 	ledController.onUpdateHook(0, []() {
-		CLP::repeat(&ledController, 0, 2);
+		CorsairLightingProtocol::repeat(&ledController, 0, 2);
 	});
 	ledController.onUpdateHook(1, []() {
-		CLP::scale(&ledController, 1, 144);
+		CorsairLightingProtocol::scale(&ledController, 1, 144);
 	});
 }
 

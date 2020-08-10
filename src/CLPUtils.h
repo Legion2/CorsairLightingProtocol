@@ -19,7 +19,7 @@
 
 #define toBigEndian(a) highByte(a), lowByte(a)
 
-namespace CLP {
+namespace CorsairLightingProtocol {
 uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
 
 /**
@@ -61,4 +61,4 @@ void disableBuildInLEDs();
  * @param deviceId the device id to print
  */
 void printDeviceID(const uint8_t* deviceId);
-}  // namespace CLP
+}  // namespace CorsairLightingProtocol

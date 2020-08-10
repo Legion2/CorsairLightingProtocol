@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
@@ -33,11 +34,11 @@ CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);
 
 void setup() {
 	// Disable the build in RX and TX LEDs of the Arduino
-	CLP::disableBuildInLEDs();
+	disableBuildInLEDs();
 	// enable reset on DeviceId (FF FF FF FF)
-	if (CLP::shouldReset(&firmware)) {
+	if (shouldReset(&firmware)) {
 		// reset DeviceId and generate new one
-		CLP::reset(&firmware);
+		reset(&firmware);
 		// reset the LEDController Settings
 		ledController.reset();
 	}
@@ -49,7 +50,7 @@ void setup() {
 	// modify the RGB values before they are shown on the LED strip
 	ledController.onUpdateHook(0, []() {
 		// increase the brightness of channel 1 when using iCUE, because iCUE only set brightness to max 50%
-		CLP::fixIcueBrightness(&ledController, 0);
+		fixIcueBrightness(&ledController, 0);
 	});
 }
 
