@@ -10,10 +10,10 @@ _This is not an official corsair project._
 ## Features
 * Add support of Corsair DIY device protocol to Arduino.
 * Control LEDs with the [Corsair iCUE software](https://www.corsair.com/icue).
-* Easy to use with [FastLED](http://fastled.io/).
-* [Supported LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets). (e.g. WS2812B, WS2801)
+* [Support common LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets). (e.g. WS2812B, WS2801)
+* Support [FastLED](http://fastled.io/).
 * Supported platform: Arduino AVR
-* Persistent settings for use without a USB connection.
+* Hardware Lighting mode.
 * Use multiple devices at the same time.
 * Repeat or scale LED channels to arbitrary size.
 
@@ -91,7 +91,9 @@ Now you can create lighting effects in the "Lighting Channel #" tabs.
 - [API Documentation](https://legion2.github.io/CorsairLightingProtocol/)
 - [How it works](#how-it-works)
 - [Use of multiple devices](#use-of-multiple-devices)
-- [Repeat or scale LED channel](#repeat-or-scale-led-channel)
+- [Repeat or scale LED channels](#repeat-or-scale-led-channels)
+- [Increase the Brightness of the LEDs](#increase-the-brightness-of-the-leds)
+- [Hardware Lighting mode](#hardware-lighting-mode)
 
 ## How it works
 This library uses the USB HID interface of the ATmega32U4.
@@ -128,10 +130,9 @@ Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 11
 The tool displays the current DeviceID, you can type in a new DeviceID that is saved on the Arduino.
 After that, you can upload another sketch.
 
-## Repeat or scale LED channel
+## Repeat or scale LED channels
 You can repeat or scale LED channel controlled by iCUE onto physical LED strips.
-This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs.
-This is the maximum number iCUE supports.
+This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs, which is the maximum number iCUE supports.
 
 To repeat or scale a LED channel you must apply the `CLP::repeat` or the `CLP:scale` function in the update hook of the FastLEDController.
 See the [RepeatAndScale](examples/RepeatAndScale/RepeatAndScale.ino) example for the complete code.
@@ -155,6 +156,13 @@ ledController.onUpdateHook(0, []() {
 	CLP::fixIcueBrightness(&ledController, 0);
 });
 ```
+
+## Hardware Lighting mode
+The [Hardware Lighting mode](https://forum.corsair.com/v3/showthread.php?t=182874) can be configured in iCUE.
+It allows you the set lighting effects that will be active when iCUE **is not** running.
+This is the case when the PC is off, in sleep mode, booting or the user is logged out.
+So if you want to have lighing effects in all these situations, use the Hardware Lighting mode.
+If you don't want it, configure a static black color.
 
 # License
 This project is licensed under the Apache 2.0 License.
