@@ -92,10 +92,10 @@ $(document).ready(function(){initNavTree('index.html','');});
 <ul>
 <li>Add support of Corsair DIY device protocol to Arduino.</li>
 <li>Control LEDs with the <a href="https://www.corsair.com/icue">Corsair iCUE software</a>.</li>
-<li>Easy to use with <a href="http://fastled.io/">FastLED</a>.</li>
-<li><a href="https://github.com/FastLED/FastLED/wiki/Overview#chipsets">Supported LED chipsets</a>. (e.g. WS2812B, WS2801)</li>
+<li><a href="https://github.com/FastLED/FastLED/wiki/Overview#chipsets">Support common LED chipsets</a>. (e.g. WS2812B, WS2801)</li>
+<li>Support <a href="http://fastled.io/">FastLED</a>.</li>
 <li>Supported platform: Arduino AVR</li>
-<li>Persistent settings for use without a USB connection.</li>
+<li>Hardware Lighting mode.</li>
 <li>Use multiple devices at the same time.</li>
 <li>Repeat or scale LED channels to arbitrary size.</li>
 </ul>
@@ -175,7 +175,9 @@ iCUE RGB Strip example</div></div>
 <li><a href="https://legion2.github.io/CorsairLightingProtocol/">API Documentation</a></li>
 <li><a href="#how-it-works">How it works</a></li>
 <li><a href="#use-of-multiple-devices">Use of multiple devices</a></li>
-<li><a href="#repeat-or-scale-led-channel">Repeat or scale LED channel</a></li>
+<li><a href="#repeat-or-scale-led-channels">Repeat or scale LED channels</a></li>
+<li><a href="#increase-the-brightness-of-the-leds">Increase the Brightness of the LEDs</a></li>
+<li><a href="#hardware-lighting-mode">Hardware Lighting mode</a></li>
 </ul>
 <h2>How it works</h2>
 <p>This library uses the USB HID interface of the ATmega32U4. After uploading a sketch with the library and selected CLP Boards, iCUE recognizes the Arduino as a Corsair device, because the CLP Boards use USB IDs of Corsair. In iCUE you can then select the device and set some lighting effects. iCUE sends these via the HID protocol to the Arduino. These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino. The <a href="http://fastled.io/">FastLED</a> library is used to control the LEDs.</p>
@@ -184,12 +186,14 @@ iCUE RGB Strip example</div></div>
 <p>The Serial Number can be set in the constructor of <code><a class="el" href="classCorsairLightingProtocolHID.html">CorsairLightingProtocolHID</a></code> and <code><a class="el" href="classCLPUSBSerialBridge.html">CLPUSBSerialBridge</a></code> as shown in the <a href="examples/AdditionalFeatures/AdditionalFeatures.ino">example</a>. </p><div class="fragment"><div class="line">{C++}</div><div class="line">const char mySerialNumber[] PROGMEM = &quot;202B6949A967&quot;;</div><div class="line">CorsairLightingProtocolHID cHID(&amp;cLP, mySerialNumber);</div></div><!-- fragment --><p> The Serial Number MAY only consist of HEX characters (0-9 and A-F).</p>
 <p>The DeviceID can be set with the <code>setDeviceID</code> function of <code><a class="el" href="classCorsairLightingFirmware.html">CorsairLightingFirmware</a></code>. </p><div class="fragment"><div class="line">{C++}</div><div class="line">void setup() {</div><div class="line">    byte deviceId[4] = { 0x9A, 0xDA, 0xA7, 0x8E };</div><div class="line">    firmware.setDeviceID(deviceId);</div><div class="line">    ...</div><div class="line">}</div></div><!-- fragment --><h3>Alternative</h3>
 <p>The <code>DeviceID</code> can be changed with the <a href="examples/DeviceIDTool/DeviceIDTool.ino">DeviceIDTool</a>. Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 115200. The tool displays the current DeviceID, you can type in a new DeviceID that is saved on the Arduino. After that, you can upload another sketch.</p>
-<h2>Repeat or scale LED channel</h2>
-<p>You can repeat or scale LED channel controlled by iCUE onto physical LED strips. This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs. This is the maximum number iCUE supports.</p>
+<h2>Repeat or scale LED channels</h2>
+<p>You can repeat or scale LED channel controlled by iCUE onto physical LED strips. This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs, which is the maximum number iCUE supports.</p>
 <p>To repeat or scale a LED channel you must apply the <code>CLP::repeat</code> or the <code>CLP:scale</code> function in the update hook of the <a class="el" href="classFastLEDController.html">FastLEDController</a>. See the <a href="examples/RepeatAndScale/RepeatAndScale.ino">RepeatAndScale</a> example for the complete code. Both functions take the <a class="el" href="classFastLEDController.html">FastLEDController</a> pointer and the channel index as arguments. Additionally, the <code>repeat</code> function takes as an argument how often the LED channel should be repeated. For example, if you want to duplicate the channel you must pass <code>2</code> as argument. The <code>scale</code> function takes as third argument the length of the physical LED strip to which it scales the channel using integer scaling. For example you have 144 physical LEDs on you strip and 60 on the LED channel. Then the third argument of the <code>scale</code> function is <code>144</code>.</p>
 <p>For both functions it's <b>important</b>, that the CRGB arrays have at least the length of the physical LED strip. This means if your LED channel from iCUE has 50 LEDs and you use the <code>repeat</code> function to control 100 physical LEDs you MUST declare the CRGB array at least with a length of 100.</p>
 <h2>Increase the Brightness of the LEDs</h2>
-<p>By default iCUE only uses 50% of the LEDs brightness even if you set the brightness to max in the iCUE Device Settings. But there are good news, we can increase the brightness with the Arduino so we can use the full brightness of our LEDs. Add the <code>CLP::fixIcueBrightness</code> function to the <code>onUpdateHook</code> in the setup function as shown in the <a href="examples/AdditionalFeatures/AdditionalFeatures.ino">example</a>. If there are multiple functions called in <code>onUpdateHook</code>, <code>fixIcueBrightness</code> should be the first. </p><div class="fragment"><div class="line">{C++}</div><div class="line">ledController.onUpdateHook(0, []() {</div><div class="line">    CLP::fixIcueBrightness(&amp;ledController, 0);</div><div class="line">});</div></div><!-- fragment --><h1>License</h1>
+<p>By default iCUE only uses 50% of the LEDs brightness even if you set the brightness to max in the iCUE Device Settings. But there are good news, we can increase the brightness with the Arduino so we can use the full brightness of our LEDs. Add the <code>CLP::fixIcueBrightness</code> function to the <code>onUpdateHook</code> in the setup function as shown in the <a href="examples/AdditionalFeatures/AdditionalFeatures.ino">example</a>. If there are multiple functions called in <code>onUpdateHook</code>, <code>fixIcueBrightness</code> should be the first. </p><div class="fragment"><div class="line">{C++}</div><div class="line">ledController.onUpdateHook(0, []() {</div><div class="line">    CLP::fixIcueBrightness(&amp;ledController, 0);</div><div class="line">});</div></div><!-- fragment --><h2>Hardware Lighting mode</h2>
+<p>The <a href="https://forum.corsair.com/v3/showthread.php?t=182874">Hardware Lighting mode</a> can be configured in iCUE. It allows you the set lighting effects that will be active when iCUE <b>is not</b> running. This is the case when the PC is off, in sleep mode, booting or the user is logged out. So if you want to have lighing effects in all these situations, use the Hardware Lighting mode. If you don't want it, configure a static black color.</p>
+<h1>License</h1>
 <p>This project is licensed under the Apache 2.0 License.</p>
 <h1>DISCLAIMERS</h1>
 <p>This is a DO IT YOURSELF project, use at your own risk!</p>
