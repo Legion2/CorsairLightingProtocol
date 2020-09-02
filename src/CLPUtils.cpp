@@ -57,8 +57,9 @@ void CLP::printFps(const int interval) {
 	unsigned long now = millis();
 	frameCount++;
 	if (now - lastMillis >= interval) {
-		unsigned int framesPerSecond = frameCount / interval;
-		Serial.println(framesPerSecond);
+		double framesPerSecond = (frameCount * 1000.0) / interval;
+		Serial.print(F("FPS: "));
+		Serial.println(framesPerSecond, 1);
 		frameCount = 0;
 		lastMillis = now;
 	}
