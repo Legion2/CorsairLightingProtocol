@@ -58,7 +58,6 @@ void loop() {
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
-		Serial.print(F("FPS: "));
 		CLP::printFps(5000);
 	}
 }
