@@ -147,10 +147,11 @@ For both functions it's **important**, that the CRGB arrays have at least the le
 This means if your LED channel from iCUE has 50 LEDs and you use the `repeat` function to control 100 physical LEDs you MUST declare the CRGB array at least with a length of 100.
 
 ## Increase the Brightness of the LEDs
-By default iCUE only uses 50% of the LEDs brightness even if you set the brightness to max in the iCUE Device Settings.
+When using LS100 or LT100 iCUE only uses 50% of the LEDs brightness even if you set the brightness to max in the iCUE Device Settings.
 But there are good news, we can increase the brightness with the Arduino so we can use the full brightness of our LEDs.
-Add the `CLP::fixIcueBrightness` function to the `onUpdateHook` in the setup function as shown in the [example](examples/AdditionalFeatures/AdditionalFeatures.ino).
+Add the `CLP::fixIcueBrightness` function to the `onUpdateHook` in the setup function as shown in the [example](examples/AmbientBacklight/AmbientBacklight.ino).
 If there are multiple functions called in `onUpdateHook`, `fixIcueBrightness` should be the first.
+Only use this function with LS100 and LT100 devices!
 ```C++
 ledController.onUpdateHook(0, []() {
 	CLP::fixIcueBrightness(&ledController, 0);
