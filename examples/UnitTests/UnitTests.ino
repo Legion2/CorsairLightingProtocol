@@ -86,6 +86,19 @@ testF(FastLEDControllerTest, simpleScaleIdentity) {
 	}
 }
 
+testF(FastLEDControllerTest, scaleLongStrip) {
+	CRGB leds[41];
+	FastLEDController ledController(false);
+	fill_solid(leds, 41, CRGB::Black);
+	ledController.addLEDs(0, leds, 27);
+
+	fill_solid(leds, 27, CRGB::White);
+	CLP::scale(&ledController, 0, 41);
+	for (int i = 0; i < 41; i++) {
+		assertCRGB(leds[i], CRGB::White);
+	}
+}
+
 testF(FastLEDControllerTest, LT100) {
 	CRGB leds[30];
 	FastLEDController ledController(false);
@@ -109,7 +122,7 @@ testF(FastLEDControllerTest, singleSegmentScaleUp) {
 	CRGB leds[20];
 	FastLEDController ledController(false);
 	fill_solid(leds, 20, CRGB::Black);
-	ledController.addLEDs(0, leds, 20);
+	ledController.addLEDs(0, leds, 10);
 
 	fill_solid(leds, 10, CRGB::White);
 	CLP::SegmentScaling segments[] = {{10, 20}};
@@ -253,6 +266,47 @@ testF(FastLEDControllerTest, SegmentScaleMixInverted) {
 	}
 	for (int i = 25; i < 30; i++) {
 		assertCRGB(leds[i], CRGB::Blue);
+	}
+}
+
+testF(FastLEDControllerTest, SegmentScaleMonitor) {
+	CRGB leds[130];
+	FastLEDController ledController(false);
+	fill_solid(leds, 130, CRGB::Black);
+	ledController.addLEDs(0, leds, 84);
+
+	fill_solid(leds, 15, CRGB::White);
+	fill_solid(leds + 15, 27, CRGB::Red);
+	fill_solid(leds + 42, 15, CRGB::Blue);
+	fill_solid(leds + 57, 27, CRGB::Green);
+	CLP::SegmentScaling segments[] = {{15, 24}, {27, 41}, {15, 24}, {27, 41}};
+	CLP::scaleSegments(&ledController, 0, segments, 4);
+
+	for (int i = 0; i < 24; i++) {
+		assertCRGB(leds[i], CRGB::White);
+	}
+	for (int i = 24; i < 65; i++) {
+		assertCRGB(leds[i], CRGB::Red);
+	}
+	for (int i = 65; i < 89; i++) {
+		assertCRGB(leds[i], CRGB::Red);
+	}
+	for (int i = 89; i < 130; i++) {
+		assertCRGB(leds[i], CRGB::Green);
+	}
+}
+
+testF(FastLEDControllerTest, SegmentScaleLongStrip) {
+	CRGB leds[41];
+	FastLEDController ledController(false);
+	fill_solid(leds, 41, CRGB::Black);
+	ledController.addLEDs(0, leds, 27);
+
+	fill_solid(leds, 27, CRGB::White);
+	CLP::SegmentScaling segments[] = {{27, 41}};
+	CLP::scaleSegments(&ledController, 0, segments, 1);
+	for (int i = 0; i < 41; i++) {
+		assertCRGB(leds[i], CRGB::White);
 	}
 }
 
