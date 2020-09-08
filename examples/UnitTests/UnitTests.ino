@@ -74,11 +74,13 @@ testF(FastLEDControllerTest, simpleScaleDownBoundaries) {
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 20);
 
-	fill_solid(leds, 1, CRGB::White);
-	CLP::scale(&ledController, 0, 10);
+	leds[0] = CRGB::White;
+	leds[19] = CRGB::Red;
+	CLP::scale(&ledController, 0, 5);
 
 	assertCRGBArray(leds, 0, 0, CRGB::White);
-	assertCRGBArray(leds, 1, 9, CRGB::Black);
+	assertCRGBArray(leds, 1, 3, CRGB::Black);
+	assertCRGBArray(leds, 4, 4, CRGB::Red);
 }
 
 testF(FastLEDControllerTest, simpleScaleIdentity) {
