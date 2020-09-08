@@ -28,6 +28,11 @@ protected:
 		assertEqual(actual.g, expected.g);
 		assertEqual(actual.b, expected.b);
 	}
+	void assertCRGBArray(const CRGB* const leds, int from, int to, const CRGB& expected) {
+		for (int i = from; i <= to; i++) {
+			assertCRGB(leds[i], expected);
+		}
+	}
 };
 
 test(getLEDs) {
@@ -47,9 +52,7 @@ testF(FastLEDControllerTest, simpleScaleUp) {
 	fill_solid(leds, 10, CRGB::White);
 	CLP::scale(&ledController, 0, 20);
 
-	for (int i = 0; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
+	assertCRGBArray(leds, 0, 9, CRGB::White);
 }
 
 testF(FastLEDControllerTest, simpleScaleDown) {
@@ -61,12 +64,21 @@ testF(FastLEDControllerTest, simpleScaleDown) {
 	fill_solid(leds, 10, CRGB::White);
 	CLP::scale(&ledController, 0, 10);
 
-	for (int i = 0; i < 5; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 5; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
+	assertCRGBArray(leds, 0, 4, CRGB::White);
+	assertCRGBArray(leds, 5, 9, CRGB::Black);
+}
+
+testF(FastLEDControllerTest, simpleScaleDownBoundaries) {
+	CRGB leds[20];
+	FastLEDController ledController(false);
+	fill_solid(leds, 20, CRGB::Black);
+	ledController.addLEDs(0, leds, 20);
+
+	fill_solid(leds, 1, CRGB::White);
+	CLP::scale(&ledController, 0, 10);
+
+	assertCRGBArray(leds, 0, 0, CRGB::White);
+	assertCRGBArray(leds, 1, 9, CRGB::Black);
 }
 
 testF(FastLEDControllerTest, simpleScaleIdentity) {
@@ -78,12 +90,8 @@ testF(FastLEDControllerTest, simpleScaleIdentity) {
 	fill_solid(leds, 10, CRGB::White);
 	CLP::scale(&ledController, 0, 10);
 
-	for (int i = 0; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 10; i < 20; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
+	assertCRGBArray(leds, 0, 9, CRGB::White);
+	assertCRGBArray(leds, 10, 19, CRGB::Black);
 }
 
 testF(FastLEDControllerTest, scaleLongStrip) {
@@ -94,9 +102,8 @@ testF(FastLEDControllerTest, scaleLongStrip) {
 
 	fill_solid(leds, 27, CRGB::White);
 	CLP::scale(&ledController, 0, 41);
-	for (int i = 0; i < 41; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
+
+	assertCRGBArray(leds, 0, 40, CRGB::White);
 }
 
 testF(FastLEDControllerTest, LT100) {
@@ -110,12 +117,8 @@ testF(FastLEDControllerTest, LT100) {
 	CLP::SegmentScaling segments[2] = {{1, 4}, {26, 26}};
 	CLP::scaleSegments(&ledController, 0, segments, 2);
 
-	for (int i = 0; i < 4; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 4; i < 30; i++) {
-		assertCRGB(leds[i], CRGB::Blue);
-	}
+	assertCRGBArray(leds, 0, 3, CRGB::White);
+	assertCRGBArray(leds, 4, 29, CRGB::Blue);
 }
 
 testF(FastLEDControllerTest, singleSegmentScaleUp) {
@@ -128,9 +131,7 @@ testF(FastLEDControllerTest, singleSegmentScaleUp) {
 	CLP::SegmentScaling segments[] = {{10, 20}};
 	CLP::scaleSegments(&ledController, 0, segments, 1);
 
-	for (int i = 0; i < 20; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
+	assertCRGBArray(leds, 0, 19, CRGB::White);
 }
 
 testF(FastLEDControllerTest, multiScaleUp) {
@@ -143,12 +144,8 @@ testF(FastLEDControllerTest, multiScaleUp) {
 	CLP::SegmentScaling segments[] = {{5, 10}, {5, 20}};
 	CLP::scaleSegments(&ledController, 0, segments, 2);
 
-	for (int i = 0; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
-	for (int i = 10; i < 30; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
+	assertCRGBArray(leds, 0, 9, CRGB::Black);
+	assertCRGBArray(leds, 10, 29, CRGB::White);
 }
 
 testF(FastLEDControllerTest, multiScaleDown) {
@@ -161,12 +158,8 @@ testF(FastLEDControllerTest, multiScaleDown) {
 	CLP::SegmentScaling segments[] = {{10, 5}, {20, 5}};
 	CLP::scaleSegments(&ledController, 0, segments, 2);
 
-	for (int i = 0; i < 5; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
-	for (int i = 5; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
+	assertCRGBArray(leds, 0, 4, CRGB::Black);
+	assertCRGBArray(leds, 5, 9, CRGB::White);
 }
 
 testF(FastLEDControllerTest, singleSegmentScaleDown) {
@@ -179,12 +172,8 @@ testF(FastLEDControllerTest, singleSegmentScaleDown) {
 	CLP::SegmentScaling segments[] = {{20, 10}};
 	CLP::scaleSegments(&ledController, 0, segments, 1);
 
-	for (int i = 0; i < 5; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 5; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
+	assertCRGBArray(leds, 0, 4, CRGB::White);
+	assertCRGBArray(leds, 5, 9, CRGB::Black);
 }
 
 testF(FastLEDControllerTest, SegmentScaleOverlap) {
@@ -197,12 +186,8 @@ testF(FastLEDControllerTest, SegmentScaleOverlap) {
 	CLP::SegmentScaling segments[] = {{5, 10}, {10, 5}};
 	CLP::scaleSegments(&ledController, 0, segments, 2);
 
-	for (int i = 0; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 10; i < 15; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
+	assertCRGBArray(leds, 0, 9, CRGB::White);
+	assertCRGBArray(leds, 10, 14, CRGB::Black);
 }
 
 testF(FastLEDControllerTest, SegmentScaleOverlapInverted) {
@@ -215,12 +200,8 @@ testF(FastLEDControllerTest, SegmentScaleOverlapInverted) {
 	CLP::SegmentScaling segments[] = {{10, 5}, {5, 10}};
 	CLP::scaleSegments(&ledController, 0, segments, 2);
 
-	for (int i = 0; i < 5; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 5; i < 15; i++) {
-		assertCRGB(leds[i], CRGB::Black);
-	}
+	assertCRGBArray(leds, 0, 4, CRGB::White);
+	assertCRGBArray(leds, 5, 14, CRGB::Black);
 }
 
 testF(FastLEDControllerTest, SegmentScaleMix) {
@@ -235,15 +216,9 @@ testF(FastLEDControllerTest, SegmentScaleMix) {
 	CLP::SegmentScaling segments[] = {{5, 10}, {20, 5}, {5, 10}};
 	CLP::scaleSegments(&ledController, 0, segments, 3);
 
-	for (int i = 0; i < 10; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 10; i < 15; i++) {
-		assertCRGB(leds[i], CRGB::Red);
-	}
-	for (int i = 15; i < 25; i++) {
-		assertCRGB(leds[i], CRGB::Blue);
-	}
+	assertCRGBArray(leds, 0, 9, CRGB::White);
+	assertCRGBArray(leds, 10, 14, CRGB::Red);
+	assertCRGBArray(leds, 15, 24, CRGB::Blue);
 }
 
 testF(FastLEDControllerTest, SegmentScaleMixInverted) {
@@ -258,15 +233,9 @@ testF(FastLEDControllerTest, SegmentScaleMixInverted) {
 	CLP::SegmentScaling segments[] = {{10, 5}, {5, 20}, {10, 5}};
 	CLP::scaleSegments(&ledController, 0, segments, 3);
 
-	for (int i = 0; i < 5; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 5; i < 25; i++) {
-		assertCRGB(leds[i], CRGB::Red);
-	}
-	for (int i = 25; i < 30; i++) {
-		assertCRGB(leds[i], CRGB::Blue);
-	}
+	assertCRGBArray(leds, 0, 4, CRGB::White);
+	assertCRGBArray(leds, 5, 24, CRGB::Red);
+	assertCRGBArray(leds, 25, 29, CRGB::Blue);
 }
 
 testF(FastLEDControllerTest, SegmentScaleMonitor) {
@@ -282,18 +251,10 @@ testF(FastLEDControllerTest, SegmentScaleMonitor) {
 	CLP::SegmentScaling segments[] = {{15, 24}, {27, 41}, {15, 24}, {27, 41}};
 	CLP::scaleSegments(&ledController, 0, segments, 4);
 
-	for (int i = 0; i < 24; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
-	for (int i = 24; i < 65; i++) {
-		assertCRGB(leds[i], CRGB::Red);
-	}
-	for (int i = 65; i < 89; i++) {
-		assertCRGB(leds[i], CRGB::Red);
-	}
-	for (int i = 89; i < 130; i++) {
-		assertCRGB(leds[i], CRGB::Green);
-	}
+	assertCRGBArray(leds, 0, 23, CRGB::White);
+	assertCRGBArray(leds, 24, 64, CRGB::Red);
+	assertCRGBArray(leds, 65, 88, CRGB::Blue);
+	assertCRGBArray(leds, 89, 129, CRGB::Green);
 }
 
 testF(FastLEDControllerTest, SegmentScaleLongStrip) {
@@ -305,9 +266,8 @@ testF(FastLEDControllerTest, SegmentScaleLongStrip) {
 	fill_solid(leds, 27, CRGB::White);
 	CLP::SegmentScaling segments[] = {{27, 41}};
 	CLP::scaleSegments(&ledController, 0, segments, 1);
-	for (int i = 0; i < 41; i++) {
-		assertCRGB(leds[i], CRGB::White);
-	}
+
+	assertCRGBArray(leds, 0, 40, CRGB::White);
 }
 
 void setup() {
