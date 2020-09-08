@@ -47,3 +47,20 @@ void CLP::printDeviceID(const uint8_t* deviceId) {
 		if (i < 3) Serial.print(F(" "));
 	}
 }
+
+void CLP::printFps(const int interval) {
+	// Create static variables so that the code and variables can
+	// all be declared inside a function
+	static unsigned long lastMillis;
+	static unsigned long frameCount;
+
+	unsigned long now = millis();
+	frameCount++;
+	if (now - lastMillis >= interval) {
+		double framesPerSecond = (frameCount * 1000.0) / interval;
+		Serial.print(F("FPS: "));
+		Serial.println(framesPerSecond, 1);
+		frameCount = 0;
+		lastMillis = now;
+	}
+}

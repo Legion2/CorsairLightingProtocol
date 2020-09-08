@@ -48,6 +48,7 @@ void loop() {
 	if (ledController.updateLEDs()) {
 		if (printUpdate) Serial.println(F("updateLEDs"));
 		FastLED.show();
+		CLP::printFps(5000);
 	}
 
 	if (Serial.available()) {

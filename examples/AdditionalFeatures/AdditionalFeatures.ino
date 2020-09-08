@@ -45,12 +45,6 @@ void setup() {
 	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 60);
 	ledController.addLEDs(0, ledsChannel1, 60);
 	ledController.addLEDs(1, ledsChannel2, 60);
-
-	// modify the RGB values before they are shown on the LED strip
-	ledController.onUpdateHook(0, []() {
-		// increase the brightness of channel 1 when using iCUE, because iCUE only set brightness to max 50%
-		CLP::fixIcueBrightness(&ledController, 0);
-	});
 }
 
 void loop() {
@@ -58,5 +52,6 @@ void loop() {
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
+		CLP::printFps(5000);
 	}
 }

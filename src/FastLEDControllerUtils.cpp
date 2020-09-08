@@ -34,26 +34,26 @@ void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIn
 }
 
 /**
- * Instead of scaling the zero based index we must scale the one based position.
- * So, we first add 1 to the index, scale it, round it up to the next integer
- * and then substract 1 to get the index.
- *
  * @param index the index which should be scaled
  * @param scaleFactor the factor for the scaling
  * @return the scaled index
  */
-int scaleIndexAsPosition(int index, const float scaleFactor) { return ceil((index + 1) * scaleFactor) - 1; }
+inline int scaleIndex(const int index, const float scaleFactor) { return round(index * scaleFactor); }
+
+float scaleFactorOf(const int numberLEDsBefore, const int numberLEDsAfter) {
+	return (float)(numberLEDsBefore - 1) / (numberLEDsAfter - 1);
+}
 
 void CLP::scale(FastLEDController* controller, uint8_t channelIndex, int scaleToSize) {
 	auto leds = controller->getLEDs(channelIndex);
-	const float scaleFactor = (float)controller->getLEDCount(channelIndex) / scaleToSize;
+	const float scaleFactor = scaleFactorOf(controller->getLEDCount(channelIndex), scaleToSize);
 	if (scaleFactor < 1.0f) {
 		for (int ledIndex = scaleToSize - 1; ledIndex >= 0; ledIndex--) {
-			leds[ledIndex] = leds[scaleIndexAsPosition(ledIndex, scaleFactor)];
+			leds[ledIndex] = leds[scaleIndex(ledIndex, scaleFactor)];
 		}
 	} else {
 		for (int ledIndex = 0; ledIndex < scaleToSize; ledIndex++) {
-			leds[ledIndex] = leds[scaleIndexAsPosition(ledIndex, scaleFactor)];
+			leds[ledIndex] = leds[scaleIndex(ledIndex, scaleFactor)];
 		}
 	}
 }
@@ -78,11 +78,11 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 	for (int i = 0; i < segmentsCount; i++) {
 		const int segmentLength = segments[i].segmentLength;
 		const int scaleToSize = min(segments[i].scaleToSize, segmentLength);
-		const float scaleFactor = (float)segmentLength / scaleToSize;
+		const float scaleFactor = scaleFactorOf(segmentLength, scaleToSize);
 
 		for (int ledIndex = 0; ledIndex < scaleToSize; ledIndex++) {
 			leds[ledStripIndexAfterScaling + ledIndex] =
-				leds[ledStripIndexBeforeScaling + scaleIndexAsPosition(ledIndex, scaleFactor)];
+				leds[ledStripIndexBeforeScaling + scaleIndex(ledIndex, scaleFactor)];
 		}
 		ledStripIndexAfterScaling += scaleToSize;
 		ledStripIndexBeforeScaling += segmentLength;
@@ -95,12 +95,12 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 	ledStripIndexAfterScaling = totalLengthAfterScaling;
 	// scale up segments beginning with the last segment to not override other segments
 	for (int i = segmentsCount - 1; i >= 0; i--) {
-		const float scaleFactor = (float)downScaledSegments[i].segmentLength / downScaledSegments[i].scaleToSize;
+		const float scaleFactor = scaleFactorOf(downScaledSegments[i].segmentLength, downScaledSegments[i].scaleToSize);
 		ledStripIndexAfterScaling -= downScaledSegments[i].scaleToSize;
 		ledStripIndexBeforeScaling -= downScaledSegments[i].segmentLength;
 		for (int ledIndex = downScaledSegments[i].scaleToSize - 1; ledIndex >= 0; ledIndex--) {
 			leds[ledStripIndexAfterScaling + ledIndex] =
-				leds[ledStripIndexBeforeScaling + scaleIndexAsPosition(ledIndex, scaleFactor)];
+				leds[ledStripIndexBeforeScaling + scaleIndex(ledIndex, scaleFactor)];
 		}
 	}
 }

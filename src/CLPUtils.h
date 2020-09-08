@@ -61,4 +61,12 @@ void disableBuildInLEDs();
  * @param deviceId the device id to print
  */
 void printDeviceID(const uint8_t* deviceId);
+
+/*
+ * Measure and print the framerate at the given interval in milliseconds. The higher this value the more precise the
+ * result will be. This function should be called after FastLED.show() to count the FPS.
+ *
+ * @param interval the measurement interval in milliseconds
+ */
+void printFps(const int interval);
 }  // namespace CLP
