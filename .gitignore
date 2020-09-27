@@ -274,5 +274,4 @@ __vm/
 .vscode/
 
 # Arduino CLI
-*.elf
-*.hex
+build/
