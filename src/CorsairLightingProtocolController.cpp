@@ -33,7 +33,7 @@ CorsairLightingProtocolController::CorsairLightingProtocolController(ILEDControl
 	  temperatureController(temperatureController),
 	  fanController(fanController) {}
 
-void CorsairLightingProtocolController::handleCommand(const Command& command,
+void CorsairLightingProtocolController::handleCommand(const CorsairLightingProtocol::Command& command,
 													  CorsairLightingProtocolResponse* response) {
 	if (command.command < 0x10) {
 		corsairLightingFirmware->handleFirmwareCommand(command, response);

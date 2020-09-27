@@ -61,6 +61,7 @@
 #define PROTOCOL_RESPONSE_OK 0x00
 #define PROTOCOL_RESPONSE_ERROR 0x01
 
+namespace CorsairLightingProtocol {
 struct Command {
 	union {
 		struct {
@@ -70,3 +71,4 @@ struct Command {
 		uint8_t raw[COMMAND_SIZE];
 	};
 };
+};  // namespace CorsairLightingProtocol

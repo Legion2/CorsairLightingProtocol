@@ -87,7 +87,7 @@ struct FanCurve {
  */
 class FanController : public IFanController {
 public:
-	virtual void handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+	virtual void handleFanControl(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response) override;
 
 protected:
 	/**

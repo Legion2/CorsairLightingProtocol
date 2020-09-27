@@ -35,7 +35,7 @@ CorsairLightingProtocolHID::CorsairLightingProtocolHID(CorsairLightingProtocolCo
 
 void CorsairLightingProtocolHID::update() {
 	if (available()) {
-		Command command;
+		CorsairLightingProtocol::Command command;
 		getCommand(command);
 		controller->handleCommand(command, this);
 	}
@@ -43,7 +43,7 @@ void CorsairLightingProtocolHID::update() {
 
 bool CorsairLightingProtocolHID::available() const { return CorsairLightingProtocol::RawHID.available() > 0; }
 
-void CorsairLightingProtocolHID::getCommand(Command& command) {
+void CorsairLightingProtocolHID::getCommand(CorsairLightingProtocol::Command& command) {
 	auto bytesAvailable = CorsairLightingProtocol::RawHID.available();
 	if (bytesAvailable) {
 		CorsairLightingProtocol::RawHID.readBytes(command.raw, sizeof(command.raw));

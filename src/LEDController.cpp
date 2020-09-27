@@ -17,7 +17,7 @@
 
 #include "TemperatureController.h"
 
-void LEDController::handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) {
+void LEDController::handleLEDControl(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response) {
 	lastCommand = millis();
 	auto& data = command.data;
 	if (command.command == WRITE_LED_TRIGGER) {

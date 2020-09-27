@@ -31,7 +31,7 @@
 class CorsairLightingFirmware {
 public:
 	CorsairLightingFirmware(const uint8_t* firmwareVersion);
-	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response);
+	void handleFirmwareCommand(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response);
 	void getDeviceID(uint8_t* deviceID) const;
 	void setDeviceID(const uint8_t* deviceID);
 	uint8_t getStatus();

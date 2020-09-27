@@ -26,7 +26,7 @@ bool isValidFanDetectionType(const FanDetectionType type) {
 		   type == FanDetectionType::Disconnected;
 }
 
-void FanController::handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) {
+void FanController::handleFanControl(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response) {
 	switch (command.command) {
 		case READ_FAN_MASK: {
 			FanMask mask[FAN_NUM];

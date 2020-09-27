@@ -56,7 +56,7 @@ public:
 	 * @param command The command received from iCUE
 	 * @param response The response callback which can be called to response to the command
 	 */
-	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
+	void handleCommand(const CorsairLightingProtocol::Command& command, CorsairLightingProtocolResponse* response);
 
 private:
 	CorsairLightingFirmware* const corsairLightingFirmware;

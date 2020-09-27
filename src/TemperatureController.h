@@ -37,7 +37,7 @@
  */
 class TemperatureController : public ITemperatureController {
 public:
-	virtual void handleTemperatureControl(const Command& command,
+	virtual void handleTemperatureControl(const CorsairLightingProtocol::Command& command,
 										  const CorsairLightingProtocolResponse* response) override;
 	/**
 	 * Get the temperature of a sensor.
