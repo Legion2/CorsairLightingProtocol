@@ -134,7 +134,7 @@ After that, you can upload another sketch.
 You can repeat or scale LED channel controlled by iCUE onto physical LED strips.
 This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs, which is the maximum number iCUE supports.
 
-To repeat or scale a LED channel you must apply the `CorsairLightingProtocol::repeat` or the `CorsairLightingProtocol::scale` function in the update hook of the FastLEDController.
+To repeat or scale a LED channel you must apply the `repeat` or the `scale` function in the update hook of the FastLEDController.
 See the [RepeatAndScale](examples/RepeatAndScale/RepeatAndScale.ino) example for the complete code.
 Both functions take the FastLEDController pointer and the channel index as arguments.
 Additionally, the `repeat` function takes as an argument how often the LED channel should be repeated.
@@ -149,12 +149,12 @@ This means if your LED channel from iCUE has 50 LEDs and you use the `repeat` fu
 ## Increase the Brightness of the LEDs
 When using LS100 or LT100 iCUE only uses 50% of the LEDs brightness even if you set the brightness to max in the iCUE Device Settings.
 But there are good news, we can increase the brightness with the Arduino so we can use the full brightness of our LEDs.
-Add the `CorsairLightingProtocol::fixIcueBrightness` function to the `onUpdateHook` in the setup function as shown in the [example](examples/AmbientBacklight/AmbientBacklight.ino).
+Add the `fixIcueBrightness` function to the `onUpdateHook` in the setup function as shown in the [example](examples/AmbientBacklight/AmbientBacklight.ino).
 If there are multiple functions called in `onUpdateHook`, `fixIcueBrightness` should be the first.
 Only use this function with LS100 and LT100 devices!
 ```C++
 ledController.onUpdateHook(0, []() {
-	CorsairLightingProtocol::fixIcueBrightness(&ledController, 0);
+	fixIcueBrightness(&ledController, 0);
 });
 ```
 

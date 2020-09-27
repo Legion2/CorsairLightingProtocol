@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 #define NUMBER_OF_LEDS_PER_FAN 8
 

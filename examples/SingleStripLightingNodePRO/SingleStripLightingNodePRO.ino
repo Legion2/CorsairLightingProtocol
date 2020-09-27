@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 // The number of LEDs per channel.
 #define CHANNEL_LED_COUNT 50
@@ -39,7 +40,7 @@ void setup() {
 #ifdef DEBUG
 	Serial.begin(115200);
 #endif
-	CorsairLightingProtocol::disableBuildInLEDs();
+	disableBuildInLEDs();
 	FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
 	ledController.addLEDs(0, leds, CHANNEL_LED_COUNT);
 	ledController.addLEDs(1, &(leds[CHANNEL_LED_COUNT]), CHANNEL_LED_COUNT);

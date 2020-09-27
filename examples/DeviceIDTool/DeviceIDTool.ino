@@ -18,6 +18,7 @@
 //
 #include <CLPUtils.h>
 #include <EEPROM.h>
+using namespace CorsairLightingProtocol;
 
 #define EEPROM_ADDRESS_DEVICE_ID 0
 
@@ -31,7 +32,7 @@ void setup() {
 		;  // wait for serial port to connect. Needed for native USB
 	}
 	Serial.print(F("Current DeviceID: "));
-	CorsairLightingProtocol::printDeviceID(deviceID);
+	printDeviceID(deviceID);
 	Serial.println();
 	Serial.println(
 		F("Set a new DeviceID by typing it in the Serial Monitor. The new DeviceID must be in same format as above. 4 "
@@ -54,14 +55,14 @@ void loop() {
 			newDeviceID[2] = strtol(&inputString[6], nullptr, 16);
 			newDeviceID[3] = strtol(&inputString[9], nullptr, 16);
 			Serial.println(F("Set DeviceID to: "));
-			CorsairLightingProtocol::printDeviceID(newDeviceID);
+			printDeviceID(newDeviceID);
 			Serial.println();
-			if (CorsairLightingProtocol::isNullID(newDeviceID)) {
+			if (isNullID(newDeviceID)) {
 				Serial.println(
 					F("This is a special DeviceID, it will generate a new random DeviceID next time iCUE controls the "
 					  "device!"));
 			}
-			if (CorsairLightingProtocol::isResetID(newDeviceID)) {
+			if (isResetID(newDeviceID)) {
 				Serial.println(
 					F("This is a special DeviceID, it will reset the device and then generate a new DeviceID!"));
 			}

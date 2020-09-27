@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 // Hint: The channels are swapped in iCUE, so the first channel in iCUE is here channel 2
 #define DATA_PIN_CHANNEL_1 2  // For the monitor backlight
@@ -35,9 +36,9 @@ void setup() {
 	ledController.addLEDs(1, ledsChannel2, 105);
 	ledController.onUpdateHook(0, []() {
 		// increase the brightness of channel 1 when using iCUE, because iCUE only set brightness to max 50%
-		CorsairLightingProtocol::fixIcueBrightness(&ledController, 0);
+		fixIcueBrightness(&ledController, 0);
 		// gamma correction with gamma value 2.0. Use napplyGamma_video for other gamma values.
-		CorsairLightingProtocol::gammaCorrection(&ledController, 0);
+		gammaCorrection(&ledController, 0);
 		// napplyGamma_video(ledsChannel1, 84, 2.2);
 	});
 }

@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 #define DATA_PIN_CHANNEL_1 2
 

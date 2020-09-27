@@ -14,6 +14,7 @@
    limitations under the License.
 */
 #include "CLPUSBSerialBridge.h"
+using namespace CorsairLightingProtocol;
 
 CLPUSBSerialBridge usbToSerialBridge;
 

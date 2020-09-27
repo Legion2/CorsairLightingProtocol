@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 // Hint: The Arduino Uno does not have as much memory as the Arduino Mega, it may be that problems occur when a higher
 // value is set here.

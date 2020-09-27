@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 #define CHANNEL_LED_COUNT 96
 
@@ -48,7 +49,7 @@ void loop() {
 	if (ledController.updateLEDs()) {
 		if (printUpdate) Serial.println(F("updateLEDs"));
 		FastLED.show();
-		CorsairLightingProtocol::printFps(5000);
+		printFps(5000);
 	}
 
 	if (Serial.available()) {
@@ -62,7 +63,7 @@ void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
 		byte deviceId[4];
 		firmware.getDeviceID(deviceId);
-		CorsairLightingProtocol::printDeviceID(deviceId);
+		printDeviceID(deviceId);
 		Serial.println();
 	}
 #ifdef VERBOSE

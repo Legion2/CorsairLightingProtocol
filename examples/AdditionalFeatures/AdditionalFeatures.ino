@@ -53,6 +53,6 @@ void loop() {
 
 	if (ledController.updateLEDs()) {
 		FastLED.show();
-		CorsairLightingProtocol::printFps(5000);
+		printFps(5000);
 	}
 }

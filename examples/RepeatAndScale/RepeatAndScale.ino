@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
@@ -33,10 +34,10 @@ void setup() {
 	ledController.addLEDs(0, ledsChannel1, 50);
 	ledController.addLEDs(1, ledsChannel2, 60);
 	ledController.onUpdateHook(0, []() {
-		CorsairLightingProtocol::repeat(&ledController, 0, 2);
+		repeat(&ledController, 0, 2);
 	});
 	ledController.onUpdateHook(1, []() {
-		CorsairLightingProtocol::scale(&ledController, 1, 144);
+		scale(&ledController, 1, 144);
 	});
 }
 

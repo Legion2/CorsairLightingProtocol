@@ -19,6 +19,7 @@
 
 #include "FastLEDControllerUtils.h"
 
+using namespace CorsairLightingProtocol;
 using namespace aunit;
 
 class FastLEDControllerTest : public TestOnce {
@@ -50,7 +51,7 @@ testF(FastLEDControllerTest, simpleScaleUp) {
 	ledController.addLEDs(0, leds, 10);
 
 	fill_solid(leds, 10, CRGB::White);
-	CorsairLightingProtocol::scale(&ledController, 0, 20);
+	scale(&ledController, 0, 20);
 
 	assertCRGBArray(leds, 0, 9, CRGB::White);
 }
@@ -62,7 +63,7 @@ testF(FastLEDControllerTest, simpleScaleDown) {
 	ledController.addLEDs(0, leds, 20);
 
 	fill_solid(leds, 10, CRGB::White);
-	CorsairLightingProtocol::scale(&ledController, 0, 10);
+	scale(&ledController, 0, 10);
 
 	assertCRGBArray(leds, 0, 4, CRGB::White);
 	assertCRGBArray(leds, 5, 9, CRGB::Black);
@@ -76,7 +77,7 @@ testF(FastLEDControllerTest, simpleScaleDownBoundaries) {
 
 	leds[0] = CRGB::White;
 	leds[19] = CRGB::Red;
-	CorsairLightingProtocol::scale(&ledController, 0, 5);
+	scale(&ledController, 0, 5);
 
 	assertCRGBArray(leds, 0, 0, CRGB::White);
 	assertCRGBArray(leds, 1, 3, CRGB::Black);
@@ -90,7 +91,7 @@ testF(FastLEDControllerTest, simpleScaleIdentity) {
 	ledController.addLEDs(0, leds, 10);
 
 	fill_solid(leds, 10, CRGB::White);
-	CorsairLightingProtocol::scale(&ledController, 0, 10);
+	scale(&ledController, 0, 10);
 
 	assertCRGBArray(leds, 0, 9, CRGB::White);
 	assertCRGBArray(leds, 10, 19, CRGB::Black);
@@ -103,7 +104,7 @@ testF(FastLEDControllerTest, scaleLongStrip) {
 	ledController.addLEDs(0, leds, 27);
 
 	fill_solid(leds, 27, CRGB::White);
-	CorsairLightingProtocol::scale(&ledController, 0, 41);
+	scale(&ledController, 0, 41);
 
 	assertCRGBArray(leds, 0, 40, CRGB::White);
 }
@@ -116,8 +117,8 @@ testF(FastLEDControllerTest, LT100) {
 
 	leds[0] = CRGB::White;
 	fill_solid(leds + 1, 26, CRGB::Blue);
-	CorsairLightingProtocol::SegmentScaling segments[2] = {{1, 4}, {26, 26}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 2);
+	SegmentScaling segments[2] = {{1, 4}, {26, 26}};
+	scaleSegments(&ledController, 0, segments, 2);
 
 	assertCRGBArray(leds, 0, 3, CRGB::White);
 	assertCRGBArray(leds, 4, 29, CRGB::Blue);
@@ -130,8 +131,8 @@ testF(FastLEDControllerTest, singleSegmentScaleUp) {
 	ledController.addLEDs(0, leds, 10);
 
 	fill_solid(leds, 10, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{10, 20}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 1);
+	SegmentScaling segments[] = {{10, 20}};
+	scaleSegments(&ledController, 0, segments, 1);
 
 	assertCRGBArray(leds, 0, 19, CRGB::White);
 }
@@ -143,8 +144,8 @@ testF(FastLEDControllerTest, multiScaleUp) {
 	ledController.addLEDs(0, leds, 10);
 
 	fill_solid(leds + 5, 5, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{5, 10}, {5, 20}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 2);
+	SegmentScaling segments[] = {{5, 10}, {5, 20}};
+	scaleSegments(&ledController, 0, segments, 2);
 
 	assertCRGBArray(leds, 0, 9, CRGB::Black);
 	assertCRGBArray(leds, 10, 29, CRGB::White);
@@ -157,8 +158,8 @@ testF(FastLEDControllerTest, multiScaleDown) {
 	ledController.addLEDs(0, leds, 30);
 
 	fill_solid(leds + 10, 20, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{10, 5}, {20, 5}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 2);
+	SegmentScaling segments[] = {{10, 5}, {20, 5}};
+	scaleSegments(&ledController, 0, segments, 2);
 
 	assertCRGBArray(leds, 0, 4, CRGB::Black);
 	assertCRGBArray(leds, 5, 9, CRGB::White);
@@ -171,8 +172,8 @@ testF(FastLEDControllerTest, singleSegmentScaleDown) {
 	ledController.addLEDs(0, leds, 20);
 
 	fill_solid(leds, 10, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{20, 10}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 1);
+	SegmentScaling segments[] = {{20, 10}};
+	scaleSegments(&ledController, 0, segments, 1);
 
 	assertCRGBArray(leds, 0, 4, CRGB::White);
 	assertCRGBArray(leds, 5, 9, CRGB::Black);
@@ -185,8 +186,8 @@ testF(FastLEDControllerTest, SegmentScaleOverlap) {
 	ledController.addLEDs(0, leds, 15);
 
 	fill_solid(leds, 5, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{5, 10}, {10, 5}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 2);
+	SegmentScaling segments[] = {{5, 10}, {10, 5}};
+	scaleSegments(&ledController, 0, segments, 2);
 
 	assertCRGBArray(leds, 0, 9, CRGB::White);
 	assertCRGBArray(leds, 10, 14, CRGB::Black);
@@ -199,8 +200,8 @@ testF(FastLEDControllerTest, SegmentScaleOverlapInverted) {
 	ledController.addLEDs(0, leds, 15);
 
 	fill_solid(leds, 10, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{10, 5}, {5, 10}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 2);
+	SegmentScaling segments[] = {{10, 5}, {5, 10}};
+	scaleSegments(&ledController, 0, segments, 2);
 
 	assertCRGBArray(leds, 0, 4, CRGB::White);
 	assertCRGBArray(leds, 5, 14, CRGB::Black);
@@ -215,8 +216,8 @@ testF(FastLEDControllerTest, SegmentScaleMix) {
 	fill_solid(leds, 5, CRGB::White);
 	fill_solid(leds + 5, 20, CRGB::Red);
 	fill_solid(leds + 25, 5, CRGB::Blue);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{5, 10}, {20, 5}, {5, 10}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 3);
+	SegmentScaling segments[] = {{5, 10}, {20, 5}, {5, 10}};
+	scaleSegments(&ledController, 0, segments, 3);
 
 	assertCRGBArray(leds, 0, 9, CRGB::White);
 	assertCRGBArray(leds, 10, 14, CRGB::Red);
@@ -232,8 +233,8 @@ testF(FastLEDControllerTest, SegmentScaleMixInverted) {
 	fill_solid(leds, 10, CRGB::White);
 	fill_solid(leds + 10, 5, CRGB::Red);
 	fill_solid(leds + 15, 10, CRGB::Blue);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{10, 5}, {5, 20}, {10, 5}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 3);
+	SegmentScaling segments[] = {{10, 5}, {5, 20}, {10, 5}};
+	scaleSegments(&ledController, 0, segments, 3);
 
 	assertCRGBArray(leds, 0, 4, CRGB::White);
 	assertCRGBArray(leds, 5, 24, CRGB::Red);
@@ -250,8 +251,8 @@ testF(FastLEDControllerTest, SegmentScaleMonitor) {
 	fill_solid(leds + 15, 27, CRGB::Red);
 	fill_solid(leds + 42, 15, CRGB::Blue);
 	fill_solid(leds + 57, 27, CRGB::Green);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{15, 24}, {27, 41}, {15, 24}, {27, 41}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 4);
+	SegmentScaling segments[] = {{15, 24}, {27, 41}, {15, 24}, {27, 41}};
+	scaleSegments(&ledController, 0, segments, 4);
 
 	assertCRGBArray(leds, 0, 23, CRGB::White);
 	assertCRGBArray(leds, 24, 64, CRGB::Red);
@@ -266,8 +267,8 @@ testF(FastLEDControllerTest, SegmentScaleLongStrip) {
 	ledController.addLEDs(0, leds, 27);
 
 	fill_solid(leds, 27, CRGB::White);
-	CorsairLightingProtocol::SegmentScaling segments[] = {{27, 41}};
-	CorsairLightingProtocol::scaleSegments(&ledController, 0, segments, 1);
+	SegmentScaling segments[] = {{27, 41}};
+	scaleSegments(&ledController, 0, segments, 1);
 
 	assertCRGBArray(leds, 0, 40, CRGB::White);
 }
