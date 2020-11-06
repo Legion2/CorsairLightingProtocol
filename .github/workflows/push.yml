@@ -37,7 +37,7 @@ jobs:
             AmbientBacklight.ino,
             MultipleFans.ino,
             DebugSketch.ino
-          examples-build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
+          build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
   testUnoMega:
     name: Test Arduino Uno/Mega sketches for Board ${{ matrix.board }}
     runs-on: ubuntu-latest
