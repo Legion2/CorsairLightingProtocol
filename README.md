@@ -63,6 +63,7 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
 1. Install the [CLP Boards](https://github.com/Legion2/CorsairLightingProtocolBoards).
    They can be installed by following the [CLP Boards installation guide](https://github.com/Legion2/CorsairLightingProtocolBoards#how-to-use-these-boards-in-arduino).
    After installation it should be possible to select the CLP Boards in the Arduino IDE as shown in the screenshot below.
+   If your are using a Sparkfun Pro Micro also install the [SparkFun Boards definition](https://github.com/sparkfun/Arduino_Boards#installation-instructions).
 
    ![select CLP Board](extra/images/select-board.png)
 1. Upload the "LightingNodePRO" sketch to your Arduino.
