@@ -38,7 +38,7 @@ This project provides example sketches for easy use with Arduino IDE.
 
 ## Requirements
 The library is compatible with all boards using the MCU ATmega32U4.
-This includes **Arduino Leonardo**, **SparkFun Pro Micro**, and **Arduino Micro**.
+This includes **Arduino Leonardo**, **SparkFun Pro Micro**, **Arduino Micro**, and **Adafruit 32u4 AVR Boards**.
 It also supports the Arduino Uno and Arduino Mega, **but** this requires the [HoodLoader2](https://github.com/NicoHood/HoodLoader2) bootloader, see [this wiki](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega) for more details.
 It is **not** compatible with ATmega328 (Arduino Nano), STM8S103F3, teensy, ESP8266 and ESP32 see [list of architecture/platform](https://github.com/Legion2/CorsairLightingProtocol/issues?q=is%3Aissue+label%3Aarchitecture%2Fplatform) for a detailed description why they are not supported.
 In the rest of the documentation "Arduino" is used as a synonym for all supported boards regardless of the manufacturer.
