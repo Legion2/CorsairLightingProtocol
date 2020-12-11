@@ -52,7 +52,7 @@ testF(FastLEDControllerTest, simpleScaleUp) {
 	fill_solid(leds, 10, CRGB::White);
 	CLP::scale(&ledController, 0, 20);
 
-	assertCRGBArray(leds, 0, 9, CRGB::White);
+	assertCRGBArray(leds, 0, 19, CRGB::White);
 }
 
 testF(FastLEDControllerTest, simpleScaleDown) {
