@@ -17,7 +17,7 @@ jobs:
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.12.1
+          cli-version: 0.14.0
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
           arduino-platform: arduino:avr@1.8.3,SparkFun:avr@1.1.13,Legion2:avr@0.2.0
@@ -48,7 +48,7 @@ jobs:
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.12.1
+          cli-version: 0.14.0
           arduino-board-fqbn: ${{ matrix.board }}
           arduino-platform: arduino:avr@1.8.3
           required-libraries: FastLED@3.3.3
@@ -64,7 +64,7 @@ jobs:
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.12.1
+          cli-version: 0.14.0
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
           arduino-platform: arduino:avr@1.8.3,HoodLoader2:avr@2.0.5,Legion2:avr@0.2.0
