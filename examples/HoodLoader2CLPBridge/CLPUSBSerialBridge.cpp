@@ -68,7 +68,7 @@ void CLPUSBSerialBridge::handleHID() {
 #ifdef DEBUG
 		Serial.print(F("C"));
 		Serial.println(rawHIDAndSerialBuffer[0], HEX);
-		long time = micros();
+		unsigned long time = micros();
 #endif  // DEBUG
 		if (!waitForSynchronization()) {
 #ifdef DEBUG
@@ -93,7 +93,7 @@ void CLPUSBSerialBridge::handleHID() {
 		sendResponse();
 
 #ifdef DEBUG
-		long duration = micros() - time;
+		unsigned long duration = micros() - time;
 		Serial.print(F("D"));
 		Serial.println(duration);
 #endif  // DEBUG

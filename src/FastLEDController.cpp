@@ -71,15 +71,15 @@ int FastLEDController::applySpeed(int duration, const GroupSpeed speed) {
 }
 
 int FastLEDController::animation_step(int duration, int steps) {
-	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+	int currentStep = ((currentUpdate % (unsigned int)duration) / ((float)duration)) * steps;
 	return currentStep;
 }
 
 int FastLEDController::animation_step_count(int duration, int steps) {
-	long lastAnimationNumber = lastUpdate / duration;
-	long currentAnimationNumber = currentUpdate / duration;
-	int lastStep = ((lastUpdate % duration) / ((float)duration)) * steps;
-	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+	unsigned long lastAnimationNumber = lastUpdate / (unsigned int)duration;
+	unsigned long currentAnimationNumber = currentUpdate / (unsigned int)duration;
+	int lastStep = ((lastUpdate % (unsigned int)duration) / ((float)duration)) * steps;
+	int currentStep = ((currentUpdate % (unsigned int)duration) / ((float)duration)) * steps;
 
 	return currentStep - lastStep + (currentAnimationNumber - lastAnimationNumber) * steps;
 }

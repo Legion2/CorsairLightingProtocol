@@ -83,5 +83,5 @@ protected:
 	 * Indicates that the configuration of the fans has been changed and should be saved.
 	 */
 	bool triggerSave = false;
-	long lastUpdate = 0;
+	unsigned long lastUpdate = 0;
 };

@@ -198,7 +198,7 @@ protected:
 	/**
 	 * Stores the time at which the last command was received by the LEDController.
 	 */
-	long lastCommand = 0;
+	unsigned long lastCommand = 0;
 
 	/**
 	 * Trigger update of the LEDs

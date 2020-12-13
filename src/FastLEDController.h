@@ -128,8 +128,8 @@ protected:
 
 	ChannelData channelData[CHANNEL_NUM];
 
-	long lastUpdate = 0;
-	long currentUpdate = 0;
+	unsigned long lastUpdate = 0;
+	unsigned long currentUpdate = 0;
 
 	int applySpeed(int duration, const GroupSpeed speed);
 	/**
