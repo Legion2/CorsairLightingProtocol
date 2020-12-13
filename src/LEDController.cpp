@@ -251,6 +251,7 @@ void LEDController::startLEDAutodetection(uint8_t channel) {
 bool LEDController::saveIfNeeded() {
 	if (triggerSave) {
 		triggerSave = false;
-		save();
+		return save();
 	}
+	return false;
 }
