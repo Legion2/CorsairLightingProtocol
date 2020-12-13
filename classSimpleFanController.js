@@ -19,7 +19,7 @@ var classSimpleFanController =
     [ "fanData", "classSimpleFanController.html#aa5ba03464405503a95374a389fb7ef4e", null ],
     [ "fans", "classSimpleFanController.html#a286c72af6458b1bfd45ea46f0a55b7d7", null ],
     [ "force3PinMode", "classSimpleFanController.html#abdbc80a4f1f8162d74fc870fc597128a", null ],
-    [ "lastUpdate", "classSimpleFanController.html#a7f4f2048c545a30c609ce9ef08551d98", null ],
+    [ "lastUpdate", "classSimpleFanController.html#a475784caf003c3618938c5e00ca58e3c", null ],
     [ "temperatureController", "classSimpleFanController.html#abbe6454d2c3559bb0fbf92ce31853c35", null ],
     [ "triggerSave", "classSimpleFanController.html#a5ec09407b6e2418192a8aff69883eeda", null ],
     [ "updateRate", "classSimpleFanController.html#a5c283aa1d23ea146764e3da2487fe9c3", null ]

@@ -21,6 +21,6 @@ var classLEDController =
     [ "startLEDAutodetection", "classLEDController.html#a769041ff2b9951adf9897ed38101ebe6", null ],
     [ "triggerLEDUpdate", "classLEDController.html#a3060ddaf40a577d3ab7a199ea5ccd4f9", null ],
     [ "channels", "classLEDController.html#a76c71ffec20065d9258fe8787413ae00", null ],
-    [ "lastCommand", "classLEDController.html#a4be48d4b33fb52c1a5c0ec4bfdb10936", null ],
+    [ "lastCommand", "classLEDController.html#a9f481a9af6105366ddccdbc52530ca44", null ],
     [ "triggerSave", "classLEDController.html#a461f02f241558c8292aa00ad21ff25ed", null ]
 ];

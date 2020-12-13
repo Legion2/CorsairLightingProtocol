@@ -233,12 +233,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_update</b> = 
 <tr class="memitem:aadbef33bc86c4ec97128f704127acef7"><td class="memItemLeft" align="right" valign="top"><a id="aadbef33bc86c4ec97128f704127acef7"></a>
 ChannelData&#160;</td><td class="memItemRight" valign="bottom"><b>channelData</b> [CHANNEL_NUM]</td></tr>
 <tr class="separator:aadbef33bc86c4ec97128f704127acef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8de641716a750bff20ebd777217a01b"><td class="memItemLeft" align="right" valign="top"><a id="ad8de641716a750bff20ebd777217a01b"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>lastUpdate</b> = 0</td></tr>
-<tr class="separator:ad8de641716a750bff20ebd777217a01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a559fead7032022a40ac84bb678ba885c"><td class="memItemLeft" align="right" valign="top"><a id="a559fead7032022a40ac84bb678ba885c"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>currentUpdate</b> = 0</td></tr>
-<tr class="separator:a559fead7032022a40ac84bb678ba885c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16397bfb1a839d9865284ac121823a89"><td class="memItemLeft" align="right" valign="top"><a id="a16397bfb1a839d9865284ac121823a89"></a>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>lastUpdate</b> = 0</td></tr>
+<tr class="separator:a16397bfb1a839d9865284ac121823a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61e32e8564adabe5e06aa631002432b8"><td class="memItemLeft" align="right" valign="top"><a id="a61e32e8564adabe5e06aa631002432b8"></a>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>currentUpdate</b> = 0</td></tr>
+<tr class="separator:a61e32e8564adabe5e06aa631002432b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10a90a52848157d4c15da60799277253"><td class="memItemLeft" align="right" valign="top"><a id="a10a90a52848157d4c15da60799277253"></a>
 const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></td></tr>
 <tr class="separator:a10a90a52848157d4c15da60799277253"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,8 +248,8 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 <tr class="separator:a76c71ffec20065d9258fe8787413ae00 inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a461f02f241558c8292aa00ad21ff25ed inherit pro_attribs_classLEDController"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a461f02f241558c8292aa00ad21ff25ed">triggerSave</a> = false</td></tr>
 <tr class="separator:a461f02f241558c8292aa00ad21ff25ed inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4be48d4b33fb52c1a5c0ec4bfdb10936 inherit pro_attribs_classLEDController"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a4be48d4b33fb52c1a5c0ec4bfdb10936">lastCommand</a> = 0</td></tr>
-<tr class="separator:a4be48d4b33fb52c1a5c0ec4bfdb10936 inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f481a9af6105366ddccdbc52530ca44 inherit pro_attribs_classLEDController"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLEDController.html#a9f481a9af6105366ddccdbc52530ca44">lastCommand</a> = 0</td></tr>
+<tr class="separator:a9f481a9af6105366ddccdbc52530ca44 inherit pro_attribs_classLEDController"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The default <a class="el" href="classLEDController.html">LEDController</a>. This controller uses the FastLED library to implement the Hardware Lighting effects. Also all RGB values of the LEDs are stored into CRGB arrays which can be used by the FastLED library to show them on the real LED strips. This controller can stores the internal state to EEPROM and support HW playback without USB connection.</p>

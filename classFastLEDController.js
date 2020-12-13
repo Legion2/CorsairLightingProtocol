@@ -33,8 +33,8 @@ var classFastLEDController =
     [ "triggerLEDUpdate", "classFastLEDController.html#ac301c35a440fac6a36d3fe7abf2c9609", null ],
     [ "updateLEDs", "classFastLEDController.html#a6525215f48c7aa2584422dd487e1f924", null ],
     [ "channelData", "classFastLEDController.html#aadbef33bc86c4ec97128f704127acef7", null ],
-    [ "currentUpdate", "classFastLEDController.html#a559fead7032022a40ac84bb678ba885c", null ],
-    [ "lastUpdate", "classFastLEDController.html#ad8de641716a750bff20ebd777217a01b", null ],
+    [ "currentUpdate", "classFastLEDController.html#a61e32e8564adabe5e06aa631002432b8", null ],
+    [ "lastUpdate", "classFastLEDController.html#a16397bfb1a839d9865284ac121823a89", null ],
     [ "temperatureController", "classFastLEDController.html#ad166fcf8400a62cb0bac96163ca16b98", null ],
     [ "trigger_update", "classFastLEDController.html#ae8d9eb0d7fdab87a0a0c9d6dd1c3bb63", null ],
     [ "useEEPROM", "classFastLEDController.html#a10a90a52848157d4c15da60799277253", null ]

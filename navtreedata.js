@@ -24,7 +24,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classSimpleFanController.html#a5ec09407b6e2418192a8aff69883eeda"
+"classSimpleFanController.html#a5c283aa1d23ea146764e3da2487fe9c3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
