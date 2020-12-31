@@ -159,6 +159,13 @@ ledController.onUpdateHook(0, []() {
 });
 ```
 
+## Reverse direction of LED Strip
+If you want to change the direction of the LEDs of the Strip without physically change the strip, the `CLP::reverse` function can be used.
+```C++
+ledController.onUpdateHook(0, []() {
+	CLP::reverse(&ledController, 0);
+});
+```
 ## Hardware Lighting mode
 The [Hardware Lighting mode](https://forum.corsair.com/v3/showthread.php?t=182874) can be configured in iCUE.
 It allows you the set lighting effects that will be active when iCUE **is not** running.
