@@ -161,6 +161,7 @@ ledController.onUpdateHook(0, []() {
 
 ## Reverse direction of LED Strip
 If you want to change the direction of the LEDs of the Strip without physically change the strip, the `CLP::reverse` function can be used.
+The reverse function must be called be for scaling.
 ```C++
 ledController.onUpdateHook(0, []() {
 	CLP::reverse(&ledController, 0);
