@@ -25,6 +25,12 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 
+#if defined(ARDUINO_ARCH_SAMD)
+#define HID_REPORT_TYPE_INPUT 1
+#define HID_REPORT_TYPE_OUTPUT 2
+#define HID_REPORT_TYPE_FEATURE 3
+#endif
+
 #if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD))
 #include <HID.h>
 #endif
@@ -53,7 +59,12 @@ THE SOFTWARE.
 
 #if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)) && defined(USBCON)  // Arduino Core
 
+#if defined(ARDUINO_ARCH_AVR)
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
+#else
+#define EPTYPE_DESCRIPTOR_SIZE unsigned int
+#endif
+
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
 // Interrupt Out Endpoint is optional, control endpoint is used by default
 #define ENDPOINT_COUNT 1
@@ -140,7 +151,11 @@ public:
 	virtual size_t write(uint8_t b) { return write(&b, 1); }
 
 	virtual size_t write(const uint8_t* buffer, size_t size) {
+#if defined(ARDUINO_ARCH_AVR)
 		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
+#else
+		return USBDevice.send(pluggedEndpoint, buffer, size);
+#endif
 	}
 
 protected:
@@ -150,7 +165,7 @@ protected:
 	bool setup(USBSetup& setup) override;
 	uint8_t getShortName(char* name) override;
 
-	EPTYPE_DESCRIPTOR_SIZE epType[ENDPOINT_COUNT];
+	EPTYPE_DESCRIPTOR_SIZE epType;
 	uint8_t protocol;
 	uint8_t idle;
 

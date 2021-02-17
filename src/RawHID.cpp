@@ -56,7 +56,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 const char defaultSerialNumber[] PROGMEM = SERIAL_NUMBER;
 
 CLP::RawHID_::RawHID_(void)
-	: PluggableUSBModule(ENDPOINT_COUNT, 1, epType),
+	: PluggableUSBModule(ENDPOINT_COUNT, 1, &epType),
 	  protocol(HID_REPORT_PROTOCOL),
 	  idle(1),
 	  dataLength(0),
@@ -66,7 +66,11 @@ CLP::RawHID_::RawHID_(void)
 	  featureReport(nullptr),
 	  featureLength(0) {
 	setTimeout(10);
-	epType[0] = EP_TYPE_INTERRUPT_IN;
+#if defined(ARDUINO_ARCH_AVR)
+	epType = EP_TYPE_INTERRUPT_IN;
+#else
+	epType = USB_ENDPOINT_TYPE_INTERRUPT | USB_ENDPOINT_IN(0);
+#endif
 	PluggableUSB().plug(this);
 }
 
@@ -80,7 +84,11 @@ int CLP::RawHID_::getInterface(uint8_t* interfaceCount) {
 								  D_HIDREPORT(sizeof(_hidReportDescriptorRawHID)),
 								  D_ENDPOINT(USB_ENDPOINT_IN(pluggedEndpoint), USB_ENDPOINT_TYPE_INTERRUPT,
 											 RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)};
+#if defined(ARDUINO_ARCH_AVR)
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
+#else
+	return USBDevice.sendControl(0, &hidInterface, sizeof(hidInterface));
+#endif
 }
 
 int CLP::RawHID_::getDescriptor(USBSetup& setup) {
@@ -100,8 +108,11 @@ int CLP::RawHID_::getDescriptor(USBSetup& setup) {
 	// Reset the protocol on reenumeration. Normally the host should not assume the state of the protocol
 	// due to the USB specs, but Windows and Linux just assumes its in report mode.
 	protocol = HID_REPORT_PROTOCOL;
-
+#if defined(ARDUINO_ARCH_AVR)
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
+#else
+	return USBDevice.sendControl(_hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
+#endif
 }
 
 bool CLP::RawHID_::setup(USBSetup& setup) {
@@ -142,8 +153,11 @@ bool CLP::RawHID_::setup(USBSetup& setup) {
 				// except the host tries to send more then 32k bytes.
 				// We dont have that much ram anyways.
 				if (length == featureLength) {
+#if defined(ARDUINO_ARCH_AVR)
 					USB_RecvControl(featureReport, featureLength);
-
+#else
+					USBDevice.recvControl(featureReport, featureLength);
+#endif
 					// Block until data is read (make length negative)
 					disableFeatureReport();
 					return true;
@@ -154,7 +168,12 @@ bool CLP::RawHID_::setup(USBSetup& setup) {
 			else if (setup.wValueH == HID_REPORT_TYPE_OUTPUT) {
 				if (!dataAvailable && length <= dataLength) {
 					// Write data to fit to the end (not the beginning) of the array
+
+#if defined(ARDUINO_ARCH_AVR)
 					USB_RecvControl(data + dataLength - length, length);
+#else
+					USBDevice.recvControl(data + dataLength - length, length);
+#endif
 					dataAvailable = length;
 					return true;
 				}
