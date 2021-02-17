@@ -21,8 +21,10 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
-FastLEDController ledController(true);
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_PRO, &firmwareStorage);
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cLPS(&cLP);
 
@@ -60,7 +62,7 @@ void loop() {
 
 void processCommand(String& cmd) {
 	if (cmd == F("print DeviceID")) {
-		byte deviceId[4];
+		DeviceID deviceId;
 		firmware.getDeviceID(deviceId);
 		CLP::printDeviceID(deviceId);
 		Serial.println();

@@ -15,12 +15,13 @@
 */
 #include "FastLEDController.h"
 
-#include <EEPROM.h>
+FastLEDController::FastLEDController(FastLEDControllerStorage* storage)
+	: temperatureController(nullptr), storage(storage) {
+	load();
+}
 
-FastLEDController::FastLEDController(bool useEEPROM) : temperatureController(nullptr), useEEPROM(useEEPROM) { load(); }
-
-FastLEDController::FastLEDController(TemperatureController* temperatureController, bool useEEPROM)
-	: temperatureController(temperatureController), useEEPROM(useEEPROM) {
+FastLEDController::FastLEDController(TemperatureController* temperatureController, FastLEDControllerStorage* storage)
+	: temperatureController(temperatureController), storage(storage) {
 	load();
 }
 
@@ -455,34 +456,36 @@ bool FastLEDController::updateLEDs() {
 	return anyUpdate;
 }
 
-size_t FastLEDController::getEEPROMSize() { return sizeof(channels); }
-
 void FastLEDController::onUpdateHook(uint8_t channel, void (*callback)(void)) {
 	channelData[channel].onUpdateCallback = callback;
 }
 
 bool FastLEDController::load() {
-	if (useEEPROM) {
-		EEPROM.get(EEPROM_ADDRESS, channels);
-		for (LEDChannel& channel : channels) {
-			if (!isValidLEDChannel(channel)) {
-				channel = LEDChannel();
-			}
-		}
-		return true;
+	if (storage == nullptr) {
+		return false;
 	}
-	return false;
+
+	for (int i = 0; i < CHANNEL_NUM; i++) {
+		storage->load(i, channels[i]);
+	}
+
+	for (LEDChannel& channel : channels) {
+		if (!isValidLEDChannel(channel)) {
+			channel = LEDChannel();
+		}
+	}
+	return true;
 }
 
 bool FastLEDController::save() {
-	if (useEEPROM) {
-#ifdef DEBUG
-		Serial.println(F("Save to EEPROM."));
-#endif
-		EEPROM.put(EEPROM_ADDRESS, channels);
-		return true;
+	if (storage == nullptr) {
+		return false;
 	}
-	return false;
+
+	for (int i = 0; i < CHANNEL_NUM; i++) {
+		storage->save(i, channels[i]);
+	}
+	return true;
 }
 
 void FastLEDController::triggerLEDUpdate() { trigger_update = true; }

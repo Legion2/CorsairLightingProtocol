@@ -55,3 +55,5 @@ void CorsairLightingProtocolController::handleCommand(const Command& command,
 		response->sendError();
 	}
 }
+
+CorsairLightingFirmware* CorsairLightingProtocolController::getFirmware(void) { return corsairLightingFirmware; }

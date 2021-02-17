@@ -18,12 +18,9 @@
 #include <FastLED.h>
 
 #include "Arduino.h"
+#include "FastLEDControllerStorage.h"
 #include "LEDController.h"
 #include "TemperatureController.h"
-
-#ifndef EEPROM_ADDRESS
-#define EEPROM_ADDRESS 4
-#endif
 
 #ifndef LED_CONTROLLER_TIMEOUT
 #define LED_CONTROLLER_TIMEOUT 30000
@@ -57,22 +54,22 @@ class FastLEDController : public LEDController {
 
 public:
 	/**
-	 * Create a new FastLEDController and specify if the EEPROM of the Arduino should be used. See the other contructor
-	 * for more details.
+	 * Create a new FastLEDController and specify which storage should be used. The EEPROM of the Arduino can be used as
+	 * Storage. See the other contructor for more details.
 	 *
-	 * @param useEEPROM specify if the EEPROM should be used
+	 * @param storage specify the storage which should be used, e.g. EEPROM
 	 */
-	FastLEDController(bool useEEPROM);
+	FastLEDController(FastLEDControllerStorage* storage);
 	/**
-	 * Create a new FastLEDController and specify if the EEPROM of the Arduino should be used to store persistent
-	 * information like the Hardware Lighting. If enabled, the hardware lighting configured in iCUE works without a USB
-	 * connection and even after a restart of the Arduino. Also the the TemperatureController used for temperature
-	 * related lighting can be passed here.
+	 * Create a new FastLEDController and specify which storage should be used. If the EEPROM of the Arduino should be
+	 * used to store persistent information like the Hardware Lighting use {@code FastLEDControllerStorageEEPROM}. If
+	 * enabled, the hardware lighting configured in iCUE works without a USB connection and even after a restart of the
+	 * Arduino. Also the the TemperatureController used for temperature related lighting can be passed here.
 	 *
 	 * @param temperatureController used for temperature based lighting
-	 * @param useEEPROM specify if the EEPROM should be used
+	 * @param storage specify the storage which should be used, e.g. EEPROM
 	 */
-	FastLEDController(TemperatureController* temperatureController, bool useEEPROM);
+	FastLEDController(TemperatureController* temperatureController, FastLEDControllerStorage* storage);
 	~FastLEDController();
 	/**
 	 * Add a LED array on a channel with a given length. The length define how many LEDs iCUE can control. The actual
@@ -107,12 +104,6 @@ public:
 	 */
 	virtual bool updateLEDs();
 	/**
-	 * Get the total size of all data stored in EEPROM by this LEDController.
-	 *
-	 * @return the size in bytes
-	 */
-	virtual size_t getEEPROMSize();
-	/**
 	 * Register an update hook, which is executed after a channel has been updated. This can be used to apply
 	 * transforamtions to the channel before the data is displayed by FastLED.
 	 *
@@ -123,6 +114,7 @@ public:
 
 protected:
 	TemperatureController* const temperatureController;
+	FastLEDControllerStorage* const storage;
 
 	bool trigger_update = false;
 
@@ -168,7 +160,6 @@ protected:
 	bool renderSequential(ChannelData& channelData, LEDGroup& group, int groupLedCount);
 	bool renderRainbow(ChannelData& channelData, LEDGroup& group, int groupLedCount);
 
-	const bool useEEPROM;
 	bool load() override;
 	bool save() override;
 

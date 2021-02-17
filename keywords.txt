@@ -11,6 +11,7 @@ LEDController	KEYWORD1
 FastLEDController	KEYWORD1
 CorsairLightingProtocolController	KEYWORD1
 CorsairLightingProtocolHID	KEYWORD1
+CorsairLightingProtocolTinyUSBHID	KEYWORD1
 CorsairLightingProtocolSerial	KEYWORD1
 CorsairLightingProtocolResponse	KEYWORD1
 CorsairLightingFirmware	KEYWORD1

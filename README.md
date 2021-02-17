@@ -12,7 +12,7 @@ _This is not an official corsair project._
 * Control LEDs with the [Corsair iCUE software](https://www.corsair.com/icue).
 * [Support common LED chipsets](https://github.com/FastLED/FastLED/wiki/Overview#chipsets). (e.g. WS2812B, WS2801)
 * Support [FastLED](http://fastled.io/).
-* Supported platform: Arduino AVR
+* Supported platforms: Arduino AVR, [TinyUSB supported cores](https://github.com/adafruit/Adafruit_TinyUSB_Arduino#supported-cores)
 * Hardware Lighting mode.
 * Use multiple devices at the same time.
 * Repeat or scale LED channels to arbitrary size.
@@ -33,14 +33,19 @@ This project provides example sketches for easy use with Arduino IDE.
 
 - [Requirements](#requirements)
 - [Install the libraries](#install-the-libraries)
-- [Create a Lighting Node PRO](#create-a-lighting-node-pro)
+- [Create a Lighting Node PRO with AVR](#create-a-lighting-node-pro-with-avr)
+- [Create a Lighting Node PRO with TinyUSB](#create-a-lighting-node-pro-for-a-raspberry-pi-pico-with-tinyusb)
 - [Use the Lighting Node PRO](#use-the-lighting-node-pro)
 
 ## Requirements
 The library is compatible with all boards using the MCU ATmega32U4.
 This includes **Arduino Leonardo**, **SparkFun Pro Micro**, **Arduino Micro**, and **Adafruit 32u4 AVR Boards**.
 It also supports the Arduino Uno and Arduino Mega, **but** this requires the [HoodLoader2](https://github.com/NicoHood/HoodLoader2) bootloader, see [this wiki](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega) for more details.
-It is **not** compatible with ATmega328 (Arduino Nano), STM8S103F3, teensy, ESP8266 and ESP32 see [list of architecture/platform](https://github.com/Legion2/CorsairLightingProtocol/issues?q=is%3Aissue+label%3Aarchitecture%2Fplatform) for a detailed description why they are not supported.
+
+In addition, any board compatible with **Adafruit TinyUSB for Arduino** is also supported without the use of custom board definitions. Be sure to define USE_TINYUSB, which is done automatically when using a supported core and selecting TinyUSB for the USB Stack. See the TinyUSB example for implementation details.
+
+It is **not** compatible with ATmega328 (Arduino Nano), STM8S103F3, teensy, or ESP8266 see [list of architecture/platform](https://github.com/Legion2/CorsairLightingProtocol/issues?q=is%3Aissue+label%3Aarchitecture%2Fplatform) for a detailed description why they are not supported.
+
 In the rest of the documentation "Arduino" is used as a synonym for all supported boards regardless of the manufacturer.
 
 When you have problems with a board not listed here, please open an [Issue](https://github.com/Legion2/CorsairLightingProtocol/issues).
@@ -51,8 +56,9 @@ Open the Library-Manager in Arduino IDE via Tools->Manage Libraries...
 Search for "Corsair Lighting Protocol" and install the Corsair Lighting Protocol library.
 This library also requires the [FastLED](http://fastled.io/) library.
 Search for "FastLED" in the Library-Manager and install the FastLED library.
+If using TinyUSB, also install the latest "Adafruit TinyUSB Library" as it supersedes some of the core versions.
 
-## Create a Lighting Node PRO
+## Create a Lighting Node PRO with AVR
 This guide will teach you how to create a Lighting Node PRO with an Arduino Leonardo compatible board.
 If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega).
 
@@ -70,7 +76,7 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
 
    ![upload sketch](extra/images/upload-sketch.png)
 1. Do the wiring.
-   For more information on [how to wire the leds](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
+   For more information on [how to wire the LEDs](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
    
    ![the wiring](extra/images/board-wiring.jpg)
 1. Verify your device works as expected.
@@ -79,6 +85,31 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
 1. Now open [iCUE](https://www.corsair.com/icue) there you should see the "Lighting Node PRO".
 
 > If you have any problem during setup you may find the solution in the [Troubleshooting section](https://github.com/Legion2/CorsairLightingProtocol/wiki/Troubleshooting).
+
+## Create a Lighting Node PRO for a Raspberry Pi Pico with TinyUSB
+
+This guide will teach you how to create a Lighting Node PRO with a Raspberry Pi Pico.
+
+**Note:** FastLED currently does not support the RP2040 natively. You must manually merge support by modifying your library to include the [6 RP2040 platform files](https://github.com/FastLED/FastLED/pull/1261/files#diff-fda1710ad90fcc4b2f07be21a834da7d24b00008867655232c84fb0369cfc74b) in the FastLED/src/platforms/arm/rp2040 folder and `#elif defined(ARDUINO_ARCH_RP2040)` / `#include` statements in [led_sysdefs.h](https://github.com/FastLED/FastLED/pull/1261/files#diff-95f6b43a0e6b0e58988e1be3bc6415ded5284082a4f2ce2aaa90f5931d4194af) and [platforms.h](https://github.com/FastLED/FastLED/pull/1261/files#diff-255ea38a6573ed237ea1fe164d5e87ca46811eef21ba6e2cef120fda47c6e62f).
+
+1. Install the [Raspberry Pi Pico Arduino core](https://github.com/earlephilhower/arduino-pico#installing-via-arduino-boards-manager).
+
+1. Open the example "TinyUSB", you can find it in Arduino IDE in the File menu->Examples->Corsair Lighting Protocol->TinyUSB.
+   If you can't open the LightingNodePRO example the Corsair Lighting Protocol library is not installed correctly.
+
+1. Select the Raspberry Pi Pico as shown in the screenshot below. Be sure to select the "Adafruit TinyUSB" USB Stack.
+
+   ![select Raspberry Pi Pico](extra/images/select-board-pico.png)
+1. Upload the "TinyUSB" sketch to your Pico.
+
+1. Do the wiring.
+   For more information on [how to wire the LEDs](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
+   
+   ![the wiring](extra/images/board-wiring-pico.jpg)
+1. Verify your device works as expected.
+   Open the Windows settings->devices->Other devices.
+   Somewhere in the list of devices, there should be a device called "Lighting Node PRO".
+1. Now open [iCUE](https://www.corsair.com/icue) there you should see the "Lighting Node PRO".
 
 ## Use the Lighting Node PRO
 
@@ -121,7 +152,7 @@ The Serial Number MAY only consist of HEX characters (0-9 and A-F).
 The DeviceID can be set with the `setDeviceID` function of `CorsairLightingFirmware`.
 ```C++
 void setup() {
-    byte deviceId[4] = { 0x9A, 0xDA, 0xA7, 0x8E };
+    DeviceID deviceId = { 0x9A, 0xDA, 0xA7, 0x8E };
     firmware.setDeviceID(deviceId);
     ...
 }
@@ -173,7 +204,7 @@ ledController.onUpdateHook(0, []() {
 The [Hardware Lighting mode](https://forum.corsair.com/v3/showthread.php?t=182874) can be configured in iCUE.
 It allows you the set lighting effects that will be active when iCUE **is not** running.
 This is the case when the PC is off, in sleep mode, booting or the user is logged out.
-So if you want to have lighing effects in all these situations, use the Hardware Lighting mode.
+So if you want to have lighting effects in all these situations, use the Hardware Lighting mode.
 If you don't want it, configure a static black color.
 
 # License

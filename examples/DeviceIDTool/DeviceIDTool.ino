@@ -17,15 +17,15 @@
 // UPLOAD THIS TO THE ARDUINO AND OPEN SERIAL MONITOR WITH BOUDRATE 115200
 //
 #include <CLPUtils.h>
-#include <EEPROM.h>
+#include <CorsairLightingFirmwareStorageEEPROM.h>
 
-#define EEPROM_ADDRESS_DEVICE_ID 0
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
 
 void setup() {
 	Serial.begin(115200);
 	Serial.setTimeout(100);
-	uint8_t deviceID[4];
-	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, deviceID);
+	DeviceID deviceID;
+	firmwareStorage.loadDeviceID(deviceID);
 
 	while (!Serial) {
 		;  // wait for serial port to connect. Needed for native USB
@@ -47,12 +47,12 @@ void loop() {
 			Serial.println(F("Do not forget the leading zeroes!"));
 			Serial.println();
 		} else {
-			uint8_t newDeviceID[4];
+			DeviceID newDeviceID;
 
-			newDeviceID[0] = strtol(&inputString[0], nullptr, 16);
-			newDeviceID[1] = strtol(&inputString[3], nullptr, 16);
-			newDeviceID[2] = strtol(&inputString[6], nullptr, 16);
-			newDeviceID[3] = strtol(&inputString[9], nullptr, 16);
+			newDeviceID.data[0] = strtol(&inputString[0], nullptr, 16);
+			newDeviceID.data[1] = strtol(&inputString[3], nullptr, 16);
+			newDeviceID.data[2] = strtol(&inputString[6], nullptr, 16);
+			newDeviceID.data[3] = strtol(&inputString[9], nullptr, 16);
 			Serial.println(F("Set DeviceID to: "));
 			CLP::printDeviceID(newDeviceID);
 			Serial.println();
@@ -66,7 +66,7 @@ void loop() {
 					F("This is a special DeviceID, it will reset the device and then generate a new DeviceID!"));
 			}
 			Serial.println();
-			EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, newDeviceID);
+			firmwareStorage.saveDeviceID(newDeviceID);
 		}
 	}
 }

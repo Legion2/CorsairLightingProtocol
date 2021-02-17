@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Leon Kiefer
+   Copyright 2021 Leon Kiefer
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,17 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CLPAdditionalFeatures.h"
+#pragma once
 
-#include "CLPUtils.h"
+#include "CorsairLightingFirmware.h"
 
-bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
-	DeviceID deviceId;
-	firmware->getDeviceID(deviceId);
-	return CLP::isResetID(deviceId);
-}
+class CorsairLightingFirmwareStorageStatic : public CorsairLightingFirmwareStorage {
+private:
+	const DeviceID deviceID;
 
-void CLP::reset(CorsairLightingFirmware* firmware) {
-	DeviceID deviceId = {0x00};
-	firmware->setDeviceID(deviceId);
-}
+public:
+	CorsairLightingFirmwareStorageStatic(DeviceID& deviceID);
+	virtual void loadDeviceID(DeviceID& deviceID) const override;
+	virtual void saveDeviceID(const DeviceID& deviceID) override;
+};
