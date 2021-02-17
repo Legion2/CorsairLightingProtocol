@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 #include "RawHID.h"
 
-#if defined(ARDUINO_ARCH_AVR) && defined(USBCON)
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)) && defined(USBCON)
 
 #ifndef HID_ENDPOINT_INTERVAL_RAWHID
 #define HID_ENDPOINT_INTERVAL_RAWHID 0x01

@@ -25,11 +25,11 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 
-#if defined(ARDUINO_ARCH_AVR)
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD))
 #include <HID.h>
 #endif
 
-#if defined(ARDUINO_ARCH_AVR) && defined(USBCON)
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)) && defined(USBCON)
 #define SUPPORT_RAW_HID
 #endif
 
@@ -51,7 +51,7 @@ THE SOFTWARE.
 
 #endif
 
-#if defined(ARDUINO_ARCH_AVR) && defined(USBCON)  // Arduino Core
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)) && defined(USBCON)  // Arduino Core
 
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
