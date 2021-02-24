@@ -25,9 +25,15 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 
-#if defined(ARDUINO_ARCH_SAMD)
+// Workaround for issue remedy in PR #602 in arduino/ArduinoCore-samd
+// https://github.com/arduino/ArduinoCore-samd/pull/602
+#ifndef HID_REPORT_TYPE_INPUT
 #define HID_REPORT_TYPE_INPUT 1
+#endif
+#ifndef HID_REPORT_TYPE_OUTPUT
 #define HID_REPORT_TYPE_OUTPUT 2
+#endif
+#ifndef HID_REPORT_TYPE_FEATURE
 #define HID_REPORT_TYPE_FEATURE 3
 #endif
 
@@ -61,7 +67,7 @@ THE SOFTWARE.
 
 #if defined(ARDUINO_ARCH_AVR)
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
-#else
+#elif defined(ARDUINO_ARCH_SAMD)
 #define EPTYPE_DESCRIPTOR_SIZE unsigned int
 #endif
 
@@ -153,7 +159,7 @@ public:
 	virtual size_t write(const uint8_t* buffer, size_t size) {
 #if defined(ARDUINO_ARCH_AVR)
 		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
-#else
+#elif defined(ARDUINO_ARCH_SAMD)
 		return USBDevice.send(pluggedEndpoint, buffer, size);
 #endif
 	}
@@ -165,7 +171,7 @@ protected:
 	bool setup(USBSetup& setup) override;
 	uint8_t getShortName(char* name) override;
 
-	EPTYPE_DESCRIPTOR_SIZE epType;
+	EPTYPE_DESCRIPTOR_SIZE epType[ENDPOINT_COUNT];
 	uint8_t protocol;
 	uint8_t idle;
 

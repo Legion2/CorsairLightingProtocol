@@ -56,7 +56,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 const char defaultSerialNumber[] PROGMEM = SERIAL_NUMBER;
 
 CLP::RawHID_::RawHID_(void)
-	: PluggableUSBModule(ENDPOINT_COUNT, 1, &epType),
+	: PluggableUSBModule(ENDPOINT_COUNT, 1, epType),
 	  protocol(HID_REPORT_PROTOCOL),
 	  idle(1),
 	  dataLength(0),
@@ -67,9 +67,9 @@ CLP::RawHID_::RawHID_(void)
 	  featureLength(0) {
 	setTimeout(10);
 #if defined(ARDUINO_ARCH_AVR)
-	epType = EP_TYPE_INTERRUPT_IN;
-#else
-	epType = USB_ENDPOINT_TYPE_INTERRUPT | USB_ENDPOINT_IN(0);
+	epType[0] = EP_TYPE_INTERRUPT_IN;
+#elif defined(ARDUINO_ARCH_SAMD)
+	epType[0] = USB_ENDPOINT_TYPE_INTERRUPT | USB_ENDPOINT_IN(0);
 #endif
 	PluggableUSB().plug(this);
 }
@@ -86,8 +86,8 @@ int CLP::RawHID_::getInterface(uint8_t* interfaceCount) {
 											 RAWHID_TX_SIZE, HID_ENDPOINT_INTERVAL_RAWHID)};
 #if defined(ARDUINO_ARCH_AVR)
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
-#else
-	return USBDevice.sendControl(0, &hidInterface, sizeof(hidInterface));
+#elif defined(ARDUINO_ARCH_SAMD)
+	return USBDevice.sendControl(&hidInterface, sizeof(hidInterface));
 #endif
 }
 
@@ -110,7 +110,7 @@ int CLP::RawHID_::getDescriptor(USBSetup& setup) {
 	protocol = HID_REPORT_PROTOCOL;
 #if defined(ARDUINO_ARCH_AVR)
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
-#else
+#elif defined(ARDUINO_ARCH_SAMD)
 	return USBDevice.sendControl(_hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
 #endif
 }
@@ -155,7 +155,7 @@ bool CLP::RawHID_::setup(USBSetup& setup) {
 				if (length == featureLength) {
 #if defined(ARDUINO_ARCH_AVR)
 					USB_RecvControl(featureReport, featureLength);
-#else
+#elif defined(ARDUINO_ARCH_SAMD)
 					USBDevice.recvControl(featureReport, featureLength);
 #endif
 					// Block until data is read (make length negative)
@@ -171,7 +171,7 @@ bool CLP::RawHID_::setup(USBSetup& setup) {
 
 #if defined(ARDUINO_ARCH_AVR)
 					USB_RecvControl(data + dataLength - length, length);
-#else
+#elif defined(ARDUINO_ARCH_SAMD)
 					USBDevice.recvControl(data + dataLength - length, length);
 #endif
 					dataAvailable = length;
