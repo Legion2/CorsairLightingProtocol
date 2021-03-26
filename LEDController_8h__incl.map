@@ -1,6 +1,9 @@
 <map id="src/LEDController.h" name="src/LEDController.h">
-<area shape="rect" id="node4" href="$CLPUtils_8h_source.html" title="CLPUtils.h" alt="" coords="166,155,253,181"/>
-<area shape="rect" id="node5" href="$ILEDController_8h_source.html" title="ILEDController.h" alt="" coords="242,80,361,107"/>
-<area shape="rect" id="node6" href="$CorsairLightingProtocolConstants_8h_source.html" title="CorsairLightingProtocolConstants.h" alt="" coords="329,155,557,181"/>
-<area shape="rect" id="node7" href="$CorsairLightingProtocolResponse_8h_source.html" title="CorsairLightingProtocolResponse.h" alt="" coords="581,155,808,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="83,5,229,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,91,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="249,229,333,256"/>
+<area shape="rect" id="node4" href="$CLPUtils_8h_source.html" title=" " alt="" coords="165,155,253,181"/>
+<area shape="rect" id="node5" href="$ILEDController_8h_source.html" title=" " alt="" coords="239,80,366,107"/>
+<area shape="rect" id="node6" href="$CorsairLightingProtocolConstants_8h_source.html" title=" " alt="" coords="328,155,579,181"/>
+<area shape="rect" id="node7" href="$CorsairLightingProtocolResponse_8h_source.html" title=" " alt="" coords="603,155,851,181"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="ThermistorTemperatureController" name="ThermistorTemperatureController">
-<area shape="rect" id="node2" href="$classTemperatureController.html" title="TemperatureController" alt="" coords="37,80,187,107"/>
-<area shape="rect" id="node3" href="$classITemperatureController.html" title="ITemperatureController" alt="" coords="35,5,189,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,155,244,181"/>
+<area shape="rect" id="node2" href="$classTemperatureController.html" title=" " alt="" coords="41,80,209,107"/>
+<area shape="rect" id="node3" href="$classITemperatureController.html" title=" " alt="" coords="39,5,211,32"/>
 </map>

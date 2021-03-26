@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pwmfan',['PWMFan',['../classPWMFan.html',1,'']]]
+  ['pwmfan_127',['PWMFan',['../classPWMFan.html',1,'']]]
 ];

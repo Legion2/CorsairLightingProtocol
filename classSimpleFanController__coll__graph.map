@@ -1,9 +1,10 @@
 <map id="SimpleFanController" name="SimpleFanController">
-<area shape="rect" id="node2" href="$classFanController.html" title="FanController" alt="" coords="9,95,109,121"/>
-<area shape="rect" id="node3" href="$classIFanController.html" title="IFanController" alt="" coords="5,5,109,32"/>
-<area shape="rect" id="node4" href="$classTemperatureController.html" title="TemperatureController" alt="" coords="134,95,285,121"/>
-<area shape="rect" id="node5" href="$classITemperatureController.html" title="ITemperatureController" alt="" coords="133,5,288,32"/>
-<area shape="rect" id="node6" href="$structFanData.html" title="FanData" alt="" coords="324,95,396,121"/>
-<area shape="rect" id="node7" href="$structFanCurve.html" title="FanCurve" alt="" coords="321,5,399,32"/>
-<area shape="rect" id="node8" href="$classPWMFan.html" title="PWMFan" alt="" coords="420,95,497,121"/>
+<area shape="rect" id="node1" title=" " alt="" coords="231,184,385,211"/>
+<area shape="rect" id="node2" href="$classFanController.html" title=" " alt="" coords="9,95,117,121"/>
+<area shape="rect" id="node3" href="$classIFanController.html" title=" " alt="" coords="5,5,117,32"/>
+<area shape="rect" id="node4" href="$classTemperatureController.html" title=" " alt="" coords="143,95,311,121"/>
+<area shape="rect" id="node5" href="$classITemperatureController.html" title=" " alt="" coords="142,5,314,32"/>
+<area shape="rect" id="node6" href="$structFanData.html" title=" " alt="" coords="356,95,431,121"/>
+<area shape="rect" id="node7" href="$structFanCurve.html" title=" " alt="" coords="352,5,435,32"/>
+<area shape="rect" id="node8" href="$classPWMFan.html" title=" " alt="" coords="455,95,532,121"/>
 </map>

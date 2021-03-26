@@ -1,5 +1,6 @@
 <map id="src/LEDController.h" name="src/LEDController.h">
-<area shape="rect" id="node2" href="$FastLEDController_8h_source.html" title="src/FastLEDController.h" alt="" coords="126,80,289,107"/>
-<area shape="rect" id="node3" href="$CorsairLightingProtocol_8h.html" title="src/CorsairLightingProtocol.h" alt="" coords="5,155,196,181"/>
-<area shape="rect" id="node4" href="$FastLEDControllerUtils_8h_source.html" title="src/FastLEDControllerUtils.h" alt="" coords="220,155,411,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="151,5,297,32"/>
+<area shape="rect" id="node2" href="$FastLEDController_8h_source.html" title=" " alt="" coords="139,80,309,107"/>
+<area shape="rect" id="node3" href="$CorsairLightingProtocol_8h.html" title=" " alt="" coords="5,155,213,181"/>
+<area shape="rect" id="node4" href="$FastLEDControllerUtils_8h_source.html" title=" " alt="" coords="237,155,440,181"/>
 </map>

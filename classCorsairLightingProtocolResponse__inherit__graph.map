@@ -1,4 +1,5 @@
 <map id="CorsairLightingProtocolResponse" name="CorsairLightingProtocolResponse">
-<area shape="rect" id="node2" href="$classCorsairLightingProtocolHID.html" title="CorsairLightingProtocolHID" alt="" coords="5,80,187,107"/>
-<area shape="rect" id="node3" href="$classCorsairLightingProtocolSerial.html" title="CorsairLightingProtocolSerial" alt="" coords="211,80,402,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="99,5,335,32"/>
+<area shape="rect" id="node2" href="$classCorsairLightingProtocolHID.html" title=" " alt="" coords="5,80,203,107"/>
+<area shape="rect" id="node3" href="$classCorsairLightingProtocolSerial.html" title=" " alt="" coords="227,80,437,107"/>
 </map>
