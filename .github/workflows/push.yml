@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@v3
+        uses: ArminJo/arduino-test-compile@v3.1.0
         with:
           cli-version: 0.14.0
           arduino-board-fqbn: ${{ matrix.board }}
@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@v3
+        uses: ArminJo/arduino-test-compile@v3.1.0
         with:
           cli-version: 0.14.0
           arduino-board-fqbn: ${{ matrix.board }}
@@ -62,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@v3
+        uses: ArminJo/arduino-test-compile@v3.1.0
         with:
           cli-version: 0.14.0
           arduino-board-fqbn: ${{ matrix.board }}
