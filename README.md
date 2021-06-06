@@ -78,6 +78,8 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
    Somewhere in the list of devices, there should be a device called "Lighting Node PRO".
 1. Now open [iCUE](https://www.corsair.com/icue) there you should see the "Lighting Node PRO".
 
+> If you have any problem during setup you may find the solution in the [Troubleshooting section](https://github.com/Legion2/CorsairLightingProtocol/wiki/Troubleshooting).
+
 ## Use the Lighting Node PRO
 
 ![iCUE RGB Strip example](extra/images/iCUE.jpg)
