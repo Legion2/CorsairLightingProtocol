@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 // Hint: The channels of the LS100 are swapped in iCUE, so the first channel in iCUE is here channel 2
 #define DATA_PIN_CHANNEL_1 2

@@ -57,7 +57,7 @@ protected:
 	CorsairLightingProtocolController* const controller;
 
 	bool available() const;
-	void getCommand(Command& command);
+	void getCommand(CorsairLightingProtocol::Command& command);
 	void sendX(const uint8_t* data, const size_t x) const override;
 };
 

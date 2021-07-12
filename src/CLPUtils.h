@@ -19,7 +19,7 @@
 
 #define toBigEndian(a) highByte(a), lowByte(a)
 
-namespace CLP {
+namespace CorsairLightingProtocol {
 uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
 
 /**
@@ -69,4 +69,4 @@ void printDeviceID(const uint8_t* deviceId);
  * @param interval the measurement interval in milliseconds
  */
 void printFps(const int interval);
-}  // namespace CLP
+}  // namespace CorsairLightingProtocol

@@ -18,7 +18,7 @@
 #include "Arduino.h"
 #include "FastLEDController.h"
 
-namespace CLP {
+namespace CorsairLightingProtocol {
 /**
  * Make it possible to use up to 96 LEDs per channel from iCUE by using the LL Fan option. This function transforms the
  * LL fans layout to a normal strip layout. This function can be combined with scale and repeat function but must be
@@ -99,4 +99,4 @@ void gammaCorrection(FastLEDController* controller, uint8_t channelIndex);
  * @param channelIndex the index of the channel
  */
 void fixIcueBrightness(FastLEDController* controller, uint8_t channelIndex);
-}  // namespace CLP
+}  // namespace CorsairLightingProtocol

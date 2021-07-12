@@ -15,6 +15,7 @@
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
+using namespace CorsairLightingProtocol;
 
 // The Arduino pin where the physical LEDs are connected.
 // Must be PWM pins

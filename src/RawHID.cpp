@@ -55,7 +55,7 @@ static const uint8_t  _hidReportDescriptorRawHID[] PROGMEM = {
 
 const char defaultSerialNumber[] PROGMEM = SERIAL_NUMBER;
 
-CLP::RawHID_::RawHID_(void)
+CorsairLightingProtocol::RawHID_::RawHID_(void)
 	: PluggableUSBModule(ENDPOINT_COUNT, 1, epType),
 	  protocol(HID_REPORT_PROTOCOL),
 	  idle(1),
@@ -70,9 +70,9 @@ CLP::RawHID_::RawHID_(void)
 	PluggableUSB().plug(this);
 }
 
-void CLP::RawHID_::setSerialNumber(const char* argSerialNumber) { serialNumber = argSerialNumber; }
+void CorsairLightingProtocol::RawHID_::setSerialNumber(const char* argSerialNumber) { serialNumber = argSerialNumber; }
 
-int CLP::RawHID_::getInterface(uint8_t* interfaceCount) {
+int CorsairLightingProtocol::RawHID_::getInterface(uint8_t* interfaceCount) {
 	// Maybe as optional device FastRawHID with different USAGE PAGE
 	*interfaceCount += 1;  // uses 1
 	HIDDescriptor hidInterface = {D_INTERFACE(pluggedInterface, ENDPOINT_COUNT, USB_DEVICE_CLASS_HUMAN_INTERFACE,
@@ -83,7 +83,7 @@ int CLP::RawHID_::getInterface(uint8_t* interfaceCount) {
 	return USB_SendControl(0, &hidInterface, sizeof(hidInterface));
 }
 
-int CLP::RawHID_::getDescriptor(USBSetup& setup) {
+int CorsairLightingProtocol::RawHID_::getDescriptor(USBSetup& setup) {
 	// Check if this is a HID Class Descriptor request
 	if (setup.bmRequestType != REQUEST_DEVICETOHOST_STANDARD_INTERFACE) {
 		return 0;
@@ -104,7 +104,7 @@ int CLP::RawHID_::getDescriptor(USBSetup& setup) {
 	return USB_SendControl(TRANSFER_PGM, _hidReportDescriptorRawHID, sizeof(_hidReportDescriptorRawHID));
 }
 
-bool CLP::RawHID_::setup(USBSetup& setup) {
+bool CorsairLightingProtocol::RawHID_::setup(USBSetup& setup) {
 	if (pluggedInterface != setup.wIndex) {
 		return false;
 	}
@@ -165,12 +165,12 @@ bool CLP::RawHID_::setup(USBSetup& setup) {
 	return false;
 }
 
-uint8_t CLP::RawHID_::getShortName(char* name) {
+uint8_t CorsairLightingProtocol::RawHID_::getShortName(char* name) {
 	name[0] = '\0';
 	strncat_P(name, serialNumber, ISERIAL_MAX_LEN - 1);
 	return strlen(name);
 }
-namespace CLP {
+namespace CorsairLightingProtocol {
 RawHID_ RawHID;
 }
 #endif

@@ -30,5 +30,5 @@ public:
 	 * @param command the command which must be handled
 	 * @param response the callback for the response
 	 */
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
+	virtual void handleLEDControl(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };

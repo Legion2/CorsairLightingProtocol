@@ -2,7 +2,7 @@
 
 You can contribute in many different ways, for example report a bug or come up with an idea for improvement.
 If you are good at programming you could also provide a fix for bugs or Pull Requests with improvements.
-If you want to help others using CLP you are welcome to extend the [Wiki on GitHub](https://github.com/Legion2/CorsairLightingProtocol/wiki).
+If you want to help others using CorsairLightingProtocol (CLP) you are welcome to extend the [Wiki on GitHub](https://github.com/Legion2/CorsairLightingProtocol/wiki).
 
 ## Finding information
 
@@ -32,3 +32,13 @@ Public methods must be documented with JavaDoc style comments.
 When introducing new methods you should think about if the method should be part of the public API or only used internally.
 Always use descriptive names for variables, only use acronyms if they are well known and frequently used.
 The coding style is defined using ClangFormat and automatically checked when you submit a Pull Request.
+
+### Naming
+
+Everything should be defined in the `CorsairLightingProtocol` namespace.
+Use camel case for names.
+Type names start with an upper case letter and variable, parameter and property names start with a lower case letter.
+
+Free function names should be unambiguous without the namespace.
+So, don't use names such as `reset` or `init`.
+Instead use `resetSomething` or `initSomethingElse`.

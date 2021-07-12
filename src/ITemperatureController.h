@@ -30,5 +30,5 @@ public:
 	 * @param command the command which should be handled
 	 * @param response the callback for the response
 	 */
-	virtual void handleTemperatureControl(const Command& command, const CorsairLightingProtocolResponse* response) = 0;
+	virtual void handleTemperatureControl(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response) = 0;
 };

@@ -17,13 +17,13 @@
 
 #include "CLPUtils.h"
 
-bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
+bool CorsairLightingProtocol::shouldReset(const CorsairLightingFirmware* firmware) {
 	byte deviceId[4];
 	firmware->getDeviceID(deviceId);
-	return CLP::isResetID(deviceId);
+	return CorsairLightingProtocol::isResetID(deviceId);
 }
 
-void CLP::reset(CorsairLightingFirmware* firmware) {
+void CorsairLightingProtocol::reset(CorsairLightingFirmware* firmware) {
 	byte deviceId[4] = {0x00};
 	firmware->setDeviceID(deviceId);
 }

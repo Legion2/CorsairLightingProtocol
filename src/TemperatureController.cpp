@@ -17,7 +17,7 @@
 
 #include "CLPUtils.h"
 
-void TemperatureController::handleTemperatureControl(const Command& command,
+void TemperatureController::handleTemperatureControl(const CorsairLightingProtocol::Command& command,
 													 const CorsairLightingProtocolResponse* response) {
 	switch (command.command) {
 		case READ_TEMPERATURE_MASK: {

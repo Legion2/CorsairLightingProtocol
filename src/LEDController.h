@@ -160,7 +160,7 @@ struct LEDChannel {
  */
 class LEDController : public ILEDController {
 public:
-	virtual void handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) override;
+	virtual void handleLEDControl(const CorsairLightingProtocol::Command& command, const CorsairLightingProtocolResponse* response) override;
 	/**
 	 * Validates a LEDChannel by checking all constrains on the values. This function should be used after non type-safe
 	 * operations on a LEDChannel.
