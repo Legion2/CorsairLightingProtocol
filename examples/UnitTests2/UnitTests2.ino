@@ -38,7 +38,7 @@ protected:
 
 class TestFastLEDController : public FastLEDController {
 public:
-	TestFastLEDController() : FastLEDController(false) {
+	TestFastLEDController() : FastLEDController(nullptr) {
 	}
 
 	void setLastUpdate(unsigned long time) {
@@ -55,7 +55,7 @@ public:
 
 test(getLEDs) {
 	CRGB leds[10];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	ledController.addLEDs(0, leds, 10);
 	assertEqual(ledController.getLEDs(0), leds);
 	assertEqual(ledController.getLEDs(1), nullptr);
@@ -63,7 +63,7 @@ test(getLEDs) {
 
 testF(FastLEDControllerTest, simpleScaleUp) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 20);
 

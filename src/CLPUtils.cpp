@@ -33,16 +33,18 @@ void CLP::disableBuildInLEDs() {
 #endif
 }
 
-bool CLP::isNullID(const uint8_t* deviceId) { return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]); }
-
-bool CLP::isResetID(const uint8_t* deviceId) {
-	return deviceId[0] == 0xFF && deviceId[1] == 0xFF && deviceId[2] == 0xFF && deviceId[3] == 0xFF;
+bool CLP::isNullID(const DeviceID& deviceId) {
+	return !(deviceId.data[0] | deviceId.data[1] | deviceId.data[2] | deviceId.data[3]);
 }
 
-void CLP::printDeviceID(const uint8_t* deviceId) {
+bool CLP::isResetID(const DeviceID& deviceId) {
+	return deviceId.data[0] == 0xFF && deviceId.data[1] == 0xFF && deviceId.data[2] == 0xFF && deviceId.data[3] == 0xFF;
+}
+
+void CLP::printDeviceID(const DeviceID& deviceId) {
 	char tmp[16];
 	for (size_t i = 0; i < 4; i++) {
-		sprintf(tmp, "%.2X", deviceId[i]);
+		sprintf(tmp, "%.2X", deviceId.data[i]);
 		Serial.print(tmp);
 		if (i < 3) Serial.print(F(" "));
 	}

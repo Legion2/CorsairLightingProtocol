@@ -25,11 +25,23 @@ THE SOFTWARE.
 
 #include <Arduino.h>
 
-#if defined(ARDUINO_ARCH_AVR)
+// Workaround for issue remedy in PR #602 in arduino/ArduinoCore-samd
+// https://github.com/arduino/ArduinoCore-samd/pull/602
+#ifndef HID_REPORT_TYPE_INPUT
+#define HID_REPORT_TYPE_INPUT 1
+#endif
+#ifndef HID_REPORT_TYPE_OUTPUT
+#define HID_REPORT_TYPE_OUTPUT 2
+#endif
+#ifndef HID_REPORT_TYPE_FEATURE
+#define HID_REPORT_TYPE_FEATURE 3
+#endif
+
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD))
 #include <HID.h>
 #endif
 
-#if defined(ARDUINO_ARCH_AVR) && defined(USBCON)
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)) && defined(USBCON)
 #define SUPPORT_RAW_HID
 #endif
 
@@ -51,9 +63,16 @@ THE SOFTWARE.
 
 #endif
 
-#if defined(ARDUINO_ARCH_AVR) && defined(USBCON)  // Arduino Core
+#if (defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)) && defined(USBCON)  // Arduino Core
 
+#if defined(ARDUINO_ARCH_AVR)
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
+#elif defined(ADAFRUIT_TRINKET_M0)  // ARDUINO_SAMD_ADAFRUIT
+#define EPTYPE_DESCRIPTOR_SIZE uint32_t
+#elif defined(ARDUINO_ARCH_SAMD)
+#define EPTYPE_DESCRIPTOR_SIZE unsigned int
+#endif
+
 // HID Functional Characteristics HID1.11 Page 10 4.4 Interfaces
 // Interrupt Out Endpoint is optional, control endpoint is used by default
 #define ENDPOINT_COUNT 1
@@ -140,7 +159,11 @@ public:
 	virtual size_t write(uint8_t b) { return write(&b, 1); }
 
 	virtual size_t write(const uint8_t* buffer, size_t size) {
+#if defined(ARDUINO_ARCH_AVR)
 		return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, buffer, size);
+#elif defined(ARDUINO_ARCH_SAMD)
+		return USBDevice.send(pluggedEndpoint, buffer, size);
+#endif
 	}
 
 protected:

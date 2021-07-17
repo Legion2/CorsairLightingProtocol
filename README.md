@@ -121,7 +121,7 @@ The Serial Number MAY only consist of HEX characters (0-9 and A-F).
 The DeviceID can be set with the `setDeviceID` function of `CorsairLightingFirmware`.
 ```C++
 void setup() {
-    byte deviceId[4] = { 0x9A, 0xDA, 0xA7, 0x8E };
+    DeviceID deviceId = { 0x9A, 0xDA, 0xA7, 0x8E };
     firmware.setDeviceID(deviceId);
     ...
 }

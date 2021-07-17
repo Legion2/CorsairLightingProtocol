@@ -16,6 +16,7 @@
 #pragma once
 
 #include "Arduino.h"
+#include "CorsairLightingFirmware.h"
 
 #define toBigEndian(a) highByte(a), lowByte(a)
 
@@ -41,14 +42,14 @@ inline uint8_t convert255To100(uint8_t value) { return value / 2.5546875f; }
  *
  * @param deviceId the device id to check
  */
-bool isNullID(const uint8_t* deviceId);
+bool isNullID(const DeviceID& deviceId);
 
 /**
  * Check if a device id is the special reset id (FF FF FF FF).
  *
  * @param deviceId the device id to check
  */
-bool isResetID(const uint8_t* deviceId);
+bool isResetID(const DeviceID& deviceId);
 
 /**
  * This will disable the RX and TX built in LEDs on Arduino Leonardo, Micro and Pro Micro.
@@ -60,7 +61,7 @@ void disableBuildInLEDs();
  *
  * @param deviceId the device id to print
  */
-void printDeviceID(const uint8_t* deviceId);
+void printDeviceID(const DeviceID& deviceId);
 
 /*
  * Measure and print the framerate at the given interval in milliseconds. The higher this value the more precise the

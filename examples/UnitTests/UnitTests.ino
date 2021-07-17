@@ -37,7 +37,7 @@ protected:
 
 test(getLEDs) {
 	CRGB leds[10];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	ledController.addLEDs(0, leds, 10);
 	assertEqual(ledController.getLEDs(0), leds);
 	assertEqual(ledController.getLEDs(1), nullptr);
@@ -45,7 +45,7 @@ test(getLEDs) {
 
 testF(FastLEDControllerTest, simpleScaleUp) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 10);
 
@@ -57,7 +57,7 @@ testF(FastLEDControllerTest, simpleScaleUp) {
 
 testF(FastLEDControllerTest, simpleScaleDown) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 20);
 
@@ -70,7 +70,7 @@ testF(FastLEDControllerTest, simpleScaleDown) {
 
 testF(FastLEDControllerTest, simpleScaleDownBoundaries) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 20);
 
@@ -85,7 +85,7 @@ testF(FastLEDControllerTest, simpleScaleDownBoundaries) {
 
 testF(FastLEDControllerTest, simpleScaleIdentity) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 10);
 
@@ -98,7 +98,7 @@ testF(FastLEDControllerTest, simpleScaleIdentity) {
 
 testF(FastLEDControllerTest, scaleLongStrip) {
 	CRGB leds[41];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 41, CRGB::Black);
 	ledController.addLEDs(0, leds, 27);
 
@@ -110,7 +110,7 @@ testF(FastLEDControllerTest, scaleLongStrip) {
 
 testF(FastLEDControllerTest, LT100) {
 	CRGB leds[30];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 30, CRGB::Black);
 	ledController.addLEDs(0, leds, 30);
 
@@ -125,7 +125,7 @@ testF(FastLEDControllerTest, LT100) {
 
 testF(FastLEDControllerTest, singleSegmentScaleUp) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 10);
 
@@ -138,7 +138,7 @@ testF(FastLEDControllerTest, singleSegmentScaleUp) {
 
 testF(FastLEDControllerTest, multiScaleUp) {
 	CRGB leds[30];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 30, CRGB::Black);
 	ledController.addLEDs(0, leds, 10);
 
@@ -152,7 +152,7 @@ testF(FastLEDControllerTest, multiScaleUp) {
 
 testF(FastLEDControllerTest, multiScaleDown) {
 	CRGB leds[30];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 30, CRGB::Black);
 	ledController.addLEDs(0, leds, 30);
 
@@ -166,7 +166,7 @@ testF(FastLEDControllerTest, multiScaleDown) {
 
 testF(FastLEDControllerTest, singleSegmentScaleDown) {
 	CRGB leds[20];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 20, CRGB::Black);
 	ledController.addLEDs(0, leds, 20);
 
@@ -180,7 +180,7 @@ testF(FastLEDControllerTest, singleSegmentScaleDown) {
 
 testF(FastLEDControllerTest, SegmentScaleOverlap) {
 	CRGB leds[15];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 15, CRGB::Black);
 	ledController.addLEDs(0, leds, 15);
 
@@ -194,7 +194,7 @@ testF(FastLEDControllerTest, SegmentScaleOverlap) {
 
 testF(FastLEDControllerTest, SegmentScaleOverlapInverted) {
 	CRGB leds[15];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 15, CRGB::Black);
 	ledController.addLEDs(0, leds, 15);
 
@@ -208,7 +208,7 @@ testF(FastLEDControllerTest, SegmentScaleOverlapInverted) {
 
 testF(FastLEDControllerTest, SegmentScaleMix) {
 	CRGB leds[30];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 30, CRGB::Black);
 	ledController.addLEDs(0, leds, 30);
 
@@ -225,7 +225,7 @@ testF(FastLEDControllerTest, SegmentScaleMix) {
 
 testF(FastLEDControllerTest, SegmentScaleMixInverted) {
 	CRGB leds[30];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 30, CRGB::Black);
 	ledController.addLEDs(0, leds, 25);
 
@@ -242,7 +242,7 @@ testF(FastLEDControllerTest, SegmentScaleMixInverted) {
 
 testF(FastLEDControllerTest, SegmentScaleMonitor) {
 	CRGB leds[130];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 130, CRGB::Black);
 	ledController.addLEDs(0, leds, 84);
 
@@ -261,7 +261,7 @@ testF(FastLEDControllerTest, SegmentScaleMonitor) {
 
 testF(FastLEDControllerTest, SegmentScaleLongStrip) {
 	CRGB leds[41];
-	FastLEDController ledController(false);
+	FastLEDController ledController(nullptr);
 	fill_solid(leds, 41, CRGB::Black);
 	ledController.addLEDs(0, leds, 27);
 

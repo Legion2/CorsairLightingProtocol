@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Leon Kiefer
+   Copyright 2021 Leon Kiefer
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,17 +13,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include "CLPAdditionalFeatures.h"
+#pragma once
 
-#include "CLPUtils.h"
+#if defined(ARDUINO_ARCH_AVR)
 
-bool CLP::shouldReset(const CorsairLightingFirmware* firmware) {
-	DeviceID deviceId;
-	firmware->getDeviceID(deviceId);
-	return CLP::isResetID(deviceId);
-}
+#include "CorsairLightingFirmware.h"
 
-void CLP::reset(CorsairLightingFirmware* firmware) {
-	DeviceID deviceId = {0x00};
-	firmware->setDeviceID(deviceId);
-}
+#ifndef EEPROM_ADDRESS_DEVICE_ID
+#define EEPROM_ADDRESS_DEVICE_ID 0
+#endif
+
+class CorsairLightingFirmwareStorageEEPROM : public CorsairLightingFirmwareStorage {
+public:
+	virtual void loadDeviceID(DeviceID& deviceID) const override;
+	virtual void saveDeviceID(const DeviceID& deviceID) override;
+};
+
+#endif

@@ -20,8 +20,10 @@
 
 CRGB ledsChannel1[108];
 
-CorsairLightingFirmware firmware = corsairLT100Firmware();
-FastLEDController ledController(true);
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(corsairLT100FirmwareVersion, &firmwareStorage);
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
