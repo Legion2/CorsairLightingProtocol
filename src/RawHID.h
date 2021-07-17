@@ -67,6 +67,8 @@ THE SOFTWARE.
 
 #if defined(ARDUINO_ARCH_AVR)
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
+#elif defined(ADAFRUIT_TRINKET_M0)  // ARDUINO_SAMD_ADAFRUIT
+#define EPTYPE_DESCRIPTOR_SIZE uint32_t
 #elif defined(ARDUINO_ARCH_SAMD)
 #define EPTYPE_DESCRIPTOR_SIZE unsigned int
 #endif

@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Leon Kiefer
+   Copyright 2021 Leon Kiefer
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,39 +16,30 @@
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
 
-// The Arduino pin where the physical LEDs are connected.
-// Must be PWM pins
-#define RED_PIN 3
-#define GREEN_PIN 5
-#define BLUE_PIN 6
+#define DATA_PIN_CHANNEL_1 2
+#define DATA_PIN_CHANNEL_2 3
 
-CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CRGB ledsChannel1[96];
+CRGB ledsChannel2[96];
+
+DeviceID deviceID = {0x9A, 0xDA, 0xA7, 0x8E};
+CorsairLightingFirmwareStorageStatic firmwareStorage(deviceID);
 CorsairLightingFirmware firmware(corsairLightingNodePROFirmwareVersion, &firmwareStorage);
-FastLEDControllerStorageEEPROM storage;
-FastLEDController ledController(&storage);
+FastLEDController ledController(nullptr);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
-CRGB ledsChannel1[10];
-
 void setup() {
-	pinMode(RED_PIN, OUTPUT);
-	pinMode(GREEN_PIN, OUTPUT);
-	pinMode(BLUE_PIN, OUTPUT);
-	ledController.addLEDs(0, ledsChannel1, 10);
-	ledController.onUpdateHook(0, []() {
-		// use color of first LED of the first channel
-		set4PinLEDs(ledsChannel1[0]);
-	});
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 96);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 96);
+	ledController.addLEDs(0, ledsChannel1, 96);
+	ledController.addLEDs(1, ledsChannel2, 96);
 }
 
 void loop() {
 	cHID.update();
-	ledController.updateLEDs();
-}
 
-void set4PinLEDs(const CRGB& color) {
-	analogWrite(RED_PIN, color.r);
-	analogWrite(GREEN_PIN, color.g);
-	analogWrite(BLUE_PIN, color.b);
+	if (ledController.updateLEDs()) {
+		FastLED.show();
+	}
 }

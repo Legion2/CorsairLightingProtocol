@@ -20,8 +20,10 @@
 
 CRGB ledsChannel1[204];
 
-CorsairLightingFirmware firmware = corsairLightingNodeCOREFirmware();
-FastLEDController ledController(true);
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(corsairLightingNodeCOREFirmwareVersion, &firmwareStorage);
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
