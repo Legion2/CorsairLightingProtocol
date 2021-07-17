@@ -17,10 +17,10 @@ jobs:
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.14.0
+          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-          arduino-platform: arduino:avr@1.8.3,SparkFun:avr@1.1.13,Legion2:avr@0.2.0
+          arduino-platform: arduino:avr@1.8.3,SparkFun:avr@1.1.13,Legion2:avr@0.3.1
           required-libraries: FastLED@3.3.3
           sketch-names: LightingNodePRO.ino,
             SingleStripLightingNodePRO.ino,
@@ -35,7 +35,8 @@ jobs:
             AdditionalFeatures.ino,
             AmbientBacklight.ino,
             MultipleFans.ino,
-            DebugSketch.ino
+            DebugSketch.ino,
+            NoEEPROM.ino
           build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
   testUnoMega:
     name: Test Arduino Uno/Mega sketches for Board ${{ matrix.board }}
@@ -48,7 +49,7 @@ jobs:
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.14.0
+          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
           arduino-platform: arduino:avr@1.8.3
           required-libraries: FastLED@3.3.3
@@ -64,9 +65,30 @@ jobs:
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.14.0
+          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-          arduino-platform: arduino:avr@1.8.3,HoodLoader2:avr@2.0.5,Legion2:avr@0.2.0
+          arduino-platform: arduino:avr@1.8.3,HoodLoader2:avr@2.0.5,Legion2:avr@0.3.1
           required-libraries: FastLED@3.3.3
           sketch-names: HoodLoader2CLPBridge.ino
+  testSAMD:
+    name: Test for Board ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board:
+          [
+            "Legion2:samd:arduino_zero_nativeclp",
+            "Legion2:samd:adafruit_trinket_m0clp",
+          ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v3
+        with:
+          cli-version: 0.18.3
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-platform: arduino:samd@1.8.11,adafruit:samd@1.7.3,Legion2:samd@0.1.1
+          required-libraries: FastLED@3.3.3
+          sketch-names: NoEEPROM.ino
