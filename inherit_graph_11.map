@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classITemperatureController.html" title=" " alt="" coords="5,5,177,32"/>
-<area shape="rect" id="node2" href="$classTemperatureController.html" title=" " alt="" coords="225,5,393,32"/>
-<area shape="rect" id="node3" href="$classThermistorTemperatureController.html" title=" " alt="" coords="441,5,680,32"/>
+<area shape="rect" id="node1" href="$classFastLEDControllerStorage.html" title=" " alt="" coords="5,13,192,39"/>
+<area shape="rect" id="node2" href="$classFastLEDControllerStorageEEPROM.html" title=" " alt="" coords="240,5,427,47"/>
 </map>

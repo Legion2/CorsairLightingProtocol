@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classCorsairLightingProtocolController.html" title=" " alt="" coords="5,5,243,32"/>
+<area shape="rect" id="node1" href="$classCorsairLightingFirmwareStorage.html" title=" " alt="" coords="5,46,236,73"/>
+<area shape="rect" id="node2" href="$classCorsairLightingFirmwareStorageEEPROM.html" title=" " alt="" coords="284,5,515,47"/>
+<area shape="rect" id="node3" href="$classCorsairLightingFirmwareStorageStatic.html" title=" " alt="" coords="284,71,515,112"/>
 </map>

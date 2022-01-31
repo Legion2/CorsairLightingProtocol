@@ -91,36 +91,50 @@ $(document).ready(function(){initNavTree('classCorsairLightingFirmware.html','')
 <div class="title">CorsairLightingFirmware Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for CorsairLightingFirmware:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classCorsairLightingFirmware__coll__graph.svg" width="347" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1faf70f44448a2103964a430d60a1cfe"><td class="memItemLeft" align="right" valign="top"><a id="a1faf70f44448a2103964a430d60a1cfe"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CorsairLightingFirmware</b> (const uint8_t *firmwareVersion)</td></tr>
-<tr class="separator:a1faf70f44448a2103964a430d60a1cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9f7b16a408d820cc410c59cc915eb8e"><td class="memItemLeft" align="right" valign="top"><a id="ae9f7b16a408d820cc410c59cc915eb8e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>CorsairLightingFirmware</b> (corsair_product_enum_t product, <a class="el" href="classCorsairLightingFirmwareStorage.html">CorsairLightingFirmwareStorage</a> *storage)</td></tr>
+<tr class="separator:ae9f7b16a408d820cc410c59cc915eb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b29947dfaa5a04fece5d267bf7e5e76"><td class="memItemLeft" align="right" valign="top"><a id="a9b29947dfaa5a04fece5d267bf7e5e76"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handleFirmwareCommand</b> (const <a class="el" href="structCommand.html">Command</a> &amp;command, const <a class="el" href="classCorsairLightingProtocolResponse.html">CorsairLightingProtocolResponse</a> *response)</td></tr>
 <tr class="separator:a9b29947dfaa5a04fece5d267bf7e5e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a392ba34556650e256b113327b39a7926"><td class="memItemLeft" align="right" valign="top"><a id="a392ba34556650e256b113327b39a7926"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>getDeviceID</b> (uint8_t *deviceID) const</td></tr>
-<tr class="separator:a392ba34556650e256b113327b39a7926"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19d59804e71b8b9489087937bd067f09"><td class="memItemLeft" align="right" valign="top"><a id="a19d59804e71b8b9489087937bd067f09"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDeviceID</b> (const uint8_t *deviceID)</td></tr>
-<tr class="separator:a19d59804e71b8b9489087937bd067f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4028ee4fbfac73b3a2e7444e541a13e2"><td class="memItemLeft" align="right" valign="top"><a id="a4028ee4fbfac73b3a2e7444e541a13e2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>getDeviceID</b> (<a class="el" href="structDeviceID.html">DeviceID</a> &amp;deviceID) const</td></tr>
+<tr class="separator:a4028ee4fbfac73b3a2e7444e541a13e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b90fcecdb363f3fa9f03c7e9397a745"><td class="memItemLeft" align="right" valign="top"><a id="a5b90fcecdb363f3fa9f03c7e9397a745"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDeviceID</b> (const <a class="el" href="structDeviceID.html">DeviceID</a> &amp;deviceID)</td></tr>
+<tr class="separator:a5b90fcecdb363f3fa9f03c7e9397a745"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afebc6d50131fbc3abe14699363d7167e"><td class="memItemLeft" align="right" valign="top"><a id="afebc6d50131fbc3abe14699363d7167e"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getStatus</b> ()</td></tr>
 <tr class="separator:afebc6d50131fbc3abe14699363d7167e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cef592dbde26327a158b8e4b621db90"><td class="memItemLeft" align="right" valign="top"><a id="a5cef592dbde26327a158b8e4b621db90"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setStatus</b> (uint8_t status)</td></tr>
 <tr class="separator:a5cef592dbde26327a158b8e4b621db90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6df1c23bdb39ff5025336d243ab978c5"><td class="memItemLeft" align="right" valign="top"><a id="a6df1c23bdb39ff5025336d243ab978c5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getProduct</b> ()</td></tr>
+<tr class="separator:a6df1c23bdb39ff5025336d243ab978c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a68232976a345343644d71e9401c1d9a2"><td class="memItemLeft" align="right" valign="top"><a id="a68232976a345343644d71e9401c1d9a2"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>firmwareVersion</b></td></tr>
-<tr class="separator:a68232976a345343644d71e9401c1d9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfa16e7307a3419d5b38cf9ae431fc86"><td class="memItemLeft" align="right" valign="top"><a id="acfa16e7307a3419d5b38cf9ae431fc86"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>deviceId</b> [4]</td></tr>
-<tr class="separator:acfa16e7307a3419d5b38cf9ae431fc86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1af3a48e8e897cf9b882cdcd904570e8"><td class="memItemLeft" align="right" valign="top"><a id="a1af3a48e8e897cf9b882cdcd904570e8"></a>
+<a class="el" href="classCorsairLightingFirmwareStorage.html">CorsairLightingFirmwareStorage</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>storage</b></td></tr>
+<tr class="separator:a1af3a48e8e897cf9b882cdcd904570e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a946afd7c16b59b309ddbfbc017e09a40"><td class="memItemLeft" align="right" valign="top"><a id="a946afd7c16b59b309ddbfbc017e09a40"></a>
+const corsair_product_enum_t&#160;</td><td class="memItemRight" valign="bottom"><b>product</b></td></tr>
+<tr class="separator:a946afd7c16b59b309ddbfbc017e09a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a499edda5dc77fec4a09087efa61253ae"><td class="memItemLeft" align="right" valign="top"><a id="a499edda5dc77fec4a09087efa61253ae"></a>
+<a class="el" href="structDeviceID.html">DeviceID</a>&#160;</td><td class="memItemRight" valign="bottom"><b>deviceId</b></td></tr>
+<tr class="separator:a499edda5dc77fec4a09087efa61253ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="CorsairLightingFirmware_8h_source.html">CorsairLightingFirmware.h</a></li>

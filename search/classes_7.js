@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['temperaturecontroller_131',['TemperatureController',['../classTemperatureController.html',1,'']]],
-  ['thermistortemperaturecontroller_132',['ThermistorTemperatureController',['../classThermistorTemperatureController.html',1,'']]]
+  ['segmentscaling_141',['SegmentScaling',['../structCLP_1_1SegmentScaling.html',1,'CLP']]],
+  ['simplefancontroller_142',['SimpleFanController',['../classSimpleFanController.html',1,'']]]
 ];

@@ -1,6 +1,8 @@
 <map id="src/LEDController.h" name="src/LEDController.h">
-<area shape="rect" id="node1" title=" " alt="" coords="151,5,297,32"/>
-<area shape="rect" id="node2" href="$FastLEDController_8h_source.html" title=" " alt="" coords="139,80,309,107"/>
-<area shape="rect" id="node3" href="$CorsairLightingProtocol_8h.html" title=" " alt="" coords="5,155,213,181"/>
-<area shape="rect" id="node4" href="$FastLEDControllerUtils_8h_source.html" title=" " alt="" coords="237,155,440,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="225,5,370,32"/>
+<area shape="rect" id="node2" href="$FastLEDControllerStorage_8h_source.html" title=" " alt="" coords="261,80,483,107"/>
+<area shape="rect" id="node3" href="$FastLEDController_8h_source.html" title=" " alt="" coords="139,162,309,189"/>
+<area shape="rect" id="node6" href="$FastLEDControllerStorageEEPROM_8h_source.html" title=" " alt="" coords="333,155,544,196"/>
+<area shape="rect" id="node4" href="$CorsairLightingProtocol_8h.html" title=" " alt="" coords="5,244,213,271"/>
+<area shape="rect" id="node5" href="$FastLEDControllerUtils_8h_source.html" title=" " alt="" coords="237,244,440,271"/>
 </map>

@@ -3,13 +3,21 @@ var hierarchy =
     [ "CLPUSBSerialBridge", "classCLPUSBSerialBridge.html", null ],
     [ "Command", "structCommand.html", null ],
     [ "CorsairLightingFirmware", "classCorsairLightingFirmware.html", null ],
+    [ "CorsairLightingFirmwareStorage", "classCorsairLightingFirmwareStorage.html", [
+      [ "CorsairLightingFirmwareStorageEEPROM", "classCorsairLightingFirmwareStorageEEPROM.html", null ],
+      [ "CorsairLightingFirmwareStorageStatic", "classCorsairLightingFirmwareStorageStatic.html", null ]
+    ] ],
     [ "CorsairLightingProtocolController", "classCorsairLightingProtocolController.html", null ],
     [ "CorsairLightingProtocolResponse", "classCorsairLightingProtocolResponse.html", [
       [ "CorsairLightingProtocolHID", "classCorsairLightingProtocolHID.html", null ],
       [ "CorsairLightingProtocolSerial", "classCorsairLightingProtocolSerial.html", null ]
     ] ],
+    [ "DeviceID", "structDeviceID.html", null ],
     [ "FanCurve", "structFanCurve.html", null ],
     [ "FanData", "structFanData.html", null ],
+    [ "FastLEDControllerStorage", "classFastLEDControllerStorage.html", [
+      [ "FastLEDControllerStorageEEPROM", "classFastLEDControllerStorageEEPROM.html", null ]
+    ] ],
     [ "IFanController", "classIFanController.html", [
       [ "FanController", "classFanController.html", [
         [ "SimpleFanController", "classSimpleFanController.html", null ]

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ledchannel_124',['LEDChannel',['../structLEDChannel.html',1,'']]],
-  ['ledcontroller_125',['LEDController',['../classLEDController.html',1,'']]],
-  ['ledgroup_126',['LEDGroup',['../structLEDGroup.html',1,'']]]
+  ['ifancontroller_133',['IFanController',['../classIFanController.html',1,'']]],
+  ['iledcontroller_134',['ILEDController',['../classILEDController.html',1,'']]],
+  ['itemperaturecontroller_135',['ITemperatureController',['../classITemperatureController.html',1,'']]]
 ];

@@ -108,16 +108,16 @@ $(document).ready(function(){initNavTree('classFastLEDController.html',''); init
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classFastLEDController__coll__graph.svg" width="616" height="320"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classFastLEDController__coll__graph.svg" width="100%" height="492"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a813338755bdd59b3b0c3d1e0bc38bb98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a813338755bdd59b3b0c3d1e0bc38bb98">FastLEDController</a> (bool useEEPROM)</td></tr>
-<tr class="separator:a813338755bdd59b3b0c3d1e0bc38bb98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e702c4da34c188f4e80a2853d3e3acf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a4e702c4da34c188f4e80a2853d3e3acf">FastLEDController</a> (<a class="el" href="classTemperatureController.html">TemperatureController</a> *temperatureController, bool useEEPROM)</td></tr>
-<tr class="separator:a4e702c4da34c188f4e80a2853d3e3acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55615055fd6f2dfa1cc7037e253631a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a55615055fd6f2dfa1cc7037e253631a0">FastLEDController</a> (<a class="el" href="classFastLEDControllerStorage.html">FastLEDControllerStorage</a> *storage)</td></tr>
+<tr class="separator:a55615055fd6f2dfa1cc7037e253631a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1247690725cecac15f61e0d4f8dfb662"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a1247690725cecac15f61e0d4f8dfb662">FastLEDController</a> (<a class="el" href="classTemperatureController.html">TemperatureController</a> *temperatureController, <a class="el" href="classFastLEDControllerStorage.html">FastLEDControllerStorage</a> *storage)</td></tr>
+<tr class="separator:a1247690725cecac15f61e0d4f8dfb662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3764e93f3d018cf7dfd4951ac909cb6a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a3764e93f3d018cf7dfd4951ac909cb6a">addLEDs</a> (uint8_t channel, CRGB *leds, uint8_t length)</td></tr>
 <tr class="separator:a3764e93f3d018cf7dfd4951ac909cb6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7673bdc98e6fd5833e114eac5ca1a52"><td class="memItemLeft" align="right" valign="top">CRGB *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#ab7673bdc98e6fd5833e114eac5ca1a52">getLEDs</a> (uint8_t channel)</td></tr>
@@ -126,8 +126,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a75a97bbfb670484b39d524076faebefb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6525215f48c7aa2584422dd487e1f924"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#a6525215f48c7aa2584422dd487e1f924">updateLEDs</a> ()</td></tr>
 <tr class="separator:a6525215f48c7aa2584422dd487e1f924"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7dafabd0ec9eac0e5f954397fa8c876"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#ac7dafabd0ec9eac0e5f954397fa8c876">getEEPROMSize</a> ()</td></tr>
-<tr class="separator:ac7dafabd0ec9eac0e5f954397fa8c876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb39d7e2fbb2ccef50a2905966f5ee17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFastLEDController.html#aeb39d7e2fbb2ccef50a2905966f5ee17">onUpdateHook</a> (uint8_t channel, void(*callback)(void))</td></tr>
 <tr class="separator:aeb39d7e2fbb2ccef50a2905966f5ee17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classLEDController"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classLEDController')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classLEDController.html">LEDController</a></td></tr>
@@ -229,6 +227,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ad166fcf8400a62cb0bac96163ca16b98"><td class="memItemLeft" align="right" valign="top"><a id="ad166fcf8400a62cb0bac96163ca16b98"></a>
 <a class="el" href="classTemperatureController.html">TemperatureController</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>temperatureController</b></td></tr>
 <tr class="separator:ad166fcf8400a62cb0bac96163ca16b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36ffbbaa94630e05b9413f48db7b0334"><td class="memItemLeft" align="right" valign="top"><a id="a36ffbbaa94630e05b9413f48db7b0334"></a>
+<a class="el" href="classFastLEDControllerStorage.html">FastLEDControllerStorage</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>storage</b></td></tr>
+<tr class="separator:a36ffbbaa94630e05b9413f48db7b0334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d9eb0d7fdab87a0a0c9d6dd1c3bb63"><td class="memItemLeft" align="right" valign="top"><a id="ae8d9eb0d7fdab87a0a0c9d6dd1c3bb63"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>trigger_update</b> = false</td></tr>
 <tr class="separator:ae8d9eb0d7fdab87a0a0c9d6dd1c3bb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -241,9 +242,6 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>lastUpdate</
 <tr class="memitem:a61e32e8564adabe5e06aa631002432b8"><td class="memItemLeft" align="right" valign="top"><a id="a61e32e8564adabe5e06aa631002432b8"></a>
 unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>currentUpdate</b> = 0</td></tr>
 <tr class="separator:a61e32e8564adabe5e06aa631002432b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10a90a52848157d4c15da60799277253"><td class="memItemLeft" align="right" valign="top"><a id="a10a90a52848157d4c15da60799277253"></a>
-const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></td></tr>
-<tr class="separator:a10a90a52848157d4c15da60799277253"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classLEDController"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classLEDController')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classLEDController.html">LEDController</a></td></tr>
 <tr class="memitem:a76c71ffec20065d9258fe8787413ae00 inherit pro_attribs_classLEDController"><td class="memItemLeft" align="right" valign="top"><a id="a76c71ffec20065d9258fe8787413ae00"></a>
 <a class="el" href="structLEDChannel.html">LEDChannel</a>&#160;</td><td class="memItemRight" valign="bottom"><b>channels</b> [CHANNEL_NUM]</td></tr>
@@ -257,8 +255,8 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 <div class="textblock"><p>The default <a class="el" href="classLEDController.html">LEDController</a>. This controller uses the FastLED library to implement the Hardware Lighting effects. Also all RGB values of the LEDs are stored into CRGB arrays which can be used by the FastLED library to show them on the real LED strips. This controller can stores the internal state to EEPROM and support HW playback without USB connection.</p>
 <dl class="section see"><dt>See also</dt><dd>FastLED </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a813338755bdd59b3b0c3d1e0bc38bb98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a813338755bdd59b3b0c3d1e0bc38bb98">&#9670;&nbsp;</a></span>FastLEDController() <span class="overload">[1/2]</span></h2>
+<a id="a55615055fd6f2dfa1cc7037e253631a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55615055fd6f2dfa1cc7037e253631a0">&#9670;&nbsp;</a></span>FastLEDController() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,24 +264,24 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
         <tr>
           <td class="memname">FastLEDController::FastLEDController </td>
           <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>useEEPROM</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classFastLEDControllerStorage.html">FastLEDControllerStorage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create a new <a class="el" href="classFastLEDController.html">FastLEDController</a> and specify if the EEPROM of the Arduino should be used. See the other contructor for more details.</p>
+<p>Create a new <a class="el" href="classFastLEDController.html">FastLEDController</a> and specify which storage should be used. The EEPROM of the Arduino can be used as Storage. See the other contructor for more details.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">useEEPROM</td><td>specify if the EEPROM should be used </td></tr>
+    <tr><td class="paramname">storage</td><td>specify the storage which should be used, e.g. EEPROM </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a4e702c4da34c188f4e80a2853d3e3acf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e702c4da34c188f4e80a2853d3e3acf">&#9670;&nbsp;</a></span>FastLEDController() <span class="overload">[2/2]</span></h2>
+<a id="a1247690725cecac15f61e0d4f8dfb662"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1247690725cecac15f61e0d4f8dfb662">&#9670;&nbsp;</a></span>FastLEDController() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,8 +295,8 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>useEEPROM</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classFastLEDControllerStorage.html">FastLEDControllerStorage</a> *&#160;</td>
+          <td class="paramname"><em>storage</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -307,11 +305,12 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create a new <a class="el" href="classFastLEDController.html">FastLEDController</a> and specify if the EEPROM of the Arduino should be used to store persistent information like the Hardware Lighting. If enabled, the hardware lighting configured in iCUE works without a USB connection and even after a restart of the Arduino. Also the the <a class="el" href="classTemperatureController.html">TemperatureController</a> used for temperature related lighting can be passed here.</p>
+<p>Create a new <a class="el" href="classFastLEDController.html">FastLEDController</a> and specify which storage should be used. If the EEPROM of the Arduino should be used to store persistent information like the Hardware Lighting use</p><div class="fragment"><div class="line"><a class="code" href="classFastLEDControllerStorageEEPROM.html">FastLEDControllerStorageEEPROM</a> </div>
+</div><!-- fragment --><p> . If enabled, the hardware lighting configured in iCUE works without a USB connection and even after a restart of the Arduino. Also the the <a class="el" href="classTemperatureController.html">TemperatureController</a> used for temperature related lighting can be passed here.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">temperatureController</td><td>used for temperature based lighting </td></tr>
-    <tr><td class="paramname">useEEPROM</td><td>specify if the EEPROM should be used </td></tr>
+    <tr><td class="paramname">storage</td><td>specify the storage which should be used, e.g. EEPROM </td></tr>
   </table>
   </dd>
 </dl>
@@ -493,33 +492,6 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc">setLEDColorValues()</a> </dd></dl>
 
 <p>Implements <a class="el" href="classLEDController.html#a1b196384633dcf4a1a3b16ad36afc8db">LEDController</a>.</p>
-
-</div>
-</div>
-<a id="ac7dafabd0ec9eac0e5f954397fa8c876"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7dafabd0ec9eac0e5f954397fa8c876">&#9670;&nbsp;</a></span>getEEPROMSize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t FastLEDController::getEEPROMSize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get the total size of all data stored in EEPROM by this <a class="el" href="classLEDController.html">LEDController</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>the size in bytes </dd></dl>
 
 </div>
 </div>
@@ -879,6 +851,7 @@ const bool&#160;</td><td class="memItemRight" valign="bottom"><b>useEEPROM</b></
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="aclassFastLEDControllerStorageEEPROM_html"><div class="ttname"><a href="classFastLEDControllerStorageEEPROM.html">FastLEDControllerStorageEEPROM</a></div><div class="ttdef"><b>Definition:</b> FastLEDControllerStorageEEPROM.h:26</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

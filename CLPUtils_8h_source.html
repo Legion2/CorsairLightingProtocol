@@ -105,34 +105,36 @@ $(document).ready(function(){initNavTree('CLPUtils_8h_source.html',''); initResi
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;Arduino.h&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define toBigEndian(a) highByte(a), lowByte(a)</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>CLP {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;uint16_t fromBigEndian(<span class="keyword">const</span> <span class="keywordtype">byte</span>&amp; byte1, <span class="keyword">const</span> <span class="keywordtype">byte</span>&amp; byte2);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">inline</span> uint8_t convert100To255(uint8_t value) { <span class="keywordflow">return</span> value * 2.5546875f; }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">inline</span> uint8_t convert255To100(uint8_t value) { <span class="keywordflow">return</span> value / 2.5546875f; }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">bool</span> isNullID(<span class="keyword">const</span> uint8_t* deviceId);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">bool</span> isResetID(<span class="keyword">const</span> uint8_t* deviceId);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> disableBuildInLEDs();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> printDeviceID(<span class="keyword">const</span> uint8_t* deviceId);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment"> * Measure and print the framerate at the given interval in milliseconds. The higher this value the more precise the</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"> * result will be. This function should be called after FastLED.show() to count the FPS.</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"> * @param interval the measurement interval in milliseconds</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> printFps(<span class="keyword">const</span> <span class="keywordtype">int</span> interval);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}  <span class="comment">// namespace CLP</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;CorsairLightingFirmware.h&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define toBigEndian(a) highByte(a), lowByte(a)</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>CLP {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;uint16_t fromBigEndian(<span class="keyword">const</span> <span class="keywordtype">byte</span>&amp; byte1, <span class="keyword">const</span> <span class="keywordtype">byte</span>&amp; byte2);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">inline</span> uint8_t convert100To255(uint8_t value) { <span class="keywordflow">return</span> value * 2.5546875f; }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">inline</span> uint8_t convert255To100(uint8_t value) { <span class="keywordflow">return</span> value / 2.5546875f; }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">bool</span> isNullID(<span class="keyword">const</span> <a class="code" href="structDeviceID.html">DeviceID</a>&amp; deviceId);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">bool</span> isResetID(<span class="keyword">const</span> <a class="code" href="structDeviceID.html">DeviceID</a>&amp; deviceId);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> disableBuildInLEDs();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> printDeviceID(<span class="keyword">const</span> <a class="code" href="structDeviceID.html">DeviceID</a>&amp; deviceId);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"> * Measure and print the framerate at the given interval in milliseconds. The higher this value the more precise the</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment"> * result will be. This function should be called after FastLED.show() to count the FPS.</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> * @param interval the measurement interval in milliseconds</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> printFps(<span class="keyword">const</span> <span class="keywordtype">int</span> interval);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}  <span class="comment">// namespace CLP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="astructDeviceID_html"><div class="ttname"><a href="structDeviceID.html">DeviceID</a></div><div class="ttdef"><b>Definition:</b> CorsairLightingFirmware.h:38</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

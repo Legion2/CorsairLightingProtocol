@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <li>Control LEDs with the <a href="https://www.corsair.com/icue">Corsair iCUE software</a>.</li>
 <li><a href="https://github.com/FastLED/FastLED/wiki/Overview#chipsets">Support common LED chipsets</a>. (e.g. WS2812B, WS2801)</li>
 <li>Support <a href="http://fastled.io/">FastLED</a>.</li>
-<li>Supported platform: Arduino AVR</li>
+<li>Supported platforms: Arduino AVR, <a href="https://github.com/adafruit/Adafruit_TinyUSB_Arduino#supported-cores">TinyUSB supported cores</a></li>
 <li>Hardware Lighting mode.</li>
 <li>Use multiple devices at the same time.</li>
 <li>Repeat or scale LED channels to arbitrary size.</li>
@@ -118,15 +118,19 @@ Overview</div></div>
 <ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#install-the-libraries">Install the libraries</a></li>
-<li><a href="#create-a-lighting-node-pro">Create a Lighting Node PRO</a></li>
+<li><a href="#create-a-lighting-node-pro-with-avr">Create a Lighting Node PRO with AVR</a></li>
+<li><a href="#create-a-lighting-node-pro-for-a-raspberry-pi-pico-with-tinyusb">Create a Lighting Node PRO with TinyUSB</a></li>
 <li><a href="#use-the-lighting-node-pro">Use the Lighting Node PRO</a></li>
 </ul>
 <h2>Requirements</h2>
-<p>The library is compatible with all boards using the MCU ATmega32U4. This includes <b>Arduino Leonardo</b>, <b>SparkFun Pro Micro</b>, <b>Arduino Micro</b>, and <b>Adafruit 32u4 AVR Boards</b>. It also supports the Arduino Uno and Arduino Mega, <b>but</b> this requires the <a href="https://github.com/NicoHood/HoodLoader2">HoodLoader2</a> bootloader, see <a href="https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega">this wiki</a> for more details. It is <b>not</b> compatible with ATmega328 (Arduino Nano), STM8S103F3, teensy, ESP8266 and ESP32 see <a href="https://github.com/Legion2/CorsairLightingProtocol/issues?q=is%3Aissue+label%3Aarchitecture%2Fplatform">list of architecture/platform</a> for a detailed description why they are not supported. In the rest of the documentation "Arduino" is used as a synonym for all supported boards regardless of the manufacturer.</p>
+<p>The library is compatible with all boards using the MCU ATmega32U4. This includes <b>Arduino Leonardo</b>, <b>SparkFun Pro Micro</b>, <b>Arduino Micro</b>, and <b>Adafruit 32u4 AVR Boards</b>. It also supports the Arduino Uno and Arduino Mega, <b>but</b> this requires the <a href="https://github.com/NicoHood/HoodLoader2">HoodLoader2</a> bootloader, see <a href="https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega">this wiki</a> for more details.</p>
+<p>In addition, any board compatible with <b>Adafruit TinyUSB for Arduino</b> is also supported without the use of custom board definitions. Be sure to define USE_TINYUSB, which is done automatically when using a supported core and selecting TinyUSB for the USB Stack. See the TinyUSB example for implementation details.</p>
+<p>It is <b>not</b> compatible with ATmega328 (Arduino Nano), STM8S103F3, teensy, or ESP8266 see <a href="https://github.com/Legion2/CorsairLightingProtocol/issues?q=is%3Aissue+label%3Aarchitecture%2Fplatform">list of architecture/platform</a> for a detailed description why they are not supported.</p>
+<p>In the rest of the documentation "Arduino" is used as a synonym for all supported boards regardless of the manufacturer.</p>
 <p>When you have problems with a board not listed here, please open an <a href="https://github.com/Legion2/CorsairLightingProtocol/issues">Issue</a>.</p>
 <h2>Install the libraries</h2>
-<p>To use this library you must install it with the Library-Manager. Open the Library-Manager in Arduino IDE via Tools-&gt;Manage Libraries... Search for "Corsair Lighting Protocol" and install the Corsair Lighting Protocol library. This library also requires the <a href="http://fastled.io/">FastLED</a> library. Search for "FastLED" in the Library-Manager and install the FastLED library.</p>
-<h2>Create a Lighting Node PRO</h2>
+<p>To use this library you must install it with the Library-Manager. Open the Library-Manager in Arduino IDE via Tools-&gt;Manage Libraries... Search for "Corsair Lighting Protocol" and install the Corsair Lighting Protocol library. This library also requires the <a href="http://fastled.io/">FastLED</a> library. Search for "FastLED" in the Library-Manager and install the FastLED library. If using TinyUSB, also install the latest "Adafruit TinyUSB Library" as it supersedes some of the core versions.</p>
+<h2>Create a Lighting Node PRO with AVR</h2>
 <p>This guide will teach you how to create a Lighting Node PRO with an Arduino Leonardo compatible board. If you have an Arduino Uno or Mega, see the <a href="https://github.com/Legion2/CorsairLightingProtocol/wiki/How-to-use-on-Arduino-Uno-and-Arduino-Mega">other guide</a>.</p>
 <ol type="1">
 <li><p class="startli">Open the example "LightingNodePRO", you can find it in Arduino IDE in the File menu-&gt;Examples-&gt;Corsair Lighting Protocol-&gt;LightingNodePRO. If you can't open the LightingNodePRO example the Corsair Lighting Protocol library is not installed correctly.</p>
@@ -153,7 +157,7 @@ upload sketch</div></div>
    </li>
 </ol>
 <ol type="1">
-<li><p class="startli">Do the wiring. For more information on <a href="https://github.com/FastLED/FastLED/wiki/Wiring-leds">how to wire the leds</a> and <a href="https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds">how to set up the LEDs in the code</a> see the links.</p>
+<li><p class="startli">Do the wiring. For more information on <a href="https://github.com/FastLED/FastLED/wiki/Wiring-leds">how to wire the LEDs</a> and <a href="https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds">how to set up the LEDs in the code</a> see the links.</p>
 <div class="image">
 <img src="board-wiring.jpg" alt=""/>
 <div class="caption">
@@ -169,6 +173,40 @@ the wiring</div></div>
 <blockquote class="doxtable">
 <p>If you have any problem during setup you may find the solution in the <a href="https://github.com/Legion2/CorsairLightingProtocol/wiki/Troubleshooting">Troubleshooting section</a>. </p>
 </blockquote>
+<h2>Create a Lighting Node PRO for a Raspberry Pi Pico with TinyUSB</h2>
+<p>This guide will teach you how to create a Lighting Node PRO with a Raspberry Pi Pico.</p>
+<p><b>Note:</b> FastLED currently does not support the RP2040 natively. You must manually merge support by modifying your library to include the <a href="https://github.com/FastLED/FastLED/pull/1261/files#diff-fda1710ad90fcc4b2f07be21a834da7d24b00008867655232c84fb0369cfc74b">6 RP2040 platform files</a> in the FastLED/src/platforms/arm/rp2040 folder and <code>#elif defined(ARDUINO_ARCH_RP2040)</code> / <code>#include</code> statements in <a href="https://github.com/FastLED/FastLED/pull/1261/files#diff-95f6b43a0e6b0e58988e1be3bc6415ded5284082a4f2ce2aaa90f5931d4194af">led_sysdefs.h</a> and <a href="https://github.com/FastLED/FastLED/pull/1261/files#diff-255ea38a6573ed237ea1fe164d5e87ca46811eef21ba6e2cef120fda47c6e62f">platforms.h</a>.</p>
+<ol type="1">
+<li>Install the <a href="https://github.com/earlephilhower/arduino-pico#installing-via-arduino-boards-manager">Raspberry Pi Pico Arduino core</a>.</li>
+</ol>
+<ol type="1">
+<li>Open the example "TinyUSB", you can find it in Arduino IDE in the File menu-&gt;Examples-&gt;Corsair Lighting Protocol-&gt;TinyUSB. If you can't open the LightingNodePRO example the Corsair Lighting Protocol library is not installed correctly.</li>
+</ol>
+<ol type="1">
+<li><p class="startli">Select the Raspberry Pi Pico as shown in the screenshot below. Be sure to select the "Adafruit TinyUSB" USB Stack.</p>
+<div class="image">
+<img src="select-board-pico.png" alt=""/>
+<div class="caption">
+select Raspberry Pi Pico</div></div>
+   </li>
+</ol>
+<ol type="1">
+<li>Upload the "TinyUSB" sketch to your Pico.</li>
+</ol>
+<ol type="1">
+<li><p class="startli">Do the wiring. For more information on <a href="https://github.com/FastLED/FastLED/wiki/Wiring-leds">how to wire the LEDs</a> and <a href="https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds">how to set up the LEDs in the code</a> see the links.</p>
+<div class="image">
+<img src="board-wiring-pico.jpg" alt=""/>
+<div class="caption">
+the wiring</div></div>
+   </li>
+</ol>
+<ol type="1">
+<li>Verify your device works as expected. Open the Windows settings-&gt;devices-&gt;Other devices. Somewhere in the list of devices, there should be a device called "Lighting Node PRO".</li>
+</ol>
+<ol type="1">
+<li>Now open <a href="https://www.corsair.com/icue">iCUE</a> there you should see the "Lighting Node PRO".</li>
+</ol>
 <h2>Use the Lighting Node PRO</h2>
 <div class="image">
 <img src="iCUE.jpg" alt=""/>
@@ -187,19 +225,19 @@ iCUE RGB Strip example</div></div>
 <h2>How it works</h2>
 <p>This library uses the USB HID interface of the ATmega32U4. After uploading a sketch with the library and selected CLP Boards, iCUE recognizes the Arduino as a Corsair device, because the CLP Boards use USB IDs of Corsair. In iCUE you can then select the device and set some lighting effects. iCUE sends these via the HID protocol to the Arduino. These commands are understood by the library and converted into lighting effects on the RGB strips connected to the Arduino. The <a href="http://fastled.io/">FastLED</a> library is used to control the LEDs.</p>
 <h2>Use of multiple devices</h2>
-<p>Each device has two unique IDs, that is, they should be unique. You must give each device a unique ID. There are two IDs that must be changed <code>Serial Number</code> and <code>DeviceID</code>.</p>
+<p>Each device has two unique IDs, that is, they should be unique. You must give each device a unique ID. There are two IDs that must be changed <code>Serial Number</code> and <code><a class="el" href="structDeviceID.html">DeviceID</a></code>.</p>
 <p>The Serial Number can be set in the constructor of <code><a class="el" href="classCorsairLightingProtocolHID.html">CorsairLightingProtocolHID</a></code> and <code><a class="el" href="classCLPUSBSerialBridge.html">CLPUSBSerialBridge</a></code> as shown in the <a href="examples/AdditionalFeatures/AdditionalFeatures.ino">example</a>. </p><div class="fragment"><div class="line"> {C++}</div>
 <div class="line">const char mySerialNumber[] PROGMEM = &quot;202B6949A967&quot;;</div>
 <div class="line">CorsairLightingProtocolHID cHID(&amp;cLP, mySerialNumber);</div>
 </div><!-- fragment --><p>The Serial Number MAY only consist of HEX characters (0-9 and A-F).</p>
-<p>The DeviceID can be set with the <code>setDeviceID</code> function of <code><a class="el" href="classCorsairLightingFirmware.html">CorsairLightingFirmware</a></code>. </p><div class="fragment"><div class="line"> {C++}</div>
+<p>The <a class="el" href="structDeviceID.html">DeviceID</a> can be set with the <code>setDeviceID</code> function of <code><a class="el" href="classCorsairLightingFirmware.html">CorsairLightingFirmware</a></code>. </p><div class="fragment"><div class="line"> {C++}</div>
 <div class="line">void setup() {</div>
-<div class="line">    byte deviceId[4] = { 0x9A, 0xDA, 0xA7, 0x8E };</div>
+<div class="line">    DeviceID deviceId = { 0x9A, 0xDA, 0xA7, 0x8E };</div>
 <div class="line">    firmware.setDeviceID(deviceId);</div>
 <div class="line">    ...</div>
 <div class="line">}</div>
 </div><!-- fragment --><h3>Alternative</h3>
-<p>The <code>DeviceID</code> can be changed with the <a href="examples/DeviceIDTool/DeviceIDTool.ino">DeviceIDTool</a>. Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 115200. The tool displays the current DeviceID, you can type in a new DeviceID that is saved on the Arduino. After that, you can upload another sketch.</p>
+<p>The <code><a class="el" href="structDeviceID.html">DeviceID</a></code> can be changed with the <a href="examples/DeviceIDTool/DeviceIDTool.ino">DeviceIDTool</a>. Upload the DeviceIDTool sketch and then open the Serial monitor with baudrate 115200. The tool displays the current <a class="el" href="structDeviceID.html">DeviceID</a>, you can type in a new <a class="el" href="structDeviceID.html">DeviceID</a> that is saved on the Arduino. After that, you can upload another sketch.</p>
 <h2>Repeat or scale LED channels</h2>
 <p>You can repeat or scale LED channel controlled by iCUE onto physical LED strips. This is very useful if you have very long LED strips that are longer than 60/96/135 LEDs, which is the maximum number iCUE supports.</p>
 <p>To repeat or scale a LED channel you must apply the <code>CLP::repeat</code> or the <code>CLP:scale</code> function in the update hook of the <a class="el" href="classFastLEDController.html">FastLEDController</a>. See the <a href="examples/RepeatAndScale/RepeatAndScale.ino">RepeatAndScale</a> example for the complete code. Both functions take the <a class="el" href="classFastLEDController.html">FastLEDController</a> pointer and the channel index as arguments. Additionally, the <code>repeat</code> function takes as an argument how often the LED channel should be repeated. For example, if you want to duplicate the channel you must pass <code>2</code> as argument. The <code>scale</code> function takes as third argument the length of the physical LED strip to which it scales the channel using integer scaling. For example you have 144 physical LEDs on you strip and 60 on the LED channel. Then the third argument of the <code>scale</code> function is <code>144</code>.</p>
@@ -215,7 +253,7 @@ iCUE RGB Strip example</div></div>
 <div class="line">    CLP::reverse(&amp;ledController, 0);</div>
 <div class="line">});</div>
 </div><!-- fragment --><h2>Hardware Lighting mode</h2>
-<p>The <a href="https://forum.corsair.com/v3/showthread.php?t=182874">Hardware Lighting mode</a> can be configured in iCUE. It allows you the set lighting effects that will be active when iCUE <b>is not</b> running. This is the case when the PC is off, in sleep mode, booting or the user is logged out. So if you want to have lighing effects in all these situations, use the Hardware Lighting mode. If you don't want it, configure a static black color.</p>
+<p>The <a href="https://forum.corsair.com/v3/showthread.php?t=182874">Hardware Lighting mode</a> can be configured in iCUE. It allows you the set lighting effects that will be active when iCUE <b>is not</b> running. This is the case when the PC is off, in sleep mode, booting or the user is logged out. So if you want to have lighting effects in all these situations, use the Hardware Lighting mode. If you don't want it, configure a static black color.</p>
 <h1>License</h1>
 <p>This project is licensed under the Apache 2.0 License.</p>
 <h1>DISCLAIMERS</h1>
