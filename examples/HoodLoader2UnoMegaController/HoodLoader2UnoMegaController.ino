@@ -23,8 +23,10 @@
 #define DATA_PIN_CHANNEL_1 2
 #define DATA_PIN_CHANNEL_2 3
 
-CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
-FastLEDController ledController(true);
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_PRO, &firmwareStorage);
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolSerial cLPS(&cLP);
 

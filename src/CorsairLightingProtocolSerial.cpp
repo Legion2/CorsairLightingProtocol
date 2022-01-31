@@ -45,7 +45,7 @@ bool CorsairLightingProtocolSerial::handleSerial() {
 	delayMicroseconds(100);
 
 	if (Serial.available()) {
-		size_t read = Serial.readBytes(rawCommand, sizeof(rawCommand));
+		size_t read = Serial.readBytes((char*)rawCommand, sizeof(rawCommand));
 		if (read == sizeof(rawCommand)) {
 			return true;
 		} else {

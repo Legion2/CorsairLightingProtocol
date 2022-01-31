@@ -25,8 +25,10 @@ CRGB ledsChannel2[60];
 // Define a custom SerialNumber for the device
 const char mySerialNumber[] PROGMEM = "202B6949A967";
 
-CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
-FastLEDController ledController(true);
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_PRO, &firmwareStorage);
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 // Set the SerialNumber here
 CorsairLightingProtocolHID cHID(&cLP, mySerialNumber);

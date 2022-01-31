@@ -15,18 +15,12 @@
 */
 #include "CorsairLightingFirmware.h"
 
-#include <EEPROM.h>
-
 const uint8_t bootloader_version[] PROGMEM = {0x00, 0x02};
 
-const uint8_t corsairLightingNodePROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x00, 0x0A, 0x04};
-
-const uint8_t corsairCommanderPROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x00, 0x09, 0xD4};
-
-const uint8_t corsairLT100FirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x01, 0x01, 0x38};
-
-CorsairLightingFirmware::CorsairLightingFirmware(const uint8_t* firmwareVersion) : firmwareVersion(firmwareVersion) {
-	EEPROM.get(EEPROM_ADDRESS_DEVICE_ID, deviceId);
+CorsairLightingFirmware::CorsairLightingFirmware(corsair_product_enum_t product,
+												 CorsairLightingFirmwareStorage* storage)
+	: storage(storage), product(product) {
+	storage->loadDeviceID(deviceId);
 }
 
 void CorsairLightingFirmware::handleFirmwareCommand(const Command& command,
@@ -38,16 +32,17 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command,
 			break;
 		}
 		case READ_FIRMWARE_VERSION: {
-			response->send_P(firmwareVersion, FIRMWARE_VERSION_SIZE);
+			response->send_P(firmwareVersions[product], FIRMWARE_VERSION_SIZE);
 			break;
 		}
 		case READ_DEVICE_ID: {
-			response->send(deviceId, sizeof(deviceId));
+			response->send(deviceId.data, sizeof(deviceId));
 			break;
 		}
 		case WRITE_DEVICE_ID: {
-			setDeviceID(command.data);
-			response->send(deviceId, sizeof(deviceId));
+			DeviceID deviceID = {command.data[0], command.data[1], command.data[2], command.data[3]};
+			setDeviceID(deviceID);
+			response->send(deviceId.data, sizeof(deviceId));
 			break;
 		}
 		case READ_BOOTLOADER_VERSION: {
@@ -60,31 +55,15 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command,
 	}
 }
 
-void CorsairLightingFirmware::getDeviceID(uint8_t* deviceID) const { memcpy(deviceID, deviceId, sizeof(deviceId)); }
+void CorsairLightingFirmware::getDeviceID(DeviceID& deviceID) const { deviceID = deviceId; }
 
-void CorsairLightingFirmware::setDeviceID(const uint8_t* deviceID) {
-	memcpy(deviceId, deviceID, sizeof(deviceId));
-	EEPROM.put(EEPROM_ADDRESS_DEVICE_ID, deviceId);
+void CorsairLightingFirmware::setDeviceID(const DeviceID& deviceID) {
+	deviceId = deviceID;
+	storage->saveDeviceID(deviceID);
 }
 
 uint8_t CorsairLightingFirmware::getStatus() { return status; }
 
 void CorsairLightingFirmware::setStatus(uint8_t a_status) { status = a_status; }
 
-CorsairLightingFirmware corsairLightingNodePROFirmware() {
-	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
-}
-
-CorsairLightingFirmware corsairLightingNodeCOREFirmware() {
-	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
-}
-
-CorsairLightingFirmware corsairLS100Firmware() {
-	return CorsairLightingFirmware(corsairLightingNodePROFirmwareVersion);
-}
-
-CorsairLightingFirmware corsairCommanderPROFirmware() {
-	return CorsairLightingFirmware(corsairCommanderPROFirmwareVersion);
-}
-
-CorsairLightingFirmware corsairLT100Firmware() { return CorsairLightingFirmware(corsairLT100FirmwareVersion); }
+uint8_t CorsairLightingFirmware::getProduct() { return product; }

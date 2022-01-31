@@ -27,8 +27,10 @@
 // In this example we use only one pin where both channel are connected in series.
 #define DATA_PIN 2
 
-CorsairLightingFirmware firmware = corsairLightingNodePROFirmware();
-FastLEDController ledController(true);
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_PRO, &firmwareStorage);
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
