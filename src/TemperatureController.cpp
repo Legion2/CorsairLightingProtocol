@@ -21,6 +21,7 @@ void TemperatureController::handleTemperatureControl(const Command& command,
 													 const CorsairLightingProtocolResponse* response) {
 	switch (command.command) {
 		case READ_TEMPERATURE_MASK: {
+			CLP_LOG(3, F("Read temp mask\r\n"));
 			uint8_t mask[TEMPERATURE_NUM];
 			for (uint8_t i = 0; i < TEMPERATURE_NUM; i++) {
 				mask[i] = isTemperatureSensorConnected(i) ? TEMPERATURE_MASK_CONNECTED : TEMPERATURE_MASK_NOT_CONNECTED;
@@ -29,8 +30,10 @@ void TemperatureController::handleTemperatureControl(const Command& command,
 			break;
 		}
 		case READ_TEMPERATURE_VALUE: {
+			CLP_LOG(3, F("Read temp value\r\n"));
 			const uint8_t& tempSensor = command.data[0];
 			if (tempSensor >= TEMPERATURE_NUM) {
+				CLP_LOG(1, F("Unknown temp sensor: %d\r\n"), tempSensor);
 				response->sendError();
 				return;
 			}
@@ -40,6 +43,7 @@ void TemperatureController::handleTemperatureControl(const Command& command,
 			break;
 		}
 		case READ_VOLTAGE_VALUE: {
+			CLP_LOG(3, F("Read voltage\r\n"));
 			const uint8_t& rail = command.data[0];
 			uint16_t voltage;
 			switch (rail) {
@@ -56,6 +60,7 @@ void TemperatureController::handleTemperatureControl(const Command& command,
 					break;
 				}
 				default: {
+					CLP_LOG(1, F("Unkown voltage rail: %d\r\n"), rail);
 					response->sendError();
 					return;
 				}
@@ -66,7 +71,9 @@ void TemperatureController::handleTemperatureControl(const Command& command,
 			break;
 		}
 		default:
+			CLP_LOG(1, F("Unkown command: %02X\r\n"), command.command);
 			response->sendError();
+			return;
 	}
 }
 

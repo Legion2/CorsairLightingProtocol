@@ -66,3 +66,44 @@ void CLP::printFps(const int interval) {
 		lastMillis = now;
 	}
 }
+
+#if CLP_DEBUG
+
+int CLP_printf(const char* __restrict format, ...) {
+	char buf[64];
+	int len;
+	va_list ap;
+	va_start(ap, format);
+	len = vsnprintf(buf, sizeof(buf), format, ap);
+	CLP_DEBUG_PORT.write(buf);
+	va_end(ap);
+	return len;
+}
+
+int CLP_printf(const __FlashStringHelper* __restrict format, ...) {
+	char buf[64];
+	char fmt[64];
+	int len;
+	va_list ap;
+	va_start(ap, format);
+	strcpy_P(fmt, (const char*)format);
+	len = vsnprintf(buf, sizeof(buf), fmt, ap);
+	CLP_DEBUG_PORT.write(buf);
+	va_end(ap);
+	return len;
+}
+
+void clp_print_data(uint8_t const* buf, uint32_t bufsize, bool address_table) {
+	if (address_table) {
+		clp_printf(">>>> ");
+		for (uint32_t i = 0; i < 16; i++) clp_printf("0x%X ", i);
+		clp_printf("\r\n");
+	}
+	for (uint32_t i = 0; i < bufsize; i++) {
+		if (address_table && (i % 16 == 0)) clp_printf("0x%02X ", (i / 16) << 4);
+		clp_printf(" %02X ", buf[i]);
+		if ((i + 1) % 16 == 0 || (i + 1) == bufsize) clp_printf("\r\n");
+	}
+}
+
+#endif

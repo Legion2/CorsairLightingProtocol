@@ -419,6 +419,7 @@ bool FastLEDController::updateLEDs() {
 							break;
 						}
 						default: {
+							CLP_LOG(3, F("Unkown group mode: %02X\r\n"), group.mode);
 #ifdef DEBUG
 							Serial.print(F("unkown group mode: "));
 							Serial.print(group.mode, HEX);

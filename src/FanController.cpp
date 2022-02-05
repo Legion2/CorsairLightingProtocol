@@ -29,6 +29,7 @@ bool isValidFanDetectionType(const FanDetectionType type) {
 void FanController::handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) {
 	switch (command.command) {
 		case READ_FAN_MASK: {
+			CLP_LOG(3, F("Read fan mask\r\n"));
 			FanMask mask[FAN_NUM];
 			for (uint8_t i = 0; i < FAN_NUM; i++) {
 				switch (getFanDetectionType(i)) {
@@ -50,8 +51,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case READ_FAN_SPEED: {
+			CLP_LOG(3, F("Read fan speed\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -61,8 +64,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case READ_FAN_POWER: {
+			CLP_LOG(3, F("Read fan power\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -72,8 +77,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_POWER: {
+			CLP_LOG(3, F("Write fan power\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -83,8 +90,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_SPEED: {
+			CLP_LOG(3, F("Write fan speed\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -94,8 +103,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_CURVE: {
+			CLP_LOG(3, F("Write fan curve\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -110,8 +121,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_EXTERNAL_TEMP: {
+			CLP_LOG(3, F("Write fan external temp\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -121,6 +134,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_FORCE_THREE_PIN_MODE: {
+			CLP_LOG(3, F("Write fan 3-pin mode\r\n"));
 			if (command.data[0] == FAN_FORCE_THREE_PIN_MODE_ON) {
 				setFanForce3PinMode(true);
 			} else if (command.data[0] == FAN_FORCE_THREE_PIN_MODE_OFF) {
@@ -134,17 +148,20 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_DETECTION_TYPE: {
+			CLP_LOG(3, F("Write fan detect type\r\n"));
 			if (command.data[0] != 0x02) {
 				response->sendError();
 				return;
 			}
 			const uint8_t& fan = command.data[1];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
 			const FanDetectionType type = static_cast<FanDetectionType>(command.data[2]);
 			if (!isValidFanDetectionType(type)) {
+				CLP_LOG(1, F("Invalid fan detection type: %d\r\n"), type);
 				response->sendError();
 				return;
 			}
@@ -153,12 +170,14 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case READ_FAN_DETECTION_TYPE: {
+			CLP_LOG(3, F("Read fan detect type\r\n"));
 			if (command.data[0] != 0x01) {
 				response->sendError();
 				return;
 			}
 			const uint8_t& fan = command.data[1];
 			if (fan >= FAN_NUM) {
+				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
 				response->sendError();
 				return;
 			}
@@ -168,6 +187,8 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		default:
+			CLP_LOG(1, F("Unkown command: %02X\r\n"), command.command);
 			response->sendError();
+			return;
 	}
 }

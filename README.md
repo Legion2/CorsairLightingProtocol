@@ -5,7 +5,7 @@
 <a href="https://gitlab.com/CalcProgrammer1/OpenRGB"><img src="extra/images/OpenRGBBadge.png" alt="OpenRGB" height="80" /></a>
 
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
-_This is not an official corsair project._
+_This is not an official Corsair project._
 
 ## Features
 * Add support of Corsair DIY device protocol to Arduino.
@@ -104,6 +104,8 @@ This guide will teach you how to create a Lighting Node PRO with a Raspberry Pi 
 
 1. Do the wiring.
    For more information on [how to wire the LEDs](https://github.com/FastLED/FastLED/wiki/Wiring-leds) and [how to set up the LEDs in the code](https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds) see the links.
+
+   A level shifter or buffer, like [this one](https://www.ti.com/product/SN74AHCT1G126), is recommended in between the Pico and LEDs to translate the 3.3v logic level of the Pico IO to the 5v logic level of the LEDs. Your setup may not work reliably without one.
    
    ![the wiring](extra/images/board-wiring-pico.jpg)
 1. Verify your device works as expected.

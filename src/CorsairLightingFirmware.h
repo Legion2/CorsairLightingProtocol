@@ -31,9 +31,11 @@ const uint8_t corsairCommanderPROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM 
 
 const uint8_t corsairLT100FirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x01, 0x01, 0x38};
 
+const uint8_t corsairCommanderCOREFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x02, 0x06, 0xC9};
+
 const uint8_t* const firmwareVersions[] PROGMEM = {
 	corsairLightingNodePROFirmwareVersion, corsairCommanderPROFirmwareVersion, corsairLightingNodeCOREFirmwareVersion,
-	corsairLS100FirmwareVersion, corsairLT100FirmwareVersion};
+	corsairLS100FirmwareVersion,           corsairLT100FirmwareVersion,        corsairCommanderCOREFirmwareVersion};
 
 struct DeviceID {
 	uint8_t data[4];

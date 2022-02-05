@@ -71,7 +71,7 @@ jobs:
           arduino-platform: arduino:avr@1.8.3,HoodLoader2:avr@2.0.5,Legion2:avr@0.3.1
           required-libraries: FastLED@3.5.0
           sketch-names: HoodLoader2CLPBridge.ino
-  testAdafruitM0:
+  testAdafruitSAMD:
     name: Test for Board ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
@@ -79,25 +79,20 @@ jobs:
         board:
           [
             "adafruit:samd:adafruit_feather_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_feather_m0_express:usbstack=tinyusb",
             "adafruit:samd:adafruit_metro_m0:usbstack=tinyusb",
             "adafruit:samd:adafruit_circuitplayground_m0:usbstack=tinyusb",
             "adafruit:samd:adafruit_gemma_m0:usbstack=tinyusb",
             "adafruit:samd:adafruit_trinket_m0:usbstack=tinyusb",
             "adafruit:samd:adafruit_qtpy_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_neotrinkey_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_rotarytrinkey_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_neokeytrinkey_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_slidetrinkey_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_proxlighttrinkey_m0:usbstack=tinyusb",
             "adafruit:samd:adafruit_itsybitsy_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_pirkey:usbstack=tinyusb",
-            "adafruit:samd:adafruit_hallowing:usbstack=tinyusb",
-            "adafruit:samd:adafruit_crickit_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_blm_badge:usbstack=tinyusb"
+            "adafruit:samd:adafruit_itsybitsy_m4:usbstack=tinyusb",
+            "adafruit:samd:adafruit_metro_m4_airliftlite:usbstack=tinyusb",
+#           "adafruit:samd:adafruit_feather_m4:usbstack=tinyusb", #Should work but doesn't have the pins needed for the sketch 
+            "adafruit:samd:adafruit_matrixportal_m4:usbstack=tinyusb"
           ]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
@@ -105,5 +100,32 @@ jobs:
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
           arduino-platform: adafruit:samd@1.7.8
+          required-libraries: FastLED@3.5.0,Adafruit TinyUSB Library@1.9.2
+          sketch-names: TinyUSB.ino
+  testAdafruitnRF52:
+    name: Test for Board ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board:
+          [
+            "adafruit:nrf52:feather52840",
+            "adafruit:nrf52:itsybitsy52840",
+#           "adafruit:nrf52:cplaynrf52840", #Should work but doesn't have the pins needed for the sketch
+            "adafruit:nrf52:metro52840"
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get adafruit-nrfutil
+        run: |
+          pip3 install adafruit-nrfutil --user
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v3
+        with:
+          cli-version: 0.18.3
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+          arduino-platform: adafruit:nrf52@1.3.0
           required-libraries: FastLED@3.5.0,Adafruit TinyUSB Library@1.9.2
           sketch-names: TinyUSB.ino

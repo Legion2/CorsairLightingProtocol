@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Arduino.h"
+#include "CLPUtils.h"
 #include "CorsairLightingProtocolConstants.h"
 #include "CorsairLightingProtocolController.h"
 #include "CorsairLightingProtocolResponse.h"
@@ -28,7 +29,7 @@ public:
 	 * Setup the TinyUSB HID connection.
 	 * This function must be called in setup.
 	 */
-	void setup();
+	void setup(void);
 	/**
 	 * Read commands form HID interface and pass them to the contoller. This function must be called in loop.
 	 */
