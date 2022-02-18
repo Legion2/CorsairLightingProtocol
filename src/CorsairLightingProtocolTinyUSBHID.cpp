@@ -26,7 +26,7 @@ uint8_t const hid_report[] = {HID_USAGE_PAGE_N (HID_USAGE_PAGE_VENDOR | 0xC0, 2)
 							  HID_COLLECTION_END};
 /* clang-format on */
 
-Adafruit_USBD_HID tudHid(hid_report, sizeof(hid_report), HID_ITF_PROTOCOL_NONE, 2, true);
+Adafruit_USBD_HID tudHid(hid_report, sizeof(hid_report), HID_ITF_PROTOCOL_NONE, 1, true);
 
 uint16_t get_report_callback(uint8_t report_id, hid_report_type_t report_type, uint8_t* buffer, uint16_t reqlen) {
 	(void)report_id;
