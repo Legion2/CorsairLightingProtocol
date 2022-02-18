@@ -68,8 +68,9 @@ void CLP::printFps(const int interval) {
 }
 
 #if CLP_DEBUG
+#if defined(CLP_DEBUG_PORT)
 
-int CLP_printf(const char* __restrict format, ...) {
+int CLP::printf(const char* __restrict format, ...) {
 	char buf[64];
 	int len;
 	va_list ap;
@@ -80,7 +81,7 @@ int CLP_printf(const char* __restrict format, ...) {
 	return len;
 }
 
-int CLP_printf(const __FlashStringHelper* __restrict format, ...) {
+int CLP::printf(const __FlashStringHelper* __restrict format, ...) {
 	char buf[64];
 	char fmt[64];
 	int len;
@@ -93,17 +94,19 @@ int CLP_printf(const __FlashStringHelper* __restrict format, ...) {
 	return len;
 }
 
-void clp_print_data(uint8_t const* buf, uint32_t bufsize, bool address_table) {
+#endif  // defined(CLP_DEBUG_PORT)
+
+void CLP::printData(uint8_t const* buf, uint32_t bufsize, bool address_table) {
 	if (address_table) {
-		clp_printf(">>>> ");
-		for (uint32_t i = 0; i < 16; i++) clp_printf("0x%X ", i);
-		clp_printf("\r\n");
+		clpPrintf(">>>> ");
+		for (uint32_t i = 0; i < 16; i++) clpPrintf("0x%X ", i);
+		clpPrintf("\r\n");
 	}
 	for (uint32_t i = 0; i < bufsize; i++) {
-		if (address_table && (i % 16 == 0)) clp_printf("0x%02X ", (i / 16) << 4);
-		clp_printf(" %02X ", buf[i]);
-		if ((i + 1) % 16 == 0 || (i + 1) == bufsize) clp_printf("\r\n");
+		if (address_table && (i % 16 == 0)) clpPrintf("0x%02X ", (i / 16) << 4);
+		clpPrintf(" %02X ", buf[i]);
+		if ((i + 1) % 16 == 0 || (i + 1) == bufsize) clpPrintf("\r\n");
 	}
 }
 
-#endif
+#endif  // CLP_DEBUG

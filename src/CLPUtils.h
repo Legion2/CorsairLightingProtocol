@@ -29,56 +29,59 @@
 #define CLP_XSTRCAT3(a, b, c) CLP_STRCAT3(a, b, c)
 
 #if defined(CLP_DEBUG_PORT)
-extern int CLP_printf(const char* format, ...);
-extern int CLP_printf(const __FlashStringHelper* format, ...);
-#define clp_printf CLP_printf
+namespace CLP {
+extern int printf(const char* format, ...);
+extern int printf(const __FlashStringHelper* format, ...);
+}  // namespace CLP
+#define clpPrintf CLP::printf
 #else
-#define clp_printf printf
+#define clpPrintf printf
 #endif
 
-static inline void clp_print_var(uint8_t const* buf, uint32_t bufsize) {
-	for (uint32_t i = 0; i < bufsize; i++) clp_printf("%02X ", buf[i]);
+namespace CLP {
+static inline void printVar(uint8_t const* buf, uint32_t bufsize) {
+	for (uint32_t i = 0; i < bufsize; i++) clpPrintf("%02X ", buf[i]);
 }
-
-extern void clp_print_data(uint8_t const* buf, uint32_t bufsize, bool address_table);
+extern void printData(uint8_t const* buf, uint32_t bufsize, bool address_table);
+}  // namespace CLP
 
 /* clang-format off */
 #define CLP_LOG(n, ...)               CLP_XSTRCAT(CLP_LOG, n)(__VA_ARGS__)
 #define CLP_LOG_VAR(n, ...)           CLP_XSTRCAT3(CLP_LOG, n, _VAR)(__VA_ARGS__)
 #define CLP_LOG_HEX(n, ...)           CLP_XSTRCAT3(CLP_LOG, n, _HEX)(__VA_ARGS__)
 #define CLP_LOG_DAT(n, buf, size, at) CLP_XSTRCAT3(CLP_LOG, n, _DAT)(buf, size, at)
-#define CLP_LOG_LOCATION()            clp_printf("%s: %d:\r\n", __PRETTY_FUNCTION__, __LINE__)
-#define CLP_LOG_FAILED()              clp_printf("%s: %d: Failed\r\n", __PRETTY_FUNCTION__, __LINE__)
+#define CLP_LOG_LOCATION()            clpPrintf("%s: %d:\r\n", __PRETTY_FUNCTION__, __LINE__)
+#define CLP_LOG_FAILED()              clpPrintf("%s: %d: Failed\r\n", __PRETTY_FUNCTION__, __LINE__)
 #define CLP_LOG_FUNC(func)            func
 
 // Log Level 1: Error
-#define CLP_LOG1                      clp_printf
-#define CLP_LOG1_VAR(_x)              clp_print_var((uint8_t const*)(_x), sizeof(*(_x)))
-#define CLP_LOG1_HEX(_x)              clp_printf(#_x " = %lX\r\n", (unsigned long) (_x) )
-#define CLP_LOG1_DAT(_x, _y, _z)      clp_print_data((uint8_t const*)(_x), _y, _z)
+#define CLP_LOG1                      clpPrintf
+#define CLP_LOG1_VAR(_x)              CLP::printVar((uint8_t const*)(_x), sizeof(*(_x)))
+#define CLP_LOG1_HEX(_x)              clpPrintf(#_x " = %lX\r\n", (unsigned long) (_x) )
+#define CLP_LOG1_DAT(_x, _y, _z)      CLP::printData((uint8_t const*)(_x), _y, _z)
 
 // Log Level 2: Warn
 #if CLP_DEBUG >= 2
-#define CLP_LOG2                  CLP_LOG1
-#define CLP_LOG2_VAR              CLP_LOG1_VAR
-#define CLP_LOG2_HEX              CLP_LOG1_HEX
-#define CLP_LOG2_DAT              CLP_LOG1_DAT
+#define CLP_LOG2                      CLP_LOG1
+#define CLP_LOG2_VAR                  CLP_LOG1_VAR
+#define CLP_LOG2_HEX                  CLP_LOG1_HEX
+#define CLP_LOG2_DAT                  CLP_LOG1_DAT
 #endif
 
 // Log Level 3: Info
 #if CLP_DEBUG >= 3
-#define CLP_LOG3                  CLP_LOG1
-#define CLP_LOG3_VAR              CLP_LOG1_VAR
-#define CLP_LOG3_HEX              CLP_LOG1_HEX
-#define CLP_LOG3_DAT              CLP_LOG1_DAT
+#define CLP_LOG3                      CLP_LOG1
+#define CLP_LOG3_VAR                  CLP_LOG1_VAR
+#define CLP_LOG3_HEX                  CLP_LOG1_HEX
+#define CLP_LOG3_DAT                  CLP_LOG1_DAT
 #endif
 
 // Log Level 4: Data
 #if CLP_DEBUG >= 4
-#define CLP_LOG4                  CLP_LOG1
-#define CLP_LOG4_VAR              CLP_LOG1_VAR
-#define CLP_LOG4_HEX              CLP_LOG1_HEX
-#define CLP_LOG4_DAT              CLP_LOG1_DAT
+#define CLP_LOG4                      CLP_LOG1
+#define CLP_LOG4_VAR                  CLP_LOG1_VAR
+#define CLP_LOG4_HEX                  CLP_LOG1_HEX
+#define CLP_LOG4_DAT                  CLP_LOG1_DAT
 #endif
 /* clang-format on */
 
