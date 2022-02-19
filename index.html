@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p><a href="https://www.ardu-badge.com/Corsair%20Lighting%20Protocol"><object type="image/svg+xml" data="https://www.ardu-badge.com/badge/Corsair%20Lighting%20Protocol.svg?" style="pointer-events: none;">arduino-library-badge</object></a> <a href="https://github.com/Legion2/CorsairLightingProtocol/actions?query=workflow%3ATest+branch%3Adev+event%3Apush"><object type="image/svg+xml" data="https://github.com/Legion2/CorsairLightingProtocol/workflows/Test/badge.svg" style="pointer-events: none;">Test Status</object></a> <a href="https://isitmaintained.com/project/Legion2/CorsairLightingProtocol" title="Average time to resolve an issue"><object type="image/svg+xml" data="https://isitmaintained.com/badge/resolution/Legion2/CorsairLightingProtocol.svg" style="pointer-events: none;">Average time to resolve an issue</object></a></p>
 <p><a href="https://www.corsair.com/icue"><img src="extra/images/iCUEDarkBadge.png" alt="iCUE" height="80" class="inline"/></a> <a href="https://rgbsync.com/"><img src="extra/images/RGBSyncDarkBadge.png" alt="RGBSync" height="80" class="inline"/></a> <a href="https://gitlab.com/CalcProgrammer1/OpenRGB"><img src="extra/images/OpenRGBBadge.png" alt="OpenRGB" height="80" class="inline"/></a></p>
-<p><b>This library can be used to integrate custom/unofficial RGB strips with iCUE.</b> <em>This is not an official corsair project.</em></p>
+<p><b>This library can be used to integrate custom/unofficial RGB strips with iCUE.</b> <em>This is not an official Corsair project.</em></p>
 <h1>Features</h1>
 <ul>
 <li>Add support of Corsair DIY device protocol to Arduino.</li>
@@ -195,6 +195,7 @@ select Raspberry Pi Pico</div></div>
 </ol>
 <ol type="1">
 <li><p class="startli">Do the wiring. For more information on <a href="https://github.com/FastLED/FastLED/wiki/Wiring-leds">how to wire the LEDs</a> and <a href="https://github.com/FastLED/FastLED/wiki/Basic-usage#setting-up-the-leds">how to set up the LEDs in the code</a> see the links.</p>
+<p class="startli">A level shifter or buffer, like <a href="https://www.ti.com/product/SN74AHCT1G126">this one</a>, is recommended in between the Pico and LEDs to translate the 3.3v logic level of the Pico IO to the 5v logic level of the LEDs. Your setup may not work reliably without one.</p>
 <div class="image">
 <img src="board-wiring-pico.jpg" alt=""/>
 <div class="caption">
