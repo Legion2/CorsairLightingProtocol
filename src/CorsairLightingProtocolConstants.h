@@ -17,6 +17,13 @@
 
 #include "Arduino.h"
 
+// CLP_DEBUG:      0=Off, 1=Error, 2=Warning, 3=Info, 4=Data (Only for TinyUSB)
+// CLP_DEBUG_BAUD: Setting too low will severely affect performance depending on debug level;
+//                 2000000 needed when CLP_DEBUG is 4
+#define CLP_DEBUG 0
+#define CLP_DEBUG_PORT Serial1
+#define CLP_DEBUG_BAUD 115200
+
 #define COMMAND_SIZE 64
 #define RESPONSE_SIZE 16
 
@@ -79,13 +86,16 @@
 #define CORSAIR_SLC_PID 0x0C1E
 #define CORSAIR_SLT_PRODUCT "Smart Lighting Towers"
 #define CORSAIR_SLT_PID 0x0C23
+#define CORSAIR_CC_PRODUCT "CORSAIR iCUE Commander CORE"
+#define CORSAIR_CC_PID 0x0C1C
 
 typedef enum {
 	CORSAIR_LIGHTING_NODE_PRO = 0,
 	CORSAIR_COMMANDER_PRO,
 	CORSAIR_LIGHTING_NODE_CORE,
 	CORSAIR_SMART_LIGHTING_CONTROLLER,
-	CORSAIR_SMART_LIGHTING_TOWERS
+	CORSAIR_SMART_LIGHTING_TOWERS,
+	CORSAIR_COMMANDER_CORE  // Currently not functional
 } corsair_product_enum_t;
 
 struct Command {

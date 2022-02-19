@@ -2,9 +2,10 @@
 
 #if defined(USE_TINYUSB)
 
-const char* corsairProducts[] = {CORSAIR_LNP_PRODUCT, CORSAIR_CP_PRODUCT, CORSAIR_LNC_PRODUCT, CORSAIR_SLC_PRODUCT,
-								 CORSAIR_SLT_PRODUCT};
-const int corsairPIDs[] = {CORSAIR_LNP_PID, CORSAIR_CP_PID, CORSAIR_LNC_PID, CORSAIR_SLC_PID, CORSAIR_SLT_PID};
+const char* corsairProducts[] = {CORSAIR_LNP_PRODUCT, CORSAIR_CP_PRODUCT,  CORSAIR_LNC_PRODUCT,
+								 CORSAIR_SLC_PRODUCT, CORSAIR_SLT_PRODUCT, CORSAIR_CC_PRODUCT};
+const int corsairPIDs[] = {CORSAIR_LNP_PID, CORSAIR_CP_PID,  CORSAIR_LNC_PID,
+						   CORSAIR_SLC_PID, CORSAIR_SLT_PID, CORSAIR_CC_PID};
 
 Command CorsairLightingProtocolTinyUSBHID::command;
 int CorsairLightingProtocolTinyUSBHID::newData;
@@ -25,13 +26,16 @@ uint8_t const hid_report[] = {HID_USAGE_PAGE_N (HID_USAGE_PAGE_VENDOR | 0xC0, 2)
 							  HID_COLLECTION_END};
 /* clang-format on */
 
-Adafruit_USBD_HID usb_hid(hid_report, sizeof(hid_report), HID_ITF_PROTOCOL_NONE, 10, true);
+Adafruit_USBD_HID tudHid(hid_report, sizeof(hid_report), HID_ITF_PROTOCOL_NONE, 1, true);
 
 uint16_t get_report_callback(uint8_t report_id, hid_report_type_t report_type, uint8_t* buffer, uint16_t reqlen) {
 	(void)report_id;
 	(void)report_type;
 	(void)buffer;
 	(void)reqlen;
+
+	CLP_LOG(2, F("Get report callback!\r\n"));
+
 	return 0;
 }
 
@@ -42,6 +46,12 @@ void set_report_callback(uint8_t report_id, hid_report_type_t report_type, uint8
 	if (bufsize <= sizeof(Command)) {
 		memcpy(&CorsairLightingProtocolTinyUSBHID::command.raw, buffer, bufsize);
 		CorsairLightingProtocolTinyUSBHID::newData = 1;
+
+		CLP_LOG(3, F("Received command: %02X\r\n"), CorsairLightingProtocolTinyUSBHID::command.command);
+		CLP_LOG_DAT(4, &CorsairLightingProtocolTinyUSBHID::command.raw,
+					sizeof(CorsairLightingProtocolTinyUSBHID::command), true);
+	} else {
+		CLP_LOG(2, F("Command too large\r\n"));
 	}
 }
 
@@ -52,16 +62,16 @@ CorsairLightingProtocolTinyUSBHID::CorsairLightingProtocolTinyUSBHID(CorsairLigh
 																	 const char* serialNumber)
 	: controller(controller), serialNumber(serialNumber) {}
 
-void CorsairLightingProtocolTinyUSBHID::setup() {
-	Serial.end();
+void CorsairLightingProtocolTinyUSBHID::setup(void) {
+	CLP_LOG_FUNC(CLP_DEBUG_PORT.begin(CLP_DEBUG_BAUD));
 
 	TinyUSBDevice.setManufacturerDescriptor(CORSAIR_MANUFACTURER);
 	TinyUSBDevice.setProductDescriptor(corsairProducts[controller->getFirmware()->getProduct()]);
 	TinyUSBDevice.setID(CORSAIR_VID, corsairPIDs[controller->getFirmware()->getProduct()]);
 	TinyUSBDevice.setSerialDescriptor(serialNumber);
 
-	usb_hid.setReportCallback(get_report_callback, set_report_callback);
-	usb_hid.begin();
+	tudHid.setReportCallback(get_report_callback, set_report_callback);
+	tudHid.begin();
 
 	while (!TinyUSBDevice.mounted()) delay(1);
 }
@@ -74,7 +84,10 @@ void CorsairLightingProtocolTinyUSBHID::update(void) {
 }
 
 void CorsairLightingProtocolTinyUSBHID::sendX(const uint8_t* data, const size_t x) const {
-	usb_hid.sendReport(0, data, x);
+	tudHid.sendReport(0, data, x);
+
+	CLP_LOG(3, F("Sent response: %02X\r\n"), data[0]);
+	CLP_LOG_DAT(4, data, x, true);
 }
 
 #endif

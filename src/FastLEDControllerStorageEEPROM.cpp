@@ -25,6 +25,7 @@ bool FastLEDControllerStorageEEPROM::load(const int index, LEDChannel& channel) 
 }
 
 bool FastLEDControllerStorageEEPROM::save(const int index, const LEDChannel& channel) {
+	CLP_LOG(3, F("Save to EEPROM.\r\n"));
 #ifdef DEBUG
 	Serial.println(F("Save to EEPROM."));
 #endif
