@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - Board: [e.g. Arduino Leonardo]
  - Device: [e.g. Lighting Node PRO]
  - Version of IDE: [e.g. Arduino IDE 1.8.13]
- - Version of CLP: [e.g. 0.14.2]
+ - Version of CLP: [e.g. 0.15.0]
  - Version of CLP Boards: [e.g. 0.2.0]
  - Sketch: [e.g. RepeatAndScale]
 
