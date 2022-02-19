@@ -33,11 +33,12 @@
 
 #define CHANNEL_LED_COUNT 96
 
-CorsairLightingFirmware firmware = corsairCommanderPROFirmware();
+CorsairLightingFirmwareStorageEEPROM firmwareStorage;
+CorsairLightingFirmware firmware(CORSAIR_COMMANDER_PRO, &firmwareStorage);
 ThermistorTemperatureController temperatureController;
-FastLEDController ledController(&temperatureController, true);
-SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE,
-								  EEPROM_ADDRESS + ledController.getEEPROMSize());
+FastLEDControllerStorageEEPROM storage;
+FastLEDController ledController(&storage);
+SimpleFanController fanController(&temperatureController, FAN_UPDATE_RATE, EEPROM_ADDRESS + storage.getEEPROMSize());
 CorsairLightingProtocolController cLP(&ledController, &temperatureController, &fanController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 

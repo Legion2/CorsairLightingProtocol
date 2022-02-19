@@ -15,12 +15,13 @@
 */
 #include "FastLEDController.h"
 
-#include <EEPROM.h>
+FastLEDController::FastLEDController(FastLEDControllerStorage* storage)
+	: temperatureController(nullptr), storage(storage) {
+	load();
+}
 
-FastLEDController::FastLEDController(bool useEEPROM) : temperatureController(nullptr), useEEPROM(useEEPROM) { load(); }
-
-FastLEDController::FastLEDController(TemperatureController* temperatureController, bool useEEPROM)
-	: temperatureController(temperatureController), useEEPROM(useEEPROM) {
+FastLEDController::FastLEDController(TemperatureController* temperatureController, FastLEDControllerStorage* storage)
+	: temperatureController(temperatureController), storage(storage) {
 	load();
 }
 
@@ -71,15 +72,15 @@ int FastLEDController::applySpeed(int duration, const GroupSpeed speed) {
 }
 
 int FastLEDController::animation_step(int duration, int steps) {
-	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+	int currentStep = ((currentUpdate % (unsigned int)duration) / ((float)duration)) * steps;
 	return currentStep;
 }
 
 int FastLEDController::animation_step_count(int duration, int steps) {
-	long lastAnimationNumber = lastUpdate / duration;
-	long currentAnimationNumber = currentUpdate / duration;
-	int lastStep = ((lastUpdate % duration) / ((float)duration)) * steps;
-	int currentStep = ((currentUpdate % duration) / ((float)duration)) * steps;
+	unsigned long lastAnimationNumber = lastUpdate / (unsigned int)duration;
+	unsigned long currentAnimationNumber = currentUpdate / (unsigned int)duration;
+	int lastStep = ((lastUpdate % (unsigned int)duration) / ((float)duration)) * steps;
+	int currentStep = ((currentUpdate % (unsigned int)duration) / ((float)duration)) * steps;
 
 	return currentStep - lastStep + (currentAnimationNumber - lastAnimationNumber) * steps;
 }
@@ -418,6 +419,7 @@ bool FastLEDController::updateLEDs() {
 							break;
 						}
 						default: {
+							CLP_LOG(3, F("Unkown group mode: %02X\r\n"), group.mode);
 #ifdef DEBUG
 							Serial.print(F("unkown group mode: "));
 							Serial.print(group.mode, HEX);
@@ -455,34 +457,36 @@ bool FastLEDController::updateLEDs() {
 	return anyUpdate;
 }
 
-size_t FastLEDController::getEEPROMSize() { return sizeof(channels); }
-
 void FastLEDController::onUpdateHook(uint8_t channel, void (*callback)(void)) {
 	channelData[channel].onUpdateCallback = callback;
 }
 
 bool FastLEDController::load() {
-	if (useEEPROM) {
-		EEPROM.get(EEPROM_ADDRESS, channels);
-		for (LEDChannel& channel : channels) {
-			if (!isValidLEDChannel(channel)) {
-				channel = LEDChannel();
-			}
-		}
-		return true;
+	if (storage == nullptr) {
+		return false;
 	}
-	return false;
+
+	for (int i = 0; i < CHANNEL_NUM; i++) {
+		storage->load(i, channels[i]);
+	}
+
+	for (LEDChannel& channel : channels) {
+		if (!isValidLEDChannel(channel)) {
+			channel = LEDChannel();
+		}
+	}
+	return true;
 }
 
 bool FastLEDController::save() {
-	if (useEEPROM) {
-#ifdef DEBUG
-		Serial.println(F("Save to EEPROM."));
-#endif
-		EEPROM.put(EEPROM_ADDRESS, channels);
-		return true;
+	if (storage == nullptr) {
+		return false;
 	}
-	return false;
+
+	for (int i = 0; i < CHANNEL_NUM; i++) {
+		storage->save(i, channels[i]);
+	}
+	return true;
 }
 
 void FastLEDController::triggerLEDUpdate() { trigger_update = true; }

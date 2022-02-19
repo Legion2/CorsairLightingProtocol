@@ -58,6 +58,8 @@ public:
 	 */
 	void handleCommand(const Command& command, CorsairLightingProtocolResponse* response);
 
+	CorsairLightingFirmware* getFirmware(void);
+
 private:
 	CorsairLightingFirmware* const corsairLightingFirmware;
 	ILEDController* const ledController;

@@ -39,9 +39,9 @@ void SimpleFanController::addFan(uint8_t index, PWMFan* fan) {
 }
 
 bool SimpleFanController::updateFans() {
-	long currentUpdate = millis();
-	long lastUpdateNumber = lastUpdate / updateRate;
-	long currentUpdateNumber = currentUpdate / updateRate;
+	unsigned long currentUpdate = millis();
+	unsigned long lastUpdateNumber = lastUpdate / updateRate;
+	unsigned long currentUpdateNumber = currentUpdate / updateRate;
 	lastUpdate = currentUpdate;
 	if (lastUpdateNumber < currentUpdateNumber) {
 		if (triggerSave) {

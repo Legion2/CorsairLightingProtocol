@@ -1,8 +1,8 @@
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 name: Test
 jobs:
   test:
-    name: Test for ${{ matrix.board }}
+    name: Test for Board ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,12 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@v2.6.0
+        uses: ArminJo/arduino-test-compile@v3
         with:
+          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-          arduino-platform: arduino:avr@1.8.2,SparkFun:avr@1.1.5,Legion2:avr@0.1.3
-          required-libraries: FastLED@3.3.3
+          arduino-platform: arduino:avr@1.8.3,SparkFun:avr@1.1.13,Legion2:avr@0.3.1
+          required-libraries: FastLED@3.5.0
           sketch-names: LightingNodePRO.ino,
             SingleStripLightingNodePRO.ino,
             CommanderPRO.ino,
@@ -34,10 +35,11 @@ jobs:
             AdditionalFeatures.ino,
             AmbientBacklight.ino,
             MultipleFans.ino,
-            DebugSketch.ino
-          examples-build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
+            DebugSketch.ino,
+            NoEEPROM.ino
+          build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
   testUnoMega:
-    name: Test UnoMega sketches for ${{ matrix.board }}
+    name: Test Arduino Uno/Mega sketches for Board ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,14 +47,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@v2.6.0
+        uses: ArminJo/arduino-test-compile@v3
         with:
+          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
-          arduino-platform: arduino:avr@1.8.2
-          required-libraries: FastLED@3.3.3
+          arduino-platform: arduino:avr@1.8.3
+          required-libraries: FastLED@3.5.0
           sketch-names: HoodLoader2UnoMegaController.ino
   test16u2:
-    name: Test 16u2 sketch for ${{ matrix.board }}
+    name: Test 16u2 sketch for Board ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -60,10 +63,69 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build for ${{ matrix.board }}
-        uses: ArminJo/arduino-test-compile@v2.6.0
+        uses: ArminJo/arduino-test-compile@v3
         with:
+          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
           platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-          arduino-platform: arduino:avr@1.8.2,HoodLoader2:avr@2.0.5,Legion2:avr@0.1.3
-          required-libraries: FastLED@3.3.3
+          arduino-platform: arduino:avr@1.8.3,HoodLoader2:avr@2.0.5,Legion2:avr@0.3.1
+          required-libraries: FastLED@3.5.0
           sketch-names: HoodLoader2CLPBridge.ino
+  testAdafruitSAMD:
+    name: Test for Board ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board:
+          [
+            "adafruit:samd:adafruit_feather_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_metro_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_circuitplayground_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_gemma_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_trinket_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_qtpy_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_itsybitsy_m0:usbstack=tinyusb",
+            "adafruit:samd:adafruit_itsybitsy_m4:usbstack=tinyusb",
+            "adafruit:samd:adafruit_metro_m4_airliftlite:usbstack=tinyusb",
+#           "adafruit:samd:adafruit_feather_m4:usbstack=tinyusb", #Should work but doesn't have the pins needed for the sketch 
+            "adafruit:samd:adafruit_matrixportal_m4:usbstack=tinyusb"
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v3
+        with:
+          cli-version: 0.18.3
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+          arduino-platform: adafruit:samd@1.7.8
+          required-libraries: FastLED@3.5.0,Adafruit TinyUSB Library@1.9.2
+          sketch-names: TinyUSB.ino
+  testAdafruitnRF52:
+    name: Test for Board ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board:
+          [
+            "adafruit:nrf52:feather52840",
+            "adafruit:nrf52:itsybitsy52840",
+#           "adafruit:nrf52:cplaynrf52840", #Should work but doesn't have the pins needed for the sketch
+            "adafruit:nrf52:metro52840"
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get adafruit-nrfutil
+        run: |
+          pip3 install adafruit-nrfutil --user
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v3
+        with:
+          cli-version: 0.18.3
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+          arduino-platform: adafruit:nrf52@1.3.0
+          required-libraries: FastLED@3.5.0,Adafruit TinyUSB Library@1.9.2
+          sketch-names: TinyUSB.ino

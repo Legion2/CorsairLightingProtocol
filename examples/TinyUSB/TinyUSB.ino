@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Leon Kiefer
+   Copyright 2021 Leon Kiefer
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,19 +17,26 @@
 #include <FastLED.h>
 
 #define DATA_PIN_CHANNEL_1 2
+#define DATA_PIN_CHANNEL_2 3
 
-CRGB ledsChannel1[204];
+CRGB ledsChannel1[96];
+CRGB ledsChannel2[96];
 
-CorsairLightingFirmwareStorageEEPROM firmwareStorage;
-CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_CORE, &firmwareStorage);
-FastLEDControllerStorageEEPROM storage;
-FastLEDController ledController(&storage);
+// Most ARM devices do not contain an EEPROM; we will use static storage for the Device ID
+DeviceID deviceID = {0x9A, 0xDA, 0xA7, 0x8E};
+CorsairLightingFirmwareStorageStatic firmwareStorage(deviceID);
+CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_PRO, &firmwareStorage);
+FastLEDController ledController(nullptr);
 CorsairLightingProtocolController cLP(&ledController, &firmware);
-CorsairLightingProtocolHID cHID(&cLP);
+CorsairLightingProtocolTinyUSBHID cHID(&cLP);
 
 void setup() {
-	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 204);
-	ledController.addLEDs(0, ledsChannel1, 204);
+	cHID.setup();
+
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_1, GRB>(ledsChannel1, 96);
+	FastLED.addLeds<WS2812B, DATA_PIN_CHANNEL_2, GRB>(ledsChannel2, 96);
+	ledController.addLEDs(0, ledsChannel1, 96);
+	ledController.addLEDs(1, ledsChannel2, 96);
 }
 
 void loop() {

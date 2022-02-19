@@ -16,9 +16,11 @@ If applicable, add screenshots to help explain your problem.
 **System (please complete the following information):**
  - OS: [e.g. Windows 10]
  - Board: [e.g. Arduino Leonardo]
- - IDE: [e.g. Arduino IDE]
- - Version: [e.g. 0.3.0]
- - Sketch: [e.g. SingleStripLightingNodePRO]
+ - Device: [e.g. Lighting Node PRO]
+ - Version of IDE: [e.g. Arduino IDE 1.8.13]
+ - Version of CLP: [e.g. 0.15.0]
+ - Version of CLP Boards: [e.g. 0.2.0]
+ - Sketch: [e.g. RepeatAndScale]
 
 **Code changes**
 Did you changed the code of the library or the sketch?

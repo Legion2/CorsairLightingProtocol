@@ -19,38 +19,52 @@
 #include "CorsairLightingProtocolConstants.h"
 #include "CorsairLightingProtocolResponse.h"
 
-#ifndef EEPROM_ADDRESS_DEVICE_ID
-#define EEPROM_ADDRESS_DEVICE_ID 0
-#endif
-
-#define PROTOCOL_STATUS_OK 0x00
-#define PROTOCOL_STATUS_ERROR 0xFF
-
 #define FIRMWARE_VERSION_SIZE 3
+
+const uint8_t corsairLightingNodePROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x00, 0x0A, 0x04};
+
+#define corsairLightingNodeCOREFirmwareVersion corsairLightingNodePROFirmwareVersion
+
+#define corsairLS100FirmwareVersion corsairLightingNodePROFirmwareVersion
+
+const uint8_t corsairCommanderPROFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x00, 0x09, 0xD4};
+
+const uint8_t corsairLT100FirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x01, 0x01, 0x38};
+
+const uint8_t corsairCommanderCOREFirmwareVersion[FIRMWARE_VERSION_SIZE] PROGMEM = {0x02, 0x06, 0xC9};
+
+const uint8_t* const firmwareVersions[] PROGMEM = {
+	corsairLightingNodePROFirmwareVersion, corsairCommanderPROFirmwareVersion, corsairLightingNodeCOREFirmwareVersion,
+	corsairLS100FirmwareVersion,           corsairLT100FirmwareVersion,        corsairCommanderCOREFirmwareVersion};
+
+struct DeviceID {
+	uint8_t data[4];
+};
+
+/**
+ * Interface to store the device id
+ */
+class CorsairLightingFirmwareStorage {
+public:
+	virtual void loadDeviceID(DeviceID& deviceID) const = 0;
+	virtual void saveDeviceID(const DeviceID& deviceID) = 0;
+};
 
 class CorsairLightingFirmware {
 public:
-	CorsairLightingFirmware(const uint8_t* firmwareVersion);
+	CorsairLightingFirmware(corsair_product_enum_t product, CorsairLightingFirmwareStorage* storage);
 	void handleFirmwareCommand(const Command& command, const CorsairLightingProtocolResponse* response);
-	void getDeviceID(uint8_t* deviceID) const;
-	void setDeviceID(const uint8_t* deviceID);
+	void getDeviceID(DeviceID& deviceID) const;
+	void setDeviceID(const DeviceID& deviceID);
 	uint8_t getStatus();
 	void setStatus(uint8_t status);
+	uint8_t getProduct();
 
 protected:
-	const uint8_t* firmwareVersion;
-	uint8_t deviceId[4];
+	CorsairLightingFirmwareStorage* const storage;
+	const corsair_product_enum_t product;
+	DeviceID deviceId;
 
 private:
 	uint8_t status = PROTOCOL_STATUS_OK;
 };
-
-CorsairLightingFirmware corsairLightingNodePROFirmware();
-
-CorsairLightingFirmware corsairLightingNodeCOREFirmware();
-
-CorsairLightingFirmware corsairLS100Firmware();
-
-CorsairLightingFirmware corsairCommanderPROFirmware();
-
-CorsairLightingFirmware corsairLT100Firmware();

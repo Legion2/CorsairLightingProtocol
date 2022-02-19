@@ -33,16 +33,18 @@ void CLP::disableBuildInLEDs() {
 #endif
 }
 
-bool CLP::isNullID(const uint8_t* deviceId) { return !(deviceId[0] | deviceId[1] | deviceId[2] | deviceId[3]); }
-
-bool CLP::isResetID(const uint8_t* deviceId) {
-	return deviceId[0] == 0xFF && deviceId[1] == 0xFF && deviceId[2] == 0xFF && deviceId[3] == 0xFF;
+bool CLP::isNullID(const DeviceID& deviceId) {
+	return !(deviceId.data[0] | deviceId.data[1] | deviceId.data[2] | deviceId.data[3]);
 }
 
-void CLP::printDeviceID(const uint8_t* deviceId) {
+bool CLP::isResetID(const DeviceID& deviceId) {
+	return deviceId.data[0] == 0xFF && deviceId.data[1] == 0xFF && deviceId.data[2] == 0xFF && deviceId.data[3] == 0xFF;
+}
+
+void CLP::printDeviceID(const DeviceID& deviceId) {
 	char tmp[16];
 	for (size_t i = 0; i < 4; i++) {
-		sprintf(tmp, "%.2X", deviceId[i]);
+		sprintf(tmp, "%.2X", deviceId.data[i]);
 		Serial.print(tmp);
 		if (i < 3) Serial.print(F(" "));
 	}
@@ -56,7 +58,7 @@ void CLP::printFps(const int interval) {
 
 	unsigned long now = millis();
 	frameCount++;
-	if (now - lastMillis >= interval) {
+	if (now - lastMillis >= (unsigned int)interval) {
 		double framesPerSecond = (frameCount * 1000.0) / interval;
 		Serial.print(F("FPS: "));
 		Serial.println(framesPerSecond, 1);
@@ -64,3 +66,47 @@ void CLP::printFps(const int interval) {
 		lastMillis = now;
 	}
 }
+
+#if CLP_DEBUG
+#if defined(CLP_DEBUG_PORT)
+
+int CLP::printf(const char* __restrict format, ...) {
+	char buf[64];
+	int len;
+	va_list ap;
+	va_start(ap, format);
+	len = vsnprintf(buf, sizeof(buf), format, ap);
+	CLP_DEBUG_PORT.write(buf);
+	va_end(ap);
+	return len;
+}
+
+int CLP::printf(const __FlashStringHelper* __restrict format, ...) {
+	char buf[64];
+	char fmt[64];
+	int len;
+	va_list ap;
+	va_start(ap, format);
+	strcpy_P(fmt, (const char*)format);
+	len = vsnprintf(buf, sizeof(buf), fmt, ap);
+	CLP_DEBUG_PORT.write(buf);
+	va_end(ap);
+	return len;
+}
+
+#endif  // defined(CLP_DEBUG_PORT)
+
+void CLP::printData(uint8_t const* buf, uint32_t bufsize, bool address_table) {
+	if (address_table) {
+		clpPrintf(">>>> ");
+		for (uint32_t i = 0; i < 16; i++) clpPrintf("0x%X ", i);
+		clpPrintf("\r\n");
+	}
+	for (uint32_t i = 0; i < bufsize; i++) {
+		if (address_table && (i % 16 == 0)) clpPrintf("0x%02X ", (i / 16) << 4);
+		clpPrintf(" %02X ", buf[i]);
+		if ((i + 1) % 16 == 0 || (i + 1) == bufsize) clpPrintf("\r\n");
+	}
+}
+
+#endif  // CLP_DEBUG
