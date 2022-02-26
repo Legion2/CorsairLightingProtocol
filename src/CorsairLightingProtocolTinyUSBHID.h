@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Arduino.h"
 #include "CLPUtils.h"
 #include "CorsairLightingProtocolConstants.h"
 #include "CorsairLightingProtocolController.h"

@@ -27,9 +27,10 @@ bool isValidFanDetectionType(const FanDetectionType type) {
 }
 
 void FanController::handleFanControl(const Command& command, const CorsairLightingProtocolResponse* response) {
+	CLP_LOG(3, F("Received fan command %02X: "), command.command);
 	switch (command.command) {
 		case READ_FAN_MASK: {
-			CLP_LOG(3, F("Read fan mask\r\n"));
+			CLP_LOG(3, F("Read mask\r\n"));
 			FanMask mask[FAN_NUM];
 			for (uint8_t i = 0; i < FAN_NUM; i++) {
 				switch (getFanDetectionType(i)) {
@@ -51,7 +52,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case READ_FAN_SPEED: {
-			CLP_LOG(3, F("Read fan speed\r\n"));
+			CLP_LOG(3, F("Read speed\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
 				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
@@ -64,7 +65,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case READ_FAN_POWER: {
-			CLP_LOG(3, F("Read fan power\r\n"));
+			CLP_LOG(3, F("Read power\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
 				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
@@ -77,7 +78,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_POWER: {
-			CLP_LOG(3, F("Write fan power\r\n"));
+			CLP_LOG(3, F("Write power\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
 				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
@@ -90,7 +91,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_SPEED: {
-			CLP_LOG(3, F("Write fan speed\r\n"));
+			CLP_LOG(3, F("Write speed\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
 				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
@@ -103,7 +104,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_CURVE: {
-			CLP_LOG(3, F("Write fan curve\r\n"));
+			CLP_LOG(3, F("Write curve\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
 				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
@@ -121,7 +122,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_EXTERNAL_TEMP: {
-			CLP_LOG(3, F("Write fan external temp\r\n"));
+			CLP_LOG(3, F("Write external temp\r\n"));
 			const uint8_t& fan = command.data[0];
 			if (fan >= FAN_NUM) {
 				CLP_LOG(1, F("Invalid fan: %d\r\n"), fan);
@@ -134,7 +135,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_FORCE_THREE_PIN_MODE: {
-			CLP_LOG(3, F("Write fan 3-pin mode\r\n"));
+			CLP_LOG(3, F("Write 3-pin mode\r\n"));
 			if (command.data[0] == FAN_FORCE_THREE_PIN_MODE_ON) {
 				setFanForce3PinMode(true);
 			} else if (command.data[0] == FAN_FORCE_THREE_PIN_MODE_OFF) {
@@ -148,7 +149,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case WRITE_FAN_DETECTION_TYPE: {
-			CLP_LOG(3, F("Write fan detect type\r\n"));
+			CLP_LOG(3, F("Write detect type\r\n"));
 			if (command.data[0] != 0x02) {
 				response->sendError();
 				return;
@@ -170,7 +171,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		case READ_FAN_DETECTION_TYPE: {
-			CLP_LOG(3, F("Read fan detect type\r\n"));
+			CLP_LOG(3, F("Read detect type\r\n"));
 			if (command.data[0] != 0x01) {
 				response->sendError();
 				return;
@@ -187,7 +188,7 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			break;
 		}
 		default:
-			CLP_LOG(1, F("Unkown command: %02X\r\n"), command.command);
+			CLP_LOG(1, F("Unkown command\r\n"));
 			response->sendError();
 			return;
 	}

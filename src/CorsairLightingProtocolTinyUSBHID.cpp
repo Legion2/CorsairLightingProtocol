@@ -46,8 +46,7 @@ void set_report_callback(uint8_t report_id, hid_report_type_t report_type, uint8
 	if (bufsize <= sizeof(Command)) {
 		memcpy(&CorsairLightingProtocolTinyUSBHID::command.raw, buffer, bufsize);
 		CorsairLightingProtocolTinyUSBHID::newData = 1;
-
-		CLP_LOG(3, F("Received command: %02X\r\n"), CorsairLightingProtocolTinyUSBHID::command.command);
+		CLP_LOG(4, F("Data received:\r\n"));
 		CLP_LOG_DAT(4, &CorsairLightingProtocolTinyUSBHID::command.raw,
 					sizeof(CorsairLightingProtocolTinyUSBHID::command), true);
 	} else {
@@ -85,8 +84,7 @@ void CorsairLightingProtocolTinyUSBHID::update(void) {
 
 void CorsairLightingProtocolTinyUSBHID::sendX(const uint8_t* data, const size_t x) const {
 	tudHid.sendReport(0, data, x);
-
-	CLP_LOG(3, F("Sent response: %02X\r\n"), data[0]);
+	CLP_LOG(4, F("Data sent:\r\n"));
 	CLP_LOG_DAT(4, data, x, true);
 }
 

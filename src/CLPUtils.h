@@ -129,6 +129,39 @@ extern void printData(uint8_t const* buf, uint32_t bufsize, bool address_table);
 #endif
 
 namespace CLP {
+
+template <typename T>
+void swap(T a, T b) {
+	auto temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+template <typename T>
+void reverse(T first, T last) {
+	while ((first != last) && (first != --last)) {
+		CLP::swap(first++, last);
+	}
+}
+
+template <typename T>
+void rotate(T first, T n_first, T last) {
+	if (first == n_first) return;
+	if (n_first == last) return;
+
+	T read = n_first;
+	T write = first;
+	T next_read = first;
+
+	while (read != last) {
+		if (write == next_read) next_read = read;
+		CLP::swap(read++, write++);
+	}
+
+	(rotate)(write, next_read, last);
+	return;
+}
+
 uint16_t fromBigEndian(const byte& byte1, const byte& byte2);
 
 /**

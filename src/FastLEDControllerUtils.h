@@ -29,6 +29,13 @@ namespace CLP {
  */
 void transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex);
 /**
+ * Puts the LC100 LEDs in order for use as a strip.
+ *
+ * @param controller the FastLEDController controlling the LEDs
+ * @param channelIndex the index of the channel
+ */
+void transformLC100ToStrip(FastLEDController* controller, uint8_t channelIndex);
+/**
  * Scales a channel's length to a given size, the size can be larger or smaller than the default length given to the
  * FastLEDController::addLEDs function Integer scaling is used, so no interpolation between color values is done and the
  * animation don't look blurry.

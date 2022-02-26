@@ -15,9 +15,9 @@
 */
 #pragma once
 
-#include <CorsairLightingProtocolConstants.h>
-#include <CorsairLightingProtocolController.h>
-#include <CorsairLightingProtocolResponse.h>
+#include "CorsairLightingProtocolConstants.h"
+#include "CorsairLightingProtocolController.h"
+#include "CorsairLightingProtocolResponse.h"
 
 // The maximum time in milliseconds needed to receive 64-byte data
 #define SERIAL_TIMEOUT 2
