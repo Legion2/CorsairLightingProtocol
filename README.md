@@ -3,6 +3,8 @@
 <a href="https://www.corsair.com/icue"><img src="extra/images/iCUEDarkBadge.png" alt="iCUE" height="80" /></a>
 <a href="https://rgbsync.com/"><img src="extra/images/RGBSyncDarkBadge.png" alt="RGBSync" height="80" /></a>
 <a href="https://gitlab.com/CalcProgrammer1/OpenRGB"><img src="extra/images/OpenRGBBadge.png" alt="OpenRGB" height="80" /></a>
+<a href="https://signalrgb.com"><img src="extra/images/SignalRGBBadge.png" alt="SignalRGB" height="80" /></a>
+
 
 **This library can be used to integrate custom/unofficial RGB strips with iCUE.**
 _This is not an official Corsair project._
