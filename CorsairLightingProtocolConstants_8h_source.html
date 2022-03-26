@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('CorsairLightingProtocolConstants_8h_so
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;Arduino.h&quot;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// CLP_DEBUG:      0=Off, 1=Error, 2=Warning, 3=Info, 4=Data (Only for TinyUSB)</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// CLP_DEBUG:      0=Off, 1=Error, 2=Warning, 3=Info, 4=Data</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// CLP_DEBUG_BAUD: Setting too low will severely affect performance depending on debug level;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//                 2000000 needed when CLP_DEBUG is 4</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define CLP_DEBUG 0</span></div>
@@ -165,40 +165,49 @@ $(document).ready(function(){initNavTree('CorsairLightingProtocolConstants_8h_so
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#define CORSAIR_MANUFACTURER &quot;Corsair&quot;</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#define CORSAIR_VID 0x1B1C</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#define CORSAIR_LNP_PRODUCT &quot;Lighting Node PRO&quot;</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#define CORSAIR_LNP_PRODUCT &quot;Lighting Node PRO&quot;  // Antigua</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#define CORSAIR_LNP_PID 0x0C0B</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#define CORSAIR_CP_PRODUCT &quot;Commander PRO&quot;</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#define CORSAIR_CP_PRODUCT &quot;Commander PRO&quot;  // Barbuda</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#define CORSAIR_CP_PID 0x0C10</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#define CORSAIR_LNC_PRODUCT &quot;Lighting Node CORE&quot;</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#define CORSAIR_LNC_PRODUCT &quot;Lighting Node CORE&quot;  // Kauai</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#define CORSAIR_LNC_PID 0x0C1A</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#define CORSAIR_SLC_PRODUCT &quot;Smart Lighting Controller&quot;</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#define CORSAIR_SLC_PRODUCT &quot;Smart Lighting Controller&quot;  // Borealis</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#define CORSAIR_SLC_PID 0x0C1E</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#define CORSAIR_SLT_PRODUCT &quot;Smart Lighting Towers&quot;</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#define CORSAIR_SLT_PRODUCT &quot;Smart Lighting Towers&quot;  // Lightsabers</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#define CORSAIR_SLT_PID 0x0C23</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#define CORSAIR_CC_PRODUCT &quot;CORSAIR iCUE Commander CORE&quot;</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#define CORSAIR_CC_PID 0x0C1C</span></div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    CORSAIR_LIGHTING_NODE_PRO = 0,</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    CORSAIR_COMMANDER_PRO,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    CORSAIR_LIGHTING_NODE_CORE,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    CORSAIR_SMART_LIGHTING_CONTROLLER,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    CORSAIR_SMART_LIGHTING_TOWERS,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    CORSAIR_COMMANDER_CORE  <span class="comment">// Currently not functional</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;} corsair_product_enum_t;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#define QL_FAN_LEDS 34</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#define LL_FAN_LEDS 16</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#define HD_FAN_LEDS 12</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#define EIGHT_LED_FAN_LEDS 8</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#define ML_PRO_FAN_LEDS 4</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#define LC100_LEDS 9</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#define LC100_FIRST_LED_OFFSET 3</span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="structCommand.html">  101</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structCommand.html">Command</a> {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">union </span>{</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">struct </span>{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            uint8_t command;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            uint8_t data[COMMAND_SIZE - 1];</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        };</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        uint8_t raw[COMMAND_SIZE];</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    };</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;};</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    CORSAIR_LIGHTING_NODE_PRO = 0,</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    CORSAIR_COMMANDER_PRO,</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    CORSAIR_LIGHTING_NODE_CORE,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    CORSAIR_SMART_LIGHTING_CONTROLLER,</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    CORSAIR_SMART_LIGHTING_TOWERS,</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    CORSAIR_COMMANDER_CORE  <span class="comment">// Currently not functional</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;} corsair_product_enum_t;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="structCommand.html">  110</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structCommand.html">Command</a> {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">union </span>{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            uint8_t command;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            uint8_t data[COMMAND_SIZE - 1];</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        };</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        uint8_t raw[COMMAND_SIZE];</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    };</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructCommand_html"><div class="ttname"><a href="structCommand.html">Command</a></div><div class="ttdef"><b>Definition:</b> CorsairLightingProtocolConstants.h:101</div></div>
+<div class="ttc" id="astructCommand_html"><div class="ttname"><a href="structCommand.html">Command</a></div><div class="ttdef"><b>Definition:</b> CorsairLightingProtocolConstants.h:110</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

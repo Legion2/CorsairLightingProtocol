@@ -109,28 +109,29 @@ $(document).ready(function(){initNavTree('FastLEDControllerUtils_8h_source.html'
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span>CLP {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> transformLLFanToStrip(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> scale(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex, <span class="keywordtype">int</span> scaleToSize);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> repeat(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex, uint8_t times);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structCLP_1_1SegmentScaling.html">   54</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structCLP_1_1SegmentScaling.html">SegmentScaling</a> {</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c">   58</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c">segmentLength</a>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d">   62</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d">scaleToSize</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> scaleSegments(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex, <span class="keyword">const</span> <a class="code" href="structCLP_1_1SegmentScaling.html">SegmentScaling</a>* <span class="keyword">const</span> segments,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                   <span class="keywordtype">int</span> segmentsCount);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">void</span> reverse(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> gammaCorrection(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keywordtype">void</span> fixIcueBrightness(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}  <span class="comment">// namespace CLP</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">void</span> transformLC100ToStrip(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> scale(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex, <span class="keywordtype">int</span> scaleToSize);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> repeat(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex, uint8_t times);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structCLP_1_1SegmentScaling.html">   61</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structCLP_1_1SegmentScaling.html">SegmentScaling</a> {</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c">   65</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c">segmentLength</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d">   69</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d">scaleToSize</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> scaleSegments(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex, <span class="keyword">const</span> <a class="code" href="structCLP_1_1SegmentScaling.html">SegmentScaling</a>* <span class="keyword">const</span> segments,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                   <span class="keywordtype">int</span> segmentsCount);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> reverse(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">void</span> gammaCorrection(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> fixIcueBrightness(<a class="code" href="classFastLEDController.html">FastLEDController</a>* controller, uint8_t channelIndex);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}  <span class="comment">// namespace CLP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructCLP_1_1SegmentScaling_html_acc8285f3de56f38efba999c3a983422c"><div class="ttname"><a href="structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c">CLP::SegmentScaling::segmentLength</a></div><div class="ttdeci">int segmentLength</div><div class="ttdef"><b>Definition:</b> FastLEDControllerUtils.h:58</div></div>
-<div class="ttc" id="astructCLP_1_1SegmentScaling_html"><div class="ttname"><a href="structCLP_1_1SegmentScaling.html">CLP::SegmentScaling</a></div><div class="ttdef"><b>Definition:</b> FastLEDControllerUtils.h:54</div></div>
+<div class="ttc" id="astructCLP_1_1SegmentScaling_html_acc8285f3de56f38efba999c3a983422c"><div class="ttname"><a href="structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c">CLP::SegmentScaling::segmentLength</a></div><div class="ttdeci">int segmentLength</div><div class="ttdef"><b>Definition:</b> FastLEDControllerUtils.h:65</div></div>
+<div class="ttc" id="astructCLP_1_1SegmentScaling_html"><div class="ttname"><a href="structCLP_1_1SegmentScaling.html">CLP::SegmentScaling</a></div><div class="ttdef"><b>Definition:</b> FastLEDControllerUtils.h:61</div></div>
 <div class="ttc" id="aclassFastLEDController_html"><div class="ttname"><a href="classFastLEDController.html">FastLEDController</a></div><div class="ttdef"><b>Definition:</b> FastLEDController.h:37</div></div>
-<div class="ttc" id="astructCLP_1_1SegmentScaling_html_a84853493c38296a8505e0292e843ba9d"><div class="ttname"><a href="structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d">CLP::SegmentScaling::scaleToSize</a></div><div class="ttdeci">int scaleToSize</div><div class="ttdef"><b>Definition:</b> FastLEDControllerUtils.h:62</div></div>
+<div class="ttc" id="astructCLP_1_1SegmentScaling_html_a84853493c38296a8505e0292e843ba9d"><div class="ttname"><a href="structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d">CLP::SegmentScaling::scaleToSize</a></div><div class="ttdeci">int scaleToSize</div><div class="ttdef"><b>Definition:</b> FastLEDControllerUtils.h:69</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
