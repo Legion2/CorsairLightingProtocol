@@ -15,6 +15,7 @@
 */
 #include "CorsairLightingProtocolResponse.h"
 
+#include "CLPUtils.h"
 #include "CorsairLightingProtocolConstants.h"
 
 void CorsairLightingProtocolResponse::send(const uint8_t* data, size_t size) const {
@@ -25,12 +26,14 @@ void CorsairLightingProtocolResponse::send(const uint8_t* data, size_t size) con
 	response[0] = PROTOCOL_RESPONSE_OK;
 	memcpy(response + 1, data, size);
 	sendX(response, sizeof(response));
+	CLP_LOG(3, F("Sent response %02X: OK\r\n"), response[0]);
 }
 
 void CorsairLightingProtocolResponse::sendError() const {
 	uint8_t response[RESPONSE_SIZE] = {0x00};
 	response[0] = PROTOCOL_RESPONSE_ERROR;
 	sendX(response, sizeof(response));
+	CLP_LOG(3, F("Sent response %02X: Error\r\n"), response[0]);
 }
 
 void CorsairLightingProtocolResponse::send_P(const uint8_t* data, size_t size) const {
@@ -41,4 +44,5 @@ void CorsairLightingProtocolResponse::send_P(const uint8_t* data, size_t size) c
 	response[0] = PROTOCOL_RESPONSE_OK;
 	memcpy_P(response + 1, data, size);
 	sendX(response, sizeof(response));
+	CLP_LOG(3, F("Sent response %02X: OK\r\n"), response[0]);
 }

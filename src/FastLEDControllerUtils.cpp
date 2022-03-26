@@ -18,17 +18,27 @@
 #include <FastLED.h>
 #include <math.h>
 
+#include "CLPUtils.h"
+
 void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex) {
 	auto& channel = controller->getChannel(channelIndex);
 	if (channel.mode == ChannelMode::SoftwarePlayback) {
 		auto leds = controller->getLEDs(channelIndex);
 		auto count = controller->getLEDCount(channelIndex);
-		for (uint8_t fanIndex = 0; fanIndex < count / 16; fanIndex++) {
-			for (uint8_t ledIndex = 0; ledIndex < 8; ledIndex++) {
-				CRGB temp = leds[fanIndex * 16 + ledIndex];
-				leds[fanIndex * 16 + ledIndex] = leds[fanIndex * 16 + 15 - ledIndex];
-				leds[fanIndex * 16 + 15 - ledIndex] = temp;
-			}
+		for (uint8_t fanIndex = 0; fanIndex < count / LL_FAN_LEDS; fanIndex++) {
+			CLP::reverse(&leds[fanIndex * LL_FAN_LEDS], &leds[fanIndex * LL_FAN_LEDS + LL_FAN_LEDS - 1] + 1);
+		}
+	}
+}
+
+void CLP::transformLC100ToStrip(FastLEDController* controller, uint8_t channelIndex) {
+	auto& channel = controller->getChannel(channelIndex);
+	if (channel.mode == ChannelMode::SoftwarePlayback) {
+		auto leds = controller->getLEDs(channelIndex);
+		auto count = controller->getLEDCount(channelIndex);
+		for (uint8_t lc100Index = 0; lc100Index < count / LC100_LEDS; lc100Index++) {
+			CLP::rotate(&leds[lc100Index * LC100_LEDS], &leds[lc100Index * LC100_LEDS + LC100_FIRST_LED_OFFSET],
+						&leds[lc100Index * LC100_LEDS + LC100_LEDS - 1] + 1);  //  End address after the last element
 		}
 	}
 }

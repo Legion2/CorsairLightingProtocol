@@ -20,8 +20,9 @@
 void LEDController::handleLEDControl(const Command& command, const CorsairLightingProtocolResponse* response) {
 	lastCommand = millis();
 	auto& data = command.data;
+	CLP_LOG(3, F("Received LED command %02X: "), command.command);
 	if (command.command == WRITE_LED_TRIGGER) {
-		CLP_LOG(3, F("Write LED trigger\r\n"));
+		CLP_LOG(3, F("Write trigger\r\n"));
 		triggerLEDUpdate();
 		saveIfNeeded();
 	} else {
@@ -32,7 +33,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 		const uint8_t& channel = data[0];
 		switch (command.command) {
 			case READ_LED_STRIP_MASK: {
-				CLP_LOG(3, F("Read LED strip mask\r\n"));
+				CLP_LOG(3, F("Read strip mask\r\n"));
 				uint8_t ledMask[GROUPS_NUM];
 				for (uint8_t i = 0; i < GROUPS_NUM; i++) {
 					if (i < channels[channel].groupsSet) {
@@ -44,20 +45,18 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				response->send(ledMask, sizeof(ledMask));
 				// don't send default response
 				return;
-				break;
 			}
 			case WRITE_LED_RGB_VALUE: {
-				CLP_LOG(1, F("Write LED RGB value!\r\n"));
+				CLP_LOG(1, F("Write RGB value!\r\n"));
 #ifdef DEBUG
 				Serial.println(F("WriteLedRgbValue"));
 #endif
 				// TODO
 				response->sendError();
 				return;
-				break;
 			}
 			case WRITE_LED_COLOR_VALUES: {
-				CLP_LOG(3, F("Write LED color values\r\n"));
+				CLP_LOG(3, F("Write color values\r\n"));
 				const uint8_t offset = data[1];
 				const size_t inputLength = min((size_t)data[2], sizeof(data) - 4);
 				const uint8_t color = data[3];
@@ -70,12 +69,12 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				break;
 			}
 			case WRITE_LED_CLEAR: {
-				CLP_LOG(3, F("Write LED clear\r\n"));
+				CLP_LOG(3, F("Write clear\r\n"));
 				clearLEDColorValues(channel);
 				break;
 			}
 			case WRITE_LED_GROUP_SET: {
-				CLP_LOG(3, F("Write LED group set\r\n"));
+				CLP_LOG(3, F("Write group set\r\n"));
 				if (channels[channel].groupsSet >= GROUPS_NUM) {
 					CLP_LOG(1, F("Invalid LED group: %d\r\n"), channels[channel].groupsSet);
 					response->sendError();
@@ -112,17 +111,17 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				break;
 			}
 			case WRITE_LED_EXTERNAL_TEMP: {
-				CLP_LOG(3, F("Write LED external temp\r\n"));
+				CLP_LOG(3, F("Write external temp\r\n"));
 				setLEDExternalTemperature(channel, CLP::fromBigEndian(data[2], data[3]));
 				break;
 			}
 			case WRITE_LED_GROUPS_CLEAR: {
-				CLP_LOG(3, F("Write LED groups clear\r\n"));
+				CLP_LOG(3, F("Write groups clear\r\n"));
 				triggerSave |= clearLEDGroups(channel);
 				break;
 			}
 			case WRITE_LED_MODE: {
-				CLP_LOG(3, F("Write LED mode\r\n"));
+				CLP_LOG(3, F("Write mode\r\n"));
 				const ChannelMode mode = static_cast<ChannelMode>(data[1]);
 				if (!isValidChannelMode(mode)) {
 					CLP_LOG(1, F("Unkown LED channel mode: %02X\r\n"), data[1]);
@@ -139,13 +138,13 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				break;
 			}
 			case WRITE_LED_BRIGHTNESS: {
-				CLP_LOG(3, F("Write LED brightness\r\n"));
+				CLP_LOG(3, F("Write brightness\r\n"));
 				uint8_t brightness = CLP::convert100To255(data[1]);
 				triggerSave |= setLEDBrightness(channel, brightness);
 				break;
 			}
 			case WRITE_LED_COUNT: {
-				CLP_LOG(2, F("Write LED count!\r\n"));
+				CLP_LOG(2, F("Write count!\r\n"));
 #ifdef DEBUG
 				Serial.print(F("WRITE_LED_COUNT: "));
 				Serial.print(data[1], HEX);
@@ -156,7 +155,7 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				break;
 			}
 			case WRITE_LED_PORT_TYPE: {
-				CLP_LOG(3, F("Write LED port type\r\n"));
+				CLP_LOG(3, F("Write port type\r\n"));
 				const PortType portType = static_cast<PortType>(data[1]);
 				if (!isValidPortType(portType)) {
 					CLP_LOG(1, F("Invalid port type: %d\r\n"), portType);
@@ -167,21 +166,20 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 				break;
 			}
 			case WRITE_LED_START_AUTODETECTION: {
-				CLP_LOG(3, F("Write LED start autodet\r\n"));
+				CLP_LOG(3, F("Write start autodet\r\n"));
 				startLEDAutodetection(channel);
 				break;
 			}
 			case READ_LED_AUTODETECTION_RESULTS: {
-				CLP_LOG(3, F("Write LED get autodet results\r\n"));
+				CLP_LOG(3, F("Write get autodet results\r\n"));
 				const uint8_t result = getLEDAutodetectionResult(channel);
 				uint8_t buffer[] = {result};
 				response->send(buffer, sizeof(buffer));
 				// don't send default response
 				return;
-				break;
 			}
 			default: {
-				CLP_LOG(1, F("Unkown command: %02X\r\n"), command.command);
+				CLP_LOG(1, F("Unkown command\r\n"));
 #ifdef DEBUG
 				Serial.print(F("unkown command: "));
 				Serial.print(command.command, HEX);

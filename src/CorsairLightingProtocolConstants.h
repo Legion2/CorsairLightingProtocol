@@ -17,7 +17,7 @@
 
 #include "Arduino.h"
 
-// CLP_DEBUG:      0=Off, 1=Error, 2=Warning, 3=Info, 4=Data (Only for TinyUSB)
+// CLP_DEBUG:      0=Off, 1=Error, 2=Warning, 3=Info, 4=Data
 // CLP_DEBUG_BAUD: Setting too low will severely affect performance depending on debug level;
 //                 2000000 needed when CLP_DEBUG is 4
 #define CLP_DEBUG 0
@@ -76,18 +76,27 @@
 
 #define CORSAIR_MANUFACTURER "Corsair"
 #define CORSAIR_VID 0x1B1C
-#define CORSAIR_LNP_PRODUCT "Lighting Node PRO"
+#define CORSAIR_LNP_PRODUCT "Lighting Node PRO"  // Antigua
 #define CORSAIR_LNP_PID 0x0C0B
-#define CORSAIR_CP_PRODUCT "Commander PRO"
+#define CORSAIR_CP_PRODUCT "Commander PRO"  // Barbuda
 #define CORSAIR_CP_PID 0x0C10
-#define CORSAIR_LNC_PRODUCT "Lighting Node CORE"
+#define CORSAIR_LNC_PRODUCT "Lighting Node CORE"  // Kauai
 #define CORSAIR_LNC_PID 0x0C1A
-#define CORSAIR_SLC_PRODUCT "Smart Lighting Controller"
+#define CORSAIR_SLC_PRODUCT "Smart Lighting Controller"  // Borealis
 #define CORSAIR_SLC_PID 0x0C1E
-#define CORSAIR_SLT_PRODUCT "Smart Lighting Towers"
+#define CORSAIR_SLT_PRODUCT "Smart Lighting Towers"  // Lightsabers
 #define CORSAIR_SLT_PID 0x0C23
 #define CORSAIR_CC_PRODUCT "CORSAIR iCUE Commander CORE"
 #define CORSAIR_CC_PID 0x0C1C
+
+#define QL_FAN_LEDS 34
+#define LL_FAN_LEDS 16
+#define HD_FAN_LEDS 12
+#define EIGHT_LED_FAN_LEDS 8
+#define ML_PRO_FAN_LEDS 4
+
+#define LC100_LEDS 9
+#define LC100_FIRST_LED_OFFSET 3
 
 typedef enum {
 	CORSAIR_LIGHTING_NODE_PRO = 0,

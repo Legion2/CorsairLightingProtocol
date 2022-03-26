@@ -19,6 +19,7 @@
 
 void TemperatureController::handleTemperatureControl(const Command& command,
 													 const CorsairLightingProtocolResponse* response) {
+	CLP_LOG(3, F("Received command %02X: "), command.command);
 	switch (command.command) {
 		case READ_TEMPERATURE_MASK: {
 			CLP_LOG(3, F("Read temp mask\r\n"));
@@ -71,7 +72,7 @@ void TemperatureController::handleTemperatureControl(const Command& command,
 			break;
 		}
 		default:
-			CLP_LOG(1, F("Unkown command: %02X\r\n"), command.command);
+			CLP_LOG(1, F("Unkown command\r\n"));
 			response->sendError();
 			return;
 	}

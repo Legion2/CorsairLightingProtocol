@@ -98,12 +98,12 @@ int CLP::printf(const __FlashStringHelper* __restrict format, ...) {
 
 void CLP::printData(uint8_t const* buf, uint32_t bufsize, bool address_table) {
 	if (address_table) {
-		clpPrintf(">>>> ");
+		clpPrintf("\t>>>> ");
 		for (uint32_t i = 0; i < 16; i++) clpPrintf("0x%X ", i);
 		clpPrintf("\r\n");
 	}
 	for (uint32_t i = 0; i < bufsize; i++) {
-		if (address_table && (i % 16 == 0)) clpPrintf("0x%02X ", (i / 16) << 4);
+		if (address_table && (i % 16 == 0)) clpPrintf("\t0x%02X ", (i / 16) << 4);
 		clpPrintf(" %02X ", buf[i]);
 		if ((i + 1) % 16 == 0 || (i + 1) == bufsize) clpPrintf("\r\n");
 	}
