@@ -32,7 +32,7 @@ void CorsairLightingFirmware::handleFirmwareCommand(const Command& command,
 			break;
 		}
 		case READ_FIRMWARE_VERSION: {
-			response->send_P(firmwareVersions[product], FIRMWARE_VERSION_SIZE);
+			response->send_P(pgm_read_word(&(firmwareVersions[product])), FIRMWARE_VERSION_SIZE);
 			break;
 		}
 		case READ_DEVICE_ID: {
