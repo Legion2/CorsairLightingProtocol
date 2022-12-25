@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classLEDController.html#ac68f3b572fb9f8177d6d3638e406a59b":[0,0,22,1],
 "classLEDController.html#ace62f072476e37f46a17419d161e4804":[0,0,22,15],
 "classLEDController.html#ad86b10620d6a42b262a9ae9a27a57769":[0,0,22,16],
 "classLEDController.html#af37cc5a6c0ff88bd904e7cd1ffa7b9da":[0,0,22,10],
@@ -68,9 +67,9 @@ var NAVTREEINDEX1 =
 "hierarchy.html":[0,2],
 "index.html":[],
 "pages.html":[],
-"structCLP_1_1SegmentScaling.html":[0,0,0,1],
-"structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d":[0,0,0,1,0],
-"structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c":[0,0,0,1,1],
+"structCLP_1_1SegmentScaling.html":[0,0,0,0],
+"structCLP_1_1SegmentScaling.html#a84853493c38296a8505e0292e843ba9d":[0,0,0,0,0],
+"structCLP_1_1SegmentScaling.html#acc8285f3de56f38efba999c3a983422c":[0,0,0,0,1],
 "structCommand.html":[0,0,2],
 "structCommand.html#a33a93dc82c62e447cf9bed378df8d68b":[0,0,2,1],
 "structCommand.html#a78118c7291cccd59d58731a2e0161dd4":[0,0,2,0],

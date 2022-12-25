@@ -13,7 +13,7 @@ var searchData=
   ['setfanspeed_197',['setFanSpeed',['../classFanController.html#a98e2dca8577eb24654828182f56c0d85',1,'FanController::setFanSpeed()'],['../classSimpleFanController.html#a45d3c5f279a18df28159620c7c3b0623',1,'SimpleFanController::setFanSpeed()']]],
   ['setledbrightness_198',['setLEDBrightness',['../classLEDController.html#aaf9030aa97cede5d578f44bdd679a4d0',1,'LEDController']]],
   ['setledcolorvalues_199',['setLEDColorValues',['../classFastLEDController.html#a7869f274c4d3c7005205d1d9268836bc',1,'FastLEDController::setLEDColorValues()'],['../classLEDController.html#a66c68b7fe68ea04b750e7ce1619be987',1,'LEDController::setLEDColorValues()']]],
-  ['setledexternaltemperature_200',['setLEDExternalTemperature',['../classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba',1,'FastLEDController::setLEDExternalTemperature()'],['../classLEDController.html#a0cd9f8d59afdb99860df3ae951935c25',1,'LEDController::setLEDExternalTemperature()']]],
+  ['setledexternaltemperature_200',['setLEDExternalTemperature',['../classFastLEDController.html#a853f628da3ba9ef12b667d48a277e9ba',1,'FastLEDController::setLEDExternalTemperature()'],['../classLEDController.html#a0cd9f8d59afdb99860df3ae951935c25',1,'LEDController::setLEDExternalTemperature(uint8_t channel, uint16_t temp)=0']]],
   ['setledmode_201',['setLEDMode',['../classLEDController.html#ad86b10620d6a42b262a9ae9a27a57769',1,'LEDController']]],
   ['setledporttype_202',['setLEDPortType',['../classLEDController.html#af894e3de293907ba4600c8c4b75fb96e',1,'LEDController']]],
   ['setserialnumber_203',['setSerialNumber',['../classCLP_1_1RawHID__.html#ab8c858ed215f15e97a98ed23e6e536e0',1,'CLP::RawHID_']]],

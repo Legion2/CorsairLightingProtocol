@@ -21,36 +21,66 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="FastLEDControllerStorage_8h_source.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="191.5,-123.5 191.5,-142.5 358.5,-142.5 358.5,-123.5 191.5,-123.5"/>
-<text text-anchor="middle" x="275" y="-130.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/FastLEDControllerStorage.h</text>
+<g id="a_node2"><a xlink:href="FastLEDController_8h_source.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="100,-62 100,-81 228,-81 228,-62 100,-62"/>
+<text text-anchor="middle" x="164" y="-69" font-family="Helvetica,sans-Serif" font-size="10.00">src/FastLEDController.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node2 -->
 <g id="edge1" class="edge">
 <title>Node1&#45;&gt;Node2</title>
+<path fill="none" stroke="midnightblue" d="M203.41,-171.9C196.3,-163.79 188.3,-153.47 183,-143 172.46,-122.19 167.25,-94.88 165.16,-81.16"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="201.01,-174.46 210.35,-179.46 206.17,-169.73 201.01,-174.46"/>
+</g>
+<!-- Node5 -->
+<g id="node5" class="node">
+<title>Node5</title>
+<g id="a_node5"><a xlink:href="FastLEDControllerStorage_8h_source.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="191.5,-123.5 191.5,-142.5 358.5,-142.5 358.5,-123.5 191.5,-123.5"/>
+<text text-anchor="middle" x="275" y="-130.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/FastLEDControllerStorage.h</text>
+</a>
+</g>
+</g>
+<!-- Node1&#45;&gt;Node5 -->
+<g id="edge4" class="edge">
+<title>Node1&#45;&gt;Node5</title>
 <path fill="none" stroke="midnightblue" d="M235.33,-172.25C245.26,-162.67 257.59,-150.79 265.84,-142.83"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="232.77,-169.86 228,-179.32 237.63,-174.9 232.77,-169.86"/>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="FastLEDController_8h_source.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="100,-62 100,-81 228,-81 228,-62 100,-62"/>
-<text text-anchor="middle" x="164" y="-69" font-family="Helvetica,sans-Serif" font-size="10.00">src/FastLEDController.h</text>
+<g id="a_node3"><a xlink:href="CorsairLightingProtocol_8h.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="0,-0.5 0,-19.5 156,-19.5 156,-0.5 0,-0.5"/>
+<text text-anchor="middle" x="78" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/CorsairLightingProtocol.h</text>
 </a>
 </g>
-</g>
-<!-- Node1&#45;&gt;Node3 -->
-<g id="edge6" class="edge">
-<title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M203.41,-171.9C196.3,-163.79 188.3,-153.47 183,-143 172.46,-122.19 167.25,-94.88 165.16,-81.16"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="201.01,-174.46 210.35,-179.46 206.17,-169.73 201.01,-174.46"/>
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge2" class="edge">
 <title>Node2&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M143.2,-56.11C126.66,-44.67 104.08,-29.05 90.3,-19.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="141.46,-59.16 151.68,-61.98 145.45,-53.41 141.46,-59.16"/>
+</g>
+<!-- Node4 -->
+<g id="node4" class="node">
+<title>Node4</title>
+<g id="a_node4"><a xlink:href="FastLEDControllerUtils_8h_source.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="174,-0.5 174,-19.5 326,-19.5 326,-0.5 174,-0.5"/>
+<text text-anchor="middle" x="250" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/FastLEDControllerUtils.h</text>
+</a>
+</g>
+</g>
+<!-- Node2&#45;&gt;Node4 -->
+<g id="edge3" class="edge">
+<title>Node2&#45;&gt;Node4</title>
+<path fill="none" stroke="midnightblue" d="M184.8,-56.11C201.34,-44.67 223.92,-29.05 237.7,-19.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="182.55,-53.41 176.32,-61.98 186.54,-59.16 182.55,-53.41"/>
+</g>
+<!-- Node5&#45;&gt;Node2 -->
+<g id="edge5" class="edge">
+<title>Node5&#45;&gt;Node2</title>
 <path fill="none" stroke="midnightblue" d="M250.21,-118.71C228.71,-107.19 198.24,-90.86 179.87,-81.01"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="248.63,-121.84 259.1,-123.48 251.94,-115.67 248.63,-121.84"/>
 </g>
@@ -64,41 +94,11 @@
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node6 -->
-<g id="edge5" class="edge">
-<title>Node2&#45;&gt;Node6</title>
+<!-- Node5&#45;&gt;Node6 -->
+<g id="edge6" class="edge">
+<title>Node5&#45;&gt;Node6</title>
 <path fill="none" stroke="midnightblue" d="M288.6,-115.81C296.3,-106.65 305.84,-95.3 313.22,-86.52"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="285.92,-113.57 282.16,-123.48 291.28,-118.07 285.92,-113.57"/>
-</g>
-<!-- Node4 -->
-<g id="node4" class="node">
-<title>Node4</title>
-<g id="a_node4"><a xlink:href="CorsairLightingProtocol_8h.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="0,-0.5 0,-19.5 156,-19.5 156,-0.5 0,-0.5"/>
-<text text-anchor="middle" x="78" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/CorsairLightingProtocol.h</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node4 -->
-<g id="edge3" class="edge">
-<title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M143.2,-56.11C126.66,-44.67 104.08,-29.05 90.3,-19.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="141.46,-59.16 151.68,-61.98 145.45,-53.41 141.46,-59.16"/>
-</g>
-<!-- Node5 -->
-<g id="node5" class="node">
-<title>Node5</title>
-<g id="a_node5"><a xlink:href="FastLEDControllerUtils_8h_source.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="174,-0.5 174,-19.5 326,-19.5 326,-0.5 174,-0.5"/>
-<text text-anchor="middle" x="250" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/FastLEDControllerUtils.h</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node5 -->
-<g id="edge4" class="edge">
-<title>Node3&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M184.8,-56.11C201.34,-44.67 223.92,-29.05 237.7,-19.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="182.55,-53.41 176.32,-61.98 186.54,-59.16 182.55,-53.41"/>
 </g>
 </g>
 </svg>
