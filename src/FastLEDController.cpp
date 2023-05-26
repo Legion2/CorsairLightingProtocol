@@ -200,8 +200,13 @@ bool FastLEDController::renderColorWave(ChannelData& channelData, LEDGroup& grou
 }
 
 bool FastLEDController::renderStatic(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
-	fill_solid(&channelData.leds[group.ledIndex], groupLedCount, group.color1);
-	return true;
+	int duration = applySpeed(100, group.speed);
+	int count = animation_step_count(duration, 1);	
+	if (count > 0) {
+		fill_solid(&channelData.leds[group.ledIndex], groupLedCount, group.color1);
+		return true;
+	}
+	return false;	
 }
 
 bool FastLEDController::renderTemperature(ChannelData& channelData, LEDGroup& group, int groupLedCount) {
