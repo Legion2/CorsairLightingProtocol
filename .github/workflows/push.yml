@@ -13,7 +13,7 @@ jobs:
             "Legion2:avr:promicro3vclp",
           ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
@@ -45,7 +45,7 @@ jobs:
       matrix:
         board: ["arduino:avr:uno", "arduino:avr:mega:cpu=atmega2560"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
@@ -61,7 +61,7 @@ jobs:
       matrix:
         board: ["Legion2:avr:HoodLoader2atmega16u2clp"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
@@ -92,7 +92,7 @@ jobs:
           ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
@@ -116,7 +116,7 @@ jobs:
           ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Get adafruit-nrfutil
         run: |
           pip3 install adafruit-nrfutil --user
