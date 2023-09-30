@@ -29,7 +29,6 @@ CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolSerial cHID(&cLP);
 
 CRGB ledsChannel1[10];
-CRGB ledsChannel2[10];
 
 // Declare the set4PinLEDs function for Channel 1
 void set4PinLEDs(const CRGB& color) {
@@ -60,10 +59,10 @@ void setup() {
     set4PinLEDs(ledsChannel1[0]);
   });
 
-  ledController.addLEDs(1, ledsChannel2, 10);
+  ledController.addLEDs(1, ledsChannel1, 10);
   ledController.onUpdateHook(1, []() {
-    // use color of first LED of the second channel
-    set4PinLEDs2(ledsChannel2[0]);
+    // use color of second LED of the first channel
+    set4PinLEDs2(ledsChannel1[1]);
   });
 }
 
