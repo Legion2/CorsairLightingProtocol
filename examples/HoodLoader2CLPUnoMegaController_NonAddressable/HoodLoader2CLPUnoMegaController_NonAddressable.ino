@@ -9,7 +9,9 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-   Non-Addressable mode made arduino-uno compatible by Space Yeti Studios
+
+   
+   Non-addressable version made Arduino-compatible by Space Yeti Studios.
 */
 #include <CorsairLightingProtocol.h>
 #include <FastLED.h>
@@ -55,15 +57,11 @@ void setup() {
   pinMode(BLUE_PIN2, OUTPUT);
 
   ledController.addLEDs(0, ledsChannel1, 10);
+  ledController.addLEDs(1, ledsChannel1, 10);
   ledController.onUpdateHook(0, []() {
     // use color of first LED of the first channel
     set4PinLEDs(ledsChannel1[0]);
-  });
-
-  ledController.addLEDs(1, ledsChannel2, 10);
-  ledController.onUpdateHook(1, []() {
-    // use color of first LED of the second channel
-    set4PinLEDs2(ledsChannel2[0]);
+    set4PinLEDs2(ledsChannel1[1]);
   });
 }
 
