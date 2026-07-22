@@ -45,6 +45,8 @@ class FastLEDController : public LEDController {
 		 * store an array for each color, used for software playback
 		 */
 		uint8_t* valuesBuffer[3] = {nullptr};
+		/** True after at least one direct-color payload has been received. */
+		bool colorDataReceived = false;
 		/**
 		 * External temperature value used by this channel for temperature based lighting.
 		 */

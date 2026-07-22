@@ -27,7 +27,7 @@ void CorsairLightingProtocolSerial::update() {
 	bool available = handleSerial();
 	if (available) {
 		Command command;
-		memcpy(command.raw, rawCommand, sizeof(command.raw));
+		::memcpy(command.raw, rawCommand, sizeof(command.raw));
 		controller->handleCommand(command, this);
 	}
 }

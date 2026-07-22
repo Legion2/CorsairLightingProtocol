@@ -58,7 +58,9 @@ void LEDController::handleLEDControl(const Command& command, const CorsairLighti
 			case WRITE_LED_COLOR_VALUES: {
 				CLP_LOG(3, F("Write color values\r\n"));
 				const uint8_t offset = data[1];
-				const size_t inputLength = min((size_t)data[2], sizeof(data) - 4);
+				const size_t requestedLength = (size_t)data[2];
+				const size_t maximumLength = sizeof(data) - 4;
+				const size_t inputLength = requestedLength < maximumLength ? requestedLength : maximumLength;
 				const uint8_t color = data[3];
 				if (color >= 3) {
 					CLP_LOG(1, F("Invalid color: %d\r\n"), color);

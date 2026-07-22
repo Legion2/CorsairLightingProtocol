@@ -40,7 +40,7 @@ void FastLEDController::addLEDs(uint8_t channel, CRGB* leds, uint8_t count) {
 	channelData[channel].ledCount = count;
 	channelData[channel].leds = leds;
 	for (uint8_t*& buffer : channelData[channel].valuesBuffer) {
-		buffer = new uint8_t[count];
+		buffer = new uint8_t[count]();
 	}
 }
 
@@ -371,7 +371,9 @@ bool FastLEDController::updateLEDs() {
 			case ChannelMode::HardwarePlayback: {
 				for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
 					LEDGroup& group = channel.groups[groupIndex];
-					int groupLedCount = min((int)channelData[channelId].ledCount - group.ledIndex, (int)group.ledCount);
+					const int availableLedCount = (int)channelData[channelId].ledCount - group.ledIndex;
+					int groupLedCount =
+						availableLedCount < (int)group.ledCount ? availableLedCount : (int)group.ledCount;
 					if (groupLedCount <= 0) {
 						continue;
 					}
@@ -441,7 +443,7 @@ bool FastLEDController::updateLEDs() {
 				break;
 			}
 			case ChannelMode::SoftwarePlayback: {
-				if (trigger_update) {
+				if (trigger_update && channelData[channelId].colorDataReceived) {
 					auto& data = channelData[channelId];
 					for (int i = 0; i < data.ledCount; i++) {
 						data.leds[i] = CRGB(data.valuesBuffer[0][i], data.valuesBuffer[1][i], data.valuesBuffer[2][i]);
@@ -500,16 +502,19 @@ void FastLEDController::setLEDExternalTemperature(uint8_t channel, uint16_t temp
 
 void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values,
 										  size_t len) {
-	int copyLength = min((int)channelData[channel].ledCount - offset, (int)len);
+	const int availableLength = (int)channelData[channel].ledCount - offset;
+	int copyLength = availableLength < (int)len ? availableLength : (int)len;
 	if (copyLength > 0) {
-		memcpy(channelData[channel].valuesBuffer[color] + offset, values, copyLength);
+		::memcpy(channelData[channel].valuesBuffer[color] + offset, values, copyLength);
+		channelData[channel].colorDataReceived = true;
 	}
 }
 
 void FastLEDController::clearLEDColorValues(uint8_t channel) {
 	for (uint8_t*& buffer : channelData[channel].valuesBuffer) {
-		memset(buffer, 0, channelData[channel].ledCount);
+		::memset(buffer, 0, channelData[channel].ledCount);
 	}
+	channelData[channel].colorDataReceived = false;
 }
 
 uint8_t FastLEDController::getLEDAutodetectionResult(uint8_t channel) { return channelData[channel].ledCount; }
