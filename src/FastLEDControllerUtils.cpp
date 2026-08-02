@@ -17,8 +17,13 @@
 
 #include <FastLED.h>
 #include <math.h>
+#include <string.h>
 
 #include "CLPUtils.h"
+
+#if FASTLED_VERSION >= 3010000
+using fl::dim8_video;
+#endif
 
 void CLP::transformLLFanToStrip(FastLEDController* controller, uint8_t channelIndex) {
 	auto& channel = controller->getChannel(channelIndex);
@@ -73,7 +78,7 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 	auto count = controller->getLEDCount(channelIndex);
 	// skip first iteration, because LEDs already contains the data at the first position
 	for (int i = 1; i < times; i++) {
-		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
+		::memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
 	}
 }
 
