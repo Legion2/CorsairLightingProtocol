@@ -84,3 +84,7 @@ uint16_t TemperatureController::getTemperature(uint8_t temperatureSensor) {
 	}
 	return getTemperatureValue(temperatureSensor);
 }
+
+bool TemperatureController::hasTemperatureSensor(uint8_t temperatureSensor) {
+	return temperatureSensor < TEMPERATURE_NUM && isTemperatureSensorConnected(temperatureSensor);
+}

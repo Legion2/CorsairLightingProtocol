@@ -132,6 +132,7 @@ Now you can create lighting effects in the "Lighting Channel #" tabs.
 - [Repeat or scale LED channels](#repeat-or-scale-led-channels)
 - [Increase the Brightness of the LEDs](#increase-the-brightness-of-the-leds)
 - [Hardware Lighting mode](#hardware-lighting-mode)
+- [Fan control with a Commander PRO](#fan-control-with-a-commander-pro)
 
 ## How it works
 This library uses the USB HID interface of the ATmega32U4.
@@ -210,6 +211,25 @@ It allows you the set lighting effects that will be active when iCUE **is not** 
 This is the case when the PC is off, in sleep mode, booting or the user is logged out.
 So if you want to have lighting effects in all these situations, use the Hardware Lighting mode.
 If you don't want it, configure a static black color.
+
+## Fan control with a Commander PRO
+The Commander PRO examples turn the Arduino into a fan controller with temperature sensors.
+iCUE shows up to six fan ports and four temperature sensors, lets you set fixed speeds or fan curves per port and displays the temperatures and speeds.
+
+- `CLP::ThermistorTemperatureController` reads 10k NTC thermistors on analog pins: 10k resistor to GND, thermistor to VCC, sensor input on the pin in between.
+  Pass a `CLP::ThermistorConfig` with the beta value of your sensors, water temperature sensors for PCs often use 3435 instead of 3950.
+- `CLP::PWMFan` drives a 4-pin fan on a PWM pin, on the ATmega32U4 the pins 5, 9 and 10 run at the 25 kHz the fans expect.
+  `CLP::TachoFan` additionally reads the tacho wire, so iCUE shows the real speed and notices a stalled fan.
+  Several fans on a splitter cable share one `CLP::PWMOutput`.
+- `CLP::SimpleFanController` evaluates the fan curves on the board and stores the settings in the EEPROM with `CLP::FanControllerStorageEEPROM`, so a curve on a sensor of the Commander PRO keeps working while iCUE is not running.
+  A curve on a sensor of the PC (CPU, GPU) needs iCUE; when the temperature updates stop for 10 seconds the controller falls back to the first local sensor, or to full power if there is none.
+  Until iCUE configures a port, its fan runs at 50%.
+
+See the [CommanderPRO](examples/CommanderPRO/CommanderPRO.ino) example for four fans and two sensors and [CommanderPROTacho](examples/CommanderPROTacho/CommanderPROTacho.ino) for a water cooling loop with six fans on two radiators, real speed readings and a water temperature sensor.
+
+**Memory:** the ATmega32U4 has 2560 bytes of RAM.
+Every LED costs 6 bytes, the fan controller about 250 bytes, and the sketch needs roughly 500 bytes free for the stack on top of the "Global variables" the compiler reports.
+A Commander PRO with two channels of 96 LEDs does not fit, use 60 LEDs per channel or a single channel with 96 LEDs.
 
 # License
 This project is licensed under the Apache 2.0 License.

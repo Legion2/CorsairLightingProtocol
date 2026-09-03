@@ -1,131 +1,190 @@
 on: [push, pull_request, workflow_dispatch]
 name: Test
+
+# All tool and dependency versions live in this block. Dependabot does not track
+# Arduino cores or libraries, so a version bump is a one-line change here.
+# The FastLED versions are repeated in the job matrices because the env context
+# is not available in strategy.matrix.
+env:
+  ARDUINO_AVR: "1.8.8"
+  SPARKFUN_AVR: "1.1.13"
+  ADAFRUIT_SAMD: "1.7.17"
+  ADAFRUIT_NRF52: "1.7.0"
+  RP2040: "6.0.0"
+  TINYUSB: "3.7.7"
+  # CLP Boards 0.4.0 bundles the SparkFun, Adafruit and HoodLoader2 pin variants
+  # and is the first release that works with arduino-cli >= 0.19, see
+  # https://github.com/Legion2/CorsairLightingProtocolBoards/issues/20
+  CLP_BOARDS: "0.4.0"
+  URL_SPARKFUN: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
+  URL_CLP_BOARDS: https://raw.githubusercontent.com/capull0/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+  URL_ADAFRUIT: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+  URL_RP2040: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+  AVR_SKETCHES: LightingNodePRO.ino,SingleStripLightingNodePRO.ino,CommanderPRO.ino,DeviceIDTool.ino,RepeatAndScale.ino,TransformLLFansFormatToStrip.ino,LS100.ino,LT100.ino,LightingNodeCORE.ino,NonAddressable.ino,AdditionalFeatures.ino,AmbientBacklight.ino,MultipleFans.ino,DebugSketch.ino,NoEEPROM.ino,CommanderPROTacho.ino
+  DEBUG_SKETCH_FLAGS: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
+
 jobs:
-  test:
-    name: Test for Board ${{ matrix.board }}
+  testAVR:
+    name: AVR ${{ matrix.board }} with FastLED ${{ matrix.fastled }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         board:
-          [
-            "Legion2:avr:leonardoclp",
-            "Legion2:avr:promicro5vclp",
-            "Legion2:avr:promicro3vclp",
-          ]
+          - arduino:avr:leonardo
+          - SparkFun:avr:promicro:cpu=16MHzatmega32U4
+          - SparkFun:avr:promicro:cpu=8MHzatmega32U4
+        fastled: ["3.5.0", "3.10.5"]
     steps:
       - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
-          platform-url: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-          arduino-platform: arduino:avr@1.8.3,SparkFun:avr@1.1.13,Legion2:avr@0.3.1
-          required-libraries: FastLED@3.5.0
-          sketch-names: LightingNodePRO.ino,
-            SingleStripLightingNodePRO.ino,
-            CommanderPRO.ino,
-            DeviceIDTool.ino,
-            RepeatAndScale.ino,
-            TransformLLFansFormatToStrip.ino,
-            LS100.ino,
-            LT100.ino,
-            LightingNodeCORE.ino,
-            NonAddressable.ino,
-            AdditionalFeatures.ino,
-            AmbientBacklight.ino,
-            MultipleFans.ino,
-            DebugSketch.ino,
-            NoEEPROM.ino
-          build-properties: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
-  testUnoMega:
-    name: Test Arduino Uno/Mega sketches for Board ${{ matrix.board }}
+          platform-url: ${{ env.URL_SPARKFUN }}
+          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }},SparkFun:avr@${{ env.SPARKFUN_AVR }}
+          required-libraries: FastLED@${{ matrix.fastled }}
+          sketch-names: ${{ env.AVR_SKETCHES }}
+          build-properties: ${{ env.DEBUG_SKETCH_FLAGS }}
+
+  testCLPBoards:
+    name: CLP Boards ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - Legion2:avr:leonardoclp:device=lnp
+          - Legion2:avr:promicro5vclp:device=cp
+          - Legion2:avr:promicro3vclp:device=slc
+          - Legion2:avr:feather32u4clp:device=lnc
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v3
+        with:
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: ${{ env.URL_CLP_BOARDS }}
+          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }},Legion2:avr@${{ env.CLP_BOARDS }}
+          required-libraries: FastLED@3.10.5
+          sketch-names: LightingNodePRO.ino,CommanderPRO.ino
+
+  testUnoMega:
+    name: ${{ matrix.board }} with FastLED ${{ matrix.fastled }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
       matrix:
         board: ["arduino:avr:uno", "arduino:avr:mega:cpu=atmega2560"]
+        fastled: ["3.5.0", "3.10.5"]
     steps:
       - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
-          arduino-platform: arduino:avr@1.8.3
-          required-libraries: FastLED@3.5.0
+          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }}
+          required-libraries: FastLED@${{ matrix.fastled }}
           sketch-names: HoodLoader2UnoMegaController.ino
+
   test16u2:
-    name: Test 16u2 sketch for Board ${{ matrix.board }}
+    name: ${{ matrix.board }} with FastLED ${{ matrix.fastled }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
+        # The HoodLoader2 platform itself pins avr-gcc 4.8 and no longer builds the
+        # current arduino:avr core; the CLP Boards entry uses the arduino:avr toolchain.
         board: ["Legion2:avr:HoodLoader2atmega16u2clp"]
+        fastled: ["3.5.0", "3.10.5"]
     steps:
       - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
-          platform-url: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json,https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-          arduino-platform: arduino:avr@1.8.3,HoodLoader2:avr@2.0.5,Legion2:avr@0.3.1
-          required-libraries: FastLED@3.5.0
+          platform-url: ${{ env.URL_CLP_BOARDS }}
+          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }},Legion2:avr@${{ env.CLP_BOARDS }}
+          required-libraries: FastLED@${{ matrix.fastled }}
           sketch-names: HoodLoader2CLPBridge.ino
+
   testAdafruitSAMD:
-    name: Test for Board ${{ matrix.board }}
+    name: ${{ matrix.board }} with FastLED ${{ matrix.fastled }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         board:
-          [
-            "adafruit:samd:adafruit_feather_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_metro_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_circuitplayground_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_gemma_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_trinket_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_qtpy_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_itsybitsy_m0:usbstack=tinyusb",
-            "adafruit:samd:adafruit_itsybitsy_m4:usbstack=tinyusb",
-            "adafruit:samd:adafruit_metro_m4_airliftlite:usbstack=tinyusb",
-#           "adafruit:samd:adafruit_feather_m4:usbstack=tinyusb", #Should work but doesn't have the pins needed for the sketch 
-            "adafruit:samd:adafruit_matrixportal_m4:usbstack=tinyusb"
-          ]
+          - "adafruit:samd:adafruit_feather_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_metro_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_circuitplayground_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_gemma_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_trinket_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_qtpy_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_itsybitsy_m0:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_itsybitsy_m4:usbstack=tinyusb"
+          - "adafruit:samd:adafruit_metro_m4_airliftlite:usbstack=tinyusb"
+          # "adafruit:samd:adafruit_feather_m4:usbstack=tinyusb" should work but doesn't have the pins needed for the sketch
+          - "adafruit:samd:adafruit_matrixportal_m4:usbstack=tinyusb"
+        # FastLED 3.10.4 and 3.10.5 do not compile against the Adafruit SAMD core
+        # (duplicate EIC_Handler, fixed upstream in FastLED/FastLED#4000 but not
+        # released yet). Add the current version back once a fixed release exists.
+        fastled: ["3.5.0"]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
-          platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-          arduino-platform: adafruit:samd@1.7.8
-          required-libraries: FastLED@3.5.0,Adafruit TinyUSB Library@1.9.2
+          platform-url: ${{ env.URL_ADAFRUIT }}
+          arduino-platform: adafruit:samd@${{ env.ADAFRUIT_SAMD }}
+          required-libraries: FastLED@${{ matrix.fastled }},Adafruit TinyUSB Library@${{ env.TINYUSB }}
           sketch-names: TinyUSB.ino
+
   testAdafruitnRF52:
-    name: Test for Board ${{ matrix.board }}
+    name: ${{ matrix.board }} with FastLED ${{ matrix.fastled }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         board:
-          [
-            "adafruit:nrf52:feather52840",
-            "adafruit:nrf52:itsybitsy52840",
-#           "adafruit:nrf52:cplaynrf52840", #Should work but doesn't have the pins needed for the sketch
-            "adafruit:nrf52:metro52840"
-          ]
+          - "adafruit:nrf52:feather52840"
+          - "adafruit:nrf52:itsybitsy52840"
+          # "adafruit:nrf52:cplaynrf52840" should work but doesn't have the pins needed for the sketch
+          - "adafruit:nrf52:metro52840"
+        fastled: ["3.5.0", "3.10.5"]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Get adafruit-nrfutil
-        run: |
-          pip3 install adafruit-nrfutil --user
+        run: pip3 install adafruit-nrfutil --user
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: 0.18.3
           arduino-board-fqbn: ${{ matrix.board }}
-          platform-url: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-          arduino-platform: adafruit:nrf52@1.3.0
-          required-libraries: FastLED@3.5.0,Adafruit TinyUSB Library@1.9.2
+          platform-url: ${{ env.URL_ADAFRUIT }}
+          arduino-platform: adafruit:nrf52@${{ env.ADAFRUIT_NRF52 }}
+          required-libraries: FastLED@${{ matrix.fastled }},Adafruit TinyUSB Library@${{ env.TINYUSB }}
+          sketch-names: TinyUSB.ino
+
+  testRP2040:
+    # FastLED supports the RP2040 since 3.6.0, so there is no 3.5.0 entry here.
+    # arduino-pico ships its own copy of the Adafruit TinyUSB library; installing
+    # the library separately would shadow the version that matches the core.
+    name: ${{ matrix.board }} with FastLED 3.10.5
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - "rp2040:rp2040:rpipico:usbstack=tinyusb"
+          - "rp2040:rp2040:rpipico2:usbstack=tinyusb"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build for ${{ matrix.board }}
+        uses: ArminJo/arduino-test-compile@v3
+        with:
+          arduino-board-fqbn: ${{ matrix.board }}
+          platform-url: ${{ env.URL_RP2040 }}
+          arduino-platform: rp2040:rp2040@${{ env.RP2040 }}
+          required-libraries: FastLED@3.10.5
           sketch-names: TinyUSB.ino

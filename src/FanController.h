@@ -151,4 +151,11 @@ protected:
 	 * @param type the FanDetectionType
 	 */
 	virtual void setFanDetectionType(uint8_t fan, FanDetectionType type) = 0;
+	/**
+	 * Detect which kind of fan is connected to a port. Used for ports with FanDetectionType::Auto.
+	 *
+	 * @param fan index of the fan
+	 * @return the detected FanMask, the default implementation reports no fan
+	 */
+	virtual FanMask detectFan(uint8_t fan);
 };

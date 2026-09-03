@@ -18,7 +18,21 @@ CorsairLightingFirmware	KEYWORD1
 IFanController	KEYWORD1
 FanController	KEYWORD1
 ITemperatureController	KEYWORD1
+ThermistorTemperatureController	KEYWORD1
+SimpleFanController	KEYWORD1
+FanControllerStorage	KEYWORD1
+FanControllerStorageEEPROM	KEYWORD1
+PWMOutput	KEYWORD1
+PWMFan	KEYWORD1
+TachoFan	KEYWORD1
 TemperatureController	KEYWORD1
+ThermistorTemperatureController	KEYWORD1
+SimpleFanController	KEYWORD1
+FanControllerStorage	KEYWORD1
+FanControllerStorageEEPROM	KEYWORD1
+PWMOutput	KEYWORD1
+PWMFan	KEYWORD1
+TachoFan	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -40,6 +54,9 @@ FanCurve	KEYWORD3
 LEDChannel	KEYWORD3
 LEDGroup	KEYWORD3
 SegmentScaling  KEYWORD3
+FanData	KEYWORD3
+ThermistorConfig	KEYWORD3
+FanControlMode	KEYWORD3
 
 #######################################
 # Constants (LITERAL1)

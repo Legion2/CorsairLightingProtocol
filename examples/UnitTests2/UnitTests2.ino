@@ -15,10 +15,12 @@
 */
 #line 17 "UnitTests2.ino"
 
-#include <AUnit.h>
-
+// clang-format off
+// FastLED must be included before AUnit: AUnit defines a test() macro and FastLED 3.10 uses test as an identifier
 #include "FastLEDController.h"
 #include "FastLEDControllerUtils.h"
+#include <AUnit.h>
+// clang-format on
 
 using namespace aunit;
 

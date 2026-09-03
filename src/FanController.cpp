@@ -33,9 +33,10 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			CLP_LOG(3, F("Read mask\r\n"));
 			FanMask mask[FAN_NUM];
 			for (uint8_t i = 0; i < FAN_NUM; i++) {
+				mask[i] = FanMask::Disconnected;
 				switch (getFanDetectionType(i)) {
 					case FanDetectionType::Auto:
-						mask[i] = FanMask::Disconnected;  // TODO
+						mask[i] = detectFan(i);
 						break;
 					case FanDetectionType::ThreePin:
 						mask[i] = FanMask::ThreePin;
@@ -193,3 +194,5 @@ void FanController::handleFanControl(const Command& command, const CorsairLighti
 			return;
 	}
 }
+
+FanMask FanController::detectFan(uint8_t fan) { return FanMask::Disconnected; }

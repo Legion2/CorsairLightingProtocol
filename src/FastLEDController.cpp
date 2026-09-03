@@ -15,6 +15,8 @@
 */
 #include "FastLEDController.h"
 
+#include <string.h>
+
 FastLEDController::FastLEDController(FastLEDControllerStorage* storage)
 	: temperatureController(nullptr), storage(storage) {
 	load();
@@ -40,7 +42,7 @@ void FastLEDController::addLEDs(uint8_t channel, CRGB* leds, uint8_t count) {
 	channelData[channel].ledCount = count;
 	channelData[channel].leds = leds;
 	for (uint8_t*& buffer : channelData[channel].valuesBuffer) {
-		buffer = new uint8_t[count];
+		buffer = new uint8_t[count]();
 	}
 }
 
@@ -371,7 +373,8 @@ bool FastLEDController::updateLEDs() {
 			case ChannelMode::HardwarePlayback: {
 				for (uint8_t groupIndex = 0; groupIndex < channel.groupsSet; groupIndex++) {
 					LEDGroup& group = channel.groups[groupIndex];
-					int groupLedCount = min((int)channelData[channelId].ledCount - group.ledIndex, (int)group.ledCount);
+					int groupLedCount =
+						CLP::minimum((int)channelData[channelId].ledCount - group.ledIndex, (int)group.ledCount);
 					if (groupLedCount <= 0) {
 						continue;
 					}
@@ -500,15 +503,15 @@ void FastLEDController::setLEDExternalTemperature(uint8_t channel, uint16_t temp
 
 void FastLEDController::setLEDColorValues(uint8_t channel, uint8_t color, uint8_t offset, const uint8_t* values,
 										  size_t len) {
-	int copyLength = min((int)channelData[channel].ledCount - offset, (int)len);
+	int copyLength = CLP::minimum((int)channelData[channel].ledCount - offset, (int)len);
 	if (copyLength > 0) {
-		memcpy(channelData[channel].valuesBuffer[color] + offset, values, copyLength);
+		::memcpy(channelData[channel].valuesBuffer[color] + offset, values, copyLength);
 	}
 }
 
 void FastLEDController::clearLEDColorValues(uint8_t channel) {
 	for (uint8_t*& buffer : channelData[channel].valuesBuffer) {
-		memset(buffer, 0, channelData[channel].ledCount);
+		::memset(buffer, 0, channelData[channel].ledCount);
 	}
 }
 
