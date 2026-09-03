@@ -17,6 +17,7 @@
 
 #include <FastLED.h>
 #include <math.h>
+#include <string.h>
 
 #include "CLPUtils.h"
 
@@ -73,7 +74,7 @@ void CLP::repeat(FastLEDController* controller, uint8_t channelIndex, uint8_t ti
 	auto count = controller->getLEDCount(channelIndex);
 	// skip first iteration, because LEDs already contains the data at the first position
 	for (int i = 1; i < times; i++) {
-		memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
+		::memcpy(leds + (count * i), leds, sizeof(CRGB) * count);
 	}
 }
 
@@ -87,7 +88,7 @@ void CLP::scaleSegments(FastLEDController* controller, uint8_t channelIndex, con
 	// scale down segments and move all segments together so there is space for upscaling
 	for (int i = 0; i < segmentsCount; i++) {
 		const int segmentLength = segments[i].segmentLength;
-		const int scaleToSize = min(segments[i].scaleToSize, segmentLength);
+		const int scaleToSize = CLP::minimum(segments[i].scaleToSize, segmentLength);
 		const float scaleFactor = scaleFactorOf(segmentLength, scaleToSize);
 
 		for (int ledIndex = 0; ledIndex < scaleToSize; ledIndex++) {
@@ -129,9 +130,11 @@ void CLP::gammaCorrection(FastLEDController* controller, uint8_t channelIndex) {
 	auto leds = controller->getLEDs(channelIndex);
 	auto count = controller->getLEDCount(channelIndex);
 	for (int ledIndex = 0; ledIndex < count; ledIndex++) {
-		leds[ledIndex].r = dim8_video(leds[ledIndex].r);
-		leds[ledIndex].g = dim8_video(leds[ledIndex].g);
-		leds[ledIndex].b = dim8_video(leds[ledIndex].b);
+		// dim8_video(x) is defined as scale8_video(x, x); scale8_video is visible in every FastLED version, dim8_video
+		// is not (FastLED >= 3.10 moved it into the fl namespace)
+		leds[ledIndex].r = scale8_video(leds[ledIndex].r, leds[ledIndex].r);
+		leds[ledIndex].g = scale8_video(leds[ledIndex].g, leds[ledIndex].g);
+		leds[ledIndex].b = scale8_video(leds[ledIndex].b, leds[ledIndex].b);
 	}
 }
 
