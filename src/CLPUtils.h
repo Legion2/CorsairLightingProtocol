@@ -130,6 +130,19 @@ extern void printData(uint8_t const* buf, uint32_t bufsize, bool address_table);
 
 namespace CLP {
 
+/**
+ * Type-safe minimum of two values. Named minimum, not min: the AVR core defines min as a macro, and with FastLED
+ * >= 3.10 a plain min() call is ambiguous between fl::min and arduino::min on ArduinoCore-API based cores.
+ *
+ * @param a the first value
+ * @param b the second value
+ * @return the smaller of both values
+ */
+template <typename T>
+constexpr T minimum(const T a, const T b) {
+	return a < b ? a : b;
+}
+
 template <typename T>
 void swap(T a, T b) {
 	auto temp = *a;
