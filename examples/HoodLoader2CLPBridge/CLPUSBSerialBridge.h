@@ -37,7 +37,7 @@ public:
 	/**
 	 * Create a new CLPUSBSerialBridge with the default Serial Number.
 	 */
-	CLPUSBSerialBridge(){};
+	CLPUSBSerialBridge() {};
 	/**
 	 * Create a new CLPUSBSerialBridge and set a Serial Number.
 	 *
