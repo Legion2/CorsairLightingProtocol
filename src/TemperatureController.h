@@ -46,6 +46,13 @@ public:
 	 * @return the temperature in hundredths of a degree Celsius.
 	 */
 	virtual uint16_t getTemperature(uint8_t temperatureSensor);
+	/**
+	 * Check if a temperature sensor is connected.
+	 *
+	 * @param temperatureSensor the index of the temperature sensor
+	 * @return true if a temperature sensor is connected
+	 */
+	bool hasTemperatureSensor(uint8_t temperatureSensor);
 
 protected:
 	/**

@@ -20,7 +20,7 @@ env:
   URL_CLP_BOARDS: https://raw.githubusercontent.com/capull0/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
   URL_ADAFRUIT: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
   URL_RP2040: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
-  AVR_SKETCHES: LightingNodePRO.ino,SingleStripLightingNodePRO.ino,CommanderPRO.ino,DeviceIDTool.ino,RepeatAndScale.ino,TransformLLFansFormatToStrip.ino,LS100.ino,LT100.ino,LightingNodeCORE.ino,NonAddressable.ino,AdditionalFeatures.ino,AmbientBacklight.ino,MultipleFans.ino,DebugSketch.ino,NoEEPROM.ino
+  AVR_SKETCHES: LightingNodePRO.ino,SingleStripLightingNodePRO.ino,CommanderPRO.ino,DeviceIDTool.ino,RepeatAndScale.ino,TransformLLFansFormatToStrip.ino,LS100.ino,LT100.ino,LightingNodeCORE.ino,NonAddressable.ino,AdditionalFeatures.ino,AmbientBacklight.ino,MultipleFans.ino,DebugSketch.ino,NoEEPROM.ino,CommanderPROTacho.ino
   DEBUG_SKETCH_FLAGS: '{"DebugSketch": "-DDEBUG -DVERBOSE -DPRINT_COMMAND=true -DPRINT_RESPONSE=true -DPRINT_LOOP=true -DPRINT_UPDATE=true"}'
 
 jobs:
