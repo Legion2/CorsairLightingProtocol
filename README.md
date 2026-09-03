@@ -56,9 +56,10 @@ When you have problems with a board not listed here, please open an [Issue](http
 To use this library you must install it with the Library-Manager.
 Open the Library-Manager in Arduino IDE via Tools->Manage Libraries...
 Search for "Corsair Lighting Protocol" and install the Corsair Lighting Protocol library.
-This library also requires the [FastLED](http://fastled.io/) library.
+This library also requires the [FastLED](http://fastled.io/) library, version 3.5.0 or newer.
 Search for "FastLED" in the Library-Manager and install the FastLED library.
-If using TinyUSB, also install the latest "Adafruit TinyUSB Library" as it supersedes some of the core versions.
+If using TinyUSB on an Adafruit SAMD or nRF52 board, also install the latest "Adafruit TinyUSB Library" as it supersedes the version bundled with the core.
+The Raspberry Pi Pico core already bundles a matching version, do not install the library separately there.
 
 ## Create a Lighting Node PRO with AVR
 This guide will teach you how to create a Lighting Node PRO with an Arduino Leonardo compatible board.
@@ -72,6 +73,12 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
    They can be installed by following the [CLP Boards installation guide](https://github.com/Legion2/CorsairLightingProtocolBoards#how-to-use-these-boards-in-arduino).
    After installation it should be possible to select the CLP Boards in the Arduino IDE as shown in the screenshot below.
    If your are using a Sparkfun Pro Micro also install the [SparkFun Boards definition](https://github.com/sparkfun/Arduino_Boards#installation-instructions).
+
+   > **Arduino IDE 2 and arduino-cli 0.19 or newer:** the Pro Micro entries of CLP Boards 0.3.1 fail with
+   > `Invalid FQBN: 'build.core' and 'build.variant' refer to different platforms`.
+   > Select **CLP Arduino Leonardo** instead. It is fully compatible with the 5V/16MHz Pro Micro (same MCU, bootloader and pin numbers).
+   > The 3.3V/8MHz Pro Micro needs Arduino IDE 1.8.x until a fixed CLP Boards release is available.
+   > With arduino-cli you can also skip the CLP Boards entirely, see [Compiling without the CLP Boards](#compiling-without-the-clp-boards).
 
    ![select CLP Board](extra/images/select-board.png)
 1. Upload the "LightingNodePRO" sketch to your Arduino.
@@ -92,7 +99,7 @@ If you have an Arduino Uno or Mega, see the [other guide](https://github.com/Leg
 
 This guide will teach you how to create a Lighting Node PRO with a Raspberry Pi Pico.
 
-**Note:** FastLED currently does not support the RP2040 natively. You must manually merge support by modifying your library to include the [6 RP2040 platform files](https://github.com/FastLED/FastLED/pull/1261/files#diff-fda1710ad90fcc4b2f07be21a834da7d24b00008867655232c84fb0369cfc74b) in the FastLED/src/platforms/arm/rp2040 folder and `#elif defined(ARDUINO_ARCH_RP2040)` / `#include` statements in [led_sysdefs.h](https://github.com/FastLED/FastLED/pull/1261/files#diff-95f6b43a0e6b0e58988e1be3bc6415ded5284082a4f2ce2aaa90f5931d4194af) and [platforms.h](https://github.com/FastLED/FastLED/pull/1261/files#diff-255ea38a6573ed237ea1fe164d5e87ca46811eef21ba6e2cef120fda47c6e62f).
+**Note:** FastLED supports the RP2040 natively since version 3.6.0 (tested with 3.10.5). The Raspberry Pi Pico Arduino core ships its own copy of the Adafruit TinyUSB library, so no separate TinyUSB installation is needed.
 
 1. Install the [Raspberry Pi Pico Arduino core](https://github.com/earlephilhower/arduino-pico#installing-via-arduino-boards-manager).
 
@@ -132,6 +139,7 @@ Now you can create lighting effects in the "Lighting Channel #" tabs.
 - [Repeat or scale LED channels](#repeat-or-scale-led-channels)
 - [Increase the Brightness of the LEDs](#increase-the-brightness-of-the-leds)
 - [Hardware Lighting mode](#hardware-lighting-mode)
+- [Compiling without the CLP Boards](#compiling-without-the-clp-boards)
 
 ## How it works
 This library uses the USB HID interface of the ATmega32U4.
@@ -210,6 +218,18 @@ It allows you the set lighting effects that will be active when iCUE **is not** 
 This is the case when the PC is off, in sleep mode, booting or the user is logged out.
 So if you want to have lighting effects in all these situations, use the Hardware Lighting mode.
 If you don't want it, configure a static black color.
+
+## Compiling without the CLP Boards
+On AVR boards the CLP Boards package does nothing but set the USB vendor and product IDs of Corsair in the board definition.
+With arduino-cli you can pass these IDs as build properties and use the stock board definitions instead:
+```sh
+arduino-cli compile --fqbn SparkFun:avr:promicro:cpu=16MHzatmega32U4 \
+  --build-property build.vid=0x1b1c --build-property build.pid=0x0c0b \
+  --build-property 'build.usb_product="Lighting Node PRO"' --build-property 'build.usb_manufacturer="Corsair"' \
+  examples/LightingNodePRO
+```
+The product IDs of the supported devices are the `CORSAIR_*_PID` constants in `src/CorsairLightingProtocolConstants.h`.
+TinyUSB boards set the IDs at runtime and never need the CLP Boards.
 
 # License
 This project is licensed under the Apache 2.0 License.
