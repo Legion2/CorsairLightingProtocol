@@ -13,12 +13,10 @@ env:
   ADAFRUIT_NRF52: "1.7.0"
   RP2040: "6.0.0"
   TINYUSB: "3.7.7"
-  # The CLP Boards package 0.3.1 only works with arduino-cli < 0.19 (its Pro Micro
-  # boards reference the SparkFun variant of another platform). It is compiled
-  # with the last known good toolchain as a smoke test until a fixed release exists.
+  # Only the Leonardo entry of CLP Boards 0.3.1 works with arduino-cli >= 0.19; its
+  # Pro Micro entries reference the SparkFun variant of another platform, see
+  # https://github.com/Legion2/CorsairLightingProtocolBoards/issues/20
   CLP_BOARDS: "0.3.1"
-  CLP_BOARDS_CLI: "0.18.3"
-  CLP_BOARDS_ARDUINO_AVR: "1.8.3"
   URL_SPARKFUN: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
   URL_CLP_BOARDS: https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
   URL_HOODLOADER2: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
@@ -52,23 +50,22 @@ jobs:
           build-properties: ${{ env.DEBUG_SKETCH_FLAGS }}
 
   testCLPBoards:
-    name: CLP Boards ${{ matrix.board }} (legacy toolchain)
+    name: CLP Boards ${{ matrix.board }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         board:
-          - Legion2:avr:leonardoclp
-          - Legion2:avr:promicro5vclp
+          - Legion2:avr:leonardoclp:device=lnp
+          - Legion2:avr:leonardoclp:device=cp
     steps:
       - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
         uses: ArminJo/arduino-test-compile@v3
         with:
-          cli-version: ${{ env.CLP_BOARDS_CLI }}
           arduino-board-fqbn: ${{ matrix.board }}
-          platform-url: ${{ env.URL_SPARKFUN }},${{ env.URL_CLP_BOARDS }}
-          arduino-platform: arduino:avr@${{ env.CLP_BOARDS_ARDUINO_AVR }},SparkFun:avr@${{ env.SPARKFUN_AVR }},Legion2:avr@${{ env.CLP_BOARDS }}
+          platform-url: ${{ env.URL_CLP_BOARDS }}
+          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }},Legion2:avr@${{ env.CLP_BOARDS }}
           required-libraries: FastLED@3.10.5
           sketch-names: LightingNodePRO.ino,CommanderPRO.ino
 
