@@ -1,5 +1,7 @@
 #include "CorsairLightingProtocolTinyUSBHID.h"
 
+#include <string.h>
+
 #if defined(USE_TINYUSB)
 
 const char* corsairProducts[] = {CORSAIR_LNP_PRODUCT, CORSAIR_CP_PRODUCT,  CORSAIR_LNC_PRODUCT,
@@ -44,7 +46,7 @@ void set_report_callback(uint8_t report_id, hid_report_type_t report_type, uint8
 	(void)report_type;
 
 	if (bufsize <= sizeof(Command)) {
-		memcpy(&CorsairLightingProtocolTinyUSBHID::command.raw, buffer, bufsize);
+		::memcpy(&CorsairLightingProtocolTinyUSBHID::command.raw, buffer, bufsize);
 		CorsairLightingProtocolTinyUSBHID::newData = 1;
 		CLP_LOG(4, F("Data received:\r\n"));
 		CLP_LOG_DAT(4, &CorsairLightingProtocolTinyUSBHID::command.raw,
