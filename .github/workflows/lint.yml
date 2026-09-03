@@ -9,14 +9,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Check src format
-      uses: DoozyX/clang-format-lint-action@v0.18
+      uses: DoozyX/clang-format-lint-action@v0.20
       with:
         source: './src'
         extensions: 'h,cpp'
-        clangFormatVersion: 9
+        clangFormatVersion: 20
     - name: Check examples format
-      uses: DoozyX/clang-format-lint-action@v0.18 
+      uses: DoozyX/clang-format-lint-action@v0.20 
       with:
         source: './examples'
         extensions: 'h,cpp,ino'
-        clangFormatVersion: 9
+        clangFormatVersion: 20
