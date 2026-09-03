@@ -8,18 +8,16 @@ name: Test
 env:
   ARDUINO_AVR: "1.8.8"
   SPARKFUN_AVR: "1.1.13"
-  HOODLOADER2_AVR: "2.0.5"
   ADAFRUIT_SAMD: "1.7.17"
   ADAFRUIT_NRF52: "1.7.0"
   RP2040: "6.0.0"
   TINYUSB: "3.7.7"
-  # Only the Leonardo entry of CLP Boards 0.3.1 works with arduino-cli >= 0.19; its
-  # Pro Micro entries reference the SparkFun variant of another platform, see
+  # CLP Boards 0.4.0 bundles the SparkFun, Adafruit and HoodLoader2 pin variants
+  # and is the first release that works with arduino-cli >= 0.19, see
   # https://github.com/Legion2/CorsairLightingProtocolBoards/issues/20
-  CLP_BOARDS: "0.3.1"
+  CLP_BOARDS: "0.4.0"
   URL_SPARKFUN: https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
-  URL_CLP_BOARDS: https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
-  URL_HOODLOADER2: https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
+  URL_CLP_BOARDS: https://raw.githubusercontent.com/capull0/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
   URL_ADAFRUIT: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
   URL_RP2040: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
   AVR_SKETCHES: LightingNodePRO.ino,SingleStripLightingNodePRO.ino,CommanderPRO.ino,DeviceIDTool.ino,RepeatAndScale.ino,TransformLLFansFormatToStrip.ino,LS100.ino,LT100.ino,LightingNodeCORE.ino,NonAddressable.ino,AdditionalFeatures.ino,AmbientBacklight.ino,MultipleFans.ino,DebugSketch.ino,NoEEPROM.ino
@@ -57,7 +55,9 @@ jobs:
       matrix:
         board:
           - Legion2:avr:leonardoclp:device=lnp
-          - Legion2:avr:leonardoclp:device=cp
+          - Legion2:avr:promicro5vclp:device=cp
+          - Legion2:avr:promicro3vclp:device=slc
+          - Legion2:avr:feather32u4clp:device=lnc
     steps:
       - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
@@ -93,7 +93,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        board: ["HoodLoader2:avr:HoodLoader2atmega16u2"]
+        # The HoodLoader2 platform itself pins avr-gcc 4.8 and no longer builds the
+        # current arduino:avr core; the CLP Boards entry uses the arduino:avr toolchain.
+        board: ["Legion2:avr:HoodLoader2atmega16u2clp"]
         fastled: ["3.5.0", "3.10.5"]
     steps:
       - uses: actions/checkout@v4
@@ -101,8 +103,8 @@ jobs:
         uses: ArminJo/arduino-test-compile@v3
         with:
           arduino-board-fqbn: ${{ matrix.board }}
-          platform-url: ${{ env.URL_HOODLOADER2 }}
-          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }},HoodLoader2:avr@${{ env.HOODLOADER2_AVR }}
+          platform-url: ${{ env.URL_CLP_BOARDS }}
+          arduino-platform: arduino:avr@${{ env.ARDUINO_AVR }},Legion2:avr@${{ env.CLP_BOARDS }}
           required-libraries: FastLED@${{ matrix.fastled }}
           sketch-names: HoodLoader2CLPBridge.ino
 
@@ -124,7 +126,10 @@ jobs:
           - "adafruit:samd:adafruit_metro_m4_airliftlite:usbstack=tinyusb"
           # "adafruit:samd:adafruit_feather_m4:usbstack=tinyusb" should work but doesn't have the pins needed for the sketch
           - "adafruit:samd:adafruit_matrixportal_m4:usbstack=tinyusb"
-        fastled: ["3.5.0", "3.10.5"]
+        # FastLED 3.10.4 and 3.10.5 do not compile against the Adafruit SAMD core
+        # (duplicate EIC_Handler, fixed upstream in FastLED/FastLED#4000 but not
+        # released yet). Add the current version back once a fixed release exists.
+        fastled: ["3.5.0"]
     steps:
       - uses: actions/checkout@v4
       - name: Build for ${{ matrix.board }}
